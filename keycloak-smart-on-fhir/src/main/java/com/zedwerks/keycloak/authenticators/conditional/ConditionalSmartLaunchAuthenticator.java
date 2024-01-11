@@ -21,7 +21,6 @@ import java.util.Set;
 public class ConditionalSmartLaunchAuthenticator implements ConditionalAuthenticator {
 
     private static final String SMART_SCOPE_LAUNCH_PATIENT = "launch/patient";
-    private static final String SMART_SCOPE_LAUNCH_ENCOUNTER = "launch/encounter";
     private static final String SMART_SCOPE_LAUNCH = "launch";
     private static final String SMART_SCOPE_LAUNCH_ANY_PREFIX = "launch/";
 
@@ -80,7 +79,6 @@ public class ConditionalSmartLaunchAuthenticator implements ConditionalAuthentic
         isLaunch |= clientScopes.anyMatch(s -> s.getName().startsWith(SMART_SCOPE_LAUNCH_ANY_PREFIX));
 
         Set<String> scopes = authSession.getClientScopes();
-        // Let's just log these client scopes so I know what they are vs. above scopes.
         for (String scope : scopes) {
             logger.info("Client scope: " + scope);
         }
