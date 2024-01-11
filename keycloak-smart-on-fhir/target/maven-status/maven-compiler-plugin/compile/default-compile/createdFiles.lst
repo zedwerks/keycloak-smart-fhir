@@ -1,4 +1,7 @@
-com/zedwerks/keycloak/authenticator/AudienceParameterValidator.class
-com/zedwerks/keycloak/authenticator/SmartLaunchAuthenticator.class
-com/zedwerks/keycloak/authenticator/AudienceParameterValidatorFactory.class
-com/zedwerks/keycloak/authenticator/SmartLaunchAuthenticatorFactory.class
+com/zedwerks/keycloak/authenticators/conditional/ConditionalSmartLaunchAuthenticator.class
+com/zedwerks/keycloak/authenticators/AudienceParameterValidatorFactory.class
+com/zedwerks/keycloak/authenticators/AudienceParameterValidator.class
+com/zedwerks/keycloak/authenticators/SmartLaunchAuthenticator.class
+com/zedwerks/keycloak/App.class
+com/zedwerks/keycloak/authenticators/conditional/ConditionalSmartLaunchAuthenticatorFactory.class
+com/zedwerks/keycloak/authenticators/SmartLaunchAuthenticatorFactory.class

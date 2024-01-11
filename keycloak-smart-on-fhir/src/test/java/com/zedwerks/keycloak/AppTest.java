@@ -1,4 +1,4 @@
-package com.zedwerks;
+package com.zedwerks.keycloak;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

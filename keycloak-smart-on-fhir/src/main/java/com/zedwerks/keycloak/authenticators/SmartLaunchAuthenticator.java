@@ -1,4 +1,4 @@
-package com.zedwerks.keycloak.authenticator;
+package com.zedwerks.keycloak.authenticators;
 
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;

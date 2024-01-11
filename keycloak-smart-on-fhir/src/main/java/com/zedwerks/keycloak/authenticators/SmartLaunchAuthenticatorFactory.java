@@ -1,4 +1,4 @@
-package com.zedwerks.keycloak.authenticator;
+package com.zedwerks.keycloak.authenticators;
 
 import org.keycloak.Config;
 import org.keycloak.authentication.Authenticator;
