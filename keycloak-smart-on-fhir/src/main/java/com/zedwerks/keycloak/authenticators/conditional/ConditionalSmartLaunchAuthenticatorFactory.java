@@ -10,7 +10,7 @@ import org.keycloak.provider.ProviderConfigProperty;
 import java.util.Arrays;
 import java.util.List;
 
-public class ConditionalSmartLaunchAuthenticatorFactory  implements ConditionalAuthenticatorFactory {
+public class ConditionalSmartLaunchAuthenticatorFactory implements ConditionalAuthenticatorFactory {
 
     public static final String CONF_NOT = "not";
     public static final String PROVIDER_ID = "conditional-smart-launch-authenticator";

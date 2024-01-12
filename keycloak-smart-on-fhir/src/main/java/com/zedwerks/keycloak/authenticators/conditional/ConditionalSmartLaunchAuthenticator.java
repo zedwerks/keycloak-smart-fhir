@@ -89,10 +89,15 @@ public class ConditionalSmartLaunchAuthenticator implements ConditionalAuthentic
     public void action(AuthenticationFlowContext authenticationFlowContext) {
         //Not used
     }
-
+ 
     @Override
     public boolean requiresUser() {
         return true;
+    }
+
+    @Override
+    public boolean areRequiredActionsEnabled(KeycloakSession keycloakSession, RealmModel realmModel) {
+        return false;
     }
 
     @Override
