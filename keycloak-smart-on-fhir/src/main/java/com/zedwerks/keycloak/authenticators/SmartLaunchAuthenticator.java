@@ -14,6 +14,7 @@ import org.keycloak.models.UserModel;
 import org.keycloak.protocol.oidc.OIDCLoginProtocol;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.keycloak.protocol.oidc.TokenManager;
+import org.keycloak.protocol.oidc.TokenManager.AccessTokenResponseBuilder;
 
 import jakarta.ws.rs.core.Response;
 
@@ -51,18 +52,27 @@ public class SmartLaunchAuthenticator implements Authenticator {
             context.attempted();
             return;
         }
+
+        String launchParam = context.getUriInfo().getQueryParameters().getFirst(LAUNCH_REQUEST_PARAM);
+
+        if (!isEHRLaunch && launchParam != null && !launchParam.trim().isEmpty()) {
+            logger.warn("SMART on FHIR request missing 'launch' scope but found 'launch' parameter");
+            context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION, Response.status(400, "Found 'launch' parameter but missing 'launch' scope").build());
+            return;
+        }
         if (isEHRLaunch) {
             // then check for the 'launch' request parameter
-            String launchParam = context.getUriInfo().getQueryParameters().getFirst(LAUNCH_REQUEST_PARAM);
 
-            if (launchParam == null || launchParam.isEmpty()) {
-                logger.warn("SMART on FHIR launch request missing 'launch' parameter");
+            if (launchParam == null || launchParam.trim().isEmpty()) {
+                logger.warn("SMART on FHIR 'launch' scope found, but missing 'launch' parameter");
                 context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION, Response.status(400, "Found 'launch' scope but missing 'launch' parameter").build());
                 return;
             }
+            // @todo: resolved the launch parameter with the Context API and set the patient_id in the session
+            // and set 'patient' alongside the bearer token and in the token response.
+            context.getAuthenticationSession().setUserSessionNote("patient_id", "9094848098");
+            context.success();
         }
-
-        context.success();
     }
 
     @Override
@@ -88,6 +98,27 @@ public class SmartLaunchAuthenticator implements Authenticator {
     @Override
     public void close() {
         // NOOP
+    }
+
+    void setPatientResource(AuthenticationFlowContext context, String patientResourceId) {
+        // We would get the launch parameter 
+        context.getAuthenticationSession().setUserSessionNote("patient_id", patientResourceId);
+
+        AuthenticationSessionModel authSession = context.getAuthenticationSession();
+        ClientModel client = authSession.getClient();
+        client.setAttribute("patient", patientResourceId);
+    }
+
+    void setFhirUser(AuthenticationFlowContext context, String fhirUser) {
+        AuthenticationSessionModel authSession = context.getAuthenticationSession();
+        ClientModel client = authSession.getClient();
+        client.setAttribute("fhirUser", fhirUser);
+    }
+
+    void addCustomAttributeToToken(AuthenticationFlowContext context, String key, String value) {
+        AuthenticationSessionModel authSession = context.getAuthenticationSession();
+        ClientModel client = authSession.getClient();
+        client.setAttribute(key, value);
     }
 
  
