@@ -46,8 +46,8 @@ ehthumbs.db
 Desktop.ini
 
 # Maven
-target/*
-**/target/
+target/
+**/target/*
 test-output/
 surefire-reports/
 
