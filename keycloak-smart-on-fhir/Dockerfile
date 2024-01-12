@@ -1,5 +1,5 @@
 # Use an official OpenJDK runtime as a base image
-FROM maven:3.8.4-openjdk-11-slim AS builder
+FROM maven:3.9.4-eclipse-temurin-21-alpine AS builder
 
 # Set the working directory in the container
 WORKDIR /app
@@ -12,7 +12,7 @@ COPY src src
 RUN mvn clean package
 
 # Use a smaller base image for the final image
-FROM openjdk:11-jre-slim
+FROM openjdk:23-slim
 
 # Set the working directory in the container
 WORKDIR /app
