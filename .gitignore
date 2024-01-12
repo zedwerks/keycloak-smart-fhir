@@ -46,8 +46,11 @@ ehthumbs.db
 Desktop.ini
 
 # Maven
+maven-status/
 target/
-**/target/*
 test-output/
 surefire-reports/
+
+# htaccess
+.htaccess
 
