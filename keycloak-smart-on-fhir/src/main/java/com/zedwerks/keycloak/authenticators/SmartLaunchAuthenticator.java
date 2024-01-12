@@ -14,10 +14,8 @@ import org.keycloak.models.UserModel;
 import org.keycloak.protocol.oidc.OIDCLoginProtocol;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.keycloak.protocol.oidc.TokenManager;
-import org.keycloak.protocol.oidc.TokenManager.AccessTokenResponseBuilder;
 
 import jakarta.ws.rs.core.Response;
-
 
 public class SmartLaunchAuthenticator implements Authenticator {
 
@@ -26,7 +24,6 @@ public class SmartLaunchAuthenticator implements Authenticator {
     public static final String SMART_SCOPE_LAUNCH_ANY_PREFIX = "launch/";
 
     public static final String LAUNCH_REQUEST_PARAM = "launch";
-
 
     public static final Logger logger = Logger.getLogger(SmartLaunchAuthenticator.class);
 
@@ -46,7 +43,7 @@ public class SmartLaunchAuthenticator implements Authenticator {
         boolean isEHRLaunch = clientScopes.anyMatch(s -> SMART_SCOPE_EHR_LAUNCH.equals(s.getName()));
         boolean isPatientLaunch = clientScopes.anyMatch(s -> SMART_SCOPE_LAUNCH_PATIENT.equals(s.getName()));
         boolean isStandaloneLaunch = clientScopes.anyMatch(s -> s.getName().startsWith(SMART_SCOPE_LAUNCH_ANY_PREFIX));
-        
+
         if (!isEHRLaunch && !isPatientLaunch && !isStandaloneLaunch) {
             logger.debug("Not a SMART on FHIR launch request");
             context.attempted();
@@ -57,7 +54,8 @@ public class SmartLaunchAuthenticator implements Authenticator {
 
         if (!isEHRLaunch && launchParam != null && !launchParam.trim().isEmpty()) {
             logger.warn("SMART on FHIR request missing 'launch' scope but found 'launch' parameter");
-            context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION, Response.status(400, "Found 'launch' parameter but missing 'launch' scope").build());
+            context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION,
+                Response.status(400, "Found 'launch' parameter but missing 'launch' scope").build());
             return;
         }
         if (isEHRLaunch) {
@@ -65,13 +63,32 @@ public class SmartLaunchAuthenticator implements Authenticator {
 
             if (launchParam == null || launchParam.trim().isEmpty()) {
                 logger.warn("SMART on FHIR 'launch' scope found, but missing 'launch' parameter");
-                context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION, Response.status(400, "Found 'launch' scope but missing 'launch' parameter").build());
+                context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION,
+                    Response.status(400, "Found 'launch' scope but missing 'launch' parameter").build());
                 return;
             }
-            // @todo: resolved the launch parameter with the Context API and set the patient_id in the session
+            // @todo: resolved the launch parameter with the Context API and set the
+            // patient_id in the session
             // and set 'patient' alongside the bearer token and in the token response.
-            context.getAuthenticationSession().setUserSessionNote("patient_id", "9094848098");
+            String patientResourceId = resolveLaunchParameter(launchParam);
+            setPatientResource(context, patientResourceId);
             context.success();
+        } else if (isPatientLaunch) {
+            // then check for the 'patient' request parameter
+
+            logger.warn("SMART on FHIR standalone 'launch/patient' scope found. This is not yet supported.");
+            context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION,
+                Response.status(400, "SMART on FHIR standalone 'launch/patient' scope found, this is not yet supported").build());
+            return;
+        } else if (isStandaloneLaunch) {
+            // then check for the 'launch' request parameter
+
+            if (launchParam == null || launchParam.trim().isEmpty()) {
+                logger.warn("SMART on FHIR standalone launch scope found. This is not yet supported.");
+                context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION,
+                    Response.status(400, "SMART on FHIR standalone launch scope found. This is not yet supported.").build());
+                return;
+            }
         }
     }
 
@@ -101,7 +118,13 @@ public class SmartLaunchAuthenticator implements Authenticator {
     }
 
     void setPatientResource(AuthenticationFlowContext context, String patientResourceId) {
-        // We would get the launch parameter 
+        // We would get the launch parameter
+        if (patientResourceId == null || patientResourceId.trim().isEmpty()) {
+            logger.warn("Could not convert launch parameter to patient resource id");
+            context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION,
+                Response.status(400, "Could not convert launch parameter to patient resource id").build());
+            return;
+        }
         context.getAuthenticationSession().setUserSessionNote("patient_id", patientResourceId);
 
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
@@ -109,20 +132,28 @@ public class SmartLaunchAuthenticator implements Authenticator {
         client.setAttribute("patient", patientResourceId);
     }
 
-    void setFhirUser(AuthenticationFlowContext context, String fhirUser) {
-        AuthenticationSessionModel authSession = context.getAuthenticationSession();
-        ClientModel client = authSession.getClient();
-        client.setAttribute("fhirUser", fhirUser);
+    void setFhirUser(AuthenticationFlowContext context, String fhirUserUrl) {
+        context.getAuthenticationSession().setUserSessionNote("fhirUser", fhirUserUrl);
     }
 
-    void addCustomAttributeToToken(AuthenticationFlowContext context, String key, String value) {
-        AuthenticationSessionModel authSession = context.getAuthenticationSession();
-        ClientModel client = authSession.getClient();
-        client.setAttribute(key, value);
+    private String resolveLaunchParameter(String launchRequestParameter) {
+        // todo: resolve the launch parameter with the Context API
+        // this involves the following steps:
+        // 1. get the launch parameter
+        // 2. Get the configuration for this client:
+        //      a. get the client_id for AuthN
+        //      b. get the client_secret for AuthN, for now.
+        //      c. get the scopes needed to make the context call.
+        //      d. get the audience needed.
+        //      e. get the URI for the Context Server Token Issuer.
+        // 3. Authenticate with the Context Server Token Issuer
+        // 4. Get the token from the Context Server Token Issuer
+        // 5. Get the configured Context Service URL.
+        // 5. Use the token to make the context call, passing the launch parameter.
+        // 6. Get the patient_id from the context call response.
+        // 7. return the patient Id, or null. (or throw an exception?)
+
+        return "9094686009";
     }
-
- 
-
-
 
 }
