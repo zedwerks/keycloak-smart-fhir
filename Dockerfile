@@ -24,4 +24,4 @@ COPY --from=builder /app/target/deploy/keycloak-smart-on-fhir-1.0-SNAPSHOT.jar .
 EXPOSE 8080
 
 # Define the command to run your application
-CMD ["java", "--help"]
+CMD ["java", "-version"]
