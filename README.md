@@ -1,6 +1,13 @@
 # kc-smart-fhir-spi
 A custom Service Provider Interface (extension) for Keycloak that supports SMART on FHIR  EHR-Launch.
 
+- Support for mapping 'patient' context response into JWT JSON response as well as Bearer Token.
+- Support for fhirUser claim in ID Token, a URL representing the authenticated user (as RelatedPerson, or Practitioner or Patient)
+- Support for EHR-Launch flow, processing the 'launch' scope and request parameter and resolving to resource identifier via an external Context API server.
+- The above is managed via custom mappers and custom Auth Flows that are configured to allow SMART on FHIR.
+- Support for mandatory ```aud``` audience request parameter for SMART on FHIR, with additional support for this aliased to ```audience``` or ```resource```. As per SMART on FHIR specs, this audience value must be a fully qualified base FHIR Server endpoint.
+- Configuration to set the allowable FHIR resource servers as part of the 'aud' request parameter.
+
 ## Deployment
 
 ```bash
@@ -9,7 +16,7 @@ mvn clean package
 cp target/*.jar $KEYCLOAK_HOME/standalone/deployments
 ```
 
-## Keycloak Configuration
+## Keycloak Auth Flow Configuration
 
 See example-usage folder. Alternatively,
 
@@ -21,3 +28,10 @@ See example-usage folder. Alternatively,
 6. Setup the Environment configuration variables (more on this later).
 
 Try out a client app with scope of ```launch and a launch= request parameter.
+
+# Use Terraform
+
+Use the included terraform scripts to configure FHIR scopes, and create a default auth flow
+that includes the SMART on FHIR custom flow steps. 
+
+The auth flows have no impact if the auth request is not a SMART on FHIR request.
