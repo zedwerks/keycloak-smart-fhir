@@ -21,7 +21,7 @@ WORKDIR /app
 COPY --from=builder /app/target/deploy/keycloak-smart-on-fhir-1.0-SNAPSHOT.jar /app/output/keycloak-smart-on-fhir.jar
 
 # Expose the port your application will run on
-EXPOSE 8080
+EXPOSE 4444
 
 # Define the command to run your application
 CMD ["java", "-version"]
