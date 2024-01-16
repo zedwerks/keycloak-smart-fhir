@@ -27,7 +27,7 @@ See example-usage folder. Alternatively,
 5. Pick from the list, this Custom Authenticator for EHR-Launch.
 6. Setup the Environment configuration variables (more on this later).
 
-Try out a client app with scope of ```launch and a launch= request parameter.
+Try out a client app with scope of ```launch``` and a ```launch={context_token_goes_here}``` request parameter.
 
 # Use Terraform
 
