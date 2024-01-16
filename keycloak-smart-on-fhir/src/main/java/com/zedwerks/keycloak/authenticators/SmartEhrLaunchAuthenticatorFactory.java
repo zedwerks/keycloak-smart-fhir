@@ -11,11 +11,24 @@ import org.keycloak.provider.ProviderConfigProperty;
 import java.util.Collections;
 import java.util.List;
 
-public class SmartLaunchAuthenticatorFactory implements AuthenticatorFactory {
-    private static final String PROVIDER_ID = "smart-ehr-launch-context-resolver";
+public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory {
+    private static final String PROVIDER_ID = "smart-ehr-launch";
     private static final String LAUNCH_PROP_NAME = "launch";
     private static final String LAUNCH_PROP_LABEL = "EHR-Launch";
     private static final String LAUNCH_PROP_DESCRIPTION = "The EHR-Launch parameter name";
+
+    // Configuration Settings to connect to the Context API server
+    public static final String CONF_CONTEXT_API_URL = "context-api-url";
+    public static final String CONF_CONTEXT_API_URL_LABEL = "Context API URL";
+    public static final String CONF_CONTEXT_API_URL_DESCRIPTION = "The URL of the Context API server";
+    public static final String CONF_CONTEXT_ISS_URL = "context-iss-url";
+    public static final String CONF_CONTEXT_ISS_URL_LABEL = "Context Issuer (iss) URL";
+    public static final String CONF_ISS_CLIENT_ID = "context-client-id";
+    public static final String CONF_ISS_CLIENT_ID_LABEL = "Context Service OAuth2 Client ID";
+    public static final String CONF_ISS_CLIENT_SECRET = "context-client-secret";
+    public static final String CONF_ISS_CLIENT_SECRET_LABEL = "Context Service OAuth2 Client Secret";
+    public static final String CONF_ISS_CLIENT_SCOPE = "context-client-scope";
+    public static final String CONF_ISS_CLIENT_SCOPE_LABEL = "Context Service OAuth2 Client Scope(s) space-delimited";
 
     @Override
     public String getDisplayType() {
@@ -65,7 +78,7 @@ public class SmartLaunchAuthenticatorFactory implements AuthenticatorFactory {
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        return new SmartLaunchAuthenticator(session);
+        return new SmartEhrLaunchAuthenticator(session);
     }
 
     @Override

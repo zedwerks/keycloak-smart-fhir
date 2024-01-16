@@ -1,0 +1,3 @@
+com.zedwerks.keycloak.authenticators.conditional.ConditionalSmartLaunchAuthenticatorFactory
+com.zedwerks.keycloak.authenticators.SmartEhrLaunchAuthenticatorFactory
+com.zedwerks.keycloak.authenticators.AudienceParameterValidatorFactory

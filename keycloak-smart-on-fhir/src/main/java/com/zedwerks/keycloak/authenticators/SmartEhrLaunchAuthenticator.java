@@ -17,7 +17,7 @@ import org.keycloak.protocol.oidc.TokenManager;
 
 import jakarta.ws.rs.core.Response;
 
-public class SmartLaunchAuthenticator implements Authenticator {
+public class SmartEhrLaunchAuthenticator implements Authenticator {
 
     public static final String SMART_SCOPE_LAUNCH_PATIENT = "launch/patient";
     public static final String SMART_SCOPE_EHR_LAUNCH = "launch";
@@ -25,9 +25,9 @@ public class SmartLaunchAuthenticator implements Authenticator {
 
     public static final String LAUNCH_REQUEST_PARAM = "launch";
 
-    public static final Logger logger = Logger.getLogger(SmartLaunchAuthenticator.class);
+    public static final Logger logger = Logger.getLogger(SmartEhrLaunchAuthenticator.class);
 
-    public SmartLaunchAuthenticator(KeycloakSession session) {
+    public SmartEhrLaunchAuthenticator(KeycloakSession session) {
         // NOOP
     }
 

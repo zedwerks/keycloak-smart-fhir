@@ -64,8 +64,6 @@ public class ConditionalSmartLaunchAuthenticator implements ConditionalAuthentic
 
     private boolean getConditionValue(AuthenticationFlowContext context){
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
-        UserModel user = context.getUser();
-        var session = context.getSession();
 
         ClientModel client = authSession.getClient();
 
