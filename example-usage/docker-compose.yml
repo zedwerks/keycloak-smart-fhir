@@ -12,12 +12,13 @@ services:
       - start-dev 
       - --log-level=INFO
       - --import-realm
+      - --spi-theme-welcome-theme=zed
       - --features=token-exchange,authorization,admin-fine-grained-authz
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
     volumes:
-      - ./keycloak/:/opt/keycloak/data/import/
+      - ./keycloak/import/:/opt/keycloak/data/import/
     networks:
       - mynetwork
 networks:

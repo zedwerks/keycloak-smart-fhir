@@ -27,6 +27,9 @@ WORKDIR /opt/keycloak
 # Copy the JAR file from the builder stage to the final image
 COPY --from=builder /app/target/deploy/*.jar ./providers/
 
+# Copy the Keycloak Custom Theme
+COPY ./theme/custom/zed ./themes/zed
+
 # Expose the port if needed
 EXPOSE 8080
 EXPOSE 8787
