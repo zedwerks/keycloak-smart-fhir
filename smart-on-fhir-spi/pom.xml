@@ -112,9 +112,11 @@
         <executions>
           <execution>
             <phase>package</phase>
+            <!---
             <goals>
-              <goal>shade</goal> <!-- copies all dependency jars, ie. big jar file here! -->
-            </goals>
+              <goal>shade</goal>
+            </goals> 
+            -->
           </execution>
         </executions>
       </plugin>

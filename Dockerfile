@@ -29,6 +29,7 @@ COPY --from=builder /app/target/deploy/*.jar ./providers/
 
 # Expose the port if needed
 EXPOSE 8080
+EXPOSE 8787
 
 # Command to run Keycloak
 CMD ["start-dev", "--import-realm", "--log-level=info"]
