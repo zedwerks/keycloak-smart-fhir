@@ -14,7 +14,6 @@ WORKDIR /app
 # Copy the Maven configuration and project files
 COPY smart-on-fhir-spi/pom.xml .
 COPY smart-on-fhir-spi/src src
-COPY smart-on-fhir-spi/config config
 
 # Build the application JAR
 RUN mvn -B clean package -DskipTests
