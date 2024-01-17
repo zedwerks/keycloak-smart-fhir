@@ -18,9 +18,10 @@ FROM openjdk:23-slim
 WORKDIR /app
 
 # Copy the JAR file from the builder stage to the final image
-COPY --from=builder /app/target/deploy/*.jar /app/output/smart-fhir-extension.jar
+COPY --from=builder /app/target/deploy/*.jar /deploy/
 
-# Expose the port your application will run on
-#EXPOSE 4444
+# Your host path should be mapped to /deploy
+VOLUME /deploy
+
 # Define the command to run your application
-CMD ["ls", "-al", "/app/output"]
+CMD ["echo", "Use docker cp to copy JAR files from /deploy to your host"]
