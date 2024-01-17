@@ -1,8 +1,6 @@
 package com.zedwerks.keycloak.mappers;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.keycloak.models.ClientSessionContext;
 import org.keycloak.models.KeycloakSession;

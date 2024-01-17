@@ -93,11 +93,10 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
         contextIssUrl.setDefaultValue("http://localhost:8080/realms/master");
 
         ProviderConfigProperty contextClientGrantType = new ProviderConfigProperty();
-        contextClientGrantType.setType(ProviderConfigProperty.STRING_TYPE);
+        contextClientGrantType.setType(ProviderConfigProperty.LIST_TYPE);
         contextClientGrantType.setName(CONF_ISS_CLIENT_GRANT_TYPE);
         contextClientGrantType.setLabel(CONF_ISS_CLIENT_GRANT_TYPE_LABEL);
         contextClientGrantType.setHelpText(CONF_ISS_CLIENT_GRANT_TYPE_HELPTEXT);
-        contextClientGrantType.setDefaultValue(CONF_ISS_CLIENT_GRANT_TYPE_CLIENT_CREDENTIALS);
         contextClientGrantType.setOptions(Arrays.asList(CONF_ISS_CLIENT_GRANT_TYPE_CLIENT_CREDENTIALS, CONF_ISS_CLIENT_GRANT_TYPE_SIGNED_JWT));
 
         ProviderConfigProperty contextClientId = new ProviderConfigProperty();
