@@ -27,7 +27,7 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
     public static final String CONF_ISS_CLIENT_GRANT_TYPE_LABEL = "Grant Type";
     public static final String CONF_ISS_CLIENT_GRANT_TYPE_HELPTEXT = "The OAuth2 Client Grant Type for this client of the Context Service";
     public static final String CONF_ISS_CLIENT_GRANT_TYPE_CLIENT_CREDENTIALS = "client_credentials";
-    public static final String CONF_ISS_CLIENT_GRANT_TYPE_SIGNED_JWT = "Service Account";
+    public static final String CONF_ISS_CLIENT_GRANT_TYPE_SIGNED_JWT = "Signed JWT";
 
     public static final String CONF_ISS_CLIENT_ID = "context-client-id";
     public static final String CONF_ISS_CLIENT_ID_LABEL = "Client ID";
