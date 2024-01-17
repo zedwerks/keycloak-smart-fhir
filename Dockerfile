@@ -31,8 +31,6 @@ COPY --from=builder /app/target/deploy/*.jar ./providers/
 # Copy the custom theme
 COPY --from=builder /app/config/theme/zed ./themes/zed
 
-# Copy the Keycloak Custom Theme
-COPY ./theme/custom/zed ./themes/zed
 
 # Expose the port if needed
 EXPOSE 8080
