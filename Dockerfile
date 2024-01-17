@@ -29,8 +29,7 @@ WORKDIR /opt/keycloak
 COPY --from=builder /app/target/deploy/*.jar ./providers/
 
 # Copy the custom theme
-COPY --from=builder /app/config/theme/zed ./themes/zed
-
+COPY --from=builder /app/src/main/resources/themes/zed ./themes/zed
 
 # Expose the port if needed
 EXPOSE 8080
