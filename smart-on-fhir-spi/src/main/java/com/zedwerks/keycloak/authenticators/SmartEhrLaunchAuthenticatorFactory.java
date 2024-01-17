@@ -32,7 +32,7 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
 
     @Override
     public String getDisplayType() {
-        return "SMART EHR-Launch Context Resolver";
+        return "SMART on FHIR: EHR-Launch Context Resolver";
     }
 
     @Override
@@ -61,8 +61,7 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
 
     @Override
     public String getHelpText() {
-        return "Detects and process a SMART EHR-Launch flow (via the 'launch' request parameter, with 'launch' scope) "
-                + ". It calls the configured Context API server to resolve the resourceId.";
+        return "Detects and processes a SMART EHR-Launch using the configured Context API server.";
     }
 
     @Override

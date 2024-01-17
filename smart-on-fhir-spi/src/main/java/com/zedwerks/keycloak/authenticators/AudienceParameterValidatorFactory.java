@@ -24,7 +24,7 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
 
     @Override
     public String getDisplayType() {
-        return "Audience Validation";
+        return "SMART on FHIR: Audience Validation";
     }
 
     @Override

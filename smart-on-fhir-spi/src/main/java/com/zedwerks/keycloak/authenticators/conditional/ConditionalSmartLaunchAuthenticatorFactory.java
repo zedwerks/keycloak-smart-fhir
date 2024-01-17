@@ -22,7 +22,7 @@ public class ConditionalSmartLaunchAuthenticatorFactory implements ConditionalAu
 
     @Override
     public String getDisplayType() {
-        return "Condition - SMART on FHIR Launch";
+        return "SMART on FHIR: Conditional Launch";
     }
 
     @Override
