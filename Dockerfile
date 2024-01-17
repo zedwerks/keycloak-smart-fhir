@@ -14,6 +14,7 @@ WORKDIR /app
 # Copy the Maven configuration and project files
 COPY smart-on-fhir-spi/pom.xml .
 COPY smart-on-fhir-spi/src src
+COPY smart-on-fhir-spi/config config
 
 # Build the application JAR
 RUN mvn -B clean package -DskipTests
@@ -27,6 +28,9 @@ WORKDIR /opt/keycloak
 # Copy the JAR file from the builder stage to the final image
 COPY --from=builder /app/target/deploy/*.jar ./providers/
 
+# Copy the custom theme
+COPY --from=builder /app/config/theme/zed ./themes/zed
+
 # Copy the Keycloak Custom Theme
 COPY ./theme/custom/zed ./themes/zed
 
@@ -35,4 +39,4 @@ EXPOSE 8080
 EXPOSE 8787
 
 # Command to run Keycloak
-CMD ["start-dev", "--import-realm", "--log-level=info"]
+CMD ["start-dev", "--import-realm", "--log-level=info", "--spi-theme-welcome-theme=zed"]
