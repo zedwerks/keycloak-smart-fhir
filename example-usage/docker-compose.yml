@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  keycloak:
+    container_name: keycloak-smart-on-fhir-23.0.1-0
+    build:
+      context: https://github.com/zedwerks/keycloak-smart-fhir.git#main
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+      - 8787:8787
+    command:
+      - start-dev 
+      - --log-level=DEBUG
+      - --import-realm
+      - --features=token-exchange,authorization,admin-fine-grained-authz
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    volumes:
+      - ./keycloak/:/opt/keycloak/data/import/
+    networks:
+      - mynetwork
+networks:
+  mynetwork:
+    driver: bridge
