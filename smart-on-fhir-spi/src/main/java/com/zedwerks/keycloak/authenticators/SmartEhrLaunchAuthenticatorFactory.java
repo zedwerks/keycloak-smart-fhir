@@ -120,7 +120,8 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
         contextClientScope.setHelpText(CONF_ISS_CLIENT_SCOPE_HELPTEXT);
         contextClientScope.setDefaultValue("context:read");
 
-        List<ProviderConfigProperty> props = Arrays.asList(contextApiUrl, contextIssUrl);
+        List<ProviderConfigProperty> props = Arrays.asList(contextApiUrl, contextIssUrl,
+            contextClientGrantType, contextClientId, contextClientSecret, contextClientScope);
         return props;
     }
 
