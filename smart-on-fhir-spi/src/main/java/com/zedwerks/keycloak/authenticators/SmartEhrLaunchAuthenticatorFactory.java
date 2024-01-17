@@ -8,18 +8,11 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
-import com.fasterxml.jackson.databind.introspect.AccessorNamingStrategy.Provider;
-
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory {
     private static final String PROVIDER_ID = "smart-ehr-launch";
-
-    private static final String LAUNCH_PROP_NAME = "launch";
-    private static final String LAUNCH_PROP_LABEL = "EHR-Launch";
-    private static final String LAUNCH_PROP_HELPTEXT= "The EHR-Launch parameter name";
 
     // Configuration Settings to connect to the Context API server
     public static final String CONF_CONTEXT_API_URL = "context-api-url";
@@ -29,6 +22,12 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
     public static final String CONF_CONTEXT_ISS_URL = "context-iss-url";
     public static final String CONF_CONTEXT_ISS_URL_LABEL = "Issuer URL";
     public static final String CONF_CONTEXT_ISS_URL_HELPTEXT = "The Base Issuer URL";
+
+    public static final String CONF_ISS_CLIENT_GRANT_TYPE = "context-client-auth-flow";
+    public static final String CONF_ISS_CLIENT_GRANT_TYPE_LABEL = "Grant Type";
+    public static final String CONF_ISS_CLIENT_GRANT_TYPE_HELPTEXT = "The OAuth2 Client Grant Type for this client of the Context Service";
+    public static final String CONF_ISS_CLIENT_GRANT_TYPE_CLIENT_CREDENTIALS = "client_credentials";
+    public static final String CONF_ISS_CLIENT_GRANT_TYPE_SIGNED_JWT = "Service Account";
 
     public static final String CONF_ISS_CLIENT_ID = "context-client-id";
     public static final String CONF_ISS_CLIENT_ID_LABEL = "Client ID";
@@ -44,7 +43,7 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
 
     @Override
     public String getDisplayType() {
-        return "SMART on FHIR: EHR-Launch Context Resolver";
+        return "SMART on FHIR: EHR-Launch Resolver";
     }
 
     @Override
@@ -84,12 +83,42 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
         contextApiUrl.setName(CONF_CONTEXT_API_URL);
         contextApiUrl.setLabel(CONF_CONTEXT_API_URL_LABEL);
         contextApiUrl.setHelpText(CONF_CONTEXT_API_URL_HELPTEXT);
+        contextApiUrl.setDefaultValue("http://localhost:8088/context-api");
 
         ProviderConfigProperty contextIssUrl = new ProviderConfigProperty();
         contextIssUrl.setType(ProviderConfigProperty.STRING_TYPE);
         contextIssUrl.setName(CONF_CONTEXT_ISS_URL);
         contextIssUrl.setLabel(CONF_CONTEXT_ISS_URL_LABEL);
-        contextApiUrl.setHelpText(CONF_CONTEXT_ISS_URL_HELPTEXT);
+        contextIssUrl.setHelpText(CONF_CONTEXT_ISS_URL_HELPTEXT);
+        contextIssUrl.setDefaultValue("http://localhost:8080/realms/master");
+
+        ProviderConfigProperty contextClientGrantType = new ProviderConfigProperty();
+        contextClientGrantType.setType(ProviderConfigProperty.STRING_TYPE);
+        contextClientGrantType.setName(CONF_ISS_CLIENT_GRANT_TYPE);
+        contextClientGrantType.setLabel(CONF_ISS_CLIENT_GRANT_TYPE_LABEL);
+        contextClientGrantType.setHelpText(CONF_ISS_CLIENT_GRANT_TYPE_HELPTEXT);
+        contextClientGrantType.setDefaultValue(CONF_ISS_CLIENT_GRANT_TYPE_CLIENT_CREDENTIALS);
+        contextClientGrantType.setOptions(Arrays.asList(CONF_ISS_CLIENT_GRANT_TYPE_CLIENT_CREDENTIALS, CONF_ISS_CLIENT_GRANT_TYPE_SIGNED_JWT));
+
+        ProviderConfigProperty contextClientId = new ProviderConfigProperty();
+        contextClientId.setType(ProviderConfigProperty.STRING_TYPE);
+        contextClientId.setName(CONF_ISS_CLIENT_ID);
+        contextClientId.setLabel(CONF_ISS_CLIENT_ID_LABEL);
+        contextClientId.setHelpText(CONF_ISS_CLIENT_ID_HELPTEXT);
+        contextClientId.setDefaultValue("context-resolver");  
+
+        ProviderConfigProperty contextClientSecret = new ProviderConfigProperty();
+        contextClientSecret.setType(ProviderConfigProperty.PASSWORD);
+        contextClientSecret.setName(CONF_ISS_CLIENT_SECRET);
+        contextClientSecret.setLabel(CONF_ISS_CLIENT_SECRET_LABEL);
+        contextClientSecret.setHelpText(CONF_ISS_CLIENT_SECRET_HELPTEXT);
+
+        ProviderConfigProperty contextClientScope = new ProviderConfigProperty();
+        contextClientScope.setType(ProviderConfigProperty.STRING_TYPE);
+        contextClientScope.setName(CONF_ISS_CLIENT_SCOPE);
+        contextClientScope.setLabel(CONF_ISS_CLIENT_SCOPE_LABEL);
+        contextClientScope.setHelpText(CONF_ISS_CLIENT_SCOPE_HELPTEXT);
+        contextClientScope.setDefaultValue("context:read");
 
         List<ProviderConfigProperty> props = Arrays.asList(contextApiUrl, contextIssUrl);
         return props;
