@@ -18,10 +18,9 @@ FROM openjdk:23-slim
 WORKDIR /app
 
 # Copy the JAR file from the builder stage to the final image
-COPY --from=builder /app/target/deploy/keycloak-smart-on-fhir-1.0-SNAPSHOT.jar /app/output/keycloak-smart-on-fhir.jar
+COPY --from=builder /app/target/deploy/*.jar /app/output/smart-fhir-extension.jar
 
 # Expose the port your application will run on
-EXPOSE 4444
-
+#EXPOSE 4444
 # Define the command to run your application
-CMD ["java", "-version"]
+CMD ["ls", "-al", "/app/output"]
