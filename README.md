@@ -1,4 +1,4 @@
-# kc-smart-fhir-spi
+# keycloak-smart-fhir
 A custom Service Provider Interface (extension) for Keycloak that supports SMART on FHIR  EHR-Launch.
 
 - Support for mapping 'patient' context response into JWT JSON response as well as Bearer Token.
@@ -8,7 +8,7 @@ A custom Service Provider Interface (extension) for Keycloak that supports SMART
 - Support for mandatory ```aud``` audience request parameter for SMART on FHIR, with additional support for this aliased to ```audience``` or ```resource```. As per SMART on FHIR specs, this audience value must be a fully qualified base FHIR Server endpoint.
 - Configuration to set the allowable FHIR resource servers as part of the 'aud' request parameter.
 
-## Deployment
+## Packaging the Extensions
 
 ```bash
 cd keycloak-smart-on-fhir-spi
