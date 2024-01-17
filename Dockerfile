@@ -23,6 +23,5 @@ COPY --from=builder /app/target/deploy/*.jar /deploy/
 # Your host path should be mapped to /deploy
 VOLUME /deploy
 
-ENTRYPOINT [ "sh" ]
 # Define the command to run your application
 CMD ["echo", "Use docker cp to copy JAR files from /deploy to your host"]
