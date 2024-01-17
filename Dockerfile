@@ -12,8 +12,8 @@ FROM maven:3.9.4-eclipse-temurin-21-alpine AS builder
 WORKDIR /app
 
 # Copy the Maven configuration and project files
-COPY keycloak-smart-on-fhir/pom.xml .
-COPY keycloak-smart-on-fhir/src src
+COPY smart-on-fhir-spi/pom.xml .
+COPY smart-on-fhir-spi/src src
 
 # Build the application JAR
 RUN mvn -B clean package -DskipTests
@@ -31,4 +31,4 @@ COPY --from=builder /app/target/deploy/*.jar ./providers/
 EXPOSE 8080
 
 # Command to run Keycloak
-CMD ["bin/kc.sh", "-b", "0.0.0.0"]
+CMD ["start-dev", "--import-realm", "--log-level=info"]
