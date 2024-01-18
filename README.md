@@ -11,8 +11,10 @@ A custom Service Provider Interface (extension) for Keycloak that supports SMART
 
 ## Packaging the Extensions
 
+Using Maven:
+
 ```bash
-cd keycloak-smart-on-fhir-spi
+cd smart-on-fhir-spi
 mvn clean package
 cp target/*.jar $KEYCLOAK_HOME/standalone/deployments
 ```
