@@ -39,8 +39,8 @@ have reset.
 ```
 
 This script assigns the realm-management : realm-admin composite role
-to the terraform client (a service account). This is needed to 
-allow the terraform scripts that authenticate as this client to run 
+to the terraform client (a service account). This is needed to
+allow the terraform scripts that authenticate as this client to run
 properly, otherwise a 403 HTTP error would result.
 
 ## docker-compose.yml
