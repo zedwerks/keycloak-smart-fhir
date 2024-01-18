@@ -26,10 +26,6 @@ echo "Keycloak server is up and running."
 echo "Set the terraform client to have ability to amdminister the realm: $realm."
 docker exec -it $container /opt/keycloak/bin/kcadm.sh config credentials --server $server --realm master --user $username --password $password
 
-
 # Create a composite role from realm-management client
 echo "Adding realm-managment role(s) to the terraform service account."
 docker exec -it $container /opt/keycloak/bin/kcadm.sh add-roles --uusername $service_account --cclientid realm-management --rolename realm-admin -r $realm
-
-# listing roles
-#docker exec -it $container /opt/keycloak/bin/kcadm.sh get-roles -r $realm  --cclientid realm-management --available
