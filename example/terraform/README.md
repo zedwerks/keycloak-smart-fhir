@@ -54,8 +54,8 @@ sh tf-apply.sh
 
 ### Reset - scrubs Terraform State! USE WITH CAUTION
 
-    USE WITH CAUTION. Meant as a convenience when you have also reset your entire docker deployment,
-    and you want to purge terraform state.
+USE WITH CAUTION. Meant as a convenience when you have also reset your entire docker deployment,
+and you want to purge terraform state.
 
 ```bash
 sh tf-reset.sh
