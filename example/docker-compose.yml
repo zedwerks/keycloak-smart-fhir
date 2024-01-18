@@ -12,7 +12,6 @@ services:
       - start-dev 
       - --log-level=INFO
       - --import-realm
-      - --spi-theme-welcome-theme=zed
       - --features=token-exchange,authorization,admin-fine-grained-authz
     environment:
       - KEYCLOAK_ADMIN=admin
