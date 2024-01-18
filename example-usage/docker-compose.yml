@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   keycloak:
-    container_name: keycloak-smart-on-fhir-23.0.1-0
+    container_name: keycloak
     build:
       context: https://github.com/zedwerks/keycloak-smart-fhir.git#main
       dockerfile: Dockerfile
