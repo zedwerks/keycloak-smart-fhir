@@ -1,4 +1,5 @@
 # keycloak-smart-fhir
+
 A custom Service Provider Interface (extension) for Keycloak that supports SMART on FHIR  EHR-Launch.
 
 - Support for mapping 'patient' context response into JWT JSON response as well as Bearer Token.
@@ -29,9 +30,13 @@ See example-usage folder. Alternatively,
 
 Try out a client app with scope of ```launch``` and a ```launch={context_token_goes_here}``` request parameter.
 
-# Use Terraform
+## Use Terraform
 
 Use the included terraform scripts to configure FHIR scopes, and create a default auth flow
-that includes the SMART on FHIR custom flow steps. 
+that includes the SMART on FHIR custom flow steps.
 
 The auth flows have no impact if the auth request is not a SMART on FHIR request.
+
+see the folder example-usage for details.
+
+@bradhead
