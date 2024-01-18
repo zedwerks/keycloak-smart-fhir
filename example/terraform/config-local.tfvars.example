@@ -1,0 +1,14 @@
+// terraform.tfvars
+// Rename by removing the .example extension
+// and set real values
+//
+keycloak_environment = {
+    realm = "example"
+    base_url = "http://localhost:8080/"
+    client_id = "terraform"
+    client_secret = "secret goes here"
+}
+
+client_postman = {
+  enabled = true
+}
