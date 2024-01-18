@@ -20,7 +20,8 @@ WORKDIR /app
 # Copy the JAR file from the builder stage to the final image
 COPY --from=builder /app/target/deploy/*.jar /deploy/
 
-COPY --from=builder /app/src/main/resources/themes/zed /deploy/themes/zed
+# Copy the custom theme
+#COPY --from=builder /app/src/main/resources/themes/zed /deploy/themes/zed
 
 # Your host path should be mapped to /deploy
 VOLUME /deploy
