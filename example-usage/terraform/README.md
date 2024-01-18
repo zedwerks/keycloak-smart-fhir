@@ -1,6 +1,6 @@
 # Terraform Configuration
 
-This is the terraform configuration library for Keycloak that has been built with the SMART on FHIR 
+This is the terraform configuration library for Keycloak that has been built with the SMART on FHIR
 extensions. This library of configurations is required to complete the conformance of Keycloak as
 a SMART on FHIR Authorization Server.
 
