@@ -13,6 +13,7 @@ import java.util.List;
 
 public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory {
     private static final String PROVIDER_ID = "smart-ehr-launch";
+    private static final SmartEhrLaunchAuthenticator SINGLETON = new SmartEhrLaunchAuthenticator();
 
     // Configuration Settings to connect to the Context API server
     public static final String CONF_CONTEXT_API_URL = "context-api-url";
@@ -56,13 +57,15 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
         return true;
     }
 
+    private static AuthenticationExecutionModel.Requirement[] REQUIREMENT_CHOICES = {
+            AuthenticationExecutionModel.Requirement.REQUIRED,
+            AuthenticationExecutionModel.Requirement.ALTERNATIVE,
+            AuthenticationExecutionModel.Requirement.DISABLED
+    };
+
     @Override
     public AuthenticationExecutionModel.Requirement[] getRequirementChoices() {
-        return new AuthenticationExecutionModel.Requirement[] {
-                AuthenticationExecutionModel.Requirement.REQUIRED,
-                AuthenticationExecutionModel.Requirement.DISABLED,
-                AuthenticationExecutionModel.Requirement.ALTERNATIVE
-        };
+        return REQUIREMENT_CHOICES;
     }
 
     @Override
@@ -95,7 +98,8 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
         contextClientGrantType.setName(CONF_ISS_CLIENT_GRANT_TYPE);
         contextClientGrantType.setLabel(CONF_ISS_CLIENT_GRANT_TYPE_LABEL);
         contextClientGrantType.setHelpText(CONF_ISS_CLIENT_GRANT_TYPE_HELPTEXT);
-        contextClientGrantType.setOptions(Arrays.asList(CONF_ISS_CLIENT_GRANT_TYPE_CLIENT_CREDENTIALS, CONF_ISS_CLIENT_GRANT_TYPE_SIGNED_JWT));
+        contextClientGrantType.setOptions(
+                Arrays.asList(CONF_ISS_CLIENT_GRANT_TYPE_CLIENT_CREDENTIALS, CONF_ISS_CLIENT_GRANT_TYPE_SIGNED_JWT));
 
         ProviderConfigProperty contextClientId = new ProviderConfigProperty();
         contextClientId.setType(ProviderConfigProperty.STRING_TYPE);
@@ -116,7 +120,7 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
         contextClientScope.setHelpText(CONF_ISS_CLIENT_SCOPE_HELPTEXT);
 
         List<ProviderConfigProperty> props = Arrays.asList(contextApiUrl, contextIssUrl,
-            contextClientGrantType, contextClientId, contextClientSecret, contextClientScope);
+                contextClientGrantType, contextClientId, contextClientSecret, contextClientScope);
         return props;
     }
 
@@ -127,7 +131,7 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        return new SmartEhrLaunchAuthenticator(session);
+        return SINGLETON;
     }
 
     @Override

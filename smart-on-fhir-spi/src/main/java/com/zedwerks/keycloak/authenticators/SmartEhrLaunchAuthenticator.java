@@ -28,6 +28,11 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
     public static final Logger logger = Logger.getLogger(SmartEhrLaunchAuthenticator.class);
 
     public SmartEhrLaunchAuthenticator(KeycloakSession session) {
+        logger.info("SmartEhrLaunchAuthenticator(session) **** SMART on FHIR EHR-Launch Authenticator ****");
+        // NOOP
+    }
+
+    public SmartEhrLaunchAuthenticator() {
         logger.info("SmartEhrLaunchAuthenticator() **** SMART on FHIR EHR-Launch Authenticator ****");
         // NOOP
     }
@@ -103,30 +108,37 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
 
     @Override
     public boolean requiresUser() {
+        logger.info("requiresUser() **** SMART on FHIR EHR-Launch Authenticator ****");
         return false;
     }
 
     @Override
     public boolean configuredFor(KeycloakSession session, RealmModel realm, UserModel user) {
+        logger.info("configuredFor() **** SMART on FHIR EHR-Launch Authenticator ****");
         return true;
     }
 
     @Override
     public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
+        logger.info("setRequiredActions() **** SMART on FHIR EHR-Launch Authenticator ****");
         // NOOP
     }
 
     @Override
     public void action(AuthenticationFlowContext context) {
+        logger.info("action() **** SMART on FHIR EHR-Launch Authenticator ****");
         // NOOP
     }
 
     @Override
     public void close() {
+        logger.info("close() **** SMART on FHIR EHR-Launch Authenticator ****");
         // NOOP
     }
 
     void setPatientResource(AuthenticationFlowContext context, String patientResourceId) {
+
+        logger.info("setPatientResource() **** SMART on FHIR EHR-Launch Authenticator ****");
         // We would get the launch parameter
         if (patientResourceId == null || patientResourceId.trim().isEmpty()) {
             logger.warn("Could not convert launch parameter to patient resource id");
