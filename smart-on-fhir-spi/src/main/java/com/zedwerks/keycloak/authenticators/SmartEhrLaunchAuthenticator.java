@@ -48,11 +48,13 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
         String requestedScopesString = authSession.getClientNote(OIDCLoginProtocol.SCOPE_PARAM);
         Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(requestedScopesString, client);
 
+        logger.info("Requested scope: " + requestedScopesString);
+        logger.info(clientScopes.toString());
         logger.info("Checking for launch scopes...");
 
         boolean isEHRLaunch = clientScopes.anyMatch(s -> SMART_SCOPE_EHR_LAUNCH.equals(s.getName()));
-        boolean isPatientLaunch = clientScopes.anyMatch(s -> SMART_SCOPE_LAUNCH_PATIENT.equals(s.getName()));
-        boolean isStandaloneLaunch = clientScopes.anyMatch(s -> s.getName().startsWith(SMART_SCOPE_LAUNCH_ANY_PREFIX));
+        boolean isPatientLaunch = false; // clientScopes.anyMatch(s -> SMART_SCOPE_LAUNCH_PATIENT.equals(s.getName()));
+        boolean isStandaloneLaunch = false; //clientScopes.anyMatch(s -> s.getName().startsWith(SMART_SCOPE_LAUNCH_ANY_PREFIX));
 
         logger.info("Checked for launch scopes");
 

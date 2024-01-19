@@ -13,7 +13,7 @@ resource "keycloak_authentication_execution" "execution_1" {
 
 resource "keycloak_authentication_subflow" "subflow" {
   realm_id          = data.keycloak_realm.realm.id
-  alias             = "smart-user-forms"
+  alias             = "user-login-form"
   description       = "Username, password, otp and other auth forms."
   parent_flow_alias = keycloak_authentication_flow.smart_flow.alias
   provider_id       = "basic-flow"
@@ -42,7 +42,7 @@ resource "keycloak_authentication_subflow" "smart_subflow" {
   parent_flow_alias = keycloak_authentication_flow.smart_flow.alias
   provider_id       = "basic-flow"
   requirement       = "ALTERNATIVE"
-  depends_on        = [keycloak_authentication_execution.execution_3]
+  depends_on        = [keycloak_authentication_subflow.subflow]
 }
 
 resource "keycloak_authentication_execution" "execution_4" {
