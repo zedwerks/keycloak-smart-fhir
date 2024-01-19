@@ -35,15 +35,25 @@ resource "keycloak_authentication_execution" "execution_3" {
   requirement       = "ALTERNATIVE"
 }
 
-resource "keycloak_authentication_execution" "execution_4" {
-  realm_id          = keycloak_authentication_flow.smart_flow.realm_id
+resource "keycloak_authentication_subflow" "smart_subflow" {
+  realm_id          = data.keycloak_realm.realm.id
+  alias             = "smart-launch-subflow"
+  description       = "SMART Launch Flow"
   parent_flow_alias = keycloak_authentication_flow.smart_flow.alias
+  provider_id       = "basic-flow"
+  requirement       = "ALTERNATIVE"
+  depends_on = [ keycloak_authentication_execution.execution_3 ]
+}
+
+resource "keycloak_authentication_execution" "execution_4" {
+  realm_id          = keycloak_authentication_flow.smart_subflow.realm_id
+  parent_flow_alias = keycloak_authentication_flow.smart_subflow.alias
   authenticator     = "smart-audience-validator"
   requirement       = "DISABLED"
   depends_on = [ keycloak_authentication_execution.execution_3 ]
 }
 resource "keycloak_authentication_execution_config" "execution_4_config" {
-  realm_id     = keycloak_authentication_flow.smart_flow.realm_id
+  realm_id     = keycloak_authentication_flow.smart_subflow.realm_id
   execution_id = keycloak_authentication_execution.execution_4.id
   alias        = "smart-audience-validator-config"
   config = {
@@ -53,10 +63,10 @@ resource "keycloak_authentication_execution_config" "execution_4_config" {
 
 // This is the custom authenticator that is in the jar file created.
 resource "keycloak_authentication_execution" "execution_5" {
-  realm_id          = keycloak_authentication_flow.smart_flow.realm_id
-  parent_flow_alias = keycloak_authentication_flow.smart_flow.alias
+  realm_id          = keycloak_authentication_flow.smart_subflow.realm_id
+  parent_flow_alias = keycloak_authentication_flow.smart_subflow.alias
   authenticator     = "smart-ehr-launch"
-  requirement       = "ALTERNATIVE"
+  requirement       = "REQUIRED"
   depends_on = [ keycloak_authentication_execution.execution_4 ]
 }
 
@@ -74,6 +84,7 @@ resource "keycloak_authentication_execution_config" "execution_5_config" {
   }
 }
 
+// BIND THIS FLOW TO THE REALM-LEVEL BROWSER FLOW
 /*
 resource "keycloak_authentication_bindings" "browser_authentication_binding" {
   realm_id     = keycloak_authentication_flow.smart_flow.realm_id
