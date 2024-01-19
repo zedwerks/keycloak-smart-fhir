@@ -28,13 +28,14 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
     public static final Logger logger = Logger.getLogger(SmartEhrLaunchAuthenticator.class);
 
     public SmartEhrLaunchAuthenticator(KeycloakSession session) {
+        logger.info("SmartEhrLaunchAuthenticator() **** SMART on FHIR EHR-Launch Authenticator ****");
         // NOOP
     }
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
 
-        logger.info("SMART on FHIR EHR-Launch Authenticator");
+        logger.info("authenticate() **** SMART on FHIR EHR-Launch Authenticator ****");
 
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         ClientModel client = authSession.getClient();
@@ -46,8 +47,10 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
         boolean isPatientLaunch = clientScopes.anyMatch(s -> SMART_SCOPE_LAUNCH_PATIENT.equals(s.getName()));
         boolean isStandaloneLaunch = clientScopes.anyMatch(s -> s.getName().startsWith(SMART_SCOPE_LAUNCH_ANY_PREFIX));
 
+        logger.info("Checked for launch scopes");
+
         if (!isEHRLaunch && !isPatientLaunch && !isStandaloneLaunch) {
-            logger.info("Not a SMART on FHIR launch request");
+            logger.warn("Not a SMART on FHIR launch request");
             context.attempted();
             return;
         }
@@ -75,6 +78,7 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
             String patientResourceId = resolveLaunchParameter(launchParam);
             setPatientResource(context, patientResourceId);
             context.success();
+            return;
         } else if (isPatientLaunch) {
             // then check for the 'patient' request parameter
 

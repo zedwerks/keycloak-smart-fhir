@@ -10,3 +10,11 @@ docker-compose build && docker-compose up -d
 # okay, so now let's get terraform with realm-managmeent roles to 
 # be able to administer the realm.
 sh ./realm-admin.sh
+
+# now let's run the terraform script to create the realm
+cd terraform
+echo 'Running terraform...'
+sh ./tf-reset.sh
+sh ./tf-apply.sh
+cd ..
+echo "Done."

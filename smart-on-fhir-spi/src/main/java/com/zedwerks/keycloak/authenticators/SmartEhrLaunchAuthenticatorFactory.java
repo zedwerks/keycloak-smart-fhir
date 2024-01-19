@@ -23,7 +23,7 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
     public static final String CONF_CONTEXT_ISS_URL_LABEL = "Issuer URL";
     public static final String CONF_CONTEXT_ISS_URL_HELPTEXT = "The Base Issuer URL";
 
-    public static final String CONF_ISS_CLIENT_GRANT_TYPE = "context-client-auth-flow";
+    public static final String CONF_ISS_CLIENT_GRANT_TYPE = "context-client-grant-type";
     public static final String CONF_ISS_CLIENT_GRANT_TYPE_LABEL = "Grant Type";
     public static final String CONF_ISS_CLIENT_GRANT_TYPE_HELPTEXT = "The OAuth2 Client Grant Type for this client of the Context Service";
     public static final String CONF_ISS_CLIENT_GRANT_TYPE_CLIENT_CREDENTIALS = "client_credentials";
@@ -83,14 +83,12 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
         contextApiUrl.setName(CONF_CONTEXT_API_URL);
         contextApiUrl.setLabel(CONF_CONTEXT_API_URL_LABEL);
         contextApiUrl.setHelpText(CONF_CONTEXT_API_URL_HELPTEXT);
-        contextApiUrl.setDefaultValue("http://localhost:8088/context-api");
 
         ProviderConfigProperty contextIssUrl = new ProviderConfigProperty();
         contextIssUrl.setType(ProviderConfigProperty.STRING_TYPE);
         contextIssUrl.setName(CONF_CONTEXT_ISS_URL);
         contextIssUrl.setLabel(CONF_CONTEXT_ISS_URL_LABEL);
         contextIssUrl.setHelpText(CONF_CONTEXT_ISS_URL_HELPTEXT);
-        contextIssUrl.setDefaultValue("http://localhost:8080/realms/master");
 
         ProviderConfigProperty contextClientGrantType = new ProviderConfigProperty();
         contextClientGrantType.setType(ProviderConfigProperty.LIST_TYPE);
@@ -104,7 +102,6 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
         contextClientId.setName(CONF_ISS_CLIENT_ID);
         contextClientId.setLabel(CONF_ISS_CLIENT_ID_LABEL);
         contextClientId.setHelpText(CONF_ISS_CLIENT_ID_HELPTEXT);
-        contextClientId.setDefaultValue("context-resolver");  
 
         ProviderConfigProperty contextClientSecret = new ProviderConfigProperty();
         contextClientSecret.setType(ProviderConfigProperty.PASSWORD);
@@ -117,7 +114,6 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
         contextClientScope.setName(CONF_ISS_CLIENT_SCOPE);
         contextClientScope.setLabel(CONF_ISS_CLIENT_SCOPE_LABEL);
         contextClientScope.setHelpText(CONF_ISS_CLIENT_SCOPE_HELPTEXT);
-        contextClientScope.setDefaultValue("context:read");
 
         List<ProviderConfigProperty> props = Arrays.asList(contextApiUrl, contextIssUrl,
             contextClientGrantType, contextClientId, contextClientSecret, contextClientScope);

@@ -1,4 +1,4 @@
 #!/bin/sh
 terraform workspace select default
-terraform apply -var-file config-local.tfvars
+terraform apply -auto-approve -var-file config-local.tfvars
 

@@ -36,4 +36,4 @@ EXPOSE 8787
 
 # Command to run Keycloak
 #CMD ["start-dev", "--import-realm", "--log-level=info", "--spi-theme-welcome-theme=zed"]
-CMD ["start-dev", "--import-realm", "--log-level=info"]
+CMD ["start-dev", "--import-realm"]
