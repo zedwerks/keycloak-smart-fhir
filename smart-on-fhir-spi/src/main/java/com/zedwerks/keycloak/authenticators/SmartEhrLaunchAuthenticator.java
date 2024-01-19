@@ -43,6 +43,8 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
         String requestedScopesString = authSession.getClientNote(OIDCLoginProtocol.SCOPE_PARAM);
         Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(requestedScopesString, client);
 
+        logger.info("Checking for launch scopes...");
+
         boolean isEHRLaunch = clientScopes.anyMatch(s -> SMART_SCOPE_EHR_LAUNCH.equals(s.getName()));
         boolean isPatientLaunch = clientScopes.anyMatch(s -> SMART_SCOPE_LAUNCH_PATIENT.equals(s.getName()));
         boolean isStandaloneLaunch = clientScopes.anyMatch(s -> s.getName().startsWith(SMART_SCOPE_LAUNCH_ANY_PREFIX));
@@ -50,7 +52,7 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
         logger.info("Checked for launch scopes");
 
         if (!isEHRLaunch && !isPatientLaunch && !isStandaloneLaunch) {
-            logger.warn("Not a SMART on FHIR launch request");
+            logger.info("Not a SMART on FHIR launch request");
             context.attempted();
             return;
         }
@@ -77,6 +79,7 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
             // and set 'patient' alongside the bearer token and in the token response.
             String patientResourceId = resolveLaunchParameter(launchParam);
             setPatientResource(context, patientResourceId);
+            logger.info("SMART on FHIR 'launch' scope found, and 'launch' parameter found. Resolved patient resource id: " + patientResourceId);
             context.success();
             return;
         } else if (isPatientLaunch) {
