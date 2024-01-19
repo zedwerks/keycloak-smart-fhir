@@ -48,7 +48,7 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
         String requestedScopesString = authSession.getClientNote(OIDCLoginProtocol.SCOPE_PARAM);
         Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(requestedScopesString, client);
 
-        logger.info("Requested scope: " + requestedScopesString);
+        logger.info(requestedScopesString);
         logger.info(clientScopes.toString());
         logger.info("Checking for launch scopes...");
 
