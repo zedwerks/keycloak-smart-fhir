@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory {
     private static final String PROVIDER_ID = "smart-ehr-launch";
-    //private static final SmartEhrLaunchAuthenticator SINGLETON = new SmartEhrLaunchAuthenticator();
+    private static final SmartEhrLaunchAuthenticator SINGLETON = new SmartEhrLaunchAuthenticator();
 
     // Configuration Settings to connect to the Context API server
     public static final String CONF_CONTEXT_API_URL = "context-api-url";
@@ -131,7 +131,8 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        return new SmartEhrLaunchAuthenticator(session);
+        // return new SmartEhrLaunchAuthenticator(session);
+        return SINGLETON;
     }
 
     @Override
