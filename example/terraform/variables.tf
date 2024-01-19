@@ -1,17 +1,23 @@
 variable "keycloak_environment" {
   type = object({
-    realm              = optional(string, "example")
-    base_url           = optional(string, "http://localhost:8080")
-    client_id          = optional(string, "terraform")
-    client_secret      = string
+    realm         = optional(string, "example")
+    base_url      = optional(string, "http://localhost:8080")
+    client_id     = optional(string, "terraform")
+    client_secret = string
   })
   description = "Keycloak configuration environment"
 }
 
-variable "audiences" {
-  type = list(string)
-  description = "List of audiences (FHIR Server URLs)"
-  default = ["http://localhost:9000"]
+variable "keycloak_smart_configuration" {
+  type = object({
+    audiences = optional(list(string), ["http://localhost:9000"])
+    context_read_scope = optional(string, "context:read")
+    context_client_id = optional(string, "context_client")
+    context_client_secret = optional(string, "context_secret")
+    context_url = optional(string, "http://localhost:9000")
+    context_iss = optional(string, "http://localhost:8080")
+  })
+  description = "SMART on FHIR Configurations"
 }
 
 variable "client_postman" {
@@ -25,7 +31,7 @@ variable "client_postman" {
 }
 
 variable "test_user_password" {
-  type = string
+  type    = string
   default = "password"
 }
 

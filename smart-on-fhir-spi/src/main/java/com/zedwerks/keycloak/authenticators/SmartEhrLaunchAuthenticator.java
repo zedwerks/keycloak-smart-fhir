@@ -34,6 +34,8 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
     @Override
     public void authenticate(AuthenticationFlowContext context) {
 
+        logger.info("SMART on FHIR EHR-Launch Authenticator");
+
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         ClientModel client = authSession.getClient();
 
@@ -45,7 +47,7 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
         boolean isStandaloneLaunch = clientScopes.anyMatch(s -> s.getName().startsWith(SMART_SCOPE_LAUNCH_ANY_PREFIX));
 
         if (!isEHRLaunch && !isPatientLaunch && !isStandaloneLaunch) {
-            logger.debug("Not a SMART on FHIR launch request");
+            logger.info("Not a SMART on FHIR launch request");
             context.attempted();
             return;
         }

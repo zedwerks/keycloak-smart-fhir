@@ -10,7 +10,7 @@ services:
       - 8787:8787
     command:
       - start-dev 
-      - --log-level=INFO
+      - --log-level=DEBUG
       - --import-realm
       - --features=token-exchange,authorization,admin-fine-grained-authz
     environment:
