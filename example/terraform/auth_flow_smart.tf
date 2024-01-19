@@ -5,7 +5,7 @@ resource "keycloak_authentication_flow" "smart_flow" {
 }
 
 resource "keycloak_authentication_execution" "execution_1" {
-  realm_id          = keycloak_authentication_flow.smart_flow.realm_id
+  realm_id          = data.keycloak_realm.realm.id
   parent_flow_alias = keycloak_authentication_flow.smart_flow.alias
   authenticator     = "auth-cookie"
   requirement       = "ALTERNATIVE"
@@ -18,18 +18,18 @@ resource "keycloak_authentication_subflow" "subflow" {
   parent_flow_alias = keycloak_authentication_flow.smart_flow.alias
   provider_id       = "basic-flow"
   requirement       = "ALTERNATIVE"
-  depends_on = [ keycloak_authentication_execution.execution_1 ]
+  depends_on        = [keycloak_authentication_execution.execution_1]
 }
 
 resource "keycloak_authentication_execution" "execution_2" {
-  realm_id          = keycloak_authentication_subflow.subflow.realm_id
+  realm_id          = data.keycloak_realm.realm.id
   parent_flow_alias = keycloak_authentication_subflow.subflow.alias
   authenticator     = "auth-username-password-form"
   requirement       = "REQUIRED"
 }
 
 resource "keycloak_authentication_execution" "execution_3" {
-  realm_id          = keycloak_authentication_flow.smart_flow.realm_id
+  realm_id          = data.keycloak_realm.realm.id
   parent_flow_alias = keycloak_authentication_flow.smart_flow.alias
   authenticator     = "identity-provider-redirector"
   requirement       = "ALTERNATIVE"
@@ -42,18 +42,18 @@ resource "keycloak_authentication_subflow" "smart_subflow" {
   parent_flow_alias = keycloak_authentication_flow.smart_flow.alias
   provider_id       = "basic-flow"
   requirement       = "ALTERNATIVE"
-  depends_on = [ keycloak_authentication_execution.execution_3 ]
+  depends_on        = [keycloak_authentication_execution.execution_3]
 }
 
 resource "keycloak_authentication_execution" "execution_4" {
-  realm_id          = keycloak_authentication_flow.smart_subflow.realm_id
-  parent_flow_alias = keycloak_authentication_flow.smart_subflow.alias
+  realm_id          = data.keycloak_realm.realm.id
+  parent_flow_alias = keycloak_authentication_subflow.smart_subflow.alias
   authenticator     = "smart-audience-validator"
   requirement       = "DISABLED"
-  depends_on = [ keycloak_authentication_execution.execution_3 ]
+  depends_on        = [keycloak_authentication_execution.execution_3]
 }
 resource "keycloak_authentication_execution_config" "execution_4_config" {
-  realm_id     = keycloak_authentication_flow.smart_subflow.realm_id
+  realm_id     = data.keycloak_realm.realm.id
   execution_id = keycloak_authentication_execution.execution_4.id
   alias        = "smart-audience-validator-config"
   config = {
@@ -63,17 +63,17 @@ resource "keycloak_authentication_execution_config" "execution_4_config" {
 
 // This is the custom authenticator that is in the jar file created.
 resource "keycloak_authentication_execution" "execution_5" {
-  realm_id          = keycloak_authentication_flow.smart_subflow.realm_id
-  parent_flow_alias = keycloak_authentication_flow.smart_subflow.alias
+  realm_id          = data.keycloak_realm.realm.id
+  parent_flow_alias = keycloak_authentication_subflow.smart_subflow.alias
   authenticator     = "smart-ehr-launch"
   requirement       = "REQUIRED"
-  depends_on = [ keycloak_authentication_execution.execution_4 ]
+  depends_on        = [keycloak_authentication_execution.execution_4]
 }
 
 // Example of how to configure the custom authenticator for SMART EHR-Launch
 // resolving of context via call to context API.
 resource "keycloak_authentication_execution_config" "execution_5_config" {
-  realm_id     = keycloak_authentication_flow.smart_flow.realm_id
+  realm_id     = data.keycloak_realm.realm.id
   execution_id = keycloak_authentication_execution.execution_5.id
   alias        = "smart-ehr-launch-config"
   config = {
