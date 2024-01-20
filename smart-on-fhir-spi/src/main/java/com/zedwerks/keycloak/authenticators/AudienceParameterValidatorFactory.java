@@ -10,7 +10,6 @@ import org.keycloak.provider.ProviderConfigProperty;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Factory for creating AudienceValidator instances.
@@ -20,8 +19,8 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
     private static final String PROVIDER_ID = "smart-audience-validator";
 
     static final String AUDIENCES_PROP_NAME = "smart-audiences";
-    private static final String AUDIENCES_PROP_LABEL = "Allowed SMART on FHIR Server URL(s) as intended audience (of the bearer token)";
-    private static final String AUDIENCES_PROP_DESCRIPTION = "Valid audience values for clients to request using 'aud', 'audience' or 'resource' request parameters. These must be FHIR Server URL(s)";
+    private static final String AUDIENCES_PROP_LABEL = "Accepted FHIR Server URLs";
+    private static final String AUDIENCES_PROP_DESCRIPTION = "Comma-separated audience values for clients to request using 'aud', 'audience' or 'resource' request parameters. These must be FHIR Server URL(s)";
 
     @Override
     public String getDisplayType() {
@@ -56,7 +55,7 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
     @Override
     public String getHelpText() {
         return "Verifies that the audience requested by the client (via the 'aud', 'audience', or 'resource' parameter) "
-                + "matches one of the configured audience values.";
+                + "matches one of the configured, comma-delineated FHIR URLs.";
     }
 
     @Override
@@ -67,7 +66,6 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
         audiences.setName(AUDIENCES_PROP_NAME);
         audiences.setLabel(AUDIENCES_PROP_LABEL);
         audiences.setHelpText(AUDIENCES_PROP_DESCRIPTION);
-        audiences.setDefaultValue(new ArrayList<String>());
         audiences.setRequired(isConfigurable());
 
         return Collections.singletonList(audiences);
