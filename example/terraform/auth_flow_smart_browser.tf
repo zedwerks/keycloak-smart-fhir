@@ -25,7 +25,7 @@ resource "keycloak_authentication_execution_config" "execution_1_config" {
   execution_id = keycloak_authentication_execution.execution_1.id
   alias        = "smart-audience-validator-config"
   config = {
-    audiences = "http://localhost:9000"
+    audiences = var.keycloak_smart_configuration.audiences
   }
 }
 
@@ -46,11 +46,11 @@ resource "keycloak_authentication_execution_config" "execution_2_config" {
   alias        = "smart-ehr-launch-config"
   config = {
     context-api-url       = var.keycloak_smart_configuration.context_url
-    context-token-url     = var.keycloak_smart_configuration.context_iss
+    context-token-url     = var.keycloak_smart_configuration.context_token_url
     context-client-id     = var.keycloak_smart_configuration.context_client_id
     context-client-secret = var.keycloak_smart_configuration.context_client_secret
     context-client-scopes = "context:read"
-    standalone-scopes     = "launch/patient"
+    standalone-scopes     = var.keycloak_smart_configuration.standalone_scopes
   }
 }
 

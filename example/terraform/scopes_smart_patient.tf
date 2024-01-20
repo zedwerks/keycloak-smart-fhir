@@ -3198,7 +3198,3 @@ resource "keycloak_openid_client_scope" "patient_vision_prescription_full_scope"
   include_in_token_scope = true
 }
 // --------------------------------------------------------------------------------
-
-
-
-

@@ -43,5 +43,11 @@ resource "keycloak_generic_protocol_mapper" "launch_patient_context_protocol_map
     "userinfo.token.claim" = "false"
   }
 }
-
-
+#------------------------------------------------------------
+resource "keycloak_openid_client_scope" "launch_encounter_context_scope" {
+  realm_id               = data.keycloak_realm.realm.id
+  name                   = "launch/encounter"
+  description            = "When launching outside the EHR, ask for an encounter to be selected at launch time."
+  include_in_token_scope = true
+}
+#------------------------------------------------------------
