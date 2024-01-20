@@ -25,7 +25,7 @@ resource "keycloak_authentication_execution_config" "execution_1_config" {
   execution_id = keycloak_authentication_execution.execution_1.id
   alias        = "smart-audience-validator-config"
   config = {
-    audiences = var.keycloak_smart_configuration.audiences
+    smart-audiences = var.keycloak_smart_configuration.audiences
   }
 }
 
