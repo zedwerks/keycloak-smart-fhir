@@ -14,7 +14,7 @@ sh ./realm-admin.sh
 # now let's run the terraform script to create the realm
 cd terraform
 echo 'Running terraform...'
-sh ./tf-reset.sh
-sh ./tf-apply.sh
+sh ./reset.sh
+sh ./apply.sh
 cd ..
 echo "Done."
