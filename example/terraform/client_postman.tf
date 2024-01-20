@@ -11,6 +11,9 @@ resource "keycloak_openid_client" "client_postman" {
   service_accounts_enabled     = false
   valid_redirect_uris          = var.client_postman.valid_redirects
   full_scope_allowed           = false
+  authentication_flow_binding_overrides {
+    browser_id = keycloak_authentication_flow.smart_flow.id
+  }
 }
 
 resource "keycloak_openid_client_default_scopes" "client_postman_default_scopes" {
@@ -66,4 +69,13 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "postman_acr_user_s
   claim_name       = "acr"
   claim_value_type = "String"
   session_note     = "acr"
+}
+
+resource "keycloak_openid_user_session_note_protocol_mapper" "postman_patient_id_user_session_note_mapper" {
+  realm_id         = keycloak_openid_client.client_postman.realm_id
+  client_id        = keycloak_openid_client.client_postman.id
+  name             = "user-session-patient-context-mapper"
+  claim_name       = "patient"
+  claim_value_type = "String"
+  session_note     = "patient_id"
 }

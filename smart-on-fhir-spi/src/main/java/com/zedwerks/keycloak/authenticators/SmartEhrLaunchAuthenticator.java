@@ -1,6 +1,7 @@
 package com.zedwerks.keycloak.authenticators;
 
 import java.util.stream.Stream;
+import java.util.ArrayList;
 
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -48,64 +49,90 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
         String requestedScopesString = authSession.getClientNote(OIDCLoginProtocol.SCOPE_PARAM);
         Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(requestedScopesString, client);
 
-        logger.info(requestedScopesString);
-        logger.info(clientScopes.toString());
-        logger.info("Checking for launch scopes...");
+        logger.info("Requested Scopes: " + requestedScopesString);
 
-        boolean isEHRLaunch = clientScopes.anyMatch(s -> SMART_SCOPE_EHR_LAUNCH.equals(s.getName()));
-        boolean isPatientLaunch = false; // clientScopes.anyMatch(s -> SMART_SCOPE_LAUNCH_PATIENT.equals(s.getName()));
-        boolean isStandaloneLaunch = false; //clientScopes.anyMatch(s -> s.getName().startsWith(SMART_SCOPE_LAUNCH_ANY_PREFIX));
-
-        logger.info("Checked for launch scopes");
-
-        if (!isEHRLaunch && !isPatientLaunch && !isStandaloneLaunch) {
-            logger.info("Not a SMART on FHIR launch request");
-            context.attempted();
+        if (clientScopes == null) {
+            logger.info("No scopes found");
+            context.attempted();  // just carry on... not a SMART on FHIR launch request
             return;
         }
+
+        ArrayList<String> scopes = new ArrayList<String>();
+        clientScopes.map(ClientScopeModel::getName).forEach(s -> scopes.add(s));  // Can only operate on a stream once
+     
+        boolean isPatientLaunch = scopes.contains(SMART_SCOPE_LAUNCH_PATIENT);
+        boolean isEHRLaunch = scopes.contains(SMART_SCOPE_EHR_LAUNCH);
+        boolean isStandaloneLaunch = isPatientLaunch && !isEHRLaunch;
+
+        if (!isEHRLaunch && !isStandaloneLaunch) {
+            logger.info("Not a SMART on FHIR launch request");
+            context.attempted();  // just carry on... not a SMART on FHIR launch request
+            return;
+        }
+
+        String uriStr = context.getUriInfo().getRequestUri().toString();
+        logger.info("SMART on FHIR request URI: " + uriStr);
 
         String launchParam = context.getUriInfo().getQueryParameters().getFirst(LAUNCH_REQUEST_PARAM);
 
         if (!isEHRLaunch && launchParam != null && !launchParam.trim().isEmpty()) {
-            logger.warn("SMART on FHIR request missing 'launch' scope but found 'launch' parameter");
-            context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION,
-                Response.status(400, "Found 'launch' parameter but missing 'launch' scope").build());
+            String msg = "SMART on FHIR request is missing 'launch' scope but found 'launch' request parameter";
+            logger.warn(msg);
+            context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
+                    Response.status(302)
+                        .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                "?error=invalid_request" +
+                                "&error_description=" + msg)
+                        .build());
             return;
         }
-        if (isEHRLaunch) {
+        if (isEHRLaunch && (launchParam == null || launchParam.trim().isEmpty())) {
+            // launch scope found, but no launch parameter
+            String msg = "Found 'launch' scope but missing 'launch' parameter";
+            logger.warn(msg);
+            context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
+                    Response.status(302)
+                        .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                "?error=invalid_request" +
+                                "&error_description=" + msg)
+                        .build());
+            return;
+        }
+        if (isPatientLaunch) {
             // then check for the 'launch' request parameter
 
             if (launchParam == null || launchParam.trim().isEmpty()) {
-                logger.warn("SMART on FHIR 'launch' scope found, but missing 'launch' parameter");
-                context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION,
-                    Response.status(400, "Found 'launch' scope but missing 'launch' parameter").build());
+                String msg = "SMART on FHIR standalone launch scope found. This is not yet supported.";
+                logger.warn(msg);
+                context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
+                        Response.status(302)
+                            .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                    "?error=invalid_request" +
+                                    "&error_description=" + msg)
+                            .build());
                 return;
             }
-            // @todo: resolved the launch parameter with the Context API and set the
-            // patient_id in the session
-            // and set 'patient' alongside the bearer token and in the token response.
+        }
+        if (isStandaloneLaunch) {
+            String msg = "SMART on FHIR standalone launch found. This is not yet supported.";
+            logger.warn(msg);
+            context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
+                    Response.status(302)
+                        .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                "?error=invalid_request" +
+                                "&error_description=" + msg)
+                        .build());
+            return;
+        }
+
+        if (isEHRLaunch && launchParam != null && !launchParam.trim().isEmpty()) {
+            // Resolve the launch parameter to the patient resource id
             String patientResourceId = resolveLaunchParameter(launchParam);
             setPatientResource(context, patientResourceId);
             logger.info("SMART on FHIR 'launch' scope found, and 'launch' parameter found. Resolved patient resource id: " + patientResourceId);
-            context.success();
-            return;
-        } else if (isPatientLaunch) {
-            // then check for the 'patient' request parameter
-
-            logger.warn("SMART on FHIR standalone 'launch/patient' scope found. This is not yet supported.");
-            context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION,
-                Response.status(400, "SMART on FHIR standalone 'launch/patient' scope found, this is not yet supported").build());
-            return;
-        } else if (isStandaloneLaunch) {
-            // then check for the 'launch' request parameter
-
-            if (launchParam == null || launchParam.trim().isEmpty()) {
-                logger.warn("SMART on FHIR standalone launch scope found. This is not yet supported.");
-                context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION,
-                    Response.status(400, "SMART on FHIR standalone launch scope found. This is not yet supported.").build());
-                return;
-            }
+            //context.attempted();
         }
+        context.attempted(); // @todo try setting this to success() and see what happens
     }
 
     @Override
