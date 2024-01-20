@@ -15,19 +15,21 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
     private static final String PROVIDER_ID = "smart-ehr-launch";
     private static final SmartEhrLaunchAuthenticator SINGLETON = new SmartEhrLaunchAuthenticator();
 
+
+
     // The allowed scopes for a standalone SMART on FHIR launch request
     public static final String CONF_STANDALONE_SCOPES = "standalone-scopes";
     public static final String CONF_STANDALONE_SCOPES_LABEL = "Standalone Scopes";
-    public static final String CONF_STANDALONE_SCOPES_HELPTEXT = "The SMART on FHIR scopes that are allowed for a standalone launch request";
+    public static final String CONF_STANDALONE_SCOPES_HELPTEXT = "The SMART on FHIR scopes (space delineated) that are allowed for a standalone launch request. Empty means standalone is not supported.";
     
     // Configuration Settings to connect to the Context API server
     public static final String CONF_CONTEXT_API_URL = "context-api-url";
     public static final String CONF_CONTEXT_API_URL_LABEL = "Context API URL";
     public static final String CONF_CONTEXT_API_URL_HELPTEXT = "The URL of the Context API server";
 
-    public static final String CONF_CONTEXT_ISS_URL = "context-iss-url";
-    public static final String CONF_CONTEXT_ISS_URL_LABEL = "Issuer URL";
-    public static final String CONF_CONTEXT_ISS_URL_HELPTEXT = "The Base Issuer URL";
+    public static final String CONF_CONTEXT_TOKEN_URL = "context-token-url";
+    public static final String CONF_CONTEXT_TOKEN_URL_LABEL = "Context Token URL";
+    public static final String CONF_CONTEXT_TOKEN_URL_HELPTEXT = "The Token Endpoint URL";
 
     public static final String CONF_ISS_CLIENT_GRANT_TYPE = "context-client-grant-type";
     public static final String CONF_ISS_CLIENT_GRANT_TYPE_LABEL = "Grant Type";
@@ -36,16 +38,16 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
     public static final String CONF_ISS_CLIENT_GRANT_TYPE_SIGNED_JWT = "Signed JWT";
 
     public static final String CONF_ISS_CLIENT_ID = "context-client-id";
-    public static final String CONF_ISS_CLIENT_ID_LABEL = "Client ID";
+    public static final String CONF_ISS_CLIENT_ID_LABEL = "Context Client ID";
     public static final String CONF_ISS_CLIENT_ID_HELPTEXT = "The Client ID for this client of the Context Service";
 
     public static final String CONF_ISS_CLIENT_SECRET = "context-client-secret";
-    public static final String CONF_ISS_CLIENT_SECRET_LABEL = "Client Secret";
+    public static final String CONF_ISS_CLIENT_SECRET_LABEL = "Context Client Secret";
     public static final String CONF_ISS_CLIENT_SECRET_HELPTEXT = "THE Context Service Client Secret";
 
-    public static final String CONF_ISS_CLIENT_SCOPE = "context-client-scope";
-    public static final String CONF_ISS_CLIENT_SCOPE_LABEL = "Scopes";
-    public static final String CONF_ISS_CLIENT_SCOPE_HELPTEXT = "Context Service OAuth2 Client Scope(s) space-delimited";
+    public static final String CONF_ISS_CLIENT_SCOPE = "context-client-scopes";
+    public static final String CONF_ISS_CLIENT_SCOPE_LABEL = "Context API Scopes";
+    public static final String CONF_ISS_CLIENT_SCOPE_HELPTEXT = "Context Service OAuth2 Client Scopes space-delimited";
 
     @Override
     public String getDisplayType() {
@@ -99,11 +101,11 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
         contextApiUrl.setLabel(CONF_CONTEXT_API_URL_LABEL);
         contextApiUrl.setHelpText(CONF_CONTEXT_API_URL_HELPTEXT);
 
-        ProviderConfigProperty contextIssUrl = new ProviderConfigProperty();
-        contextIssUrl.setType(ProviderConfigProperty.STRING_TYPE);
-        contextIssUrl.setName(CONF_CONTEXT_ISS_URL);
-        contextIssUrl.setLabel(CONF_CONTEXT_ISS_URL_LABEL);
-        contextIssUrl.setHelpText(CONF_CONTEXT_ISS_URL_HELPTEXT);
+        ProviderConfigProperty contextTokenUrl = new ProviderConfigProperty();
+        contextTokenUrl.setType(ProviderConfigProperty.STRING_TYPE);
+        contextTokenUrl.setName(CONF_CONTEXT_TOKEN_URL);
+        contextTokenUrl.setLabel(CONF_CONTEXT_TOKEN_URL_LABEL);
+        contextTokenUrl.setHelpText(CONF_CONTEXT_TOKEN_URL_HELPTEXT);
 
         ProviderConfigProperty contextClientGrantType = new ProviderConfigProperty();
         contextClientGrantType.setType(ProviderConfigProperty.LIST_TYPE);
@@ -132,8 +134,8 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
 
 
 
-        List<ProviderConfigProperty> props = Arrays.asList(contextApiUrl, contextIssUrl,
-                contextClientGrantType, contextClientId, contextClientSecret, contextClientScope);
+        List<ProviderConfigProperty> props = Arrays.asList(contextApiUrl, contextTokenUrl,
+                contextClientGrantType, contextClientId, contextClientSecret, contextClientScope, standaloneScopes);
         return props;
     }
 

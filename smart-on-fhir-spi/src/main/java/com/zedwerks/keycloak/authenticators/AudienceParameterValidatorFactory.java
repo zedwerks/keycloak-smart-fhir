@@ -10,6 +10,7 @@ import org.keycloak.provider.ProviderConfigProperty;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Factory for creating AudienceValidator instances.
@@ -60,8 +61,16 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
 
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
-        return Collections.singletonList(new ProviderConfigProperty(AUDIENCES_PROP_NAME, AUDIENCES_PROP_LABEL,
-                AUDIENCES_PROP_DESCRIPTION, ProviderConfigProperty.MULTIVALUED_STRING_TYPE, null));
+
+        ProviderConfigProperty audiences = new ProviderConfigProperty();
+        audiences.setType(ProviderConfigProperty.MULTIVALUED_STRING_TYPE);
+        audiences.setName(AUDIENCES_PROP_NAME);
+        audiences.setLabel(AUDIENCES_PROP_LABEL);
+        audiences.setHelpText(AUDIENCES_PROP_DESCRIPTION);
+        audiences.setDefaultValue(new ArrayList<String>());
+        audiences.setRequired(isConfigurable());
+
+        return Collections.singletonList(audiences);
     }
 
     @Override

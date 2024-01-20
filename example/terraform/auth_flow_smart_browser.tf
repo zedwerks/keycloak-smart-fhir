@@ -11,7 +11,7 @@ resource "keycloak_authentication_subflow" "smart_subflow" {
   parent_flow_alias = keycloak_authentication_flow.smart_flow.alias
   provider_id       = "basic-flow"
   requirement       = "ALTERNATIVE"
-  depends_on = [ keycloak_authentication_flow.smart_flow ]
+  depends_on        = [keycloak_authentication_flow.smart_flow]
 }
 
 resource "keycloak_authentication_execution" "execution_1" {
@@ -46,9 +46,11 @@ resource "keycloak_authentication_execution_config" "execution_2_config" {
   alias        = "smart-ehr-launch-config"
   config = {
     context-api-url       = var.keycloak_smart_configuration.context_url
-    context-iss-url       = var.keycloak_smart_configuration.context_iss
+    context-token-url     = var.keycloak_smart_configuration.context_iss
     context-client-id     = var.keycloak_smart_configuration.context_client_id
     context-client-secret = var.keycloak_smart_configuration.context_client_secret
+    context-client-scopes = "context:read"
+    standalone-scopes     = "launch/patient"
   }
 }
 
@@ -56,7 +58,7 @@ resource "keycloak_authentication_execution" "execution_3" {
   realm_id          = data.keycloak_realm.realm.id
   parent_flow_alias = keycloak_authentication_flow.smart_flow.alias
   authenticator     = "auth-cookie"
-  requirement       = "DISABLED"  // for testing only. Set to ALTERNATVIE otherwise
+  requirement       = "DISABLED" // for testing only. Set to ALTERNATVIE otherwise
 }
 
 resource "keycloak_authentication_execution" "execution_4" {
@@ -81,7 +83,7 @@ resource "keycloak_authentication_execution" "execution_5" {
   parent_flow_alias = keycloak_authentication_subflow.subflow.alias
   authenticator     = "auth-username-password-form"
   requirement       = "REQUIRED"
-  depends_on = [ keycloak_authentication_execution.execution_4 ]
+  depends_on        = [keycloak_authentication_execution.execution_4]
 }
 
 // BIND THIS FLOW TO THE REALM-LEVEL BROWSER FLOW
