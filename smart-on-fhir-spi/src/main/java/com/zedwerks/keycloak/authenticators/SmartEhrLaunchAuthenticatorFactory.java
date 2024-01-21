@@ -146,7 +146,6 @@ public class SmartEhrLaunchAuthenticatorFactory implements AuthenticatorFactory 
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        //return new SmartEhrLaunchAuthenticator(session);
         return SINGLETON;
     }
 

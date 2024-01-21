@@ -20,12 +20,6 @@ import jakarta.ws.rs.core.Response;
 
 public class SmartEhrLaunchAuthenticator implements Authenticator {
 
-    public static final String SMART_SCOPE_LAUNCH_PATIENT = "launch/patient";
-    public static final String SMART_SCOPE_EHR_LAUNCH = "launch";
-    public static final String SMART_SCOPE_LAUNCH_ANY_PREFIX = "launch/";
-
-    public static final String LAUNCH_REQUEST_PARAM = "launch";
-
     public static final Logger logger = Logger.getLogger(SmartEhrLaunchAuthenticator.class);
 
     public SmartEhrLaunchAuthenticator(KeycloakSession session) {
@@ -60,12 +54,10 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
         ArrayList<String> scopes = new ArrayList<String>();
         clientScopes.map(ClientScopeModel::getName).forEach(s -> scopes.add(s));  // Can only operate on a stream once
      
-        boolean isPatientLaunch = scopes.contains(SMART_SCOPE_LAUNCH_PATIENT);
-        boolean isEHRLaunch = scopes.contains(SMART_SCOPE_EHR_LAUNCH);
-        boolean isStandaloneLaunch = isPatientLaunch && !isEHRLaunch;
+        boolean isEHRLaunch = scopes.contains(SmartOnFhir.SMART_SCOPE_EHR_LAUNCH);
 
-        if (!isEHRLaunch && !isStandaloneLaunch) {
-            logger.info("Not a SMART on FHIR launch request");
+        if (!isEHRLaunch) {
+            logger.info("Not a SMART on FHIR EHR-Launch request");
             context.attempted();  // just carry on... not a SMART on FHIR launch request
             return;
         }
@@ -73,7 +65,7 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
         String uriStr = context.getUriInfo().getRequestUri().toString();
         logger.info("SMART on FHIR request URI: " + uriStr);
 
-        String launchParam = context.getUriInfo().getQueryParameters().getFirst(LAUNCH_REQUEST_PARAM);
+        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.LAUNCH_REQUEST_PARAM);
 
         if (!isEHRLaunch && launchParam != null && !launchParam.trim().isEmpty()) {
             String msg = "SMART on FHIR request is missing 'launch' scope but found 'launch' request parameter";
@@ -98,41 +90,14 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
                         .build());
             return;
         }
-        if (isPatientLaunch) {
-            // then check for the 'launch' request parameter
-
-            if (launchParam == null || launchParam.trim().isEmpty()) {
-                String msg = "SMART on FHIR standalone launch scope found. This is not yet supported.";
-                logger.warn(msg);
-                context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
-                        Response.status(302)
-                            .header("Location", context.getAuthenticationSession().getRedirectUri() +
-                                    "?error=invalid_request" +
-                                    "&error_description=" + msg)
-                            .build());
-                return;
-            }
-        }
-        if (isStandaloneLaunch) {
-            String msg = "SMART on FHIR standalone launch found. This is not yet supported.";
-            logger.warn(msg);
-            context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
-                    Response.status(302)
-                        .header("Location", context.getAuthenticationSession().getRedirectUri() +
-                                "?error=invalid_request" +
-                                "&error_description=" + msg)
-                        .build());
-            return;
-        }
 
         if (isEHRLaunch && launchParam != null && !launchParam.trim().isEmpty()) {
             // Resolve the launch parameter to the patient resource id
             String patientResourceId = resolveLaunchParameter(launchParam);
             setPatientResource(context, patientResourceId);
             logger.info("SMART on FHIR 'launch' scope found, and 'launch' parameter found. Resolved patient resource id: " + patientResourceId);
-            //context.attempted();
         }
-        context.attempted(); // @todo try setting this to success() and see what happens
+        context.success(); 
     }
 
     @Override
