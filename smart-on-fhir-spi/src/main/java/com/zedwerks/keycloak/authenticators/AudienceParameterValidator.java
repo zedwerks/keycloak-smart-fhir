@@ -58,17 +58,28 @@ public class AudienceParameterValidator implements Authenticator {
         String audience = requestedAud != null ? requestedAud : requestedAudience;
         audience = audience != null ? audience : requestedResource;
 
+        if (audience == null || audience.isEmpty()) {
+            String msg = "A SMART on FHIR Request must include an 'aud', 'audience', or 'resource' parameter";
+            logger.warn(msg);
+            context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
+                    Response.status(302)
+                            .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                    "?error=server_error" +
+                                    "&error_description=" + msg)
+                            .build());
+            return; // early exit
+        }
+
+        logger.infof("Requested audience: %s", audience);
+
         String audiencesString = context.getAuthenticatorConfig().getConfig()
                 .get(AudienceParameterValidatorFactory.AUDIENCES_PROP_NAME);
-        logger.debugf("Requested audience: %s", requestedAudience);
-        logger.debugf("Requested aud: %s", requestedAud);
-        logger.debugf("Requested resource: %s", requestedResource);
-        logger.debugf("Allowed audiences: %s", audiencesString);
 
         List<String> audiences = Arrays.asList(audiencesString.split("##"));
 
         if (audiences.size() < 1) {
             String msg = "The SMART on FHIR Audience Validation Extension must be configured with one or more allowed audiences (URLs)";
+            logger.warn(msg);
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
                     Response.status(302)
                             .header("Location", context.getAuthenticationSession().getRedirectUri() +

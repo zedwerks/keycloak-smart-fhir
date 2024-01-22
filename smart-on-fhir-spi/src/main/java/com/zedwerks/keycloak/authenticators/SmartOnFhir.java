@@ -32,9 +32,11 @@ public final class SmartOnFhir {
 
     public static boolean isSmartOnFhirRequest(AuthenticationFlowContext context) {
 
-        boolean isSmartOnFhir = hasLaunchParameter(context) || hasLaunchScopes(context);
-        logger.infof("Is a SMART on FHIR Request? %s.", isSmartOnFhir ? "YES" : "NO");
-        return isSmartOnFhir;
+        boolean isSmartOnFhirLaunch = hasLaunchParameter(context) || 
+            hasStandaloneLaunchScopes(context) ||
+            hasLaunchScope(context);                    // This is considered a SMART on FHIR launch when included.
+        logger.infof("Is a SMART on FHIR launch Request? %s.", isSmartOnFhirLaunch ? "YES" : "NO");
+        return isSmartOnFhirLaunch;
     }
 
     public static boolean hasAudienceParam(AuthenticationFlowContext context) {
@@ -52,17 +54,39 @@ public final class SmartOnFhir {
     public static boolean hasLaunchParameter(AuthenticationFlowContext context) {
 
         logger.debug("hasLaunchParameter() **** SMART on FHIR  ****");
+        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.LAUNCH_REQUEST_PARAM);
 
-        AuthenticationSessionModel authSession = context.getAuthenticationSession();
-        String launch = authSession.getClientNote(LAUNCH_REQUEST_PARAM);
-
-        boolean hasLaunch = (launch != null);
+        logger.info("SMART Launch Parameter: " + launchParam);
+        boolean hasLaunch = (launchParam != null);
         return hasLaunch;
     }
 
-    public static boolean hasLaunchScopes(AuthenticationFlowContext context) {
+    public static boolean hasLaunchScope(AuthenticationFlowContext context) {
 
-        logger.debug("hasLaunchScopes() **** SMART on FHIR  ****");
+        logger.debug("hasLaunchScope() **** SMART on FHIR  ****");
+
+        AuthenticationSessionModel authSession = context.getAuthenticationSession();
+        ClientModel client = authSession.getClient();
+
+        String requestedScopesString = authSession.getClientNote(OIDCLoginProtocol.SCOPE_PARAM);
+        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(requestedScopesString, client);
+
+        if (clientScopes == null) {
+            logger.debug("No scopes found");
+            return false;
+        }
+        ArrayList<String> scopes = new ArrayList<String>();
+
+        clientScopes.forEach(scope -> scopes.add(scope.getName()));
+
+        boolean hasLaunch = scopes.contains(SmartOnFhir.SMART_SCOPE_EHR_LAUNCH);
+
+        return hasLaunch;
+    }
+
+    public static boolean hasStandaloneLaunchScopes(AuthenticationFlowContext context) {
+
+        logger.debug("hasStandaloneLaunchScopes() **** SMART on FHIR  ****");
 
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         ClientModel client = authSession.getClient();
@@ -81,7 +105,6 @@ public final class SmartOnFhir {
 
         boolean hasScopes = (scopes.size() > 1) && (scopes.contains(SmartOnFhir.SMART_SCOPE_LAUNCH_PATIENT) ||
                 scopes.contains(SmartOnFhir.SMART_SCOPE_LAUNCH_ENCOUNTER) ||
-                scopes.contains(SmartOnFhir.SMART_SCOPE_EHR_LAUNCH) ||
                 scopes.stream().anyMatch(s -> s.startsWith(SmartOnFhir.SMART_SCOPE_LAUNCH_ANY_PREFIX)));
 
         return hasScopes;
