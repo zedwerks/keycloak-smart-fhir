@@ -30,6 +30,15 @@ public final class SmartOnFhir {
     public static final String SMART_AUDIENCE_PARAM = "audience";
     public static final String SMART_RESOURCE_PARAM = "resource";
 
+    public static void clearSmartLaunchInSession(AuthenticationFlowContext context) {
+        context.getAuthenticationSession().clearAuthNotes();
+
+        AuthenticationSessionModel authSession = context.getAuthenticationSession();
+        ClientModel client = authSession.getClient();
+        client.removeAttribute(SMART_TOKEN_PATIENT_CLAIM);
+        client.removeAttribute(SMART_FHIR_USER_CLAIM);
+    }
+
     public static boolean isSmartOnFhirRequest(AuthenticationFlowContext context) {
 
         boolean isSmartOnFhirLaunch = hasLaunchParameter(context) || 

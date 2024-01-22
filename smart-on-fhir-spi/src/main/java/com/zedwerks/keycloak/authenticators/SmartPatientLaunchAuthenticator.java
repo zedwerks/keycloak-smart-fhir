@@ -34,6 +34,9 @@ public class SmartPatientLaunchAuthenticator implements Authenticator {
 
         logger.info("authenticate() **** SMART on FHIR Patient-Launch Authenticator ****");
 
+        // First, let's clear out any launch context, patient_id, etc...
+        SmartOnFhir.clearSmartLaunchInSession(context);
+
         if (!SmartOnFhir.isSmartOnFhirRequest(context)) {
             logger.info("*** SMART on FHIR Patient-Launch Authenticator: This is not a SMART on FHIR request.");
             context.attempted(); // just carry on... not a SMART on FHIR request
