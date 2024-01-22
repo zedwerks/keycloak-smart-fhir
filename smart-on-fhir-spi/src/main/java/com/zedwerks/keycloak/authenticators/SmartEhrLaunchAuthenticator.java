@@ -37,6 +37,20 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
 
         logger.info("authenticate() **** SMART on FHIR EHR-Launch Authenticator ****");
 
+        if (!SmartOnFhir.isSmartOnFhirRequest(context)) {
+            logger.info("*** SMART on FHIR EHR-Launch Authenticator: This is not a SMART on FHIR request.");
+            context.attempted(); // just carry on... not a SMART on FHIR request
+            return;
+        }
+
+        boolean isEHRLaunch = SmartOnFhir.hasLaunchParameter(context);
+
+        if (!isEHRLaunch) {
+            logger.info("Not a SMART on FHIR EHR-Launch request. No launch parameter found.");
+            context.attempted();  // just carry on... not a SMART on FHIR launch request
+            return;
+        }
+
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         ClientModel client = authSession.getClient();
 
@@ -45,42 +59,18 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
 
         logger.info("Requested Scopes: " + requestedScopesString);
 
-        if (clientScopes == null) {
-            logger.info("No scopes found");
-            context.attempted();  // just carry on... not a SMART on FHIR launch request
-            return;
-        }
-
         ArrayList<String> scopes = new ArrayList<String>();
         clientScopes.map(ClientScopeModel::getName).forEach(s -> scopes.add(s));  // Can only operate on a stream once
-     
-        boolean isEHRLaunch = scopes.contains(SmartOnFhir.SMART_SCOPE_EHR_LAUNCH);
-
-        if (!isEHRLaunch) {
-            logger.info("Not a SMART on FHIR EHR-Launch request");
-            context.attempted();  // just carry on... not a SMART on FHIR launch request
-            return;
-        }
 
         String uriStr = context.getUriInfo().getRequestUri().toString();
-        logger.info("SMART on FHIR request URI: " + uriStr);
+        logger.debug("SMART on FHIR request URI: " + uriStr);
 
         String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.LAUNCH_REQUEST_PARAM);
+        logger.debug("Launch parameter: " + launchParam);
 
-        if (!isEHRLaunch && launchParam != null && !launchParam.trim().isEmpty()) {
-            String msg = "SMART on FHIR request is missing 'launch' scope but found 'launch' request parameter";
-            logger.warn(msg);
-            context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
-                    Response.status(302)
-                        .header("Location", context.getAuthenticationSession().getRedirectUri() +
-                                "?error=invalid_request" +
-                                "&error_description=" + msg)
-                        .build());
-            return;
-        }
         if (isEHRLaunch && (launchParam == null || launchParam.trim().isEmpty())) {
             // launch scope found, but no launch parameter
-            String msg = "Found 'launch' scope but missing 'launch' parameter";
+            String msg = "The 'launch' parameter is blank, or missing.";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
                     Response.status(302)
@@ -91,13 +81,13 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
             return;
         }
 
-        if (isEHRLaunch && launchParam != null && !launchParam.trim().isEmpty()) {
+        if (isEHRLaunch && !launchParam.trim().isEmpty()) {
             // Resolve the launch parameter to the patient resource id
             String patientResourceId = resolveLaunchParameter(launchParam);
             setPatientResource(context, patientResourceId);
             logger.info("SMART on FHIR 'launch' scope found, and 'launch' parameter found. Resolved patient resource id: " + patientResourceId);
         }
-        context.success(); 
+        context.attempted();  // Do not set this to success, as we are not done authenticating the user.
     }
 
     @Override

@@ -34,6 +34,12 @@ public class SmartPatientLaunchAuthenticator implements Authenticator {
 
         logger.info("authenticate() **** SMART on FHIR Patient-Launch Authenticator ****");
 
+        if (!SmartOnFhir.isSmartOnFhirRequest(context)) {
+            logger.info("*** SMART on FHIR Patient-Launch Authenticator: This is not a SMART on FHIR request.");
+            context.attempted(); // just carry on... not a SMART on FHIR request
+            return;
+        }
+
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         ClientModel client = authSession.getClient();
 
@@ -53,14 +59,14 @@ public class SmartPatientLaunchAuthenticator implements Authenticator {
 
         if (!scopes.contains(SmartOnFhir.SMART_SCOPE_LAUNCH_PATIENT)) {
             logger.info("Not a SMART on FHIR launch/patient request");
-            context.success(); // just carry on... not a SMART on FHIR standalone launch/patient request
+            context.attempted(); // just carry on... not a SMART on FHIR standalone launch/patient request
             return;
         }
 
         // Okay, so let's do this! Time to ask the user to select a patient!!!
 
         logger.info("SMART on FHIR launch/patient request found!");
-        context.success();
+        context.attempted();
     }
 
     /* @todo for future processing...

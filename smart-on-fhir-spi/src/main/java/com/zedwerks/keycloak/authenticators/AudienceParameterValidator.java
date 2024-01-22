@@ -3,8 +3,7 @@ package com.zedwerks.keycloak.authenticators;
 import java.util.Arrays;
 import java.util.List;
 
-//import javax.ws.rs.core.Response;
-import  jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
@@ -13,16 +12,14 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 
-
 /**
- * Validate an incoming "aud", "audience", or "resource" query parameter (during OIDC flows) against a set of acceptable FHIR Server Url(s).
+ * Validate an incoming "aud", "audience", or "resource" query parameter (during
+ * OIDC flows) against a set of acceptable FHIR Server Url(s).
  */
 public class AudienceParameterValidator implements Authenticator {
 
     private static final Logger logger = Logger.getLogger(AudienceParameterValidator.class);
-    private static final String SMART_AUD_PARAM =  "aud";
-    private static final String SMART_AUDIENCE_PARAM =  "audience";
-    private static final String SMART_RESOURCE_PARAM =  "resource";
+
 
     public AudienceParameterValidator(KeycloakSession session) {
         // NOOP
@@ -31,41 +28,72 @@ public class AudienceParameterValidator implements Authenticator {
     @Override
     public void authenticate(AuthenticationFlowContext context) {
 
+        logger.info("authenticate() **** SMART on FHIR Audience Validator ****");
+
+        if (!SmartOnFhir.isSmartOnFhirRequest(context)) {
+            logger.info("*** SMART on FHIR Audience Validator: This is not a SMART on FHIR request.");
+            context.attempted(); // just carry on... not a SMART on FHIR request
+            return;
+        }
+
         if (context.getAuthenticatorConfig() == null ||
-                !context.getAuthenticatorConfig().getConfig().containsKey(AudienceParameterValidatorFactory.AUDIENCES_PROP_NAME)) {
+                !context.getAuthenticatorConfig().getConfig()
+                        .containsKey(AudienceParameterValidatorFactory.AUDIENCES_PROP_NAME)) {
             String msg = "The SMART on FHIR Audience Validation Extension must be configured with one or more allowed audiences (URLs)";
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
                     Response.status(302)
-                        .header("Location", context.getAuthenticationSession().getRedirectUri() +
-                                "?error=server_error" +
-                                "&error_description=" + msg)
-                        .build());
-            return;  // early exit
+                            .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                    "?error=server_error" +
+                                    "&error_description=" + msg)
+                            .build());
+            return; // early exit
         }
 
-        String requestedAudience = context.getUriInfo().getQueryParameters().getFirst(SMART_AUDIENCE_PARAM);
-        String requestedAud = context.getUriInfo().getQueryParameters().getFirst(SMART_AUD_PARAM);
-        String requestedResource = context.getUriInfo().getQueryParameters().getFirst(SMART_RESOURCE_PARAM);
+        String requestedAudience = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.SMART_AUDIENCE_PARAM);
+        String requestedAud = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.SMART_AUD_PARAM);
+        String requestedResource = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.SMART_RESOURCE_PARAM);
 
-        String audiencesString = context.getAuthenticatorConfig().getConfig().get(AudienceParameterValidatorFactory.AUDIENCES_PROP_NAME);
+        // Hierarchical precedence: aud > audience > resource. If none of these are
+        // present, then the request is invalid.
+        String audience = requestedAud != null ? requestedAud : requestedAudience;
+        audience = audience != null ? audience : requestedResource;
+
+        String audiencesString = context.getAuthenticatorConfig().getConfig()
+                .get(AudienceParameterValidatorFactory.AUDIENCES_PROP_NAME);
         logger.debugf("Requested audience: %s", requestedAudience);
         logger.debugf("Requested aud: %s", requestedAud);
         logger.debugf("Requested resource: %s", requestedResource);
         logger.debugf("Allowed audiences: %s", audiencesString);
 
         List<String> audiences = Arrays.asList(audiencesString.split("##"));
-        if (audiences.contains(requestedAudience) || audiences.contains(requestedAud) || audiences.contains(requestedResource)) {
-            context.success();
-        } else {
-            String msg = "Requested audience '" + requestedAudience +
-                    "' must match one of the configured Resource Server URLs: " + audiences;
+
+        if (audiences.size() < 1) {
+            String msg = "The SMART on FHIR Audience Validation Extension must be configured with one or more allowed audiences (URLs)";
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
                     Response.status(302)
-                        .header("Location", context.getAuthenticationSession().getRedirectUri() +
-                                "?error=invalid_request" +
-                                "&error_description=" + msg)
-                        .build());
+                            .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                    "?error=server_error" +
+                                    "&error_description=" + msg)
+                            .build());
+            return; // early exit
         }
+
+        if (audience != null) {
+            if (!audiences.contains(audience)) {
+                String warning = "Requested audience '" + audience +
+                        "' must match one of the configured Resource Server URLs: " + audiences;
+                logger.warn(warning);
+                context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
+                        Response.status(302)
+                                .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                        "?error=invalid_request" +
+                                        "&error_description=" + warning)
+                                .build());
+                return; // early exit
+            }
+        }
+        logger.info("Audience is acceptable");
+        context.attempted();
     }
 
     @Override
@@ -90,6 +118,7 @@ public class AudienceParameterValidator implements Authenticator {
 
     @Override
     public void close() {
+        logger.info("close() **** SMART on FHIR Audience Validator ****");
         // NOOP
     }
 }
