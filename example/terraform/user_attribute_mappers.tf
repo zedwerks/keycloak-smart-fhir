@@ -26,4 +26,3 @@ resource "keycloak_openid_user_attribute_protocol_mapper" "patientId_attribute_m
 }
 
 
-

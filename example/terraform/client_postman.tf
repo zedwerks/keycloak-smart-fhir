@@ -31,12 +31,25 @@ resource "keycloak_openid_client_optional_scopes" "client_postman_optional_scope
   optional_scopes = [
     "offline_access",
     "launch",
+    "fhirUser",
+    "fhircast",
+    "Patient-open",
+    "Patient-close",
     "launch/patient",
     "launch/encounter",
     "online_access",
-    "context:read",
-    "context:write"
+    "launch-context:read",
+    "launch-context:write"
   ]
+}
+
+resource "keycloak_openid_audience_protocol_mapper" "audience_mapper" {
+  realm_id  = keycloak_openid_client.client_postman.realm_id
+  client_id = keycloak_openid_client.client_postman.id
+  name      = "audience-mapper"
+  included_client_audience = "postman"
+  add_to_access_token = false
+  add_to_id_token = true
 }
 
 resource "keycloak_openid_user_realm_role_protocol_mapper" "postman_user_realm_role_mapper" {
@@ -50,18 +63,6 @@ resource "keycloak_openid_user_realm_role_protocol_mapper" "postman_user_realm_r
   add_to_userinfo     = true
 }
 
-resource "keycloak_openid_user_attribute_protocol_mapper" "postman_profile" {
-  realm_id            = keycloak_openid_client.client_postman.realm_id
-  client_id           = keycloak_openid_client.client_postman.id
-  name                = "fhirUser"
-  user_attribute      = "fhirUser"
-  claim_name          = "fhirUser"
-  claim_value_type    = "String"
-  add_to_id_token     = true
-  add_to_access_token = true
-  add_to_userinfo     = true
-}
-
 resource "keycloak_openid_user_session_note_protocol_mapper" "postman_acr_user_session_note_mapper" {
   realm_id         = keycloak_openid_client.client_postman.realm_id
   client_id        = keycloak_openid_client.client_postman.id
@@ -69,6 +70,8 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "postman_acr_user_s
   claim_name       = "acr"
   claim_value_type = "String"
   session_note     = "acr"
+  add_to_access_token = false
+  add_to_id_token = true
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "postman_patient_id_user_session_note_mapper" {
@@ -78,4 +81,6 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "postman_patient_id
   claim_name       = "patient"
   claim_value_type = "String"
   session_note     = "patient_id"
+  add_to_access_token = true
+  add_to_id_token = false
 }

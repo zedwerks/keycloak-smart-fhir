@@ -21,6 +21,15 @@ variable "keycloak_smart_configuration" {
   description = "SMART on FHIR Configurations"
 }
 
+variable "client_context_resolver" {
+  type = object({
+    id              = optional(string, "context_resolver")
+    secret          = string
+    enabled         = optional(bool, true)
+  })
+  description = "Context Resolver Client"
+}
+
 variable "client_postman" {
   type = object({
     id              = optional(string, "postman")

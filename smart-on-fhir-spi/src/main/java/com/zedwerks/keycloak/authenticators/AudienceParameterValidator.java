@@ -103,7 +103,8 @@ public class AudienceParameterValidator implements Authenticator {
                 return; // early exit
             }
         }
-        logger.info("Audience is acceptable");
+        logger.infof("Audience is acceptable: %s", audience);
+        //SmartOnFhir.setAudienceClaim(context, audience);
         context.attempted();
     }
 
