@@ -140,10 +140,6 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
         client.setAttribute("patient", patientResourceId);
     }
 
-    void setFhirUser(AuthenticationFlowContext context, String fhirUserUrl) {
-        context.getAuthenticationSession().setUserSessionNote("fhirUser", fhirUserUrl);
-    }
-
     private String resolveLaunchParameter(String launchRequestParameter) {
         // todo: resolve the launch parameter with the Context API
         // this involves the following steps:

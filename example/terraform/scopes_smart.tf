@@ -6,6 +6,22 @@ resource "keycloak_openid_client_scope" "fhir_user_scope" {
   include_in_token_scope = true
 }
 #------------------------------------------------------------
+resource "keycloak_generic_protocol_mapper" "fhir_user_context_protocol_mapper" {
+  realm_id        = keycloak_openid_client_scope.fhir_user_scope.realm_id
+  client_scope_id = keycloak_openid_client_scope.fhir_user_scope.id
+  name            = "fhirUser Claim Mapper"
+  protocol        = "openid-connect"
+  protocol_mapper = "oidc-usermodel-attribute-mapper"
+  config = {
+    "user.attribute"       = "fhirUser",
+    "claim.name"           = "fhirUser",
+    "jsonType.label"       = "String",
+    "id.token.claim"       = "true",
+    "access.token.claim"   = "false",
+    "userinfo.token.claim" = "true"
+  }
+}
+#------------------------------------------------------------
 resource "keycloak_openid_client_scope" "online_access_scope" {
   realm_id               = data.keycloak_realm.realm.id
   name                   = "online_access"
