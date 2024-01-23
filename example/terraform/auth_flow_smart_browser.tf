@@ -33,8 +33,7 @@ resource "keycloak_authentication_execution_config" "execution_1_config" {
     context-token-url     = var.keycloak_smart_configuration.context_token_url
     context-client-id     = var.keycloak_smart_configuration.context_client_id
     context-client-secret = var.keycloak_smart_configuration.context_client_secret
-    context-client-scopes = "context:read"
-    standalone-scopes     = var.keycloak_smart_configuration.standalone_scopes
+    context-client-scopes = "launch-context:read"
   }
 }
 

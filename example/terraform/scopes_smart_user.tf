@@ -247,6 +247,7 @@ resource "keycloak_openid_client_scope" "user_biologically_derived_product_full_
   consent_screen_text    = "Permission to read and write BiologicallyDerivedProduct for the user"
   include_in_token_scope = true
 }
+
 // BodyStructure -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_body_structure_read_scope" {
   realm_id               = data.keycloak_realm.realm.id

@@ -20,30 +20,48 @@ public final class SmartOnFhir {
     public static final String SMART_SCOPE_EHR_LAUNCH = "launch";
     public static final String SMART_SCOPE_LAUNCH_ANY_PREFIX = "launch/";
 
+    // SMART on FHIR Request Parameters
     public static final String LAUNCH_REQUEST_PARAM = "launch";
+    public static final String SMART_AUD_PARAM = "aud"; // mandatory for both standalone and EHR-Launch
+    public static final String SMART_AUDIENCE_PARAM = "audience"; // accepted alias for aud
+    public static final String SMART_RESOURCE_PARAM = "resource"; // accepted alias for aud
 
-    public static final String USER_SESSION_NOTE_PATIENT = "patient_id";
-    public static final String SMART_TOKEN_PATIENT_CLAIM = "patient";
+    // SMART on FHIR Session Notes - set by the LAUNCH CONTEXT resolution.
+    public static final String USER_SESSION_NOTE_PATIENT = "smart_patient_id";
+    public static final String USER_SESSION_NOTE_AUDIENCE = "smart_aud";
+    public static final String USER_SESSION_NOTE_FHIR_CONTEXT = "smart_fhir_context";
+    public static final String USER_SESSION_NOTE_NEED_BANNER = "smart_need_patient_banner";
+    public static final String USER_SESSION_NOTE_INTENT = "smart_intent";
+    public static final String USER_SESSION_NOTE_SMART_STYLE_URL = "smart_style_url";
+    public static final String USER_SESSION_NOTE_SMART_TENANT = "smart_tenant";
+
+    // These Token Claims are added to the ID Token by the SMART on FHIR Authenticator.
     public static final String SMART_FHIR_USER_CLAIM = "fhirUser";
 
-    public static final String SMART_AUD_PARAM = "aud";
-    public static final String SMART_AUDIENCE_PARAM = "audience";
-    public static final String SMART_RESOURCE_PARAM = "resource";
+    // These Token Claims are added to the Access Token Response, alongside the access_token.
+    public static final String SMART_TOKEN_PATIENT_CLAIM = "patient";
+    public static final String SMART_TOKEN_ENCOUNTER_CLAIM = "encounter";
+
+    // These Token Claims are added to the Access Token Response, alongside the access_token.
+    public static final String SMART_TENANT_CLAIM = "tenant";
+    public static final String SMART_NEED_BANNER_CLAIM = "need_patient_banner";
+    public static final String SMART_INTENT_CLAIM = "intent";
+    public static final String SMART_STYLE_URL_CLAIM = "smart_style_url";
+    public static final String SMART_FHIR_CONTEXT_CLAIM = "fhirContext";
 
     public static void clearSmartLaunchInSession(AuthenticationFlowContext context) {
         context.getAuthenticationSession().clearAuthNotes();
 
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
-        ClientModel client = authSession.getClient();
-        client.removeAttribute(SMART_TOKEN_PATIENT_CLAIM);
-        client.removeAttribute(SMART_FHIR_USER_CLAIM);
+        authSession.getUserSessionNotes().remove(USER_SESSION_NOTE_PATIENT);
+        authSession.getUserSessionNotes().remove(USER_SESSION_NOTE_AUDIENCE);
     }
 
     public static boolean isSmartOnFhirRequest(AuthenticationFlowContext context) {
 
         boolean isSmartOnFhirLaunch = hasLaunchParameter(context) || 
             hasStandaloneLaunchScopes(context) ||
-            hasLaunchScope(context);                    // This is considered a SMART on FHIR launch when included.
+            hasLaunchScope(context);                    // This is considered a SMART on FHIR EHR-launch when included.
         logger.infof("Is a SMART on FHIR launch Request? %s.", isSmartOnFhirLaunch ? "YES" : "NO");
         return isSmartOnFhirLaunch;
     }
