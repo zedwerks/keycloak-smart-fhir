@@ -1,4 +1,4 @@
-resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_patient_mapper" {
+resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_patient_mapper" {
   realm_id            = keycloak_openid_client.client_postman.realm_id
   client_scope_id     = keycloak_openid_client_scope.launch_context_scope.id
   name                = "user-session-patient-mapper"
@@ -8,10 +8,23 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_pati
   add_to_access_token = true
   add_to_id_token     = false
   //add_to_access_token_response = true
-  depends_on = [ keycloak_openid_client_scope.launch_context_scope ]
+  depends_on = [keycloak_openid_client_scope.launch_context_scope]
 }
 
-resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_aud_mapper" {
+resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_encounter_mapper" {
+  realm_id            = keycloak_openid_client.client_postman.realm_id
+  client_scope_id     = keycloak_openid_client_scope.launch_context_scope.id
+  name                = "user-session-encounter-mapper"
+  claim_name          = "encounter"
+  claim_value_type    = "String"
+  session_note        = "smart_encounter_id"
+  add_to_access_token = true
+  add_to_id_token     = false
+  //add_to_access_token_response = true
+  depends_on = [keycloak_openid_client_scope.launch_context_scope]
+}
+
+resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_aud_mapper" {
   realm_id            = keycloak_openid_client.client_postman.realm_id
   client_scope_id     = keycloak_openid_client_scope.launch_context_scope.id
   name                = "user-session-smart-audience-mapper"
@@ -20,11 +33,11 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_aud_
   session_note        = "smart_aud"
   add_to_access_token = true
   add_to_id_token     = false
-  depends_on = [ keycloak_openid_client_scope.launch_context_scope ]
+  depends_on          = [keycloak_openid_client_scope.launch_context_scope]
 
 }
 
-resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_fhir_context_mapper" {
+resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_fhir_context_mapper" {
   realm_id            = keycloak_openid_client.client_postman.realm_id
   client_scope_id     = keycloak_openid_client_scope.launch_context_scope.id
   name                = "user-session-fhir-context-mapper"
@@ -34,9 +47,11 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_fhir
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
+  depends_on = [keycloak_openid_client_scope.launch_context_scope]
+
 }
 
-resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_patient_banner_mapper" {
+resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_patient_banner_mapper" {
   realm_id            = keycloak_openid_client.client_postman.realm_id
   client_scope_id     = keycloak_openid_client_scope.launch_context_scope.id
   name                = "user-session-patient-banner-mapper"
@@ -46,9 +61,11 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_pati
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
+  depends_on = [keycloak_openid_client_scope.launch_context_scope]
+
 }
 
-resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_intent_mapper" {
+resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_intent_mapper" {
   realm_id            = keycloak_openid_client.client_postman.realm_id
   client_scope_id     = keycloak_openid_client_scope.launch_context_scope.id
   name                = "user-session-intent-mapper"
@@ -58,9 +75,11 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_inte
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
+  depends_on = [keycloak_openid_client_scope.launch_context_scope]
+
 }
 
-resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_style_mapper" {
+resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_style_mapper" {
   realm_id            = keycloak_openid_client.client_postman.realm_id
   client_scope_id     = keycloak_openid_client_scope.launch_context_scope.id
   name                = "user-session-smart-style-url-mapper"
@@ -70,9 +89,11 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_styl
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
+  depends_on = [keycloak_openid_client_scope.launch_context_scope]
+
 }
 
-resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_tenant_mapper" {
+resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_tenant_mapper" {
   realm_id            = keycloak_openid_client.client_postman.realm_id
   client_scope_id     = keycloak_openid_client_scope.launch_context_scope.id
   name                = "user-session-tenant-mapper"
@@ -82,6 +103,8 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "postman_smart_tena
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
+  depends_on = [keycloak_openid_client_scope.launch_context_scope]
+
 }
 
 
