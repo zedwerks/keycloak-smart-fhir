@@ -3,6 +3,7 @@ package com.zedwerks.keycloak.authenticators;
 import java.util.stream.Stream;
 import java.util.ArrayList;
 
+import org.apache.http.cookie.SM;
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
@@ -114,6 +115,8 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
             logger.info("SMART on FHIR 'launch' scope found, and 'launch' parameter found. Resolved patient resource id: " + patientResourceId);
         }
 
+        // Set the audience to requested audience
+
         String newAudience = "custom-audience";
         context.getAuthenticationSession().setClientNote("aud", newAudience);
         
@@ -161,13 +164,7 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
                 Response.status(400, "Could not convert launch parameter to patient resource id").build());
             return;
         }
-        context.getAuthenticationSession().setUserSessionNote("patient_id", patientResourceId);
-        context.getAuthenticationSession().setAuthNote("patient_id", patientResourceId);
-        AuthenticationSessionModel authSession = context.getAuthenticationSession();
-        ClientModel client = authSession.getClient();
-        client.setAttribute("aud", "the-audience");
-        
-        //authSession.setClientNote( "aud", "the-audience");
+        context.getAuthenticationSession().setUserSessionNote(SmartOnFhir.USER_SESSION_NOTE_PATIENT, patientResourceId);
     }
 
     private String resolveLaunchParameter(String launchRequestParameter) {

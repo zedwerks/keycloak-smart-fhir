@@ -137,4 +137,8 @@ public final class SmartOnFhir {
         return hasScopes;
     }
 
+    public static void setAudience(AuthenticationFlowContext context, String audience) {
+        context.getAuthenticationSession().setUserSessionNote(SmartOnFhir.USER_SESSION_NOTE_AUDIENCE, audience);
+    }
+
 }
