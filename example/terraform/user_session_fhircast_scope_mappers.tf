@@ -68,7 +68,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_patient_b
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_intent_mapper" {
   realm_id            = keycloak_openid_client.client_postman.realm_id
   client_scope_id     = keycloak_openid_client_scope.smart_fhircast_scope.id
-  name                = "user-session-intent-mapper"
+  name                = "user-session-fhircast-intent-mapper"
   claim_name          = "intent"
   claim_value_type    = "String"
   session_note        = "smart_intent"
@@ -82,7 +82,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_intent_ma
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_style_mapper" {
   realm_id            = keycloak_openid_client.client_postman.realm_id
   client_scope_id     = keycloak_openid_client_scope.smart_fhircast_scope.id
-  name                = "user-session-smart-style-url-mapper"
+  name                = "user-session-fhircast-style-url-mapper"
   claim_name          = "smart_style_url"
   claim_value_type    = "String"
   session_note        = "smart_style_url"
@@ -96,7 +96,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_style_map
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_tenant_mapper" {
   realm_id            = keycloak_openid_client.client_postman.realm_id
   client_scope_id     = keycloak_openid_client_scope.smart_fhircast_scope.id
-  name                = "user-session-tenant-mapper"
+  name                = "user-session-fhircast-tenant-mapper"
   claim_name          = "tenant"
   claim_value_type    = "String"
   session_note        = "smart_tenant"
@@ -122,8 +122,8 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_hub_url_m
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_hub_topic_mapper" {
   realm_id            = keycloak_openid_client.client_postman.realm_id
   client_scope_id     = keycloak_openid_client_scope.smart_fhircast_scope.id
-  name                = "user-session-fhircast-hub-url-mapper"
-  claim_name          = "hub.url"
+  name                = "user-session-fhircast-hub-topic-mapper"
+  claim_name          = "hub.topic"
   claim_value_type    = "String"
   session_note        = "smart_fhircast_hub_topic"
   add_to_access_token = false
