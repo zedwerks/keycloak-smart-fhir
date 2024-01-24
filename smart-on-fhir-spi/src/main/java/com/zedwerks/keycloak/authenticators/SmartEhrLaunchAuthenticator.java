@@ -64,18 +64,15 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
 
         boolean hasLaunchParam = SmartOnFhir.hasLaunchParameter(context);
         boolean hasLaunchScope = SmartOnFhir.hasLaunchScope(context);
-        boolean isEHRLaunch =  hasLaunchParam && hasLaunchScope;
 
-        if (!hasLaunchParam) {
-            logger.info("Not a SMART on FHIR EHR-Launch request. No launch parameter found.");
+        if (!hasLaunchParam && !hasLaunchScope) {
+            logger.info("Not a SMART on FHIR EHR-Launch request.");
             context.attempted();  // just carry on... not a SMART on FHIR launch request
             return;
         }
-        if (!hasLaunchScope) {
-            logger.info("Not a SMART on FHIR EHR-Launch request. No launch scope found.");
-            context.attempted();  // just carry on... not a SMART on FHIR launch request
-            return;
-        }
+
+        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.LAUNCH_REQUEST_PARAM);
+        logger.debug("Launch parameter: " + launchParam);
 
         // First, let's clear out any launch context, patient_id, etc...
         SmartOnFhir.clearSmartLaunchInSession(context);
@@ -83,12 +80,23 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
         String uriStr = context.getUriInfo().getRequestUri().toString();
         logger.debug("SMART on FHIR request URI: " + uriStr);
 
-        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.LAUNCH_REQUEST_PARAM);
-        logger.debug("Launch parameter: " + launchParam);
+        boolean hasLaunchToken = (launchParam != null) && !launchParam.trim().isEmpty();
 
-        if (isEHRLaunch && (launchParam == null || launchParam.trim().isEmpty())) {
+        if (!hasLaunchToken) {
             // launch scope found, but no launch parameter
-            String msg = "The 'launch' parameter is blank, or missing.";
+            String msg = "The 'launch' parameter has no value.";
+            logger.warn(msg);
+            context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
+                    Response.status(302)
+                        .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                "?error=invalid_request" +
+                                "&error_description=" + msg)
+                        .build());
+            return;
+        }
+        if (!hasLaunchScope) {
+            // launch scope found, but no launch parameter
+            String msg = "The 'launch' scope is missing.";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
                     Response.status(302)
@@ -99,7 +107,7 @@ public class SmartEhrLaunchAuthenticator implements Authenticator {
             return;
         }
 
-        if (hasLaunchParam && hasLaunchScope && !launchParam.trim().isEmpty()) {
+        if (hasLaunchParam && hasLaunchScope && hasLaunchToken) {
             // Resolve the launch parameter to the patient resource id
             String patientResourceId = resolveLaunchParameter(launchParam);
             setPatientResource(context, patientResourceId);
