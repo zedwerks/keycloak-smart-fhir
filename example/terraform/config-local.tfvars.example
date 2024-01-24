@@ -20,7 +20,7 @@ client_context_resolver = {
 
 keycloak_smart_configuration = {
   audiences = "http://fhirserver.com##http://fhirserver.com/fhir##"
-  context_client_secret = "t3vGj9MTjULLXeVbvnP33gANmgRuk1Ul"
+  context_client_secret = "t3vGj9MTjULLXeVbvnP33gANmgRuk1999"
   context_client_id = "context-resolver"
   context_token_url = "http://localhost:8080/realms/example/openid-connect/token"
 }
