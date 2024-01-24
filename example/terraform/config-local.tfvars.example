@@ -6,9 +6,22 @@ keycloak_environment = {
     realm = "example"
     base_url = "http://localhost:8080/"
     client_id = "terraform"
-    client_secret = "secret goes here"
+    client_secret = "t3vGj9MTjULLXeVbvnP33gANmgRuk1Ul"
 }
 
 client_postman = {
   enabled = true
 }
+
+client_context_resolver = {
+  enabled = false
+  secret ="t3vGj9MTjULLXeVbvnP33gANmgRuk1999"
+}
+
+keycloak_smart_configuration = {
+  audiences = "http://fhirserver.com##http://fhirserver.com/fhir##"
+  context_client_secret = "t3vGj9MTjULLXeVbvnP33gANmgRuk1Ul"
+  context_client_id = "context-resolver"
+  context_token_url = "http://localhost:8080/realms/example/openid-connect/token"
+}
+
