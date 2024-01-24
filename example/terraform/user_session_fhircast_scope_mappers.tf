@@ -8,7 +8,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_patient_m
   add_to_access_token = true
   add_to_id_token     = false
   //add_to_access_token_response = true
-  depends_on = [ keycloak_openid_client_scope.smart_fhircast_scope ]
+  depends_on = [keycloak_openid_client_scope.smart_fhircast_scope]
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_encounter_mapper" {
@@ -21,7 +21,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_encounter
   add_to_access_token = true
   add_to_id_token     = false
   //add_to_access_token_response = true
-  depends_on = [ keycloak_openid_client_scope.smart_fhircast_scope ]
+  depends_on = [keycloak_openid_client_scope.smart_fhircast_scope]
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_aud_mapper" {
@@ -33,8 +33,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_aud_mappe
   session_note        = "smart_aud"
   add_to_access_token = true
   add_to_id_token     = false
-  depends_on = [ keycloak_openid_client_scope.smart_fhircast_scope ]
-
+  depends_on          = [keycloak_openid_client_scope.smart_fhircast_scope]
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_fhir_context_mapper" {
@@ -47,8 +46,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_fhir_cont
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
-    depends_on = [ keycloak_openid_client_scope.smart_fhircast_scope ]
-
+  depends_on = [keycloak_openid_client_scope.smart_fhircast_scope]
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_patient_banner_mapper" {
@@ -61,8 +59,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_patient_b
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
-    depends_on = [ keycloak_openid_client_scope.smart_fhircast_scope ]
-
+  depends_on = [keycloak_openid_client_scope.smart_fhircast_scope]
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_intent_mapper" {
@@ -75,8 +72,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_intent_ma
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
-    depends_on = [ keycloak_openid_client_scope.smart_fhircast_scope ]
-
+  depends_on = [keycloak_openid_client_scope.smart_fhircast_scope]
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_style_mapper" {
@@ -89,8 +85,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_style_map
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
-      depends_on = [ keycloak_openid_client_scope.smart_fhircast_scope ]
-
+  depends_on = [keycloak_openid_client_scope.smart_fhircast_scope]
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_tenant_mapper" {
@@ -103,7 +98,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_tenant_ma
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
-      depends_on = [ keycloak_openid_client_scope.smart_fhircast_scope ]
+  depends_on = [keycloak_openid_client_scope.smart_fhircast_scope]
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_hub_url_mapper" {
@@ -116,7 +111,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_hub_url_m
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
-      depends_on = [ keycloak_openid_client_scope.smart_fhircast_scope ]
+  depends_on = [keycloak_openid_client_scope.smart_fhircast_scope]
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_hub_topic_mapper" {
@@ -129,7 +124,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "fhircast_hub_topic
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
-      depends_on = [ keycloak_openid_client_scope.smart_fhircast_scope ]
+  depends_on = [keycloak_openid_client_scope.smart_fhircast_scope]
 }
 
 
