@@ -39,6 +39,7 @@ public class AudienceParameterValidator implements Authenticator {
                 !context.getAuthenticatorConfig().getConfig()
                         .containsKey(AudienceParameterValidatorFactory.AUDIENCES_PROP_NAME)) {
             String msg = "The SMART on FHIR Audience Validation Extension must be configured with one or more allowed audiences (URLs)";
+            logger.warn(msg);
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
                     Response.status(302)
                             .header("Location", context.getAuthenticationSession().getRedirectUri() +
@@ -49,8 +50,9 @@ public class AudienceParameterValidator implements Authenticator {
         }
 
         String audience = SmartLaunchHelper.getAudienceParameter(context);
+        logger.infof("Requested audience: %s", audience);
 
-        if (audience == null || audience.trim().isEmpty()) {
+        if (audience == null || audience.isBlank()) {
             String msg = "A SMART on FHIR Request must include an 'aud', 'audience', or 'resource' parameter";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
@@ -62,12 +64,16 @@ public class AudienceParameterValidator implements Authenticator {
             return; // early exit
         }
 
-        logger.infof("Requested audience: %s", audience);
 
         String audiencesString = context.getAuthenticatorConfig().getConfig()
                 .get(AudienceParameterValidatorFactory.AUDIENCES_PROP_NAME);
 
         List<String> audiences = Arrays.asList(audiencesString.split("##"));
+
+        for (int i = 0; i < audiences.size(); i++) {
+            audiences.set(i, audiences.get(i).trim());
+            logger.info("Configured FHIR audience: " + audiences.get(i));
+        }
 
         if (audiences.size() < 1) {
             String msg = "The SMART on FHIR Audience Validation Extension must be configured with one or more allowed audiences (URLs)";

@@ -55,7 +55,7 @@ public final class SmartLaunchHelper {
     public static final String AUTH_SESSION_NOTE_LAUNCH_TOKEN = "launch_token";
 
     public static boolean isEhrLaunch(AuthenticationFlowContext context) {
-        boolean ehrLaunch = hasLaunchParameter(context) && hasLaunchScope(context);
+        boolean ehrLaunch = hasLaunchParameter(context) || hasLaunchScope(context);
         logger.debugf("Is a SMART on FHIR EHR-launch Request? %s.", ehrLaunch ? "YES" : "NO");
         return ehrLaunch;
     }
@@ -67,7 +67,7 @@ public final class SmartLaunchHelper {
     }
 
     public static boolean isEhrLaunchValid(AuthenticationFlowContext context) {
-        boolean valid = isEhrLaunch(context) && hasAudienceParameter(context);
+        boolean valid = hasLaunchParameter(context) && hasLaunchScope(context) && hasAudienceParameter(context);
         return valid;
     }
 
