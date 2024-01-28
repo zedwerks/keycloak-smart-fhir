@@ -1,8 +1,10 @@
 package com.zedwerks.keycloak.authenticators.smart;
 
 import org.keycloak.Config;
+
 import org.keycloak.authentication.Authenticator;
-import org.keycloak.authentication.AuthenticatorFactory;
+import org.keycloak.authentication.authenticators.conditional.ConditionalAuthenticator;
+import org.keycloak.authentication.authenticators.conditional.ConditionalAuthenticatorFactory;
 import org.keycloak.models.AuthenticationExecutionModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
@@ -10,13 +12,25 @@ import org.keycloak.provider.ProviderConfigProperty;
 
 import java.util.List;
 
-public class EhrLaunchValidatorFactory implements AuthenticatorFactory {
-    private static final String PROVIDER_ID = "smart-ehr-launch-validator";
-    private static final EhrLaunchValidator SINGLETON = new EhrLaunchValidator();
+public class EhrLaunchConditionalFactory implements ConditionalAuthenticatorFactory {
+    
+    public static final String PROVIDER_ID = "ehr-launch-condition";
+
+    private static final EhrLaunchConditional SINGLETON = new EhrLaunchConditional();
+
+    @Override
+    public Authenticator create(KeycloakSession session) {
+        return SINGLETON;
+    }
+
+    @Override
+    public ConditionalAuthenticator getSingleton() {
+        return null;
+    }
 
     @Override
     public String getDisplayType() {
-        return "SMART on FHIR: EHR Launch Validator";
+        return "SMART on FHIR Conditional for EHR-Launch";
     }
 
     @Override
@@ -29,17 +43,10 @@ public class EhrLaunchValidatorFactory implements AuthenticatorFactory {
         return true;
     }
 
-    private static AuthenticationExecutionModel.Requirement[] REQUIREMENT_CHOICES = {
-            AuthenticationExecutionModel.Requirement.REQUIRED,
-            AuthenticationExecutionModel.Requirement.ALTERNATIVE,
-            AuthenticationExecutionModel.Requirement.DISABLED
-    };
-
     @Override
     public AuthenticationExecutionModel.Requirement[] getRequirementChoices() {
-        return REQUIREMENT_CHOICES;
+        return new AuthenticationExecutionModel.Requirement[] { AuthenticationExecutionModel.Requirement.REQUIRED };
     }
-
     @Override
     public boolean isUserSetupAllowed() {
         return false;
@@ -47,7 +54,7 @@ public class EhrLaunchValidatorFactory implements AuthenticatorFactory {
 
     @Override
     public String getHelpText() {
-        return "Detects and validates a SMART on EHR-Launch then sets session values for context resolver.";
+        return "Checks if the request is a SMART on FHIR EHR-Launch. Returns true if so, false otherwise.";
     }
 
     @Override
@@ -57,23 +64,18 @@ public class EhrLaunchValidatorFactory implements AuthenticatorFactory {
     }
 
     @Override
+    public void init(Config.Scope scope) {
+
+    }
+
+    @Override
+    public void postInit(KeycloakSessionFactory keycloakSessionFactory) {
+
+    }
+
+    @Override
     public void close() {
-        // NOOP
-    }
 
-    @Override
-    public Authenticator create(KeycloakSession session) {
-        return SINGLETON;
-    }
-
-    @Override
-    public void init(Config.Scope config) {
-        // NOOP
-    }
-
-    @Override
-    public void postInit(KeycloakSessionFactory factory) {
-        // NOOP
     }
 
     @Override

@@ -11,9 +11,9 @@ import org.keycloak.protocol.oidc.OIDCLoginProtocol;
 import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.sessions.AuthenticationSessionModel;
 
-public final class SmartHelper {
+public final class SmartLaunchHelper {
 
-    public static final Logger logger = Logger.getLogger(SmartHelper.class);
+    public static final Logger logger = Logger.getLogger(SmartLaunchHelper.class);
 
     public static final String SMART_SCOPE_LAUNCH_PATIENT = "launch/patient";
     public static final String SMART_SCOPE_LAUNCH_ENCOUNTER = "launch/encounter";
@@ -54,19 +54,29 @@ public final class SmartHelper {
 
     public static final String AUTH_SESSION_NOTE_LAUNCH_TOKEN = "launch_token";
 
-    public static boolean isEHRLaunch(AuthenticationFlowContext context) {
-        boolean isEHRLaunchRequest = hasLaunchParameter(context) && hasLaunchScope(context);
-        logger.infof("Is a SMART on FHIR EHR-launch Request? %s.", isEHRLaunchRequest ? "YES" : "NO");
-        return isEHRLaunchRequest;
+    public static boolean isEhrLaunch(AuthenticationFlowContext context) {
+        boolean ehrLaunch = hasLaunchParameter(context) && hasLaunchScope(context);
+        logger.debugf("Is a SMART on FHIR EHR-launch Request? %s.", ehrLaunch ? "YES" : "NO");
+        return ehrLaunch;
     }
 
     public static boolean isStandaloneLaunch(AuthenticationFlowContext context) {
-        boolean isStandaloneLaunchRequest = !hasLaunchParameter(context) && hasStandaloneLaunchScopes(context);
-        logger.infof("Is a SMART on FHIR standalone launch Request? %s.", isStandaloneLaunchRequest ? "YES" : "NO");
-        return isStandaloneLaunchRequest;
+        boolean standalone = !hasLaunchParameter(context) && hasStandaloneLaunchScopes(context);
+        logger.debugf("Is a SMART on FHIR standalone launch Request? %s.", standalone ? "YES" : "NO");
+        return standalone;
     }
 
-    public static boolean hasAudienceParam(AuthenticationFlowContext context) {
+    public static boolean isEhrLaunchValid(AuthenticationFlowContext context) {
+        boolean valid = isEhrLaunch(context) && hasAudienceParameter(context);
+        return valid;
+    }
+
+    public static boolean isStandaloneLaunchValid(AuthenticationFlowContext context) {
+        boolean valid = !isEhrLaunch(context) && isStandaloneLaunch(context) && hasAudienceParameter(context);
+        return valid;
+    }
+
+    public static boolean hasAudienceParameter(AuthenticationFlowContext context) {
 
         logger.debug("hasAudienceParam() **** SMART on FHIR  ****");
 
@@ -74,25 +84,27 @@ public final class SmartHelper {
         String requestedAud = context.getUriInfo().getQueryParameters().getFirst(SMART_AUD_PARAM);
         String requestedResource = context.getUriInfo().getQueryParameters().getFirst(SMART_RESOURCE_PARAM);
 
-        boolean hasAudience = (requestedAud != null) || (requestedAudience != null) || (requestedResource != null);
-        return hasAudience;
+        boolean hasAudience = (requestedAudience != null) && !requestedAudience.isBlank();
+        boolean hasAud = (requestedAud != null) && !requestedAud.isBlank();
+        boolean hasResource = (requestedResource != null) && !requestedResource.isBlank();
+
+        return  (hasAudience || hasAud || hasResource);
     }
 
     public static boolean hasLaunchParameter(AuthenticationFlowContext context) {
 
         logger.debug("hasLaunchParameter() **** SMART on FHIR  ****");
-        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartHelper.LAUNCH_REQUEST_PARAM);
+        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartLaunchHelper.LAUNCH_REQUEST_PARAM);
 
-        logger.info("SMART Launch Parameter: " + launchParam);
-        boolean hasLaunch = (launchParam != null);
+        boolean hasLaunch = (launchParam != null) && !launchParam.isBlank();
         return hasLaunch;
     }
 
-    public static String getLaunchParam(AuthenticationFlowContext context) {
+    public static String getLaunchParameter(AuthenticationFlowContext context) {
 
         logger.debug("getLaunchParam() **** SMART on FHIR  ****");
 
-        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartHelper.LAUNCH_REQUEST_PARAM);
+        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartLaunchHelper.LAUNCH_REQUEST_PARAM);
 
         logger.info("SMART Launch Parameter: " + launchParam);
         return launchParam;
@@ -116,12 +128,10 @@ public final class SmartHelper {
 
         clientScopes.forEach(scope -> scopes.add(scope.getName()));
 
-        boolean hasLaunch = scopes.contains(SmartHelper.SMART_SCOPE_EHR_LAUNCH);
+        boolean hasLaunch = scopes.contains(SmartLaunchHelper.SMART_SCOPE_EHR_LAUNCH);
 
         return hasLaunch;
     }
-
- 
 
     public static boolean hasStandaloneLaunchScopes(AuthenticationFlowContext context) {
 
@@ -141,14 +151,14 @@ public final class SmartHelper {
 
         clientScopes.forEach(scope -> scopes.add(scope.getName()));
 
-        boolean hasScopes = (scopes.size() > 1) && (scopes.contains(SmartHelper.SMART_SCOPE_LAUNCH_PATIENT) ||
-                scopes.contains(SmartHelper.SMART_SCOPE_LAUNCH_ENCOUNTER) ||
-                scopes.stream().anyMatch(s -> s.startsWith(SmartHelper.SMART_SCOPE_LAUNCH_ANY_PREFIX)));
+        boolean hasScopes = (scopes.size() > 1) && (scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_PATIENT) ||
+                scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER) ||
+                scopes.stream().anyMatch(s -> s.startsWith(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ANY_PREFIX)));
 
         return hasScopes;
     }
 
-    public static String getAudienceParam(AuthenticationFlowContext context) {
+    public static String getAudienceParameter(AuthenticationFlowContext context) {
 
         logger.info("getAudienceParam() **** SMART on FHIR  ****");
 
@@ -156,14 +166,13 @@ public final class SmartHelper {
         String requestedAud = context.getUriInfo().getQueryParameters().getFirst(SMART_AUD_PARAM);
         String requestedResource = context.getUriInfo().getQueryParameters().getFirst(SMART_RESOURCE_PARAM);
 
-        if (requestedAudience != null) {
-            logger.debug("Found audience parameter: " + requestedAudience);
-            return requestedAudience;
-        }
-
         if (requestedAud != null) {
             logger.debug("Found aud parameter: " + requestedAud);
             return requestedAud;
+        }
+        if (requestedAudience != null) {
+            logger.debug("Found audience parameter: " + requestedAudience);
+            return requestedAudience;
         }
 
         if (requestedResource != null) {
@@ -174,54 +183,54 @@ public final class SmartHelper {
         return null;
     }
 
-    public static void setAudience(AuthenticationFlowContext context, String audience) {
+    public static void saveAudienceToSession(AuthenticationFlowContext context, String audience) {
         logger.infof("Save to User Session: %s = %s", USER_SESSION_NOTE_AUDIENCE, audience);
         context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_AUDIENCE, audience);
     }
 
-    public static String getAudience(AuthenticationFlowContext context) {
+    public static String getAudienceFromSession(AuthenticationFlowContext context) {
         return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_AUDIENCE);
     }
 
-    public static void removeAudience(AuthenticationFlowContext context) {
+    public static void removeAudienceFromSession(AuthenticationFlowContext context) {
         context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_AUDIENCE);
     }
 
-    public static void setPatient(AuthenticationFlowContext context, String patientId) {
+    public static void savePatientToSession(AuthenticationFlowContext context, String patientId) {
         context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_PATIENT, patientId);
     }
 
-    public static String getPatient(AuthenticationFlowContext context) {
+    public static String getPatientFromSession(AuthenticationFlowContext context) {
         return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_PATIENT);
     }
 
-    public static void removePatient(AuthenticationFlowContext context) {
+    public static void removePatientFromSession(AuthenticationFlowContext context) {
         context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_PATIENT);
     }
 
-    public static void setFhirContext(AuthenticationFlowContext context, String fhirContext) {
+    public static void saveFhirContextToSession(AuthenticationFlowContext context, String fhirContext) {
         context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_FHIR_CONTEXT, fhirContext);
     }
 
-    public static String getFhirContext(AuthenticationFlowContext context) {
+    public static String getFhirContextFromSession(AuthenticationFlowContext context) {
         return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_FHIR_CONTEXT);
     }
 
-    public static void removeFhirContext(AuthenticationFlowContext context) {
+    public static void removeFhirContextFromSession(AuthenticationFlowContext context) {
         context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_FHIR_CONTEXT);
     }
 
-    public static void setNeedBanner(AuthenticationFlowContext context, boolean needBanner) {
+    public static void saveNeedBannerToSession(AuthenticationFlowContext context, boolean needBanner) {
         context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_NEED_BANNER,
                 Boolean.toString(needBanner));
     }
 
-    public static boolean getNeedBanner(AuthenticationFlowContext context) {
+    public static boolean getNeedBannerFromSession(AuthenticationFlowContext context) {
         String needBanner = context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_NEED_BANNER);
         return Boolean.parseBoolean(needBanner);
     }
 
-    public static void removeNeedBanner(AuthenticationFlowContext context) {
+    public static void removeNeedBannerFromSession(AuthenticationFlowContext context) {
         context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_NEED_BANNER);
     }
 
@@ -245,17 +254,17 @@ public final class SmartHelper {
         context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_SMART_STYLE_URL);
     }
 
-    public static void setLaunch(AuthenticationFlowContext context, String launch) {
+    public static void saveLaunchToSession(AuthenticationFlowContext context, String launch) {
         logger.infof("Save to Session Auth Note: %s = %s", AUTH_SESSION_NOTE_LAUNCH_TOKEN, launch);
         context.getAuthenticationSession().setAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN, launch);
     }
 
-    public static String getLaunch(AuthenticationFlowContext context) {
-        return context.getAuthenticationSession().getAuthNote(USER_SESSION_NOTE_FHIR_CONTEXT);
+    public static String getLaunchFromSession(AuthenticationFlowContext context) {
+        return context.getAuthenticationSession().getAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN);
     }
 
-    public static void removeLaunch(AuthenticationFlowContext context) {
-        context.getAuthenticationSession().removeAuthNote(USER_SESSION_NOTE_FHIR_CONTEXT);
+    public static void removeLaunchFromSession(AuthenticationFlowContext context) {
+        context.getAuthenticationSession().removeAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN);
     }
 
 }

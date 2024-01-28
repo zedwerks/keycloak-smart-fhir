@@ -32,7 +32,7 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
 
     @Override
     public String getDisplayType() {
-        return "SMART on FHIR: Launch Context Resolver";
+        return "SMART on FHIR EHR-Launch Context Resolver";
     }
 
     @Override

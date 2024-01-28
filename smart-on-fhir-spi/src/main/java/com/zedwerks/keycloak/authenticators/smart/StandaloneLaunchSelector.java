@@ -50,7 +50,7 @@ public class StandaloneLaunchSelector implements Authenticator {
         ArrayList<String> scopes = new ArrayList<String>();
         clientScopes.forEach(scope -> scopes.add(scope.getName()));
 
-        if (!scopes.contains(SmartHelper.SMART_SCOPE_LAUNCH_PATIENT)) {
+        if (!scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_PATIENT)) {
             logger.info("Not a SMART on FHIR launch/patient request");
             context.attempted(); // just carry on... not a SMART on FHIR standalone launch/patient request
             return;

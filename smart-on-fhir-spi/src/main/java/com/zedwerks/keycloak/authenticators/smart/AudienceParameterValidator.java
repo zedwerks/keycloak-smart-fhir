@@ -29,7 +29,7 @@ public class AudienceParameterValidator implements Authenticator {
 
         logger.info("authenticate() **** SMART on FHIR Audience Validator ****");
 
-        if (!SmartHelper.isEHRLaunch(context) && !SmartHelper.isStandaloneLaunch(context)) {
+        if (!SmartLaunchHelper.isEhrLaunch(context) && !SmartLaunchHelper.isStandaloneLaunch(context)) {
             logger.info("*** SMART on FHIR Audience Validator: This is not a SMART on FHIR request.");
             context.attempted(); // just carry on... not a SMART on FHIR request
             return;
@@ -48,16 +48,9 @@ public class AudienceParameterValidator implements Authenticator {
             return; // early exit
         }
 
-        String requestedAudience = context.getUriInfo().getQueryParameters().getFirst(SmartHelper.SMART_AUDIENCE_PARAM);
-        String requestedAud = context.getUriInfo().getQueryParameters().getFirst(SmartHelper.SMART_AUD_PARAM);
-        String requestedResource = context.getUriInfo().getQueryParameters().getFirst(SmartHelper.SMART_RESOURCE_PARAM);
+        String audience = SmartLaunchHelper.getAudienceParameter(context);
 
-        // Hierarchical precedence: aud > audience > resource. If none of these are
-        // present, then the request is invalid.
-        String audience = requestedAud != null ? requestedAud : requestedAudience;
-        audience = audience != null ? audience : requestedResource;
-
-        if (audience == null || audience.isEmpty()) {
+        if (audience == null || audience.trim().isEmpty()) {
             String msg = "A SMART on FHIR Request must include an 'aud', 'audience', or 'resource' parameter";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
@@ -102,8 +95,7 @@ public class AudienceParameterValidator implements Authenticator {
                 return; // early exit
             }
         }
-        logger.infof("*** Audience is valid/acceptable: %s", audience);
-        SmartHelper.setAudience(context, audience);
+        logger.infof("*** Great! Audience is known: '%s'. It will be used for SMART Launch", audience);
         context.attempted();
     }
 

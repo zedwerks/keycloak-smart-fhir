@@ -10,13 +10,13 @@ import org.keycloak.provider.ProviderConfigProperty;
 
 import java.util.List;
 
-public class StandaloneLaunchValidatorFactory implements AuthenticatorFactory {
-    private static final String PROVIDER_ID = "smart-standalone-launch-validator";
-    private static final StandaloneLaunchValidator SINGLETON = new StandaloneLaunchValidator();
+public class SmartLaunchDetectorFactory implements AuthenticatorFactory {
+    private static final String PROVIDER_ID = "smart-launch-detector";
+    private static final SmartLaunchDetector SINGLETON = new SmartLaunchDetector();
 
     @Override
     public String getDisplayType() {
-        return "SMART on FHIR: Standalone Launch Validator";
+        return "SMART on FHIR Launch Detector";
     }
 
     @Override
@@ -47,7 +47,7 @@ public class StandaloneLaunchValidatorFactory implements AuthenticatorFactory {
 
     @Override
     public String getHelpText() {
-        return "Detects and validates a SMART on EHR-Launch then sets session values for context resolver.";
+        return "Detects and validates a SMART on FHIR Launch then sets session values for context selector or resolver.";
     }
 
     @Override

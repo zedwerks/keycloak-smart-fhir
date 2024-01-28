@@ -39,15 +39,15 @@ import jakarta.ws.rs.core.Response;
  * @see https://build.fhir.org/ig/HL7/smart-app-launch/scopes-and-launch-context.html#apps-that-launch-from-the-ehr
  */
 
-public class EhrLaunchValidator implements Authenticator {
+public class SmartLaunchDetector implements Authenticator {
 
-    public static final Logger logger = Logger.getLogger(EhrLaunchValidator.class);
+    public static final Logger logger = Logger.getLogger(SmartLaunchDetector.class);
 
-    public EhrLaunchValidator(KeycloakSession session) {
+    public SmartLaunchDetector(KeycloakSession session) {
         // NOOP
     }
 
-    public EhrLaunchValidator() {
+    public SmartLaunchDetector() {
         // NOOP
     }
 
@@ -56,27 +56,28 @@ public class EhrLaunchValidator implements Authenticator {
 
         logger.info("authenticate() **** SMART on FHIR Launch Validator ****");
 
-        boolean isEhrLaunch = SmartHelper.isEHRLaunch(context);
+        boolean isEhrLaunch = SmartLaunchHelper.isEhrLaunch(context);
+        boolean isStandaloneLaunch = SmartLaunchHelper.isStandaloneLaunch(context);
 
-        if (!isEhrLaunch) {
-            logger.info("Not a SMART on FHIR EHR-Launch request.");
+        if (!isEhrLaunch && !isStandaloneLaunch) {
+            logger.info("Not a SMART on FHIR Launch request.");
             context.attempted(); // just carry on... not a SMART on FHIR request
             return;
         }
 
-        boolean hasLaunchParam = SmartHelper.hasLaunchParameter(context);
-        boolean hasLaunchScope = SmartHelper.hasLaunchScope(context);
-        boolean hasAudience = SmartHelper.hasAudienceParam(context);
-
-        if (!hasLaunchParam && !hasLaunchScope  && !hasAudience) {
-            logger.info("Not a SMART on FHIR EHR-Launch request.");
-            context.attempted(); // just carry on... not a SMART on FHIR launch request
+        if (isStandaloneLaunch && !SmartLaunchHelper.isEhrLaunchValid(context)) {
+            String msg = "Invalid Standalone launch request!";
+            logger.warn(msg);
+            context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
+                    Response.status(302)
+                            .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                    "?error=invalid_request" +
+                                    "&error_description=" + msg)
+                            .build());
             return;
         }
-
-        if (!hasAudience) {
-            // launch scope found, but no launch parameter
-            String msg = "Missing audience parameter! Not good!";
+        if (isEhrLaunch && !SmartLaunchHelper.isEhrLaunchValid(context)) {
+            String msg = "Invalid EHR launch request!";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
                     Response.status(302)
@@ -87,10 +88,18 @@ public class EhrLaunchValidator implements Authenticator {
             return;
         }
 
-        logger.info("authenticate(): **** SMART on FHIR EHR-Launch is detected! ****");
-        String launch = SmartHelper.getLaunchParam(context);
-        SmartHelper.setLaunch(context, launch); // tuck this away for the context resolver.
+        // If we are here, then we have a valid launch request.
+        // Let's save the audience parameter to the session.
+        String audience = SmartLaunchHelper.getAudienceParameter(context);
+        SmartLaunchHelper.saveAudienceToSession(context, audience);
+
+        if (isEhrLaunch) {
+            String launch = SmartLaunchHelper.getLaunchParameter(context);
+            SmartLaunchHelper.saveLaunchToSession(context, launch); // tuck this away for the context resolver.
+        }
+
         context.attempted(); // Do not set this to success???, as we are not done authenticating the user.
+        return;
     }
 
     @Override
