@@ -1,4 +1,4 @@
-package com.zedwerks.keycloak.authenticators;
+package com.zedwerks.keycloak.authenticators.smart;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,9 +11,9 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
-public class SmartPatientLaunchAuthenticatorFactory implements AuthenticatorFactory {
+public class StandaloneLaunchSelectorFactory implements AuthenticatorFactory {
 
-    private static final String PROVIDER_ID = "smart-auth-patient-launch";
+    private static final String PROVIDER_ID = "smart-standalone-launch-selector";
 
     // configuration parameters
     private static final String USE_AUDIENCE_FHIR_SERVER = "use-audience-fhir-server";
@@ -85,7 +85,7 @@ public class SmartPatientLaunchAuthenticatorFactory implements AuthenticatorFact
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        return new SmartPatientLaunchAuthenticator();
+        return new StandaloneLaunchSelector(session);
     }
 
     @Override

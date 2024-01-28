@@ -1,4 +1,4 @@
-package com.zedwerks.keycloak.authenticators;
+package com.zedwerks.keycloak.authenticators.smart;
 
 import org.keycloak.Config;
 import org.keycloak.authentication.Authenticator;
@@ -8,23 +8,15 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
-import java.util.Collections;
 import java.util.List;
 
-/**
- * Factory for creating AudienceValidator instances.
- */
-public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
-
-    private static final String PROVIDER_ID = "smart-audience-validator";
-
-    static final String AUDIENCES_PROP_NAME = "smart-audiences";
-    private static final String AUDIENCES_PROP_LABEL = "Accepted FHIR Server URLs";
-    private static final String AUDIENCES_PROP_DESCRIPTION = "Comma-separated audience values for clients to request using 'aud', 'audience' or 'resource' request parameters. These must be FHIR Server URL(s)";
+public class EhrLaunchValidatorFactory implements AuthenticatorFactory {
+    private static final String PROVIDER_ID = "smart-ehr-launch-validator";
+    private static final EhrLaunchValidator SINGLETON = new EhrLaunchValidator();
 
     @Override
     public String getDisplayType() {
-        return "SMART on FHIR: Audience Validation";
+        return "SMART on FHIR: EHR Launch Validator";
     }
 
     @Override
@@ -37,7 +29,8 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
         return true;
     }
 
-    public static final AuthenticationExecutionModel.Requirement[] REQUIREMENT_CHOICES = {
+    private static AuthenticationExecutionModel.Requirement[] REQUIREMENT_CHOICES = {
+            AuthenticationExecutionModel.Requirement.REQUIRED,
             AuthenticationExecutionModel.Requirement.ALTERNATIVE,
             AuthenticationExecutionModel.Requirement.DISABLED
     };
@@ -54,21 +47,13 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
 
     @Override
     public String getHelpText() {
-        return "Verifies that the audience requested by the client (via the 'aud', 'audience', or 'resource' parameter) "
-                + "matches one of the configured, comma-delineated FHIR URLs.";
+        return "Detects and validates a SMART on EHR-Launch then sets session values for context resolver.";
     }
 
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
 
-        ProviderConfigProperty audiences = new ProviderConfigProperty();
-        audiences.setType(ProviderConfigProperty.MULTIVALUED_STRING_TYPE);
-        audiences.setName(AUDIENCES_PROP_NAME);
-        audiences.setLabel(AUDIENCES_PROP_LABEL);
-        audiences.setHelpText(AUDIENCES_PROP_DESCRIPTION);
-        audiences.setRequired(isConfigurable());
-
-        return Collections.singletonList(audiences);
+        return null;
     }
 
     @Override
@@ -78,7 +63,7 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        return new AudienceParameterValidator(session);
+        return SINGLETON;
     }
 
     @Override

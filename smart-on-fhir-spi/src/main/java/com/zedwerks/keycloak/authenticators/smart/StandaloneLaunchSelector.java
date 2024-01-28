@@ -1,4 +1,4 @@
-package com.zedwerks.keycloak.authenticators;
+package com.zedwerks.keycloak.authenticators.smart;
 
 import java.util.stream.Stream;
 import java.util.ArrayList;
@@ -15,33 +15,23 @@ import org.keycloak.protocol.oidc.OIDCLoginProtocol;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.keycloak.protocol.oidc.TokenManager;
 
-public class SmartPatientLaunchAuthenticator implements Authenticator {
+public class StandaloneLaunchSelector implements Authenticator {
 
-    public static final Logger logger = Logger.getLogger(SmartPatientLaunchAuthenticator.class);
+    public static final Logger logger = Logger.getLogger(StandaloneLaunchSelector.class);
 
-    public SmartPatientLaunchAuthenticator(KeycloakSession session) {
-        logger.info("SmartPatientLaunchAuthenticator(session) **** SMART on FHIR Patient-Launch Authenticator ****");
+    public StandaloneLaunchSelector(KeycloakSession session) {
         // NOOP
     }
 
-    public SmartPatientLaunchAuthenticator() {
-        logger.info("SmartPatientLaunchAuthenticator() **** SMART on FHIR Patient-Launch Authenticator ****");
+    public StandaloneLaunchSelector() {
         // NOOP
     }
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
 
-        logger.info("authenticate() **** SMART on FHIR Patient-Launch Authenticator ****");
+        logger.info("authenticate() **** SMART on FHIR Standalone Launch Selector ****");
 
-        // First, let's clear out any launch context, patient_id, etc...
-        SmartOnFhir.clearSmartLaunchInSession(context);
-
-        if (!SmartOnFhir.isSmartOnFhirRequest(context)) {
-            logger.info("*** SMART on FHIR Patient-Launch Authenticator: This is not a SMART on FHIR request.");
-            context.attempted(); // just carry on... not a SMART on FHIR request
-            return;
-        }
 
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         ClientModel client = authSession.getClient();
@@ -60,7 +50,7 @@ public class SmartPatientLaunchAuthenticator implements Authenticator {
         ArrayList<String> scopes = new ArrayList<String>();
         clientScopes.forEach(scope -> scopes.add(scope.getName()));
 
-        if (!scopes.contains(SmartOnFhir.SMART_SCOPE_LAUNCH_PATIENT)) {
+        if (!scopes.contains(SmartHelper.SMART_SCOPE_LAUNCH_PATIENT)) {
             logger.info("Not a SMART on FHIR launch/patient request");
             context.attempted(); // just carry on... not a SMART on FHIR standalone launch/patient request
             return;

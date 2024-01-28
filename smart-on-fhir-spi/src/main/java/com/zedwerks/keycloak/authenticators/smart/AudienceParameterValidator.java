@@ -1,4 +1,4 @@
-package com.zedwerks.keycloak.authenticators;
+package com.zedwerks.keycloak.authenticators.smart;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +20,6 @@ public class AudienceParameterValidator implements Authenticator {
 
     private static final Logger logger = Logger.getLogger(AudienceParameterValidator.class);
 
-
     public AudienceParameterValidator(KeycloakSession session) {
         // NOOP
     }
@@ -30,7 +29,7 @@ public class AudienceParameterValidator implements Authenticator {
 
         logger.info("authenticate() **** SMART on FHIR Audience Validator ****");
 
-        if (!SmartOnFhir.isSmartOnFhirRequest(context)) {
+        if (!SmartHelper.isEHRLaunch(context) && !SmartHelper.isStandaloneLaunch(context)) {
             logger.info("*** SMART on FHIR Audience Validator: This is not a SMART on FHIR request.");
             context.attempted(); // just carry on... not a SMART on FHIR request
             return;
@@ -49,9 +48,9 @@ public class AudienceParameterValidator implements Authenticator {
             return; // early exit
         }
 
-        String requestedAudience = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.SMART_AUDIENCE_PARAM);
-        String requestedAud = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.SMART_AUD_PARAM);
-        String requestedResource = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.SMART_RESOURCE_PARAM);
+        String requestedAudience = context.getUriInfo().getQueryParameters().getFirst(SmartHelper.SMART_AUDIENCE_PARAM);
+        String requestedAud = context.getUriInfo().getQueryParameters().getFirst(SmartHelper.SMART_AUD_PARAM);
+        String requestedResource = context.getUriInfo().getQueryParameters().getFirst(SmartHelper.SMART_RESOURCE_PARAM);
 
         // Hierarchical precedence: aud > audience > resource. If none of these are
         // present, then the request is invalid.
@@ -103,8 +102,8 @@ public class AudienceParameterValidator implements Authenticator {
                 return; // early exit
             }
         }
-        logger.infof("Audience is acceptable: %s", audience);
-        SmartOnFhir.setAudience(context, audience);
+        logger.infof("*** Audience is valid/acceptable: %s", audience);
+        SmartHelper.setAudience(context, audience);
         context.attempted();
     }
 
