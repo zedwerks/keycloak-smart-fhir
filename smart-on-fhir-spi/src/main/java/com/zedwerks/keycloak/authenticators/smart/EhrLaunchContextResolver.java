@@ -124,7 +124,6 @@ public class EhrLaunchContextResolver implements Authenticator {
     private String authenticateForContextAPI(AuthenticationFlowContext context) {
         KeycloakSession session = context.getSession();
         RealmModel realm = context.getRealm();
-        // UserModel user = context.getUser();
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         ClientModel client = authSession.getClient();
 
@@ -161,19 +160,23 @@ public class EhrLaunchContextResolver implements Authenticator {
         // We will be hand-bombing in the context read scope
         // rather than rely on the user having the scope to read.
 
-        String scopeString = context.getAuthenticatorConfig().getConfig()
-                .get(EhrLaunchContextResolverFactory.CONF_CONTEXT_API_SCOPES);
-        String[] scopes = scopeString.split(" ");
-        String audience = context.getAuthenticatorConfig().getConfig()
-                .get(EhrLaunchContextResolverFactory.CONF_CONTEXT_API_AUDIENCE);
+        String scope = context.getAuthenticatorConfig().getConfig().get(EhrLaunchContextResolverFactory.CONF_CONTEXT_API_SCOPE);
+        if (scope == null) {
+            logger.warn("No scope configured for Context API. Using default scope: " + EhrLaunchContextResolverFactory.CONF_CONTEXT_API_SCOPE_DEFAULT);
+            scope = EhrLaunchContextResolverFactory.CONF_CONTEXT_API_SCOPE_DEFAULT;
+        }
+        String contextAudience = context.getAuthenticatorConfig().getConfig().get(EhrLaunchContextResolverFactory.CONF_CONTEXT_API_AUDIENCE);
+
+        if (contextAudience == null) {
+            logger.warn("No explicit audience configured for Context API. Using the default value.");
+            contextAudience = EhrLaunchContextResolverFactory.CONF_CONTEXT_API_AUDIENCE_DEFAULT;
+        }
 
         ClientSessionContext clientSessionCtx = DefaultClientSessionContext
                 .fromClientSessionScopeParameter(clientSession, session);
 
-        if (scopes != null && scopes.length > 0) {
-            for (String scope : scopes) {
-                clientSessionCtx.getClientScopeIds().add(scope);
-            }
+        if (scope != null && !scope.isBlank()) {
+            clientSessionCtx.getClientScopeIds().add(scope);
         }
 
         // Explicit decision not to check the requested audience against the configured
@@ -187,13 +190,11 @@ public class EhrLaunchContextResolver implements Authenticator {
 
         // Explicitly override the scope string with what we need (less brittle than
         // depending on this to exist as a client scope)
-        if (scopes != null && scopes.length > 0) {
-            for (String scope : scopes) {
-                accessToken.setScope(scope);
-            }
+        if (scope != null && !scope.isBlank()) {
+            accessToken.setScope(scope);
         }
+        JsonWebToken jwt = accessToken.audience(contextAudience);
 
-        JsonWebToken jwt = accessToken.audience(audience);
         return session.tokens().encode(jwt);
     }
 

@@ -11,7 +11,7 @@ variable "keycloak_environment" {
 variable "keycloak_smart_configuration" {
   type = object({
     fhir_audiences = string
-    context_api_scopes = optional(string, "context:read")
+    context_api_scope = optional(string, "launch-context:read")
     context_api_url = optional(string, "http://localhost:9000")
     context_api_audience = optional(string, "context-api")
   })

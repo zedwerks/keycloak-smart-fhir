@@ -16,11 +16,11 @@ public class StandaloneLaunchSelectorFactory implements AuthenticatorFactory {
     private static final String PROVIDER_ID = "smart-standalone-launch-selector";
 
     // configuration parameters
-    private static final String USE_AUDIENCE_FHIR_SERVER = "use-audience-fhir-server";
+    private static final String USE_AUDIENCE_FHIR_SERVER = "use_audience_fhir_server";
     private static final String USE_AUDIENCE_FHIR_SERVER_LABEL = "Use Audience FHIR Server";
     private static final String USE_AUDIENCE_FHIR_SERVER_DESCRIPTION = "If true, the FHIR Server URL will be taken from the 'aud' parameter. If false, the FHIR Server URL will be taken from the 'iss' parameter.";
 
-    private static final String CONF_FHIR_URL = "fhir-server-base-url";
+    private static final String CONF_FHIR_URL = "fhir_server_base_url";
     private static final String CONF_FHIR_URL_LABEL = "FHIR Server URL";
     private static final String CONF_FHIR_URL_DESCRIPTION = "The base URL of the FHIR resource server"
             + " for retrieving Patient resources. This can differ from the base URL provided by the client in"

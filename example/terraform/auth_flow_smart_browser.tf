@@ -34,7 +34,7 @@ resource "keycloak_authentication_execution_config" "s1e2_config" {
   execution_id = keycloak_authentication_execution.s1e2.id
   alias        = "smart-audience-validator-config"
   config = {
-    smart-audiences = var.keycloak_smart_configuration.fhir_audiences
+    smart_audiences = var.keycloak_smart_configuration.fhir_audiences
   }
 }
 
@@ -76,8 +76,9 @@ resource "keycloak_authentication_execution_config" "s3e2_config" {
   execution_id = keycloak_authentication_execution.s3e2.id
   alias        = "idp-smart-context-resolver-config"
   config = {
-    context-api-url =  var.keycloak_smart_configuration.context_api_url
-    context-api-scopes = var.keycloak_smart_configuration.context_api_scopes
+    context_api_url =  var.keycloak_smart_configuration.context_api_url
+    context_api_scope = var.keycloak_smart_configuration.context_api_scope
+    context_api_audience = var.keycloak_smart_configuration.context_api_audience
   }
 }
 
@@ -111,8 +112,9 @@ resource "keycloak_authentication_execution_config" "s4e2_config" {
   execution_id = keycloak_authentication_execution.s4e2.id
   alias        = "login-form-smart-context-resolver-config"
   config = {
-    context-api-url =  var.keycloak_smart_configuration.context_api_url
-    context-api-scopes = var.keycloak_smart_configuration.context_api_scopes
+    context_api_url =  var.keycloak_smart_configuration.context_api_url
+    context_api_scope = var.keycloak_smart_configuration.context_api_scope
+    context_api_audience = var.keycloak_smart_configuration.context_api_audience
   }
 }
 

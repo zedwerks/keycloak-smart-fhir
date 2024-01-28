@@ -18,7 +18,7 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
 
     private static final String PROVIDER_ID = "smart-audience-validator";
 
-    static final String AUDIENCES_PROP_NAME = "smart-audiences";
+    static final String AUDIENCES_PROP_NAME = "smart_audiences";
     private static final String AUDIENCES_PROP_LABEL = "Accepted FHIR Server URLs";
     private static final String AUDIENCES_PROP_DESCRIPTION = "Comma-separated audience values for clients to request using 'aud', 'audience' or 'resource' request parameters. These must be FHIR Server URL(s)";
 

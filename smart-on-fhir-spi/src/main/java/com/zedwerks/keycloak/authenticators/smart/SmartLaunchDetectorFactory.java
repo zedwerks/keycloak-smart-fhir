@@ -26,7 +26,7 @@ public class SmartLaunchDetectorFactory implements AuthenticatorFactory {
 
     @Override
     public boolean isConfigurable() {
-        return true;
+        return false;
     }
 
     private static AuthenticationExecutionModel.Requirement[] REQUIREMENT_CHOICES = {

@@ -16,16 +16,16 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
     private static final EhrLaunchContextResolver SINGLETON = new EhrLaunchContextResolver();
 
     // Configuration Settings to connect to the Context API server
-    public static final String CONF_CONTEXT_API_URL = "context-api-url";
+    public static final String CONF_CONTEXT_API_URL = "context_api_url";
     public static final String CONF_CONTEXT_API_URL_LABEL = "Context API URL";
     public static final String CONF_CONTEXT_API_URL_HELPTEXT = "The URL of the Context API server";
 
-    public static final String CONF_CONTEXT_API_SCOPES = "context-api-scopes";
-    public static final String CONF_CONTEXT_API_SCOPES_LABEL = "Context Scopes";
-    public static final String CONF_CONTEXT_API_SCOPES_HELPTEXT = "The Scopes Needed to make the Context API get request";
-    public static final String CONF_CONTEXT_API_URL_DEFAULT = "launch-context:read";
+    public static final String CONF_CONTEXT_API_SCOPE = "context_api_scope";
+    public static final String CONF_CONTEXT_API_SCOPE_LABEL = "Context Read Scope";
+    public static final String CONF_CONTEXT_API_SCOPE_HELPTEXT = "The Scope Needed to read/get Context API data";
+    public static final String CONF_CONTEXT_API_SCOPE_DEFAULT = "launch-context:read";
 
-    public static final String CONF_CONTEXT_API_AUDIENCE = "context-api-audience";
+    public static final String CONF_CONTEXT_API_AUDIENCE = "context_api_audience";
     public static final String CONF_CONTEXT_API_AUDIENCE_LABEL = "Context Audience";
     public static final String CONF_CONTEXT_API_AUDIENCE_HELPTEXT = "The Audience expected in the Access Token to make the Context API get request";
     public static final String CONF_CONTEXT_API_AUDIENCE_DEFAULT = "context-api";
@@ -78,10 +78,10 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
 
         ProviderConfigProperty contextScope = new ProviderConfigProperty();
         contextScope.setType(ProviderConfigProperty.STRING_TYPE);
-        contextScope.setName(CONF_CONTEXT_API_SCOPES);
-        contextScope.setLabel(CONF_CONTEXT_API_SCOPES_LABEL);
-        contextScope.setHelpText(CONF_CONTEXT_API_SCOPES_HELPTEXT);
-        contextScope.setDefaultValue(CONF_CONTEXT_API_URL_DEFAULT);
+        contextScope.setName(CONF_CONTEXT_API_SCOPE);
+        contextScope.setLabel(CONF_CONTEXT_API_SCOPE_LABEL);
+        contextScope.setHelpText(CONF_CONTEXT_API_SCOPE_HELPTEXT);
+        contextScope.setDefaultValue(CONF_CONTEXT_API_SCOPE_DEFAULT);
 
         ProviderConfigProperty contextAudience = new ProviderConfigProperty();
         contextAudience.setType(ProviderConfigProperty.STRING_TYPE);
