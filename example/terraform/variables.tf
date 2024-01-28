@@ -10,13 +10,10 @@ variable "keycloak_environment" {
 
 variable "keycloak_smart_configuration" {
   type = object({
-    audiences = string
-    context_read_scope = optional(string, "context:read")
-    context_client_id = optional(string, "context_client")
-    context_client_secret = string
-    context_url = optional(string, "http://localhost:9000")
-    context_token_url = optional(string, "http://localhost:8080/realms/example/protocol/openid-connect/token")
-    standalone_scopes = optional(string, "launch/patient launch/encounter")
+    fhir_audiences = string
+    context_api_scope = optional(string, "launch-context:read")
+    context_api_url = optional(string, "http://localhost:9000")
+    context_api_audience = optional(string, "context-api")
   })
   description = "SMART on FHIR Configurations"
 }

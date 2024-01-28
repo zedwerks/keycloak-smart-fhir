@@ -1,4 +1,4 @@
-package com.zedwerks.keycloak.authenticators;
+package com.zedwerks.keycloak.authenticators.smart;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +20,6 @@ public class AudienceParameterValidator implements Authenticator {
 
     private static final Logger logger = Logger.getLogger(AudienceParameterValidator.class);
 
-
     public AudienceParameterValidator(KeycloakSession session) {
         // NOOP
     }
@@ -30,7 +29,7 @@ public class AudienceParameterValidator implements Authenticator {
 
         logger.info("authenticate() **** SMART on FHIR Audience Validator ****");
 
-        if (!SmartOnFhir.isSmartOnFhirRequest(context)) {
+        if (!SmartLaunchHelper.isEhrLaunch(context) && !SmartLaunchHelper.isStandaloneLaunch(context)) {
             logger.info("*** SMART on FHIR Audience Validator: This is not a SMART on FHIR request.");
             context.attempted(); // just carry on... not a SMART on FHIR request
             return;
@@ -40,6 +39,7 @@ public class AudienceParameterValidator implements Authenticator {
                 !context.getAuthenticatorConfig().getConfig()
                         .containsKey(AudienceParameterValidatorFactory.AUDIENCES_PROP_NAME)) {
             String msg = "The SMART on FHIR Audience Validation Extension must be configured with one or more allowed audiences (URLs)";
+            logger.warn(msg);
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
                     Response.status(302)
                             .header("Location", context.getAuthenticationSession().getRedirectUri() +
@@ -49,16 +49,10 @@ public class AudienceParameterValidator implements Authenticator {
             return; // early exit
         }
 
-        String requestedAudience = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.SMART_AUDIENCE_PARAM);
-        String requestedAud = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.SMART_AUD_PARAM);
-        String requestedResource = context.getUriInfo().getQueryParameters().getFirst(SmartOnFhir.SMART_RESOURCE_PARAM);
+        String audience = SmartLaunchHelper.getAudienceParameter(context);
+        logger.infof("Requested audience: %s", audience);
 
-        // Hierarchical precedence: aud > audience > resource. If none of these are
-        // present, then the request is invalid.
-        String audience = requestedAud != null ? requestedAud : requestedAudience;
-        audience = audience != null ? audience : requestedResource;
-
-        if (audience == null || audience.isEmpty()) {
+        if (audience == null || audience.isBlank()) {
             String msg = "A SMART on FHIR Request must include an 'aud', 'audience', or 'resource' parameter";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
@@ -70,12 +64,16 @@ public class AudienceParameterValidator implements Authenticator {
             return; // early exit
         }
 
-        logger.infof("Requested audience: %s", audience);
 
         String audiencesString = context.getAuthenticatorConfig().getConfig()
                 .get(AudienceParameterValidatorFactory.AUDIENCES_PROP_NAME);
 
         List<String> audiences = Arrays.asList(audiencesString.split("##"));
+
+        for (int i = 0; i < audiences.size(); i++) {
+            audiences.set(i, audiences.get(i).trim());
+            logger.info("Configured FHIR audience: " + audiences.get(i));
+        }
 
         if (audiences.size() < 1) {
             String msg = "The SMART on FHIR Audience Validation Extension must be configured with one or more allowed audiences (URLs)";
@@ -103,8 +101,7 @@ public class AudienceParameterValidator implements Authenticator {
                 return; // early exit
             }
         }
-        logger.infof("Audience is acceptable: %s", audience);
-        SmartOnFhir.setAudience(context, audience);
+        logger.infof("*** Great! Audience is known: '%s'. It will be used for SMART Launch", audience);
         context.attempted();
     }
 
