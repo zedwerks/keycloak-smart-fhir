@@ -65,7 +65,7 @@ public class SmartLaunchDetector implements Authenticator {
             return;
         }
 
-        if (isStandaloneLaunch && !SmartLaunchHelper.isEhrLaunchValid(context)) {
+        if (isStandaloneLaunch && !SmartLaunchHelper.isStandaloneLaunchValid(context)) {
             String msg = "Invalid Standalone launch request!";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
