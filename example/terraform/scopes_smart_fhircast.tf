@@ -1,20 +1,13 @@
-resource "keycloak_openid_client_scope" "smart_fhircast_scope" {
+resource "keycloak_openid_client_scope" "smart_fhircast_ppatient_open_read_scope" {
   realm_id               = data.keycloak_realm.realm.id
-  name                   = "fhircast"
-  description            = "Permission to access fhirCast topics. This is an alternative to 'launch' scope in SMART on FHIR."
+  name                   = "fhircast/Patient-open.read"
+  description            = "Permission to receive notification when the patient context changes."
   include_in_token_scope = true
 }
 
-resource "keycloak_openid_client_scope" "smart_fhircast_patient_open_scope" {
+resource "keycloak_openid_client_scope" "smart_fhircast_ppatient_open_write_scope" {
   realm_id               = data.keycloak_realm.realm.id
-  name                   = "Patient-open"
-  description            = "Permission to open fhirCast topic against Patient."
-  include_in_token_scope = true
-}
-
-resource "keycloak_openid_client_scope" "smart_fhircast_patient_close_scope" {
-  realm_id               = data.keycloak_realm.realm.id
-  name                   = "Patient-close"
-  description            = "Permission to close fhirCast topic against Patient."
+  name                   = "fhircast/Patient-open.write"
+  description            = "Permission to request a context change for patient."
   include_in_token_scope = true
 }

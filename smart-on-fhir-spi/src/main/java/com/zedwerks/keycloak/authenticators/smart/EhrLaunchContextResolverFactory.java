@@ -23,7 +23,7 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
     public static final String CONF_CONTEXT_API_SCOPE = "context_api_scope";
     public static final String CONF_CONTEXT_API_SCOPE_LABEL = "Context Read Scope";
     public static final String CONF_CONTEXT_API_SCOPE_HELPTEXT = "The Scope Needed to read/get Context API data";
-    public static final String CONF_CONTEXT_API_SCOPE_DEFAULT = "launch-context:read";
+    public static final String CONF_CONTEXT_API_SCOPE_DEFAULT = "launch";
 
     public static final String CONF_CONTEXT_API_AUDIENCE = "context_api_audience";
     public static final String CONF_CONTEXT_API_AUDIENCE_LABEL = "Context Audience";

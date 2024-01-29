@@ -38,8 +38,8 @@ resource "keycloak_openid_client_optional_scopes" "client_postman_optional_scope
     "launch/patient",
     "launch/encounter",
     "online_access",
-    "launch-context:read",
-    "launch-context:write"
+    "fhircast/Patient-open.read",
+    "fhircast/Patient-open.write"
   ]
 }
 
