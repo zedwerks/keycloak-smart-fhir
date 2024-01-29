@@ -58,7 +58,7 @@ public class AudienceParameterValidator implements Authenticator {
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
                     Response.status(302)
                             .header("Location", context.getAuthenticationSession().getRedirectUri() +
-                                    "?error=server_error" +
+                                    "?error=invalid_request" +
                                     "&error_description=" + msg)
                             .build());
             return; // early exit
