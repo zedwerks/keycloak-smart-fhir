@@ -1,8 +1,18 @@
+variable "client_postman" {
+  type = object({
+    id              = optional(string, "postman")
+    valid_redirects = optional(list(string), ["https://oauth.pstmn.io/v1/callback"])
+    login_theme     = optional(string, "keycloak")
+    enabled         = optional(bool, true)
+  })
+  description = "Postman Client"
+}
+
 resource "keycloak_openid_client" "client_postman" {
   realm_id                     = data.keycloak_realm.realm.id
   client_id                    = var.client_postman.id
-  name                         = "Postman"
-  description                  = "Postman client"
+  name                         = "Postman SMART App"
+  description                  = "Postman client as SMART app"
   enabled                      = var.client_postman.enabled
   access_type                  = "PUBLIC"
   standard_flow_enabled        = true
@@ -22,7 +32,7 @@ resource "keycloak_openid_client_default_scopes" "client_postman_default_scopes"
 
   default_scopes = [
     "web-origins",
-    "profile"]
+  "profile"]
 }
 resource "keycloak_openid_client_optional_scopes" "client_postman_optional_scopes" {
   realm_id  = keycloak_openid_client.client_postman.realm_id
@@ -32,24 +42,19 @@ resource "keycloak_openid_client_optional_scopes" "client_postman_optional_scope
     "offline_access",
     "launch",
     "fhirUser",
-    "fhircast",
-    "Patient-open",
-    "Patient-close",
     "launch/patient",
     "launch/encounter",
     "online_access",
-    "fhircast/Patient-open.read",
-    "fhircast/Patient-open.write"
-  ]
+  "fhircast/Patient-open.read"]
 }
 
 resource "keycloak_openid_audience_protocol_mapper" "audience_mapper" {
-  realm_id  = keycloak_openid_client.client_postman.realm_id
-  client_id = keycloak_openid_client.client_postman.id
-  name      = "audience-mapper"
+  realm_id                 = keycloak_openid_client.client_postman.realm_id
+  client_id                = keycloak_openid_client.client_postman.id
+  name                     = "audience-mapper"
   included_client_audience = keycloak_openid_client.client_postman.client_id
-  add_to_access_token = false
-  add_to_id_token = true
+  add_to_access_token      = false
+  add_to_id_token          = true
 }
 
 resource "keycloak_openid_user_realm_role_protocol_mapper" "postman_user_realm_role_mapper" {
@@ -62,3 +67,5 @@ resource "keycloak_openid_user_realm_role_protocol_mapper" "postman_user_realm_r
   add_to_access_token = true
   add_to_userinfo     = true
 }
+
+
