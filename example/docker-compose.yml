@@ -5,6 +5,8 @@ services:
     environment:
       - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
       - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+      - KEYCLOAK_TARGET_REALM=${KEYCLOAK_TARGET_REALM}
+      - KEYCLOAK_TERRAFORM_CLIENT_ID=${KEYCLOAK_TERRAFORM_CLIENT_ID}
     build:
       #context: https://github.com/zedwerks/keycloak-smart-fhir.git#main
       context: ../
