@@ -27,6 +27,7 @@ resource "keycloak_openid_client_default_scopes" "client_postman_emr_default_sco
   client_id = keycloak_openid_client.client_postman_emr.id
 
   default_scopes = [
+    "openid",
     "web-origins",
     "profile"
   ]
@@ -38,10 +39,9 @@ resource "keycloak_openid_client_optional_scopes" "client_postman_emr_optional_s
   optional_scopes = [
     "offline_access",
     "online_access",
-    "user/Patient.read",
     "fhircast/Patient-open.read",
     "fhircast/Patient-open.write",
-    "launch/Context:write"
+    "launch/Context.write",
   ]
 }
 

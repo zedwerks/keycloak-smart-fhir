@@ -6,6 +6,7 @@ keycloak_url="http://localhost:8080"
 echo "Stopping keycloak container..."
 docker-compose stop
 echo "(Re)building and starting keycloak..."
+
 docker-compose build && docker-compose up -d
 
 echo "Waiting for keycloak to be ready..."

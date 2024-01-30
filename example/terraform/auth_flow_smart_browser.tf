@@ -84,9 +84,9 @@ resource "keycloak_authentication_execution_config" "s4e2_config" {
   execution_id = keycloak_authentication_execution.s4e2.id
   alias        = "idp-smart-context-resolver-config"
   config = {
-    context_api_url =  var.keycloak_smart_configuration.context_api_url
-    context_api_scope = var.keycloak_smart_configuration.context_api_scope
-    context_api_audience = var.keycloak_smart_configuration.context_api_audience
+    context_api_url =  var.keycloak_smart_configuration.context_server_url
+    context_api_scope = var.keycloak_smart_configuration.context_server_scope
+    context_api_audience = var.keycloak_smart_configuration.context_server_audience
   }
 }
 
@@ -120,9 +120,9 @@ resource "keycloak_authentication_execution_config" "s5e2_config" {
   execution_id = keycloak_authentication_execution.s5e2.id
   alias        = "login-form-smart-context-resolver-config"
   config = {
-    context_api_url =  var.keycloak_smart_configuration.context_api_url
-    context_api_scope = var.keycloak_smart_configuration.context_api_scope
-    context_api_audience = var.keycloak_smart_configuration.context_api_audience
+    context_api_url =  var.keycloak_smart_configuration.context_server_url
+    context_api_scope = var.keycloak_smart_configuration.context_server_scope
+    context_api_audience = var.keycloak_smart_configuration.context_server_audience
   }
 }
 

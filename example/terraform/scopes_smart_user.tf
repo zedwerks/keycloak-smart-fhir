@@ -2209,21 +2209,21 @@ resource "keycloak_openid_client_scope" "user_parameters_full_scope" {
   include_in_token_scope = true
 }
 // Patient -------------------------------------------------------------------------
-resource "keycloak_openid_client_scope" "user_user_read_scope" {
+resource "keycloak_openid_client_scope" "user_patient_read_scope" {
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Patient.read"
   description            = "Read access to Patient"
   consent_screen_text    = "Permission to read Patient for the user"
   include_in_token_scope = true
 }
-resource "keycloak_openid_client_scope" "user_user_write_scope" {
+resource "keycloak_openid_client_scope" "user_patient_write_scope" {
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Patient.write"
   description            = "Write access to Patient"
   consent_screen_text    = "Permission to write Patient for the user"
   include_in_token_scope = true
 }
-resource "keycloak_openid_client_scope" "user_user_full_scope" {
+resource "keycloak_openid_client_scope" "user_patien_full_scope" {
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Patient.*"
   description            = "Full access to Patient"

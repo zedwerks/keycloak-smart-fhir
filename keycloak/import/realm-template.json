@@ -1,5 +1,6 @@
 {
-  "realm": "example",
+  "realm": "{{place_realm_name_here}}",
+  "displayName": "{{place_realm_display_name_here}}",
   "enabled": true,
   "roles": {
     "realm": [
@@ -21,7 +22,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "t3vGj9MTjULLXeVbvnP33gANmgRuk1Ul",
+      "secret": "{{place_terraform_client_secret_here}}",
       "redirectUris": [],
       "webOrigins": [],
       "notBefore": 0,
