@@ -5,18 +5,20 @@ services:
     environment:
       - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
       - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
-      - KEYCLOAK_TERRAFORM_CLIENT_SECRET=${KEYCLOAK_TERRAFORM_CLIENT_SECRET}
-      - KEYCLOAK_TARGET_REALM=${KEYCLOAK_TARGET_REALM}
-      - KEYCLOAK_TARGET_REALM_DISPLAY_NAME=${KEYCLOAK_TARGET_REALM_DISPLAY_NAME}
     build:
       #context: https://github.com/zedwerks/keycloak-smart-fhir.git#main
       context: ../
       dockerfile: Dockerfile
+      args:
+        target_realm: ${KEYCLOAK_TARGET_REALM}
+        target_realm_display_name: ${KEYCLOAK_TARGET_REALM_DISPLAY_NAME}
+        terraform_client_id: ${KEYCLOAK_TERRAFORM_CLIENT_ID}
+        terraform_client_secret: ${KEYCLOAK_TERRAFORM_CLIENT_SECRET}
     ports:
       - 8080:8080
     command:
-      - start-dev 
-      - --log-level=INFO  
+      - start-dev
+      - --log-level=INFO
       - --import-realm
       - --features=token-exchange,authorization,admin-fine-grained-authz
     networks:
