@@ -56,4 +56,4 @@ COPY --from=builder /app/target/deploy/*.jar ./providers/
 EXPOSE $KEYCLOAK_PORT
 
 # Start Keycloak with the import-realm optin to load in the SMART on FHIR realm
-CMD ["start-dev", "--import-realm", "--log-level=info"]
+CMD ["start-dev", "--import-realm", "--log-level=info", "--features=token-exchange,authorization,admin-fine-grained-authz"]
