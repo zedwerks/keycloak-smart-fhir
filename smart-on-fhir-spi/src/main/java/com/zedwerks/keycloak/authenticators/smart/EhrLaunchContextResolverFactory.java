@@ -30,6 +30,11 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
     public static final String CONF_CONTEXT_API_AUDIENCE_HELPTEXT = "The Audience expected in the Access Token to make the Context API get request";
     public static final String CONF_CONTEXT_API_AUDIENCE_DEFAULT = "context-api";
 
+    public static final String CONF_CONTEXT_API_CLASS_FACTORY = "context_api_class_factory";
+    public static final String CONF_CONTEXT_API_CLASS_FACTORY_LABEL = "Context API Class Factory";
+    public static final String CONF_CONTEXT_API_CLASS_FACTORY_HELPTEXT = "The Class Factory to use to create the Context API Service";
+    public static final String CONF_CONTEXT_API_CLASS_FACTORY_DEFAULT = "ca.phsa.keycloak.smart.FhirCastServiceFactory";
+
     @Override
     public String getDisplayType() {
         return "SMART on FHIR EHR-Launch Context Resolver";

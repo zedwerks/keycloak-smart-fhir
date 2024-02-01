@@ -77,7 +77,6 @@ public class StandaloneLaunchSelectorFactory implements AuthenticatorFactory {
         patientResourceUrl.setName(CONF_FHIR_URL);
         patientResourceUrl.setLabel(CONF_FHIR_URL_LABEL);
         patientResourceUrl.setHelpText(CONF_FHIR_URL_DESCRIPTION);
-        patientResourceUrl.setDefaultValue("http://localhost:9000/fhir-server/api/v4/Patient");
         
         List<ProviderConfigProperty> props = Arrays.asList(useAudienceFhirServer, patientResourceUrl);
         return props;
