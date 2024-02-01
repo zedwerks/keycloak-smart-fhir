@@ -13,15 +13,19 @@ DO NOT REMOVE THIS FOLDER OR THE BUILD BREAKS.
 
 ## Applying realm-admin access for the terraform service account client
 
+Bash Script:
+
 ```bash
 bin/terraform-realm-admin.sh
 ```
 
   This is a script that is loaded into ```/opt/keycloak/bin```.  It is called to setup the realm permissions for the terraform client.
   This script is not automatically called when the image runs. This is deliberate as we don't want to over-permit the terraform client
-  at the initial build. Instead, use the example script ```reset.sh`` to rebuild and apply the terraform scripts.
+  at the initial build. Instead, look at the example script ```../example/reset.sh`` - it calls this script using docker cli.
 
 ## Creating the target realm using a template
+
+File:
 
 ```bash
 import/realm-template.json
