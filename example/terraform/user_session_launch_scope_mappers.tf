@@ -5,7 +5,20 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_patie
   claim_name          = "patient"
   claim_value_type    = "String"
   session_note        = "smart_patient_id"
-  add_to_access_token = true
+  add_to_access_token = false
+  add_to_id_token     = false
+  //add_to_access_token_response = true
+  depends_on = [keycloak_openid_client_scope.launch_context_scope]
+}
+
+resource "keycloak_openid_user_session_note_protocol_mapper" "smart_launch_patient_mapper" {
+  realm_id            = data.keycloak_realm.realm.id
+  client_scope_id     = keycloak_openid_client_scope.launch_patient_context_scope.id
+  name                = "user-session-patient-launch-mapper"
+  claim_name          = "patient"
+  claim_value_type    = "String"
+  session_note        = "smart_patient_id"
+  add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
   depends_on = [keycloak_openid_client_scope.launch_context_scope]
@@ -18,7 +31,20 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_encou
   claim_name          = "encounter"
   claim_value_type    = "String"
   session_note        = "smart_encounter_id"
-  add_to_access_token = true
+  add_to_access_token = false
+  add_to_id_token     = false
+  //add_to_access_token_response = true
+  depends_on = [keycloak_openid_client_scope.launch_context_scope]
+}
+
+resource "keycloak_openid_user_session_note_protocol_mapper" "smart_launch_encounter_mapper" {
+  realm_id            = data.keycloak_realm.realm.id
+  client_scope_id     = keycloak_openid_client_scope.launch_encounter_context_scope.id
+  name                = "user-session-launch-encounter-mapper"
+  claim_name          = "encounter"
+  claim_value_type    = "String"
+  session_note        = "smart_encounter_id"
+  add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
   depends_on = [keycloak_openid_client_scope.launch_context_scope]

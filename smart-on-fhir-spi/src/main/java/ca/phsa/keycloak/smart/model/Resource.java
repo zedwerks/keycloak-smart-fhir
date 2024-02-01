@@ -12,15 +12,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import com.zedwerks.keycloak.authenticators.smart.context.IResource;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "resourceType",
     "id",
     "identifier"
 })
-public class Resource implements IResource {
+public class Resource  {
 
     @JsonProperty("resourceType")
     private String resourceType;

@@ -4,9 +4,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
-import java.util.Map;
 import org.jboss.logging.Logger;
+
 
 public abstract class ContextService implements IContextService {
 
@@ -52,7 +51,11 @@ public abstract class ContextService implements IContextService {
 
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .uri(new URI(getRequestUrl))
+                    .header("Authorization", "Bearer " + accessToken)
+                    .header("Content-Type", "application/json")
+                    .GET()
                     .build();
+
             // Send the request and receive the response as a string
             HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
@@ -60,7 +63,14 @@ public abstract class ContextService implements IContextService {
             if (response.statusCode() >= 200 && response.statusCode() < 300) {
                 // Parse the JSON response
                 String jsonResponse = response.body();
+                logger.info("ContextService JSON Response: " + jsonResponse);
 
+                // Create a new instance of th context class and parse the JSON response
+
+                IContext contextInstance = contextClass.getDeclaredConstructor().newInstance();
+                contextInstance.parseJson(jsonResponse);
+
+                return contextInstance;
   
             } else {
                 // Handle error response

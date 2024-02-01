@@ -32,7 +32,7 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
 
     public static final String CONF_CONTEXT_API_CLASS_FACTORY = "context_api_class_factory";
     public static final String CONF_CONTEXT_API_CLASS_FACTORY_LABEL = "Context API Class Factory";
-    public static final String CONF_CONTEXT_API_CLASS_FACTORY_HELPTEXT = "The Class Factory to use to create the Context API Service";
+    public static final String CONF_CONTEXT_API_CLASS_FACTORY_HELPTEXT = "The Class Factory used to create the Context API Service";
     public static final String CONF_CONTEXT_API_CLASS_FACTORY_DEFAULT = "ca.phsa.keycloak.smart.FhirCastServiceFactory";
 
     @Override
@@ -73,12 +73,18 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
 
+        ProviderConfigProperty contextApiClassFactory = new ProviderConfigProperty();
+        contextApiClassFactory.setType(ProviderConfigProperty.STRING_TYPE);
+        contextApiClassFactory.setName(CONF_CONTEXT_API_CLASS_FACTORY);
+        contextApiClassFactory.setLabel(CONF_CONTEXT_API_CLASS_FACTORY_LABEL);
+        contextApiClassFactory.setHelpText(CONF_CONTEXT_API_CLASS_FACTORY_HELPTEXT);
+        contextApiClassFactory.setDefaultValue(CONF_CONTEXT_API_CLASS_FACTORY_DEFAULT);
+
         ProviderConfigProperty contextApiUrl = new ProviderConfigProperty();
         contextApiUrl.setType(ProviderConfigProperty.STRING_TYPE);
         contextApiUrl.setName(CONF_CONTEXT_API_URL);
         contextApiUrl.setLabel(CONF_CONTEXT_API_URL_LABEL);
         contextApiUrl.setHelpText(CONF_CONTEXT_API_URL_HELPTEXT);
-
 
         ProviderConfigProperty contextScope = new ProviderConfigProperty();
         contextScope.setType(ProviderConfigProperty.STRING_TYPE);
@@ -94,7 +100,7 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
         contextAudience.setHelpText(CONF_CONTEXT_API_AUDIENCE_HELPTEXT);
         contextAudience.setDefaultValue(CONF_CONTEXT_API_AUDIENCE_DEFAULT);
 
-        List<ProviderConfigProperty> props = Arrays.asList(contextApiUrl, contextScope, contextAudience);
+        List<ProviderConfigProperty> props = Arrays.asList(contextApiClassFactory, contextApiUrl, contextScope, contextAudience);
         return props;
     }
 

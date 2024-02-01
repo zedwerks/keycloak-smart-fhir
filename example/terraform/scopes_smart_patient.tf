@@ -4,6 +4,13 @@
 //
 // See https://build.fhir.org/resourcelist.html
 // =================================================================================
+resource "keycloak_openid_client_scope" "patient_wildcard_read_scope" {
+  realm_id               = data.keycloak_realm.realm.id
+  name                   = "patient/*.read"
+  description            = "Read access to all resources for the patient"
+  consent_screen_text    = "Read access to all resources for the patient"
+  include_in_token_scope = true
+}
 // Account Resource ----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_account_read_scope" {
   realm_id               = data.keycloak_realm.realm.id

@@ -3,7 +3,8 @@ package com.zedwerks.keycloak.authenticators.smart.context;
 import java.util.Collection;
 
 public interface IContext {
-    public String getId();
-    public Collection<Resource> getResources();
+    public boolean parseJson(String json);
+    public String getContextId();
+    public Collection<ContextResource> getContextResources();
 }
  

@@ -11,6 +11,8 @@ import org.keycloak.protocol.oidc.OIDCLoginProtocol;
 import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.sessions.AuthenticationSessionModel;
 
+import com.zedwerks.keycloak.authenticators.smart.context.ContextResource;
+
 public final class SmartLaunchHelper {
 
     public static final Logger logger = Logger.getLogger(SmartLaunchHelper.class);
@@ -181,6 +183,15 @@ public final class SmartLaunchHelper {
         }
 
         return null;
+    }
+
+    public static void saveToUserSession(AuthenticationFlowContext context, String key, String value) {
+        logger.infof("Save to User Session: %s = %s", key, value);
+        context.getAuthenticationSession().setUserSessionNote(key, value);
+    }
+
+    public static String getFromUserSession(AuthenticationFlowContext context, String key) {
+        return context.getAuthenticationSession().getUserSessionNotes().get(key);
     }
 
     public static void saveAudienceToSession(AuthenticationFlowContext context, String audience) {

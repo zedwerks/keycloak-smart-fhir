@@ -16,8 +16,4 @@ public class FhirCastServiceFactory implements IContextServiceFactory {
         SINGLETON.setBaseUrl(baseUrl);
         return SINGLETON;
     }
-
-    public boolean isFhirCast() {
-        return true;
-    }
 }
