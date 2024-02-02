@@ -16,22 +16,22 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
     private static final EhrLaunchContextResolver SINGLETON = new EhrLaunchContextResolver();
 
     // Configuration Settings to connect to the Context API server
-    public static final String CONF_CONTEXT_API_URL = "context_api_url";
-    public static final String CONF_CONTEXT_API_URL_LABEL = "Context API URL";
+    public static final String CONF_CONTEXT_API_URL = "context_server_url";
+    public static final String CONF_CONTEXT_API_URL_LABEL = "Context Server URL";
     public static final String CONF_CONTEXT_API_URL_HELPTEXT = "The URL of the Context API server";
 
-    public static final String CONF_CONTEXT_API_SCOPE = "context_api_scope";
+    public static final String CONF_CONTEXT_API_SCOPE = "context_server_scope";
     public static final String CONF_CONTEXT_API_SCOPE_LABEL = "Context Read Scope";
     public static final String CONF_CONTEXT_API_SCOPE_HELPTEXT = "The Scope Needed to read/get Context API data";
     public static final String CONF_CONTEXT_API_SCOPE_DEFAULT = "launch";
 
-    public static final String CONF_CONTEXT_API_AUDIENCE = "context_api_audience";
+    public static final String CONF_CONTEXT_API_AUDIENCE = "context_server_audience";
     public static final String CONF_CONTEXT_API_AUDIENCE_LABEL = "Context Audience";
     public static final String CONF_CONTEXT_API_AUDIENCE_HELPTEXT = "The Audience expected in the Access Token to make the Context API get request";
     public static final String CONF_CONTEXT_API_AUDIENCE_DEFAULT = "context-api";
 
-    public static final String CONF_CONTEXT_API_CLASS_FACTORY = "context_api_class_factory";
-    public static final String CONF_CONTEXT_API_CLASS_FACTORY_LABEL = "Context API Class Factory";
+    public static final String CONF_CONTEXT_API_CLASS_FACTORY = "context_server_class_factory";
+    public static final String CONF_CONTEXT_API_CLASS_FACTORY_LABEL = "Context Server Class Factory";
     public static final String CONF_CONTEXT_API_CLASS_FACTORY_HELPTEXT = "The Class Factory used to create the Context API Service";
     public static final String CONF_CONTEXT_API_CLASS_FACTORY_DEFAULT = "ca.phsa.keycloak.smart.FhirCastServiceFactory";
 

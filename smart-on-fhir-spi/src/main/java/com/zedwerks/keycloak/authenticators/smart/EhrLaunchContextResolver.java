@@ -24,9 +24,6 @@ import com.zedwerks.keycloak.authenticators.smart.context.IFhirCastContext;
 import com.zedwerks.keycloak.authenticators.smart.context.IContext;
 import com.zedwerks.keycloak.authenticators.smart.context.ContextResource;
 
-import ca.phsa.keycloak.smart.model.Context;
-
-import java.util.List;
 import java.util.Collection;
 
 import jakarta.ws.rs.core.Response;
