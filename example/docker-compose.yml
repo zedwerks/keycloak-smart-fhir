@@ -24,6 +24,8 @@ services:
       - --import-realm
       - --features=token-exchange,authorization,admin-fine-grained-authz
   smartcontext:
+    # This an example context service. It consumes any JSON and returns it as a response.
+    # The default uses the FHIRcast JSON as shown in the FHIRcast examles folder.
     container_name: smartcontext
     image: smartcontext
     build:

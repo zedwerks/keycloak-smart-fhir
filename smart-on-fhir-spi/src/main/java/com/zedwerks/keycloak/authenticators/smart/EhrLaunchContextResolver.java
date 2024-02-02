@@ -290,6 +290,10 @@ public class EhrLaunchContextResolver implements Authenticator {
             logger.info("We are dealing with a FHIRcast context service.");
             IFhirCastContext fhirCastContext = (IFhirCastContext) launchContext;
             SmartLaunchHelper.saveToUserSession(context, IFhirCastContext.HUB_TOPIC_KEY, fhirCastContext.getHubTopic());
+
+            String hubUrl = context.getAuthenticatorConfig().getConfig()
+                .get(EhrLaunchContextResolverFactory.CONTEXT_SERVER_URL_PROP_NAME);
+            SmartLaunchHelper.saveToUserSession(context, IFhirCastContext.HUB_URL_KEY, hubUrl);
         }
 
         Collection<ContextResource> resources = launchContext.getContextResources();
@@ -302,7 +306,7 @@ public class EhrLaunchContextResolver implements Authenticator {
         for (ContextResource resource : resources) {
             // This relies on user session mappers, as configured per resource key
             // to be able to push them onwards into token response.
-            SmartLaunchHelper.saveToUserSession(context, resource.getKey(), resource.getId());
+            SmartLaunchHelper.psaveToUserSession(context, resource.getKey(), resource.getId());
         }
 
         // This places it in user session that mappers then stuff into token, and

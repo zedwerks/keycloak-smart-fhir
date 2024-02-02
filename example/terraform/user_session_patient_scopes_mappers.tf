@@ -7,7 +7,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "launch_patient_rea
   name                = "user-session-patient-mapper"
   claim_name          = "patient"
   claim_value_type    = "String"
-  session_note        = "smart_patient_id"
+  session_note        = "patient"
   add_to_access_token = true
   add_to_id_token     = false
   //add_to_access_token_response = true
