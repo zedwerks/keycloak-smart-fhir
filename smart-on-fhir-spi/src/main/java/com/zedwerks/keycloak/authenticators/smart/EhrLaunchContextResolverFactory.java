@@ -16,24 +16,24 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
     private static final EhrLaunchContextResolver SINGLETON = new EhrLaunchContextResolver();
 
     // Configuration Settings to connect to the Context API server
-    public static final String CONF_CONTEXT_API_URL = "context_server_url";
-    public static final String CONF_CONTEXT_API_URL_LABEL = "Context Server URL";
-    public static final String CONF_CONTEXT_API_URL_HELPTEXT = "The URL of the Context API server";
+    public static final String CONF_CONTEXT_SERVER_URL = "context_server_url";
+    public static final String CONF_CONTEXT_SERVER_URL_LABEL = "Context Server URL";
+    public static final String CONF_CONTEXT_SERVER_URL_HELPTEXT = "The URL of the Context API server";
 
-    public static final String CONF_CONTEXT_API_SCOPE = "context_server_scope";
-    public static final String CONF_CONTEXT_API_SCOPE_LABEL = "Context Read Scope";
-    public static final String CONF_CONTEXT_API_SCOPE_HELPTEXT = "The Scope Needed to read/get Context API data";
-    public static final String CONF_CONTEXT_API_SCOPE_DEFAULT = "launch";
+    public static final String CONF_CONTEXT_SERVER_SCOPE = "context_server_scope";
+    public static final String CONF_CONTEXT_SERVER_SCOPE_LABEL = "Context Read Scope";
+    public static final String CONF_CONTEXT_SERVER_SCOPE_HELPTEXT = "The Scope Needed to read/get Context API data";
+    public static final String CONF_CONTEXT_SERVER_SCOPE_DEFAULT = "launch";
 
-    public static final String CONF_CONTEXT_API_AUDIENCE = "context_server_audience";
-    public static final String CONF_CONTEXT_API_AUDIENCE_LABEL = "Context Audience";
-    public static final String CONF_CONTEXT_API_AUDIENCE_HELPTEXT = "The Audience expected in the Access Token to make the Context API get request";
-    public static final String CONF_CONTEXT_API_AUDIENCE_DEFAULT = "context-api";
+    public static final String CONF_CONTEXT_SERVER_AUDIENCE = "context_server_audience";
+    public static final String CONF_CONTEXT_SERVER_AUDIENCE_LABEL = "Context Audience";
+    public static final String CONF_CONTEXT_SERVER_AUDIENCE_HELPTEXT = "The Audience expected in the Access Token to make the Context API get request";
+    public static final String CONF_CONTEXT_SERVER_AUDIENCE_DEFAULT = "context-api";
 
-    public static final String CONF_CONTEXT_API_CLASS_FACTORY = "context_server_class_factory";
-    public static final String CONF_CONTEXT_API_CLASS_FACTORY_LABEL = "Context Server Class Factory";
-    public static final String CONF_CONTEXT_API_CLASS_FACTORY_HELPTEXT = "The Class Factory used to create the Context API Service";
-    public static final String CONF_CONTEXT_API_CLASS_FACTORY_DEFAULT = "ca.phsa.keycloak.smart.FhirCastServiceFactory";
+    public static final String CONF_CONTEXT_SERVER_CLASS_FACTORY = "context_server_class_factory";
+    public static final String CONF_CONTEXT_SERVER_CLASS_FACTORY_LABEL = "Context Server Class Factory";
+    public static final String CONF_CONTEXT_SERVER_CLASS_FACTORY_HELPTEXT = "The Class Factory used to create the Context API Service";
+    public static final String CONF_CONTEXT_SERVER_CLASS_FACTORY_DEFAULT = "ca.phsa.keycloak.smart.FhirCastServiceFactory";
 
     @Override
     public String getDisplayType() {
@@ -75,30 +75,30 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
 
         ProviderConfigProperty contextApiClassFactory = new ProviderConfigProperty();
         contextApiClassFactory.setType(ProviderConfigProperty.STRING_TYPE);
-        contextApiClassFactory.setName(CONF_CONTEXT_API_CLASS_FACTORY);
-        contextApiClassFactory.setLabel(CONF_CONTEXT_API_CLASS_FACTORY_LABEL);
-        contextApiClassFactory.setHelpText(CONF_CONTEXT_API_CLASS_FACTORY_HELPTEXT);
-        contextApiClassFactory.setDefaultValue(CONF_CONTEXT_API_CLASS_FACTORY_DEFAULT);
+        contextApiClassFactory.setName(CONF_CONTEXT_SERVER_CLASS_FACTORY);
+        contextApiClassFactory.setLabel(CONF_CONTEXT_SERVER_CLASS_FACTORY_LABEL);
+        contextApiClassFactory.setHelpText(CONF_CONTEXT_SERVER_CLASS_FACTORY_HELPTEXT);
+        contextApiClassFactory.setDefaultValue(CONF_CONTEXT_SERVER_CLASS_FACTORY_DEFAULT);
 
         ProviderConfigProperty contextApiUrl = new ProviderConfigProperty();
         contextApiUrl.setType(ProviderConfigProperty.STRING_TYPE);
-        contextApiUrl.setName(CONF_CONTEXT_API_URL);
-        contextApiUrl.setLabel(CONF_CONTEXT_API_URL_LABEL);
-        contextApiUrl.setHelpText(CONF_CONTEXT_API_URL_HELPTEXT);
+        contextApiUrl.setName(CONF_CONTEXT_SERVER_URL);
+        contextApiUrl.setLabel(CONF_CONTEXT_SERVER_URL_LABEL);
+        contextApiUrl.setHelpText(CONF_CONTEXT_SERVER_URL_HELPTEXT);
 
         ProviderConfigProperty contextScope = new ProviderConfigProperty();
         contextScope.setType(ProviderConfigProperty.STRING_TYPE);
-        contextScope.setName(CONF_CONTEXT_API_SCOPE);
-        contextScope.setLabel(CONF_CONTEXT_API_SCOPE_LABEL);
-        contextScope.setHelpText(CONF_CONTEXT_API_SCOPE_HELPTEXT);
-        contextScope.setDefaultValue(CONF_CONTEXT_API_SCOPE_DEFAULT);
+        contextScope.setName(CONF_CONTEXT_SERVER_SCOPE);
+        contextScope.setLabel(CONF_CONTEXT_SERVER_SCOPE_LABEL);
+        contextScope.setHelpText(CONF_CONTEXT_SERVER_SCOPE_HELPTEXT);
+        contextScope.setDefaultValue(CONF_CONTEXT_SERVER_SCOPE_DEFAULT);
 
         ProviderConfigProperty contextAudience = new ProviderConfigProperty();
         contextAudience.setType(ProviderConfigProperty.STRING_TYPE);
-        contextAudience.setName(CONF_CONTEXT_API_AUDIENCE);
-        contextAudience.setLabel(CONF_CONTEXT_API_AUDIENCE_LABEL);
-        contextAudience.setHelpText(CONF_CONTEXT_API_AUDIENCE_HELPTEXT);
-        contextAudience.setDefaultValue(CONF_CONTEXT_API_AUDIENCE_DEFAULT);
+        contextAudience.setName(CONF_CONTEXT_SERVER_AUDIENCE);
+        contextAudience.setLabel(CONF_CONTEXT_SERVER_AUDIENCE_LABEL);
+        contextAudience.setHelpText(CONF_CONTEXT_SERVER_AUDIENCE_HELPTEXT);
+        contextAudience.setDefaultValue(CONF_CONTEXT_SERVER_AUDIENCE_DEFAULT);
 
         List<ProviderConfigProperty> props = Arrays.asList(contextApiClassFactory, contextApiUrl, contextScope, contextAudience);
         return props;

@@ -11,8 +11,6 @@ import org.keycloak.protocol.oidc.OIDCLoginProtocol;
 import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.sessions.AuthenticationSessionModel;
 
-import com.zedwerks.keycloak.authenticators.smart.context.ContextResource;
-
 public final class SmartLaunchHelper {
 
     public static final Logger logger = Logger.getLogger(SmartLaunchHelper.class);

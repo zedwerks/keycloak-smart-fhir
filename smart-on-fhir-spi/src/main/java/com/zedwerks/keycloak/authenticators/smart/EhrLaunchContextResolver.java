@@ -89,7 +89,7 @@ public class EhrLaunchContextResolver implements Authenticator {
 
         if (context.getAuthenticatorConfig() == null ||
                 !context.getAuthenticatorConfig().getConfig()
-                        .containsKey(EhrLaunchContextResolverFactory.CONF_CONTEXT_API_CLASS_FACTORY)) {
+                        .containsKey(EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_CLASS_FACTORY)) {
             String msg = "The SMART on FHIR EHR Launch Context Resolver Extension must be configured with a Context API Class Factory.";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
@@ -184,18 +184,18 @@ public class EhrLaunchContextResolver implements Authenticator {
         // rather than rely on the user having the scope to read.
 
         String scope = context.getAuthenticatorConfig().getConfig()
-                .get(EhrLaunchContextResolverFactory.CONF_CONTEXT_API_SCOPE);
+                .get(EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_SCOPE);
         if (scope == null) {
             logger.warn("No scope configured for Context API. Using default scope: "
-                    + EhrLaunchContextResolverFactory.CONF_CONTEXT_API_SCOPE_DEFAULT);
-            scope = EhrLaunchContextResolverFactory.CONF_CONTEXT_API_SCOPE_DEFAULT;
+                    + EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_SCOPE_DEFAULT);
+            scope = EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_SCOPE_DEFAULT;
         }
         String contextAudience = context.getAuthenticatorConfig().getConfig()
-                .get(EhrLaunchContextResolverFactory.CONF_CONTEXT_API_AUDIENCE);
+                .get(EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_AUDIENCE);
 
         if (contextAudience == null) {
             logger.warn("No explicit audience configured for Context API. Using the default value.");
-            contextAudience = EhrLaunchContextResolverFactory.CONF_CONTEXT_API_AUDIENCE_DEFAULT;
+            contextAudience = EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_AUDIENCE_DEFAULT;
         }
 
         ClientSessionContext clientSessionCtx = DefaultClientSessionContext
@@ -227,11 +227,11 @@ public class EhrLaunchContextResolver implements Authenticator {
     private IContextService getContextService(AuthenticationFlowContext context) {
         
         String contextApiClassFactory = context.getAuthenticatorConfig().getConfig()
-                .get(EhrLaunchContextResolverFactory.CONF_CONTEXT_API_CLASS_FACTORY);
+                .get(EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_CLASS_FACTORY);
 
         if (contextApiClassFactory == null) {
             logger.warn("No Context API Class Factory configured. Using default factory.");
-            contextApiClassFactory = EhrLaunchContextResolverFactory.CONF_CONTEXT_API_CLASS_FACTORY_DEFAULT;
+            contextApiClassFactory = EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_CLASS_FACTORY_DEFAULT;
         }
 
         IContextService contextService = null;
