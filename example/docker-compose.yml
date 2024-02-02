@@ -23,8 +23,16 @@ services:
       - --log-level=INFO
       - --import-realm
       - --features=token-exchange,authorization,admin-fine-grained-authz
-    networks:
-      - mynetwork
-networks:
-  mynetwork:
-    driver: bridge
+  smartcontext:
+    container_name: smart-context
+    image: smart-context
+    build:
+      context: https://github.com/zedwerks/smart-context.git#main
+    ports:
+      - "8088:8088"
+    environment:
+    - ISSUER=${ISSUER}
+    - JWKS_URI=${JWKS_URI}
+    - SCOPES=${SCOPES}
+    - API_KEY=${API_KEY}
+
