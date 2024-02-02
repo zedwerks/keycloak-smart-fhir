@@ -12,8 +12,7 @@ public class FhirCastServiceFactory implements IContextServiceFactory {
         // NOOP
     }
 
-    public FhirCastService create(String baseUrl) {
-        SINGLETON.setBaseUrl(baseUrl);
+    public FhirCastService create() {
         return SINGLETON;
     }
 }

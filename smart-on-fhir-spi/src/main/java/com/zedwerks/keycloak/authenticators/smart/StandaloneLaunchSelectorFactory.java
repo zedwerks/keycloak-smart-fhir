@@ -92,7 +92,6 @@ public class StandaloneLaunchSelectorFactory implements AuthenticatorFactory {
         // NOOP
     }
 
-
     @Override
     public void init(Config.Scope config) {
         // NOOP

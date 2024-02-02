@@ -19,17 +19,7 @@ public abstract class ContextService implements IContextService {
         this.contextClass = contextClass;
     }
 
-    public ContextService(Class<? extends IContext> contextClass, String contextServiceUrl) {
-
-        this.contextServiceUrl = contextServiceUrl;
-        this.contextClass = contextClass;
-    }
-
-    public void setBaseUrl(String contextServiceUrl) {
-        this.contextServiceUrl = contextServiceUrl;
-    }
-
-    public IContext getLaunchContext(String accessToken, String contextId) {
+    public IContext getLaunchContext(String accessToken, String contextId, String contextServiceUrl) {
 
         if ((contextId == null) || contextId.isEmpty()) {
             logger.error("getLaunchContext() called with null or empty contextId");
@@ -40,11 +30,13 @@ public abstract class ContextService implements IContextService {
             return null;
         }
         if ((contextServiceUrl == null) || contextServiceUrl.isEmpty()) {
-            logger.error("getLaunchContext() called with null or empty contextGetUrl");
+            logger.error("getLaunchContext() called with null or empty contextServiceUrl");
             return null;
         }
 
         String getRequestUrl = contextServiceUrl + "/" + contextId;
+
+        logger.info("getLaunchContext() called with GET Url: " + getRequestUrl);
 
         try {
             HttpClient httpClient = HttpClient.newHttpClient();
@@ -55,6 +47,11 @@ public abstract class ContextService implements IContextService {
                     .header("Content-Type", "application/json")
                     .GET()
                     .build();
+
+            if (httpRequest == null) {
+                logger.error("Failed to create HttpRequest");
+                return null;
+            }
 
             // Send the request and receive the response as a string
             HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());

@@ -32,7 +32,6 @@ public class StandaloneLaunchSelector implements Authenticator {
 
         logger.info("authenticate() **** SMART on FHIR Standalone Launch Selector ****");
 
-
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         ClientModel client = authSession.getClient();
 

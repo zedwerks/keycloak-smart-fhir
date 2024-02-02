@@ -121,9 +121,10 @@ resource "keycloak_authentication_execution_config" "s5e2_config" {
   execution_id = keycloak_authentication_execution.s5e2.id
   alias        = "login-form-smart-context-resolver-config"
   config = {
-    context_api_url =  var.keycloak_smart_configuration.context_server_url
-    context_api_scope = var.keycloak_smart_configuration.context_server_scope
-    context_api_audience = var.keycloak_smart_configuration.context_server_audience
+    context_server_url =  var.keycloak_smart_configuration.context_server_url
+    context_server_scope = var.keycloak_smart_configuration.context_server_scope
+    context_server_audience = var.keycloak_smart_configuration.context_server_audience
+    context_server_class_factory = var.keycloak_smart_configuration.context_server_class_factory
   }
 }
 

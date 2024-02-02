@@ -20,6 +20,7 @@ import org.keycloak.services.util.DefaultClientSessionContext;
 import org.keycloak.sessions.AuthenticationSessionModel;
 
 import com.zedwerks.keycloak.authenticators.smart.context.IContextService;
+import com.zedwerks.keycloak.authenticators.smart.context.IContextServiceFactory;
 import com.zedwerks.keycloak.authenticators.smart.context.IFhirCastContext;
 import com.zedwerks.keycloak.authenticators.smart.context.IContext;
 import com.zedwerks.keycloak.authenticators.smart.context.ContextResource;
@@ -87,10 +88,21 @@ public class EhrLaunchContextResolver implements Authenticator {
 
         // Let's make sure we have a configured launch resolver...
 
-        if (context.getAuthenticatorConfig() == null ||
-                !context.getAuthenticatorConfig().getConfig()
-                        .containsKey(EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_CLASS_FACTORY)) {
-            String msg = "The SMART on FHIR EHR Launch Context Resolver Extension must be configured with a Context API Class Factory.";
+        if (context.getAuthenticatorConfig() == null) {
+            String msg = "The SMART on FHIR EHR Launch Context Resolver Configuration is null!";
+            logger.warn(msg);
+            context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
+                    Response.status(302)
+                            .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                    "?error=server_error" +
+                                    "&error_description=" + msg)
+                            .build());
+            return; // early exit
+        }
+
+        if (!context.getAuthenticatorConfig().getConfig()
+                .containsKey(EhrLaunchContextResolverFactory.CONTEXT_SERVER_URL_PROP_NAME)) {
+            String msg = "The SMART on FHIR Launch Context URL is not configured!";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
                     Response.status(302)
@@ -184,19 +196,12 @@ public class EhrLaunchContextResolver implements Authenticator {
         // rather than rely on the user having the scope to read.
 
         String scope = context.getAuthenticatorConfig().getConfig()
-                .get(EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_SCOPE);
-        if (scope == null) {
-            logger.warn("No scope configured for Context API. Using default scope: "
-                    + EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_SCOPE_DEFAULT);
-            scope = EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_SCOPE_DEFAULT;
-        }
-        String contextAudience = context.getAuthenticatorConfig().getConfig()
-                .get(EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_AUDIENCE);
+                .getOrDefault(EhrLaunchContextResolverFactory.CONTEXT_SERVER_SCOPE_PROP_NAME,
+                        EhrLaunchContextResolverFactory.CONTEXT_SERVER_SCOPE_PROP_DEFAULT);
 
-        if (contextAudience == null) {
-            logger.warn("No explicit audience configured for Context API. Using the default value.");
-            contextAudience = EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_AUDIENCE_DEFAULT;
-        }
+        String contextAudience = context.getAuthenticatorConfig().getConfig()
+                .getOrDefault(EhrLaunchContextResolverFactory.CONTEXT_SERVER_AUDIENCE_PROP_NAME,
+                        EhrLaunchContextResolverFactory.CONTEXT_SERVER_AUDIENCE_PROP_DEFAULT);
 
         ClientSessionContext clientSessionCtx = DefaultClientSessionContext
                 .fromClientSessionScopeParameter(clientSession, session);
@@ -225,25 +230,30 @@ public class EhrLaunchContextResolver implements Authenticator {
     }
 
     private IContextService getContextService(AuthenticationFlowContext context) {
-        
+
         String contextApiClassFactory = context.getAuthenticatorConfig().getConfig()
-                .get(EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_CLASS_FACTORY);
+                .getOrDefault(EhrLaunchContextResolverFactory.CONTEXT_SERVER_CLASS_FACTORY_PROP_NAME,
+                        EhrLaunchContextResolverFactory.CONTEXT_SERVER_CLASS_FACTORY_PROP_DEFAULT);
 
         if (contextApiClassFactory == null) {
             logger.warn("No Context API Class Factory configured. Using default factory.");
-            contextApiClassFactory = EhrLaunchContextResolverFactory.CONF_CONTEXT_SERVER_CLASS_FACTORY_DEFAULT;
+            return null;
         }
 
-        IContextService contextService = null;
+        logger.info("Using Context API Class Factory: " + contextApiClassFactory);
+
+        IContextServiceFactory contextServiceFactory = null;
 
         try {
             Class<?> contextApiClass = Class.forName(contextApiClassFactory);
-            contextService = (IContextService) contextApiClass.getDeclaredConstructor().newInstance();
-        }
-        catch (ReflectiveOperationException e) {
-            logger.error("Could not create Context API Service", e);
+            contextServiceFactory = (IContextServiceFactory) contextApiClass.getDeclaredConstructor().newInstance();
+        } catch (ReflectiveOperationException e) {
+            logger.error("Could not create the Context Service Factory", e);
             return null;
         }
+  
+        IContextService contextService = contextServiceFactory.create();
+    
         return contextService;
     }
 
@@ -252,7 +262,7 @@ public class EhrLaunchContextResolver implements Authenticator {
         IContextService contextService = getContextService(context);
 
         if (contextService == null) {
-            logger.warn("Could not create Context API Service. Could not resolve launch parameter to resource id(s).");
+            logger.warn("Could not create Context API Service.");
             return false;
         }
 
@@ -264,7 +274,12 @@ public class EhrLaunchContextResolver implements Authenticator {
 
         logger.info("Generated Access Token used to call Context API: " + accessToken);
 
-        IContext launchContext = contextService.getLaunchContext(accessToken, launchRequestParameter);
+        String launchContextUrl = context.getAuthenticatorConfig().getConfig()
+                .get(EhrLaunchContextResolverFactory.CONTEXT_SERVER_URL_PROP_NAME);
+
+        logger.info("Using Context API URL: " + launchContextUrl);
+        
+        IContext launchContext = contextService.getLaunchContext(accessToken, launchRequestParameter, launchContextUrl);
 
         if (launchContext instanceof IFhirCastContext) {
             logger.info("We are dealing with a FHIRcast context service.");
@@ -275,8 +290,8 @@ public class EhrLaunchContextResolver implements Authenticator {
         Collection<ContextResource> resources = launchContext.getContextResources();
 
         for (ContextResource resource : resources) {
-            // This relies on user session mappers, as configured per resource key 
-            // to be able to push them onwards into token response. 
+            // This relies on user session mappers, as configured per resource key
+            // to be able to push them onwards into token response.
             SmartLaunchHelper.saveToUserSession(context, resource.getKey(), resource.getId());
         }
 
