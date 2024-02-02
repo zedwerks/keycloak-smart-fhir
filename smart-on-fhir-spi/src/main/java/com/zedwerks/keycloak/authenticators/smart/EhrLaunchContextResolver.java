@@ -115,10 +115,10 @@ public class EhrLaunchContextResolver implements Authenticator {
 
         // Resolve the launch parameter to the patient resource id
         if (!resolveLaunchParameter(context, launchToken)) {
-            String msg = "*** Could not resolve launch parameter to resource id(s).";
+            String msg = "*** Could not resolve launch parameter to resource id(s). Failing the request. ***";
             logger.warn(msg);
-            context.failure(AuthenticationFlowError.INVALID_CLIENT_SESSION,
-                    Response.status(422, msg).build());
+            context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
+                    Response.status(421, msg).build());
             return;
         }
 
@@ -281,6 +281,11 @@ public class EhrLaunchContextResolver implements Authenticator {
         
         IContext launchContext = contextService.getLaunchContext(accessToken, launchRequestParameter, launchContextUrl);
 
+        if (launchContext == null) {
+            logger.warn("Could not resolve launch parameter to context");
+            return false;
+        }
+
         if (launchContext instanceof IFhirCastContext) {
             logger.info("We are dealing with a FHIRcast context service.");
             IFhirCastContext fhirCastContext = (IFhirCastContext) launchContext;
@@ -288,6 +293,11 @@ public class EhrLaunchContextResolver implements Authenticator {
         }
 
         Collection<ContextResource> resources = launchContext.getContextResources();
+
+        if (resources == null || resources.isEmpty()) {
+            logger.warn("No resources found in launch context");
+            return false;
+        }
 
         for (ContextResource resource : resources) {
             // This relies on user session mappers, as configured per resource key
@@ -297,7 +307,7 @@ public class EhrLaunchContextResolver implements Authenticator {
 
         // This places it in user session that mappers then stuff into token, and
         // response.
-        SmartLaunchHelper.savePatientToSession(context, "9094686009");
+        //SmartLaunchHelper.savePatientToSession(context, "9094686009");
 
         return true;
     }

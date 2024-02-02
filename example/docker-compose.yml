@@ -24,8 +24,8 @@ services:
       - --import-realm
       - --features=token-exchange,authorization,admin-fine-grained-authz
   smartcontext:
-    container_name: smart-context
-    image: smart-context
+    container_name: smartcontext
+    image: smartcontext
     build:
       context: https://github.com/zedwerks/smart-context.git#main
     ports:

@@ -21,6 +21,7 @@ public abstract class ContextService implements IContextService {
 
     public IContext getLaunchContext(String accessToken, String contextId, String contextServiceUrl) {
 
+
         if ((contextId == null) || contextId.isEmpty()) {
             logger.error("getLaunchContext() called with null or empty contextId");
             return null;
@@ -56,6 +57,8 @@ public abstract class ContextService implements IContextService {
             // Send the request and receive the response as a string
             HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
+            logger.info("ContextService Response Code: " + response.statusCode());
+
             // Check if the request was successful (status code 2xx)
             if (response.statusCode() >= 200 && response.statusCode() < 300) {
                 // Parse the JSON response
@@ -71,10 +74,11 @@ public abstract class ContextService implements IContextService {
   
             } else {
                 // Handle error response
-                System.out.println("Error: " + response.statusCode() + ", " + response.body());
+                logger.error("Error: " + response.statusCode() + ", " + response.body());
             }
 
         } catch (Exception e) {
+            logger.error("*** SMART on FHIR: Error during call to Context Server: " + e.getMessage());
             e.printStackTrace();
         }
 
