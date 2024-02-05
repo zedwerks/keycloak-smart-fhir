@@ -1,5 +1,5 @@
 data "keycloak_realm" "realm" {
-  realm = var.keycloak_environment.realm
+  realm = var.keycloak_realm
 }
 
 data "keycloak_openid_client_scope" "openid_profile_scope" {

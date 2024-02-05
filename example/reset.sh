@@ -33,7 +33,9 @@ docker exec -it $keycloak_container_name /bin/bash /opt/keycloak/bin/terraform-r
 # now let's run the terraform script to create the realm
 cd terraform
 echo 'Running terraform...'
-sh ./reset.sh
-sh ./apply.sh
+sh ./tfexec.sh reset local
+sh ./tfexec.sh init local
+sh ./tfexec.sh plan local
+sh ./tfexec.sh apply local
 cd ..
 echo "Done."

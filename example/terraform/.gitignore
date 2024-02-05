@@ -1,5 +1,5 @@
 *.tfvars
-!config_sample.tfvars
+!config-EXAMPLE.tfvars
 
 # Ignore any .tfstate files
 *.tfstate
