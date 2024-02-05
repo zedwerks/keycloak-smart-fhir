@@ -55,9 +55,5 @@ surefire-reports/
 .htaccess
 
 # environment
-.env
-.env.local*
-.env.development*
-.env.test*
-.env.staging*
-.env.production*
+.env*
+!.env.example
