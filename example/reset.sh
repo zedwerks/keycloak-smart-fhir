@@ -4,7 +4,6 @@
 keycloak_url="http://localhost:8080"
 keycloak_container_name="keycloak"
 
-@echo off
 echo "Stopping and removing keycloak container..."
 docker-compose down
 echo "Building and starting keycloak..."

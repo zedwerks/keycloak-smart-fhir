@@ -118,7 +118,11 @@ public class EhrLaunchContextResolver implements Authenticator {
             String msg = "*** Could not resolve launch parameter to resource id(s). Failing the request. ***";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
-                    Response.status(421, msg).build());
+                    Response.status(302)
+                    .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                            "?error=server_error" +
+                            "&error_description=" + msg)
+                    .build());
             return;
         }
 

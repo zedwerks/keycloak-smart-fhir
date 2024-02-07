@@ -2,7 +2,6 @@
 # Script to run the docker container including re-building the image, if necessary.
 keycloak_url="http://localhost:8080"
 
-@echo off
 echo "Stopping keycloak container..."
 docker-compose stop
 echo "(Re)building and starting keycloak..."
