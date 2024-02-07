@@ -4,7 +4,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_patie
   name                = "user-session-patient-mapper"
   claim_name          = "patient"
   claim_value_type    = "String"
-  session_note        = "smart_patient_id"
+  session_note        = "patient"
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
@@ -17,7 +17,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "smart_launch_patie
   name                = "user-session-patient-launch-mapper"
   claim_name          = "patient"
   claim_value_type    = "String"
-  session_note        = "smart_patient_id"
+  session_note        = "patient"
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
@@ -30,7 +30,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_encou
   name                = "user-session-encounter-mapper"
   claim_name          = "encounter"
   claim_value_type    = "String"
-  session_note        = "smart_encounter_id"
+  session_note        = "encounter"
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true
@@ -43,7 +43,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "smart_launch_encou
   name                = "user-session-launch-encounter-mapper"
   claim_name          = "encounter"
   claim_value_type    = "String"
-  session_note        = "smart_encounter_id"
+  session_note        = "encounter"
   add_to_access_token = false
   add_to_id_token     = false
   //add_to_access_token_response = true

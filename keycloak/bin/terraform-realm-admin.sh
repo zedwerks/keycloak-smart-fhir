@@ -6,7 +6,7 @@ username=$KEYCLOAK_ADMIN
 password=$KEYCLOAK_ADMIN_PASSWORD
 realm=$KEYCLOAK_TARGET_REALM
 device="/dev/tcp/localhost/$KEYCLOAK_PORT"
-server="http://localhost:$KEYCLOAK_PORT"
+server="http://127.0.0.1:$KEYCLOAK_PORT"
 role="admin"
 service_account="service-account-$KEYCLOAK_TERRAFORM_CLIENT_ID"
 

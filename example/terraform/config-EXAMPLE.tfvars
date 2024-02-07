@@ -19,9 +19,10 @@ client_context_resolver = {
 }
 
 keycloak_smart_configuration = {
-  audiences = "http://fhirserver.com##http://fhirserver.com/fhir##"
-  context_client_secret = "t3vGj9MTjULLXeVbvnP33gANmgRuk1999"
-  context_client_id = "context-resolver"
-  context_token_url = "http://localhost:8080/realms/example/openid-connect/token"
+  fhir_audiences = "http://fhirserver.com##http://fhirserver.com/fhir##http://localhost:9000/fhir"
+  context_server_url = "http://smartcontext:8088/context"
+  context_server_scope = "fhircast/Patient-open.read"
+  context_server_audience = "fhircast-service"
+  context_server_class_factory = "ca.phsa.keycloak.smart.FhirCastServiceFactory"
 }
 
