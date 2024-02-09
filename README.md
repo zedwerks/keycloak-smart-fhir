@@ -45,7 +45,13 @@ that includes the SMART on FHIR custom flow steps.
 
 The auth flows have no impact if the auth request is not a SMART on FHIR request.
 
-see the folder example-usage for details.
+see the folder ```example``` for details.
+
+In order for these extensions to work, you must use the flow structure as defined in the Terraform file: 
+
+```bash
+example/terraform/auth_flow_smart_browser.tf
+```
 
 ## Quick Start
 
@@ -64,7 +70,7 @@ This will build and deploy the docker group/bundle consisting of two services:
 in the folder example/FHIRcast_examples.
 2. keycloak, the extended version of keycloak that adds SMART on FHIR ehr-launch capability
 
-To try this out, use Postman. Included in this repo, is example/postman folder containing a postman collection you can import into Postman app. To try out the smart service.
+To try this out, use Postman. Included in this repo, is ```example/postman``` folder containing a postman collection you can import into Postman app. To try out the smart service.
 
 ### Trying it out
 
