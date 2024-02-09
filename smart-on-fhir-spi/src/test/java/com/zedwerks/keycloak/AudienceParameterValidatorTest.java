@@ -17,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.Authenticator;
-import org.keycloak.provider.ProviderConfigProperty;
 import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakContext;
 import org.keycloak.sessions.AuthenticationSessionModel;
