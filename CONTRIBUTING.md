@@ -1,6 +1,14 @@
 # Contributing
 
-Our project welcomes contributions. Zed Werks Inc. in partnership with PHSA set to make this part of their program open source so that others could benefit from a Keycloak Authorization Server that fully supports  HL7 SMART on FHIR.
+Both public and private sector are encouraged to contribute to the repository by **forking and submitting a pull request**.
+
+(If you are new to GitHub, you might start with a [basic tutorial](https://help.github.com/articles/set-up-git) and  check out a more detailed guide to [pull requests](https://help.github.com/articles/using-pull-requests/).)
+
+Pull requests will be evaluated by the repository guardians on a schedule and if deemed beneficial will be committed to the main branch after validating.
+
+All contributors retain the original copyright to their stuff, but by contributing to this project, you grant a world-wide, royalty-free, perpetual, irrevocable, non-exclusive, transferable license to all users **under the terms of the license under which this project is distributed.**
+
+This project welcomes contributions. Zed Werks in partnership with PHSA set to make this aspect of their Digital Health strategy open source so that others could benefit from an extension of the Keycloak Authorization Server that fully supports HL7 SMART on FHIR.
 
 ## Communication
 

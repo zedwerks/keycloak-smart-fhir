@@ -1,5 +1,10 @@
 # keycloak-smart-fhir
 
+![Badge-License]
+
+![badge-stable]
+
+
 A custom Service Provider Interface (extension) for Keycloak that supports SMART on FHIR  EHR-Launch.
 
 - Support for mapping 'patient' context response into JWT JSON response as well as Bearer Token.
@@ -86,4 +91,5 @@ Keycloak since it interprets the '.' to mean build a json structure with child n
 mappers set the claims to be hub_topic and hub_url. We are going to submit this change request to the FHIRcast standards team for 
 consideration. Many JSON parsers make assumptions about the dots in the middle of key names, so hopefully they will accept this recommendation.
 
-
+[Badge-License]: https://img.shields.io/badge/license-apache%202.0-60C060.svg
+[badge-stable]: https://img.shields.io/badge/Lifecycle-Preview-97ca00?color=blue
