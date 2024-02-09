@@ -1,4 +1,11 @@
 /*
+ (C) Copyright Provincial Health Services Authority of British Columbia and Zed Werks Inc. 2024
+
+ SPDX-License-Identifier: Apache-2.0
+
+ * 
+ *  Modified base User Attribute Mapper to support SMART on FHIR. -- Zed Werks Inc.
+
  * Copyright 2016 Red Hat, Inc. and/or its affiliates
  * and other contributors as indicated by the @author tags.
  *
@@ -14,8 +21,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * 
- *  Modified base User Attribute Mapper to support SMART on FHIR. -- Zedwerks
+
  */
 
 package com.zedwerks.keycloak.mappers;
