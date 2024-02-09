@@ -29,7 +29,6 @@ import java.util.Hashtable;
 
 public class AudienceParameterValidatorTest {
 
-
     @BeforeClass
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -50,8 +49,6 @@ public class AudienceParameterValidatorTest {
         Authenticator authenticator = new AudienceParameterValidator(session);
 
         AudienceParameterValidatorFactory factory = mock(AudienceParameterValidatorFactory.class);
-
-        //List<ProviderConfigProperty> providerConfig = factory.getConfigProperties();
 
         MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<String,String>();
         queryParameters.putSingle("aud", "https://fhir.example.com");
