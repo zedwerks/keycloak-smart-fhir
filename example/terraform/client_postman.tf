@@ -22,7 +22,7 @@ resource "keycloak_openid_client" "client_postman" {
   valid_redirect_uris          = var.client_postman.valid_redirects
   full_scope_allowed           = false
   authentication_flow_binding_overrides {
-    browser_id = keycloak_authentication_flow.smart_flow.id
+    browser_id = keycloak_authentication_flow.sf1.id
   }
 }
 
@@ -31,8 +31,10 @@ resource "keycloak_openid_client_default_scopes" "client_postman_default_scopes"
   client_id = keycloak_openid_client.client_postman.id
 
   default_scopes = [
+    "openid",
     "web-origins",
-  "profile"]
+    "profile"
+  ]
 }
 resource "keycloak_openid_client_optional_scopes" "client_postman_optional_scopes" {
   realm_id  = keycloak_openid_client.client_postman.realm_id
