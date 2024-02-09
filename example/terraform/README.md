@@ -37,19 +37,19 @@ terraform apply -tfvars {your configuration file}.tfvars
 ### Initialize Terraform
 
 ```bash
-sh tf-init.sh
+sh tfexec.sh init local
 ```
 
 ### Terraform Plan
 
 ```bash
-sh tf-plan.sh
+sh tfexec.sh plan local
 ```
 
 ### Terraform Apply
 
 ```bash
-sh tf-apply.sh
+sh tfexec.sh apply local
 ```
 
 ### Reset - scrubs Terraform State! USE WITH CAUTION
@@ -58,5 +58,5 @@ USE WITH CAUTION. Meant as a convenience when you have also reset your entire do
 and you want to purge terraform state.
 
 ```bash
-sh tf-reset.sh
+sh tfexec.sh reset local
 ```
