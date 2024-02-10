@@ -59,7 +59,7 @@ public class SmartLaunchDetector implements Authenticator {
     @Override
     public void authenticate(AuthenticationFlowContext context) {
 
-        logger.info("authenticate() **** SMART on FHIR Launch Validator ****");
+        logger.info("authenticate() **** SMART on FHIR Launch Detector ****");
 
         boolean isEhrLaunch = SmartLaunchHelper.isEhrLaunch(context);
         boolean isStandaloneLaunch = SmartLaunchHelper.isStandaloneLaunch(context);
@@ -109,7 +109,7 @@ public class SmartLaunchDetector implements Authenticator {
 
     @Override
     public boolean requiresUser() {
-        logger.info("requiresUser() **** SMART on FHIR EHR-Launch Authenticator ****");
+        logger.debug("requiresUser() **** SMART on FHIR EHR-Launch Authenticator ****");
         return false;
     }
 
@@ -133,7 +133,7 @@ public class SmartLaunchDetector implements Authenticator {
 
     @Override
     public void close() {
-        logger.info("close() **** SMART on FHIR EHR-Launch Validator ****");
+        logger.debug("close() **** SMART on FHIR EHR-Launch Validator ****");
         // NOOP
     }
 }
