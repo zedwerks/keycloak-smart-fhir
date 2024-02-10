@@ -85,6 +85,15 @@ public final class SmartLaunchHelper {
 
         logger.debug("hasAudienceParam() **** SMART on FHIR  ****");
 
+        if (context.getUriInfo() == null) {
+            logger.debug("No URI Info found");
+            return false;
+        }
+        if (context.getUriInfo().getQueryParameters() == null) {
+            logger.debug("No Query Parameters found");
+            return false;
+        }
+
         String requestedAudience = context.getUriInfo().getQueryParameters().getFirst(SMART_AUDIENCE_PARAM);
         String requestedAud = context.getUriInfo().getQueryParameters().getFirst(SMART_AUD_PARAM);
         String requestedResource = context.getUriInfo().getQueryParameters().getFirst(SMART_RESOURCE_PARAM);
@@ -99,6 +108,16 @@ public final class SmartLaunchHelper {
     public static boolean hasLaunchParameter(AuthenticationFlowContext context) {
 
         logger.debug("hasLaunchParameter() **** SMART on FHIR  ****");
+
+        if (context.getUriInfo() == null) {
+            logger.debug("No URI Info found");
+            return false;
+        }
+        if (context.getUriInfo().getQueryParameters() == null) {
+            logger.debug("No Query Parameters found");
+            return false;
+        }
+
         String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartLaunchHelper.LAUNCH_REQUEST_PARAM);
 
         boolean hasLaunch = (launchParam != null) && !launchParam.isBlank();
@@ -107,11 +126,20 @@ public final class SmartLaunchHelper {
 
     public static String getLaunchParameter(AuthenticationFlowContext context) {
 
+        if (context.getUriInfo() == null) {
+            logger.debug("No URI Info found");
+            return null;
+        }
+        if (context.getUriInfo().getQueryParameters() == null) {
+            logger.debug("No Query Parameters found");
+            return null;
+        }
+
         logger.debug("getLaunchParam() **** SMART on FHIR  ****");
 
         String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartLaunchHelper.LAUNCH_REQUEST_PARAM);
 
-        logger.info("SMART Launch Parameter: " + launchParam);
+        logger.debug("SMART Launch Parameter: " + launchParam);
         return launchParam;
     }
 
@@ -131,7 +159,12 @@ public final class SmartLaunchHelper {
         }
         ArrayList<String> scopes = new ArrayList<String>();
 
-        clientScopes.forEach(scope -> scopes.add(scope.getName()));
+        clientScopes.forEach(scope -> scopes.add(scope.getName()!=null?scope.getName():"")); // to protect against null entries
+
+        if (scopes.size() == 0) {
+            logger.debug("No scopes found");
+            return false;
+        }
 
         boolean hasLaunch = scopes.contains(SmartLaunchHelper.SMART_SCOPE_EHR_LAUNCH);
 
@@ -154,9 +187,16 @@ public final class SmartLaunchHelper {
         }
         ArrayList<String> scopes = new ArrayList<String>();
 
-        clientScopes.forEach(scope -> scopes.add(scope.getName()));
+        clientScopes.forEach(scope -> scopes.add(scope.getName()!=null?scope.getName():"")); // to protect against null entries
 
-        boolean hasScopes = (scopes.size() > 1) && (scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_PATIENT) ||
+        logger.info("Requested Scopes: " + scopes.toString());
+
+        if (scopes.size() == 0) {
+            logger.debug("No scopes found");
+            return false;
+        }
+
+        boolean hasScopes = (scopes.size() > 0) && (scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_PATIENT) ||
                 scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER) ||
                 scopes.stream().anyMatch(s -> s.startsWith(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ANY_PREFIX)));
 
@@ -165,7 +205,16 @@ public final class SmartLaunchHelper {
 
     public static String getAudienceParameter(AuthenticationFlowContext context) {
 
-        logger.info("getAudienceParam() **** SMART on FHIR  ****");
+        logger.debug("getAudienceParam() **** SMART on FHIR  ****");
+
+        if (context.getUriInfo() == null) {
+            logger.debug("No URI Info found");
+            return null;
+        }
+        if (context.getUriInfo().getQueryParameters() == null) {
+            logger.debug("No Query Parameters found");
+            return null;
+        }
 
         String requestedAudience = context.getUriInfo().getQueryParameters().getFirst(SMART_AUDIENCE_PARAM);
         String requestedAud = context.getUriInfo().getQueryParameters().getFirst(SMART_AUD_PARAM);

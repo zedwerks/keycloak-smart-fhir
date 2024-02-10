@@ -8,7 +8,6 @@ import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
 import org.junit.BeforeClass;
-//import org.junit.Test;
 import org.junit.jupiter.api.Test;
 import org.keycloak.models.AuthenticatorConfigModel;
 import org.keycloak.models.KeycloakSession;
@@ -64,21 +63,6 @@ public class AudienceParameterValidatorTest {
         when(session.getContext()).thenReturn(keycloakContext);
         when(session.getContext().getAuthenticationSession()).thenReturn(authSession);
         when(session.getContext().getClient()).thenReturn(client);
-
-        when(context.getAuthenticatorConfig()).thenReturn(config);
-        when(context.getUser()).thenReturn(user);
-        when(context.getSession()).thenReturn(session);
-        when(context.getUriInfo()).thenReturn(uriInfo);
-        when(context.getAuthenticationSession()).thenReturn(authSession);
-        when(context.getUriInfo().getQueryParameters()).thenReturn(queryParameters);
-
-        when(factory.create(session)).thenReturn(authenticator);
-        when(factory.getId()).thenReturn("audience-validator");
-
-        when(uriInfo.getQueryParameters()).thenReturn(queryParameters);
-        when(session.getContext().getAuthenticationSession()).thenReturn(authSession);
-        when(session.getContext().getClient()).thenReturn(client);
-        when(session.getContext()).thenReturn(keycloakContext);
 
         when(context.getAuthenticatorConfig()).thenReturn(config);
         when(context.getUser()).thenReturn(user);
