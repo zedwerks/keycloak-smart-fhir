@@ -47,10 +47,10 @@ The auth flows have no impact if the auth request is not a SMART on FHIR request
 
 see the folder ```example``` for details.
 
-In order for these extensions to work, you must use the flow structure as defined in the Terraform file: 
+In order for these extensions to work, you must use the flow structure as defined in the Terraform file:
 
 ```bash
-example/terraform/auth_flow_smart_browser.tf
+cd example/terraform/auth_flow_smart_browser.tf
 ```
 
 ## Quick Start
