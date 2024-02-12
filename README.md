@@ -86,10 +86,10 @@ To try this out, use Postman. Included in this repo, is ```example/postman``` fo
 5. Observe the console logs in Docker.
 6. Examine the response JSON, by opening the console logs in Postman and viewing the response.
 
-To get the patient, hub topic and hub url (FHIRcast) into the JSON response, you need to manually set the "Add to access token response"
-for the user session notes of hub.topic, hub.url and patient.  These are found under the example realm -> Client Scopes -> launch.
+To get the patient, hub topic and hub url (FHIRcast) into the JSON response, we used the generic protocol mapper in Keycloak Terraform Provider.
+Using the user session note mapper does not allow us to set the "along side the access token" for these claims, as per the SMART and FHIRcast specifications.
 
-Once you have added those to the access token response, you should see them in the response JSON.
+### Caveat - deviation from the STU2 FHIRcast spec
 
 Unfortunately, the current FHIRcast spec calls for these json values to be "hub.topic", "hub.url", but that does not work with
 Keycloak since it interprets the '.' to mean build a json structure with child nodes of topic and url.  To overcome this, the
