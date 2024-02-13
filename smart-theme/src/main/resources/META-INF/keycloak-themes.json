@@ -1,0 +1,6 @@
+{
+    "themes": [ {
+        "name" : "smart-theme",
+        "types": [ "login", "welcome" ]
+    }]
+}

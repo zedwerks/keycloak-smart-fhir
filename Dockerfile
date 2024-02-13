@@ -21,6 +21,12 @@ COPY smart-on-fhir-spi/pom.xml .
 COPY smart-on-fhir-spi/src src
 COPY keycloak keycloak
 
+# Copy the theme files
+COPY smart-theme/pom.xml ./smart-theme/
+COPY smart-theme/src ./smart-theme/src
+# Build the theme
+RUN mvn -B -f smart-theme/pom.xml clean package
+
 # Build the application JAR
 RUN mvn -B clean package -DskipTests
 
@@ -51,6 +57,9 @@ COPY --from=builder /app/keycloak/import/realm.json ./data/import/realm.json
 # Copy the script that sets the realm admin roles for the terraform client
 COPY --from=builder /app/keycloak/bin/terraform-realm-admin.sh ./bin/terraform-realm-admin.sh
 COPY --from=builder /app/target/deploy/*.jar ./providers/
+
+# Copy the theme files
+COPY --from=builder /app/smart-theme/target/*.jar ./providers/
 
 # Expose the port if needed
 EXPOSE $KEYCLOAK_PORT
