@@ -1,0 +1,19 @@
+{
+    "exp": 1706065363,
+    "iat": 1706065063,
+    "auth_time": 1706065063,
+    "jti": "8b9cc80a-5d44-4823-8f81-09d2d7f21e99",
+    "iss": "http://localhost:8080/realms/example",
+    "aud": "http://fhirserver.com",
+    "sub": "f59e82cc-e97f-4b3c-b808-4d87816972b9",
+    "typ": "Bearer",
+    "azp": "postman",
+    "session_state": "decd7a5e-3b6b-4c76-a6c0-f891eac27102",
+    "scope": "openid fhirUser launch profile",
+    "sid": "decd7a5e-3b6b-4c76-a6c0-f891eac27102",
+    "patient": "9094686009",
+    "name": "Alice Fehr",
+    "preferred_username": "alice",
+    "given_name": "Alice",
+    "family_name": "Fehr"
+  }

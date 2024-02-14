@@ -1,0 +1,36 @@
+*.tfvars
+!config-EXAMPLE.tfvars
+
+# Ignore any .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Ignore any override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore the .terraform directory as it contains a local copy of the Terraform state
+**/.terraform/*
+
+# Ignore any temporary files
+*.tfplan
+*.tfout
+
+# Ignore any crash log files
+crash.log
+
+# Ignore any .tfvars files that are generated automatically for each Terraform run. Most
+# .tfvars files are managed as part of configuration and so should be included in
+# version control.
+*.auto.tfvars
+*.auto.tfvars.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Ignore MacOS files
+.DS_Store

@@ -1,0 +1,29 @@
+{
+  "timestamp": "2024-01-30T19:50:46.392-0800",
+  "id": "7a2a6081-44e2-40c2-8953-cf8676e7a155",
+  "event": {
+    "hub.topic": "d72c5fbc-48f8-4323-9064-2985ea14d66f",
+    "hub.event": "Patient-open",
+    "context": [
+      {
+        "key": "patient",
+        "resource": {
+          "resourceType": "Patient",
+          "id": "9698656171", 
+          "identifier": [
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "https://fhir.infoway-inforoute.ca/NamingSystem/ca-bc-patient-healthcare-id",
+                    "value": "9698656171"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
