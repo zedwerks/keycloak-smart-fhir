@@ -89,6 +89,13 @@ To try this out, use Postman. Included in this repo, is ```example/postman``` fo
 To get the patient, hub topic and hub url (FHIRcast) into the JSON response, we used the generic protocol mapper in Keycloak Terraform Provider.
 Using the user session note mapper does not allow us to set the "along side the access token" for these claims, as per the SMART and FHIRcast specifications.
 
+#### Quick start script
+
+```bash
+sh quick-start.sh
+```
+
+
 ### Caveat - deviation from the STU2 FHIRcast spec
 
 Unfortunately, the current FHIRcast spec calls for these json values to be "hub.topic", "hub.url", but that does not work with
