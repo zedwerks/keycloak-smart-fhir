@@ -34,6 +34,7 @@ cd terraform
 echo 'Running terraform...'
 sh ./tfexec.sh reset local
 sh ./tfexec.sh init local
+sh ./tfexec.sh import local
 sh ./tfexec.sh plan local
 sh ./tfexec.sh apply local
 cd ..
