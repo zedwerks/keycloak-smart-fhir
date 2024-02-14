@@ -1,0 +1,6 @@
+{
+    "themes": [ {
+        "name" : "pdhis",
+        "types": [ "login" ]
+    }]
+}
