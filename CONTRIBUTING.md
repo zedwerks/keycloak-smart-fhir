@@ -44,7 +44,6 @@ SPDX-License-Identifier: Apache-2.0
 
 All changes to the `main` branch must be approved by one or more project maintainers.
 
-For a list of project maintainers, see the [MAINTAINERS.md](MAINTAINERS.md) page.
 We are always looking for additional maintainers, so please contact us if you are interest in helping to drive the project forward.
 
 ## Setup
