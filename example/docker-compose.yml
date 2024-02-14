@@ -10,7 +10,7 @@ services:
     build:
       #context: https://github.com/zedwerks/keycloak-smart-fhir.git#main
       context: ../
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.example
       args:
         target_realm: ${KEYCLOAK_TARGET_REALM}
         target_realm_display_name: ${KEYCLOAK_TARGET_REALM_DISPLAY_NAME}
