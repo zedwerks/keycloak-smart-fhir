@@ -44,18 +44,12 @@ import com.zedwerks.keycloak.authenticators.smart.EhrLaunchContextResolverFactor
 import com.zedwerks.keycloak.authenticators.smart.EhrLaunchContextResolver;
 import com.zedwerks.keycloak.authenticators.smart.context.ContextResource;
 import com.zedwerks.keycloak.authenticators.smart.context.IFhirCastContext;
-import com.zedwerks.keycloak.authenticators.smart.context.IContextService;
-import com.zedwerks.keycloak.authenticators.smart.context.IContext;
-import com.zedwerks.keycloak.authenticators.smart.context.ContextService;
-import com.zedwerks.keycloak.authenticators.smart.context.IContextServiceFactory;
 
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
 public class EhrLaunchContextResolverTest {
