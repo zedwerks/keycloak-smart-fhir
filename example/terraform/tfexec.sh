@@ -1,8 +1,8 @@
 
 # Check if the first parameter is valid
-if [ $1 != "apply" ]  && [ $1 != "init" ] && [ $1 != "plan" ] && [ $1 != "reset" ]; then
+if [ $1 != "apply" ]  && [ $1 != "init" ] && [ $1 != "plan" ] && [ $1 != "reset" ]&& [ $1 != "import" ]; then
     echo "Invalid action: $1"
-    echo "Valid actions: apply, init, plan, reset"
+    echo "Valid actions: apply, init, plan, reset, import"
     exit 1
 fi
 
@@ -25,17 +25,12 @@ fi
 if [ $1 == "init" ]; then
     terraform workspace new $2
     # Set the TF_VAR_ environment variables
-    source env.sh
     terraform init --upgrade -var-file config-$2.tfvars
     exit 0
 fi
 
-if [ $1 == "apply" ]; then
-    auto_approve="-auto-approve"
-fi
-
-if [ ! -f ../.env ]; then
-    echo "The ../.env file does not exist. Please create it and fill in the values:"
+if [ ! -f ../.env.$2 ]; then
+    echo "The ../.env.$2 file does not exist. Please create it and fill in the values:"
     echo "KEYCLOAK_HOSTNAME_URL=?"
     echo "KEYCLOAK_TARGET_REALM=?"
     echo "KEYCLOAK_TERRAFORM_CLIENT_ID=?"
@@ -43,16 +38,24 @@ if [ ! -f ../.env ]; then
     exit 1
 else 
     echo "Setting environment variables from .env file"
-    source ../.env
+    source ../.env.$2
+    export TF_VAR_keycloak_base_url=$KEYCLOAK_HOSTNAME_URL
+    export TF_VAR_keycloak_realm=$KEYCLOAK_TARGET_REALM
+    export TF_VAR_keycloak_terraform_client_id=$KEYCLOAK_TERRAFORM_CLIENT_ID
+    export TF_VAR_keycloak_terraform_client_secret=$KEYCLOAK_TERRAFORM_CLIENT_SECRET
+    #printenv | grep TF_VAR_
 fi
 
-export TF_VAR_keycloak_base_url=$KEYCLOAK_HOSTNAME_URL
-export TF_VAR_keycloak_realm=$KEYCLOAK_TARGET_REALM
-export TF_VAR_keycloak_terraform_client_id=$KEYCLOAK_TERRAFORM_CLIENT_ID
-export TF_VAR_keycloak_terraform_client_secret=$KEYCLOAK_TERRAFORM_CLIENT_SECRET
+if [ $1 == "import" ]; then
+    echo "Importing the realm $KEYCLOAK_TARGET_REALM"
+    terraform import -var-file=config-$2.tfvars 'keycloak_realm.realm' "$KEYCLOAK_TARGET_REALM"
+    exit 0
+fi
 
-printenv | grep TF_VAR_
+if [ $1 == "apply" ]; then
+    auto_approve="-auto-approve"
+fi
 
 echo "Running terraform $1 for environment $2"
 terraform workspace select $2
-terraform $1 $auto_approve -var-file config-$2.tfvars
+terraform $1 $auto_approve -var-file=config-$2.tfvars
