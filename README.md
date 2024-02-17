@@ -2,7 +2,7 @@
 
 ![Badge-License]
 
-![badge-stable]
+![Badge-Maturing]
 
 ## About
 
@@ -104,4 +104,5 @@ mappers set the claims to be hub_topic and hub_url. We are going to submit this 
 consideration. Many JSON parsers make assumptions about the dots in the middle of key names, so hopefully they will accept this recommendation.
 
 [Badge-License]: https://img.shields.io/badge/license-apache%202.0-60C060.svg
-[badge-stable]: https://img.shields.io/badge/Lifecycle-Preview-97ca00?color=blue
+[Badge-Maturing]: https://img.shields.io/badge/Lifecycle-Maturing-007EC6
+
