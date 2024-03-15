@@ -41,6 +41,7 @@ resource "keycloak_openid_client_optional_scopes" "client_postman_optional_scope
   client_id = keycloak_openid_client.client_postman.id
 
   optional_scopes = [
+    "user/Patient.read"
     "offline_access",
     "launch",
     "fhirUser",
