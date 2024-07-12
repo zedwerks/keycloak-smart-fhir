@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
 import org.jboss.logging.Logger;
 
 
@@ -27,17 +28,19 @@ public abstract class ContextService implements IContextService {
 
     private String getContextUrl(String baseUrl, String contextIdentifier) {
 
-        String contextServiceUrl = null;
+        String contextUrl = null;
         try {
-            URI baseUri = new URI(baseUrl);
+            URI baseUri = new URI(baseUrl + "/");
+            baseUri = baseUri.normalize(); // get rid of duplicate trailing slashes, if any.
             URI finalUri = baseUri.resolve(contextIdentifier);
-            contextServiceUrl = finalUri.toString();
+            contextUrl = finalUri.toString();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        return contextServiceUrl;
+        return contextUrl;
     }
 
+    @Override
     public IContext getLaunchContext(String accessToken, String contextId, String contextServiceUrl) {
 
 
