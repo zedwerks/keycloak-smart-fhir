@@ -28,11 +28,18 @@ echo "Keycloak is up and running."
 echo 'Running terraform...'
 workdir="terraform"
 
-exec_terraform () {
-    terraform $@
-    if [ $? -ne 0 ]; then
-        echo "Terraform $@ failed. Exiting..."
-        exit 1
+# Execute Terraform command and exit if it fails
+exec_terraform() {
+    errormsg=`terraform $@ 2>&1`
+    local exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+        echo "Error[$exit_code] terraform $@"
+        if [[ $errormsg =~ "Resource already managed" ]]; then
+            echo "Resource already managed. Continuing..."
+        else
+            echo $errormsg
+            exit $exit_code
+        fi
     fi
 }
 
@@ -56,7 +63,13 @@ echo "\nRunning terraform plan..."
 exec_terraform plan -var-file="$tfvars_file"
 
 # import the realm so we can configure it.
-exec_terraform import -var-file="$tfvars_file" -input=false 'keycloak_realm.realm' "$KEYCLOAK_TARGET_REALM"
+#bash ./scripts/tfimports.sh -var-file "$tfvars_file"
+#if [ $? -ne 0 ]; then
+#    echo "Error: Failed to perform terraform imports ."
+#    exit 1
+#fi
+
+exec_terraform import -input=false -var-file "$tfvars_file" 'keycloak_realm.realm' "$KEYCLOAK_TARGET_REALM"
 
 echo "\nRunning terraform apply..."
 exec_terraform apply  -var-file="$tfvars_file" -auto-approve

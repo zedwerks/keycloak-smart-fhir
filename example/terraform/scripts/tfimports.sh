@@ -202,6 +202,7 @@ apply_imports() {
 
     exec_terraform import -input=false $VAR_FILE_ARG $VARS_ARGS 'keycloak_realm.realm' "$KEYCLOAK_TARGET_REALM"
 
+
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.email_email_user_attribute_mapper' \
         "$KEYCLOAK_TARGET_REALM/client-scope/$EMAIL_SCOPE_ID/$email_id"
