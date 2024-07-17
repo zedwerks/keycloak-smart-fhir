@@ -8,30 +8,25 @@
 #FROM maven:3.8.3-openjdk-11-slim AS builder
 FROM maven:3.9.4-eclipse-temurin-21-alpine AS builder
 
-ARG target_realm=example
-ARG target_realm_display_name="Example SMART on FHIR Realm."
-ARG terraform_client_id=terraform
-ARG terraform_client_secret
-
 # Set the working directory in the container
 WORKDIR /app
 
 # Copy the Maven configuration and project files
-COPY smart-on-fhir-spi/pom.xml .
-COPY smart-on-fhir-spi/src src
+COPY smart-on-fhir-spi/pom.xml ./smart-on-fhir-spi/
+COPY smart-on-fhir-spi/src ./smart-on-fhir-spi/src
 COPY keycloak keycloak
 
 # Copy the theme files
-COPY smart-theme/pom.xml ./smart-theme/
-COPY smart-theme/src ./smart-theme/src
+COPY smart-theme/pom.xml ./theme/
+COPY smart-theme/src ./theme/src
 # Build the theme
-RUN mvn -B -f smart-theme/pom.xml clean package
+RUN mvn -B -f theme/pom.xml clean package
 
 # Build the application JAR
-RUN mvn -B clean package -DskipTests
+RUN mvn -B -DskipTests -f smart-on-fhir-spi/pom.xml clean package 
 
 # Make the script executable
-RUN chmod +x keycloak/bin/terraform-realm-admin.sh
+RUN chmod +x keycloak/bin/*.sh
 
 # Modify the realm.json file to contain ENV variables for realm name and terraform client secret
 # sed -i does not work in alpine, so we have to use a temporary file...
@@ -41,28 +36,38 @@ RUN cd /app/keycloak/import && sed "s/{{place_terraform_client_name_here}}/$terr
 RUN cd /app/keycloak/import && sed "s/{{place_terraform_client_secret_here}}/$terraform_client_secret/g" r3.json > realm.json
 RUN cd /app/keycloak/import && rm r1.json r2.json r3.json
 
+## =================================================================================================
 # Package Stage - add to an official Keycloak image
-FROM quay.io/keycloak/keycloak:23.0.1-0
+FROM quay.io/keycloak/keycloak:24.0.5-0 
+## Need this for AWS Aurora Edition of PostgreSQL JDBC driver
 
-# need this set so we can use it in entrypoint to 
-# apply realm admin rights to the terraform client.
-ENV KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM
+# need the Keycloak Port ENV var set so we can use it in entrypoint to 
+# apply realm admin rights to the terraform client. 
+# Used in: /opt/keycloak/bin/terraform_realm_admin.sh
 ENV KEYCLOAK_PORT=8080
 
 # Set the working directory in the container
 WORKDIR /opt/keycloak/
 
-# Copy the JAR file from the builder stage to the final image
-COPY --from=builder /app/keycloak/import/realm.json ./data/import/realm.json
 # Copy the script that sets the realm admin roles for the terraform client
-COPY --from=builder /app/keycloak/bin/terraform-realm-admin.sh ./bin/terraform-realm-admin.sh
-COPY --from=builder /app/target/deploy/*.jar ./providers/
+COPY --from=builder /app/keycloak/bin/*.sh ./bin/
+
+# Copy the Keycloak Realm file (which in build phase, the realm name was resolved to the realm name)
+COPY --from=builder /app/keycloak/import/realm-template.json ./data/import/realm.json
+
+USER root
+RUN chown keycloak:root -R ./data/import/
+USER keycloak
+
+# Copy the SMART on FHIR SPI Jar to the providers folder
+COPY --from=builder /app/smart-on-fhir-spi/target/deploy/*.jar ./providers/
 
 # Copy the theme files
-COPY --from=builder /app/smart-theme/target/*.jar ./providers/
+COPY --from=builder /app/theme/target/*.jar ./providers/
 
 # Expose the port if needed
 EXPOSE $KEYCLOAK_PORT
 
 # Start Keycloak with the import-realm optin to load in the SMART on FHIR realm
-CMD ["start-dev", "--import-realm", "--log-level=info", "--features=token-exchange,authorization,admin-fine-grained-authz"]
+ENTRYPOINT ["/opt/keycloak/bin/bootstrap.sh"]
+CMD ["start-dev", "--import-realm", "--features-disabled=account3,impersonation","--health-enabled=true"]

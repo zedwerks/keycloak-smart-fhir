@@ -6,9 +6,11 @@ SPDX-License-Identifier: Apache-2.0
 package com.zedwerks.keycloak.authenticators.smart.context;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
 import org.jboss.logging.Logger;
 
 
@@ -24,6 +26,21 @@ public abstract class ContextService implements IContextService {
         this.contextClass = contextClass;
     }
 
+    private String getContextUrl(String baseUrl, String contextIdentifier) {
+
+        String contextUrl = null;
+        try {
+            URI baseUri = new URI(baseUrl + "/");
+            baseUri = baseUri.normalize(); // get rid of duplicate trailing slashes, if any.
+            URI finalUri = baseUri.resolve(contextIdentifier);
+            contextUrl = finalUri.toString();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return contextUrl;
+    }
+
+    @Override
     public IContext getLaunchContext(String accessToken, String contextId, String contextServiceUrl) {
 
 
@@ -40,7 +57,7 @@ public abstract class ContextService implements IContextService {
             return null;
         }
 
-        String getRequestUrl = contextServiceUrl + "/" + contextId;
+        String getRequestUrl = this.getContextUrl(contextServiceUrl, contextId);
 
         logger.info("getLaunchContext() called with GET Url: " + getRequestUrl);
 

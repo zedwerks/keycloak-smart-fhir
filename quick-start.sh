@@ -2,7 +2,7 @@
 # A simple script to start the quick start example
 
 cd example
-sh reset.sh
+sh deploy.sh
 echo "Quick Start is done."
 echo "Go to http://localhost:8080 to see the example Keycloak admin login"
 echo "username: admin"
