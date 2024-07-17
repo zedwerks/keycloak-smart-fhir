@@ -29,8 +29,8 @@ echo 'Running terraform...'
 workdir="terraform"
 
 # Execute Terraform command and exit if it fails
-exec_terraform() {
-    errormsg=`terraform $@ 2>&1`
+exec_terraform_import() {
+    errormsg=`terraform import $@ 2>&1`
     local exit_code=$?
     if [ $exit_code -ne 0 ]; then
         echo "Error[$exit_code] terraform $@"
@@ -40,6 +40,16 @@ exec_terraform() {
             echo $errormsg
             exit $exit_code
         fi
+    fi
+}
+
+exec_terraform() {
+    errormsg=`terraform $@ 2>&1`
+    local exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+        echo "Error[$exit_code] terraform $@"
+        echo $errormsg
+        exit $exit_code
     fi
 }
 
@@ -56,10 +66,10 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "\nRunning terraform init..."
+echo "Running terraform init..."
 exec_terraform init -upgrade
 
-echo "\nRunning terraform plan..."
+echo "Running terraform plan..."
 exec_terraform plan -var-file="$tfvars_file"
 
 # import the realm so we can configure it.
@@ -69,10 +79,10 @@ exec_terraform plan -var-file="$tfvars_file"
 #    exit 1
 #fi
 
-exec_terraform import -input=false -var-file "$tfvars_file" 'keycloak_realm.realm' "$KEYCLOAK_TARGET_REALM"
+exec_terraform_import -input=false -var-file "$tfvars_file" 'keycloak_realm.realm' "$KEYCLOAK_TARGET_REALM"
 
-echo "\nRunning terraform apply..."
-exec_terraform apply  -var-file="$tfvars_file" -auto-approve
+echo "Running terraform apply..."
+exec_terraform apply -var-file="$tfvars_file" -auto-approve
 rm -f $secrets_tfvars_file
 cd ..
 echo "Done."
