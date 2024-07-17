@@ -21,6 +21,12 @@ client so that it can execute the terraform scripts.
 I recommend changing the Keycloak admin password AFTER you
 have reset.
 
+## Apply terraform configuration changes.
+```bash
+/bin/sh configure.sh
+```
+This does everything but init. It uses local terraform state, so not 
+production grade state management. 
 
 ## docker-compose.yml
 

@@ -18,18 +18,15 @@ terraform init
 
 ## Configuring Variables
 
-1. Clone the example configuration file ```configuration.tfvars.example```, and name it with an extension of ```.tfvars```.
+1. Edit the example configuration file ```configuration/example.tfvars``` , or use it to create a  new one.
 2. Edit the secrets and other configurations in your new configuration file.
 3. Execute the plan.
 
-```bash
-terraform plan -tfvars {your configuration file}.tfvars
-```
 
 ## Now Apply the configuration
 
 ```bash
-terraform apply -tfvars {your configuration file}.tfvars
+terraform apply -tfvars configuration/example.tfvars
 ```
 
 ## Handy Shell scripts
@@ -37,26 +34,26 @@ terraform apply -tfvars {your configuration file}.tfvars
 ### Initialize Terraform
 
 ```bash
-sh tfexec.sh init local
+terraform init -tfvars configuration/example.tfvars
 ```
 
 ### Terraform Plan
 
 ```bash
-sh tfexec.sh plan local
+sh terraform plan -tfvars configuration/example.tfvars
 ```
 
-### Terraform Apply
 
+
+# Or use the handy scripts at the top-level
+
+## Full first-time deployment (dev)
 ```bash
-sh tfexec.sh apply local
+sh deploy.sh
 ```
 
-### Reset - scrubs Terraform State! USE WITH CAUTION
-
-USE WITH CAUTION. Meant as a convenience when you have also reset your entire docker deployment,
-and you want to purge terraform state.
+## configure Keycloak with Terraform
 
 ```bash
-sh tfexec.sh reset local
+sh configure.sh
 ```
