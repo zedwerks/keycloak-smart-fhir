@@ -31,7 +31,7 @@ import org.keycloak.services.resource.RealmResourceProviderFactory;
 
 public class SmartContextRealmResourceProviderFactory implements RealmResourceProviderFactory {
 
-    public static final String ID = "smart-context-api";
+    public static final String ID = "smart-on-fhir";
     @Override
     public RealmResourceProvider create(KeycloakSession session) {
 

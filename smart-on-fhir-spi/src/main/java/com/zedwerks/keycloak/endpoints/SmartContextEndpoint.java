@@ -78,7 +78,7 @@ public class SmartContextEndpoint implements RealmResourceProvider {
      * @return Response
      */
     @POST
-    @Path("/smart-context")
+    @Path("/context")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response setSmartContext(@Context SecurityContext securityContext, Map<String, String> json) {

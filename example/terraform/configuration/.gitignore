@@ -3,4 +3,5 @@
 # version control.
 *.auto.tfvars
 *.auto.tfvars.json
+!localhost.tfvars
 !example.tfvars
