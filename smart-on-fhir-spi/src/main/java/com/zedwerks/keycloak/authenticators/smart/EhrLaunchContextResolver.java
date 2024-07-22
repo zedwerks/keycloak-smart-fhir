@@ -29,6 +29,10 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 
+import com.zedwerks.smart.context.IContext;
+import com.zedwerks.smart.context.ContextPayload;
+import com.zedwerks.smart.context.ContextResource;
+
 import jakarta.ws.rs.core.Response;
 
 /**
@@ -148,9 +152,19 @@ public class EhrLaunchContextResolver implements Authenticator {
             logger.warn("No launch context found for launch token: " + launchToken);
             return false;
         }   
-        
-        // Now parse the JSON string into a ContextResource object
-        // and extract the resource identifier types and values and set them into the UserSession
+
+        IContext contextPayload = new ContextPayload();
+        if (contextPayload.parseJson(jsonString) == false) {
+            logger.warn("Could not parse the launch context JSON string from session. Something is wrong.");
+            return false;
+        }
+        logger.info("Saving launch context parameters to user session - so they appear in/alongside the access token");
+
+        for (ContextResource resource : contextPayload.getContextResources()) {
+            logger.info("From Context Resource Type: " + resource.getResourceKey());
+            logger.info("From Context Resource ID: " + resource.getResourceId());
+            SmartLaunchHelper.saveToUserSession(context, resource.getResourceKey(), resource.getResourceId());
+        }
         return true;
     }
 

@@ -118,7 +118,7 @@ public class SmartContextEndpoint implements RealmResourceProvider {
         // The context will be retrieved by the Keycloak Authenticator
         // and will return the resource identifiers as part of the auth response.
 
-        userSession.setNote(guid, jsonString);
+        userSession.setNote(guid, jsonString); // Here we just store it blind! If it is not well-formed JSON, we will have a problem later.
 
         return Response.ok().entity(guid).build();
 

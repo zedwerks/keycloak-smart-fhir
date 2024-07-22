@@ -1,0 +1,30 @@
+{
+    "resourceType": "Parameters",
+    "parameter": [
+      {
+        "name": "patient",
+        "valueString": "12345"
+      },
+      {
+        "name": "fhirContext",
+        "part": [
+          {
+            "name": "reference",
+            "valueString": "Observation/123456"
+          },
+          {
+            "name": "reference",
+            "valueString": "Encounter/234567"
+          },
+          {
+            "name": "reference",
+            "valueString": "Appointment/345678"
+          },
+          {
+            "name": "reference",
+            "valueString": "DiagnosticReport/456789"
+          }
+        ]
+      }
+    ]
+}
