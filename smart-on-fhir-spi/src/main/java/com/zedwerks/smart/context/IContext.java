@@ -3,13 +3,12 @@
 
 SPDX-License-Identifier: Apache-2.0
 */
-package com.zedwerks.keycloak.authenticators.smart.context;
+package com.zedwerks.smart.context;
 
 import java.util.Collection;
 
 public interface IContext {
     public boolean parseJson(String json);
-    public String getContextId();
     public Collection<ContextResource> getContextResources();
 }
  

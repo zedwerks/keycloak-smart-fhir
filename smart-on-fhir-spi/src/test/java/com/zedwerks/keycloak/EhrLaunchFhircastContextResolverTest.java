@@ -12,7 +12,6 @@ import org.mockito.MockedStatic;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 import org.junit.BeforeClass;
@@ -37,13 +36,13 @@ import org.keycloak.services.util.DefaultClientSessionContext;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.mockito.MockitoAnnotations;
 
-import ca.phsa.keycloak.smart.FhirCastService;
-import ca.phsa.keycloak.smart.FhirCastServiceFactory;
+import com.zedwerks.smart.fhircast.FhirCastService;
+import com.zedwerks.smart.fhircast.FhirCastServiceFactory;
 
-import com.zedwerks.keycloak.authenticators.smart.EhrLaunchContextResolverFactory;
-import com.zedwerks.keycloak.authenticators.smart.EhrLaunchContextResolver;
-import com.zedwerks.keycloak.authenticators.smart.context.ContextResource;
-import com.zedwerks.keycloak.authenticators.smart.context.IFhirCastContext;
+import com.zedwerks.keycloak.authenticators.smart.EhrLaunchFhircastContextResolverFactory;
+import com.zedwerks.keycloak.authenticators.smart.EhrLaunchFhircastContextResolver;
+import com.zedwerks.smart.context.ContextResource;
+import com.zedwerks.smart.fhircast.IFhirCastContext;
 
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -52,7 +51,7 @@ import jakarta.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.ArrayList;
 
-public class EhrLaunchContextResolverTest {
+public class EhrLaunchFhircastContextResolverTest {
 
     @BeforeClass
     public void setUp() {
@@ -60,12 +59,11 @@ public class EhrLaunchContextResolverTest {
     }
 
     @Test
-    public void testLaunchResolver() {
+    public void testFhircastLaunchResolver() {
 
         KeycloakSession session = mock(KeycloakSession.class);
-        EhrLaunchContextResolver authenticator = new EhrLaunchContextResolver(session); // this is the class we want to
+        EhrLaunchFhircastContextResolver authenticator = new EhrLaunchFhircastContextResolver(session); // this is the class we want to
                                                                                         // test
-
         KeycloakContext keycloakContext = mock(KeycloakContext.class);
         AuthenticationSessionModel authSession = mock(AuthenticationSessionModel.class);
         AuthenticationFlowContext context = mock(AuthenticationFlowContext.class);
@@ -77,18 +75,24 @@ public class EhrLaunchContextResolverTest {
         ClientConnection clientConnection = mock(ClientConnection.class);
         RealmModel realm = mock(RealmModel.class);
 
-        EhrLaunchContextResolverFactory factory = mock(EhrLaunchContextResolverFactory.class);
+        EhrLaunchFhircastContextResolverFactory factory = mock(EhrLaunchFhircastContextResolverFactory.class);
 
-
-        MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<String, String>();
+        MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<>();
         queryParameters.putSingle("aud", "https://fhir.example.com");
 
-        Map<String, String> configMap = new Hashtable<String, String>(1);
-        configMap.put("smart_audiences", "https://fhir.example.com");
-        configMap.put("context_server_url", "https://context.example.com");
-        configMap.put("context_server_scope", EhrLaunchContextResolverFactory.CONTEXT_SERVER_SCOPE_PROP_DEFAULT);
-        configMap.put("context_server_audience", EhrLaunchContextResolverFactory.CONTEXT_SERVER_AUDIENCE_PROP_DEFAULT);
+        Map<String, String> configMap = new HashMap<>(5);
 
+        configMap.put(EhrLaunchFhircastContextResolverFactory.CONTEXT_SERVER_CLASS_FACTORY_PROP_NAME, 
+            "com.zedwerks.smart.fhircast.FhirCastServiceFactory");
+        configMap.put(EhrLaunchFhircastContextResolverFactory.CONTEXT_SERVER_AUDIENCE_PROP_NAME,
+            "https://fhir.example.com");
+        configMap.put(EhrLaunchFhircastContextResolverFactory.CONTEXT_SERVER_URL_PROP_NAME, 
+            "https://context.example.com");
+        configMap.put(EhrLaunchFhircastContextResolverFactory.CONTEXT_SERVER_SCOPE_PROP_NAME, 
+            EhrLaunchFhircastContextResolverFactory.CONTEXT_SERVER_SCOPE_PROP_DEFAULT);
+        configMap.put(EhrLaunchFhircastContextResolverFactory.CONTEXT_SERVER_AUDIENCE_PROP_NAME, 
+            EhrLaunchFhircastContextResolverFactory.CONTEXT_SERVER_AUDIENCE_PROP_DEFAULT);
+        
         when(config.getConfig()).thenReturn(configMap);
 
         ClientScopeModel defaultScope = mock(ClientScopeModel.class);
@@ -99,12 +103,12 @@ public class EhrLaunchContextResolverTest {
         when(defaultScope.getName()).thenReturn("openid");
         when(launchScope.getName()).thenReturn("launch");
 
-        Map<String, ClientScopeModel> allOptionalScopes = new HashMap<String, ClientScopeModel>();
+        Map<String, ClientScopeModel> allOptionalScopes = new HashMap<>(1);
         allOptionalScopes.put("launch", launchScope);
 
         when(client.getClientScopes(false)).thenReturn(allOptionalScopes);
 
-        Map<String, ClientScopeModel> defaultScopes = new HashMap<String, ClientScopeModel>();
+        Map<String, ClientScopeModel> defaultScopes = new HashMap<>(2);
         defaultScopes.put("openid", defaultScope);
         defaultScopes.put("profile", profileScope);
 
@@ -144,7 +148,7 @@ public class EhrLaunchContextResolverTest {
         when(session.getContext().getClient()).thenReturn(client);
         when(session.sessions()).thenReturn(userSessionProvider);
 
-        Collection<ContextResource> contextResources = new ArrayList<ContextResource>();
+        Collection<ContextResource> contextResources = new ArrayList<>();
         contextResources.add(new ContextResource("patient", "9094008993", "Patient"));
 
         MockedStatic<Profile> profileMock = mockStatic(Profile.class);

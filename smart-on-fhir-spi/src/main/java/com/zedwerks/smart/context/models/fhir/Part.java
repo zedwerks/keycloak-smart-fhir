@@ -1,8 +1,6 @@
 /*
  * Copyright 2024 Zed Werks Inc.and/or its affiliates
  * and other contributors as indicated by the @author tags.
- * 
- *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +17,35 @@
  * @author brad@zedwerks.com
  * 
  */
-package com.zedwerks.smart.context.models;
+package com.zedwerks.smart.context.models.fhir;
 
-import com.zedwerks.smart.context.models.fhir.Parameters;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ContextModel extends Parameters {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Part {
 
+    @JsonProperty("name")
+    private String name;
+
+    @JsonProperty("valueString")
+    private String valueString;
+
+    // Getters and Setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValueString() {
+        return valueString;
+    }
+
+    public void setValueString(String valueString) {
+        this.valueString = valueString;
+    }
 }
+

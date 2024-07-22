@@ -1,14 +1,32 @@
 /*
-(C) Copyright Provincial Health Services Authority of British Columbia 2024
+ (C) Copyright Zed Werks Inc. 2024
 
-SPDX-License-Identifier: Apache-2.0
-*/
-package ca.phsa.keycloak.smart;
+ SPDX-License-Identifier: Apache-2.0
 
-import ca.phsa.keycloak.smart.model.FhirCastModel;
-import ca.phsa.keycloak.smart.model.Context;
-import com.zedwerks.keycloak.authenticators.smart.context.IFhirCastContext;
-import com.zedwerks.keycloak.authenticators.smart.context.ContextResource;
+ * 
+ *  Modified base User Attribute Mapper to support SMART on FHIR. -- Zed Werks Inc.
+
+ * Copyright 2016 Red Hat, Inc. and/or its affiliates
+ * and other contributors as indicated by the @author tags.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
+package com.zedwerks.smart.fhircast;
+
+import com.zedwerks.smart.fhircast.model.FhirCastModel;
+import com.zedwerks.smart.fhircast.model.Context;
+import com.zedwerks.smart.context.ContextResource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,7 +34,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public class FhirCastContext  implements IFhirCastContext {
+
+    Logger logger = Logger.getLogger(FhirCastContext.class);
 
     private FhirCastModel fhirCastModel;
 
@@ -36,7 +60,7 @@ public class FhirCastContext  implements IFhirCastContext {
     @Override
     public Collection<ContextResource> getContextResources() {
 
-        List<ContextResource> resources = new ArrayList<ContextResource>();
+        List<ContextResource> resources = new ArrayList<>();
 
         // Iterate through the Contexts and add all the resources to the list
         List<Context> contexts = fhirCastModel.getEvent().getContext();
@@ -58,8 +82,8 @@ public class FhirCastContext  implements IFhirCastContext {
         try {
             this.fhirCastModel = mapper.readValue(json, FhirCastModel.class);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            logger.error("Error parsing FhirCastModel: " + e.getMessage());
         }
         
         return false;

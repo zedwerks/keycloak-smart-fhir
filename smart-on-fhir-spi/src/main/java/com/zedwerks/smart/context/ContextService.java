@@ -3,8 +3,10 @@
 
 SPDX-License-Identifier: Apache-2.0
 */
-package com.zedwerks.keycloak.authenticators.smart.context;
+package com.zedwerks.smart.context;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -35,7 +37,7 @@ public abstract class ContextService implements IContextService {
             URI finalUri = baseUri.resolve(contextIdentifier);
             contextUrl = finalUri.toString();
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            logger.error("getContextUrl() failed to create URI: " + e.getMessage());
         }
         return contextUrl;
     }
@@ -99,9 +101,8 @@ public abstract class ContextService implements IContextService {
                 logger.error("Error: " + response.statusCode() + ", " + response.body());
             }
 
-        } catch (Exception e) {
+        } catch (IOException | IllegalAccessException | IllegalArgumentException | InstantiationException | InterruptedException | NoSuchMethodException | SecurityException | InvocationTargetException | URISyntaxException e) {
             logger.error("*** SMART on FHIR: Error during call to Context Server: " + e.getMessage());
-            e.printStackTrace();
         }
 
         return null;
