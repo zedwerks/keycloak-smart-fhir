@@ -331,12 +331,8 @@ public class EhrLaunchFhircastContextResolver implements Authenticator {
         for (ContextResource resource : resources) {
             // This relies on user session mappers, as configured per resource key
             // to be able to push them onwards into token response.
-            SmartLaunchHelper.saveToUserSession(context, resource.getKey(), resource.getId());
+            SmartLaunchHelper.saveToUserSession(context, resource.getResourceKey(), resource.getResourceId());
         }
-
-        // This places it in user session that mappers then stuff into token, and
-        // response.
-        //SmartLaunchHelper.savePatientToSession(context, "9094686009");
 
         return true;
     }

@@ -1,6 +1,8 @@
 /*
  * Copyright 2024 Zed Werks Inc.and/or its affiliates
  * and other contributors as indicated by the @author tags.
+ * 
+ *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +23,10 @@ package com.zedwerks.smart.context.models.fhir;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
+
+import com.zedwerks.smart.fhircast.model.Resource;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -35,6 +40,7 @@ public class Parameter {
 
     @JsonProperty("part")
     private List<Part> part;
+
 
     // Getters and Setters
     public String getName() {

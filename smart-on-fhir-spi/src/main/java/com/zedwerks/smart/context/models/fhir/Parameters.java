@@ -1,6 +1,8 @@
 /*
  * Copyright 2024 Zed Werks Inc.and/or its affiliates
  * and other contributors as indicated by the @author tags.
+ * 
+ *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,11 +45,11 @@ public class Parameters {
         this.resourceType = resourceType;
     }
 
-    public List<Parameter> getParameter() {
+    public List<Parameter> getParameterList() {
         return parameter;
     }
 
-    public void setParameter(List<Parameter> parameter) {
+    public void setParameterList(List<Parameter> parameter) {
         this.parameter = parameter;
     }
 }

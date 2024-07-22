@@ -67,9 +67,8 @@ public class FhirCastContext  implements IFhirCastContext {
 
         for (Context context : contexts) {
             String key = context.getKey();
-            String resourceType = context.getResource().getResourceType();
             String resourceId = context.getResource().getId();
-            ContextResource resource = new ContextResource(key, resourceId, resourceType);
+            ContextResource resource = new ContextResource(key, resourceId);
             resources.add(resource);
         }
         return resources;

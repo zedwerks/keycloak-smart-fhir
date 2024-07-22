@@ -149,7 +149,7 @@ public class EhrLaunchFhircastContextResolverTest {
         when(session.sessions()).thenReturn(userSessionProvider);
 
         Collection<ContextResource> contextResources = new ArrayList<>();
-        contextResources.add(new ContextResource("patient", "9094008993", "Patient"));
+        contextResources.add(new ContextResource("patient", "9094008993"));
 
         MockedStatic<Profile> profileMock = mockStatic(Profile.class);
         Profile profile = mock(Profile.class);
