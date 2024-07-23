@@ -1,8 +1,24 @@
 /*
-(C) Copyright Provincial Health Services Authority of British Columbia and Zed Werks Inc. 2024
-
-SPDX-License-Identifier: Apache-2.0
-*/
+ * Copyright 2024 Zed Werks Inc.and/or its affiliates
+ * and other contributors as indicated by the @author tags.
+ * 
+ *  SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author brad@zedwerks.com
+ * 
+ */
 package com.zedwerks.keycloak.authenticators.smart;
 
 import org.jboss.logging.Logger;
@@ -102,6 +118,10 @@ public class SmartLaunchDetector implements Authenticator {
             String launch = SmartLaunchHelper.getLaunchParameter(context);
             SmartLaunchHelper.saveLaunchToSession(context, launch); // tuck this away for the context resolver.
         }
+
+        // Saves the additional request parameters into user session that were provided in the launch as HTTP request parameters.
+        // examples are 'intent', 'fhirContext', 'need_patient_banner', etc.
+        SmartLaunchHelper.saveAdditionalLaunchRequestParameters(context);
 
         context.attempted(); // Do not set this to success???, as we are not done authenticating the user.
         return;

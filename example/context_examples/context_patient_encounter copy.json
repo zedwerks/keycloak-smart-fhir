@@ -1,0 +1,13 @@
+{
+    "resourceType": "Parameters",
+    "parameter": [
+      {
+        "name": "patient",
+        "valueString": "12345"
+      },
+      {
+        "name": "encounter",
+        "valueString": "67890"
+      }
+    ]
+}

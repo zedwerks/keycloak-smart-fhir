@@ -1,13 +1,8 @@
 /*
- (C) Copyright Provincial Health Services Authority of British Columbia and Zed Werks Inc. 2024
-
- SPDX-License-Identifier: Apache-2.0
-
- * 
- *  Modified base User Attribute Mapper to support SMART on FHIR. -- Zed Werks Inc.
-
- * Copyright 2016 Red Hat, Inc. and/or its affiliates
+ * Copyright 2024 Zed Werks Inc.and/or its affiliates
  * and other contributors as indicated by the @author tags.
+ * 
+ *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +16,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
-
+ * @author brad@zedwerks.com
+ * 
  */
 
 package com.zedwerks.keycloak.mappers;
@@ -60,7 +56,7 @@ import java.util.List;
 public class CustomUserAttributeMapper extends AbstractOIDCProtocolMapper
         implements OIDCAccessTokenMapper, OIDCIDTokenMapper, UserInfoTokenMapper, TokenIntrospectionTokenMapper, OIDCAccessTokenResponseMapper {
 
-    private static final List<ProviderConfigProperty> configProperties = new ArrayList<ProviderConfigProperty>();
+    private static final List<ProviderConfigProperty> configProperties = new ArrayList<>();
 
     static {
         ProviderConfigProperty property;
@@ -89,6 +85,7 @@ public class CustomUserAttributeMapper extends AbstractOIDCProtocolMapper
 
     public static final String PROVIDER_ID = "custom-oidc-usermodel-attribute-mapper";
 
+    @Override
     public List<ProviderConfigProperty> getConfigProperties() {
         return configProperties;
     }
@@ -114,11 +111,16 @@ public class CustomUserAttributeMapper extends AbstractOIDCProtocolMapper
     }
 
     @Override
+    @Deprecated
     protected void setClaim(IDToken token, ProtocolMapperModel mappingModel, UserSessionModel userSession) {
+    }
+
+    @Override
+    protected void setClaim(IDToken token, ProtocolMapperModel mappingModel, UserSessionModel userSession, KeycloakSession keycloakSession, ClientSessionContext clientSessionCtx) {
 
         UserModel user = userSession.getUser();
         String attributeName = mappingModel.getConfig().get(ProtocolMapperUtils.USER_ATTRIBUTE);
-        boolean aggregateAttrs = Boolean.valueOf(mappingModel.getConfig().get(ProtocolMapperUtils.AGGREGATE_ATTRS));
+        boolean aggregateAttrs = Boolean.parseBoolean(mappingModel.getConfig().get(ProtocolMapperUtils.AGGREGATE_ATTRS));
         Collection<String> attributeValue = KeycloakModelUtils.resolveAttribute(user, attributeName, aggregateAttrs);
         if (attributeValue == null)
             return;
@@ -131,7 +133,7 @@ public class CustomUserAttributeMapper extends AbstractOIDCProtocolMapper
 
         UserModel user = userSession.getUser();
         String attributeName = mappingModel.getConfig().get(ProtocolMapperUtils.USER_ATTRIBUTE);
-        boolean aggregateAttrs = Boolean.valueOf(mappingModel.getConfig().get(ProtocolMapperUtils.AGGREGATE_ATTRS));
+        boolean aggregateAttrs = Boolean.parseBoolean(mappingModel.getConfig().get(ProtocolMapperUtils.AGGREGATE_ATTRS));
         Collection<String> attributeValue = KeycloakModelUtils.resolveAttribute(user, attributeName, aggregateAttrs);
         if (attributeValue == null) return;
         OIDCAttributeMapperHelper.mapClaim(accessTokenResponse, mappingModel, attributeValue);

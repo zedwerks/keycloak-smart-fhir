@@ -55,20 +55,19 @@ cd example/terraform/auth_flow_smart_browser.tf
 
 ## Quick Start
 
-This quick start allows you to try out this Keycloak extension and related configurations. It expects that you have Docker Desktop installed.
-
-From your shell or terminal:
+#### Quick start script
 
 ```bash
-cd example
-sh reset.sh
+sh quick-start.sh
 ```
+
+This quick start allows you to try out this Keycloak extension and related configurations. It expects that you have Docker Desktop installed.
 
 This will build and deploy the docker group/bundle consisting of two services:
 
 1. smart-context service, which can consume any context JSON, but out of the box we use FHIRcast JSON, an example of which is found
 in the folder example/FHIRcast_examples.
-2. keycloak, the extended version of keycloak that adds SMART on FHIR ehr-launch capability
+1. keycloak, the extended version of keycloak that adds SMART on FHIR ehr-launch capability
 
 To try this out, use Postman. Included in this repo, is ```example/postman``` folder containing a postman collection you can import into Postman app. To try out the smart service.
 
@@ -81,7 +80,7 @@ To try this out, use Postman. Included in this repo, is ```example/postman``` fo
    - In the Authorization tab, set the 'launch' request parameter to the content identifier you copied by pasting it there
    - On Docker Desktop, open the console to view the logs from Keycloak. This is so you can see the smart extension in action.
    - Tap the run button on Postman to submit the authentication request.
-3. Past the context identifier UUID into the request parameter named 'launch'
+3. Paste the context identifier UUID into the request parameter named 'launch'
 4. Now try submitting the authorization by clicking on the 'Get New Access Token' button, at the bottom of the Authorization form.
 5. Observe the console logs in Docker.
 6. Examine the response JSON, by opening the console logs in Postman and viewing the response.
@@ -89,11 +88,7 @@ To try this out, use Postman. Included in this repo, is ```example/postman``` fo
 To get the patient, hub topic and hub url (FHIRcast) into the JSON response, we used the generic protocol mapper in Keycloak Terraform Provider.
 Using the user session note mapper does not allow us to set the "along side the access token" for these claims, as per the SMART and FHIRcast specifications.
 
-#### Quick start script
-
-```bash
-sh quick-start.sh
-```
+Checkout the Postman library to simplify this trial, found in postman folder.
 
 
 ### Caveat - deviation from the STU2 FHIRcast spec

@@ -1,12 +1,30 @@
 /*
-(C) Copyright Provincial Health Services Authority of British Columbia and Zed Werks Inc. 2024
-
-SPDX-License-Identifier: Apache-2.0
-*/
+ * Copyright 2024 Zed Werks Inc.and/or its affiliates
+ * and other contributors as indicated by the @author tags.
+ * 
+ *  SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author brad@zedwerks.com
+ * 
+ */
 package com.zedwerks.keycloak.authenticators.smart;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
+
+import javax.security.auth.AuthPermission;
 
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -49,9 +67,11 @@ public final class SmartLaunchHelper {
     public static final String SMART_FHIR_CONTEXT_CLAIM = "fhirContext";
 
     // SMART on FHIR Session Notes - set by the LAUNCH CONTEXT resolution.
-    public static final String USER_SESSION_NOTE_PATIENT = "smart_patient_id";
+    public static final String USER_SESSION_NOTE_PATIENT = "patient";
+    public static final String USER_SESSION_NOTE_ENCOUNTER = "encounter";
+
     public static final String USER_SESSION_NOTE_AUDIENCE = "smart_aud";
-    public static final String USER_SESSION_NOTE_FHIR_CONTEXT = "smart_fhir_context";
+    public static final String USER_SESSION_NOTE_FHIR_CONTEXT = "smart_fhirContext";
     public static final String USER_SESSION_NOTE_NEED_BANNER = "smart_need_patient_banner";
     public static final String USER_SESSION_NOTE_INTENT = "smart_intent";
     public static final String USER_SESSION_NOTE_SMART_STYLE_URL = "smart_style_url";
@@ -197,8 +217,12 @@ public final class SmartLaunchHelper {
         }
 
         boolean hasScopes = (scopes.size() > 0) && (scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_PATIENT) ||
-                scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER) ||
-                scopes.stream().anyMatch(s -> s.startsWith(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ANY_PREFIX)));
+                scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER));
+                // @TODO: Implement the following:
+                // setup a configuration for this authenticator to set what scopes are considered for launching standalone.
+                // we limit to launch/Patient and launch/Encounter for now, but this should be configurable.
+                //||
+                // scopes.stream().anyMatch(s -> s.startsWith(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ANY_PREFIX)));
 
         return hasScopes;
     }
@@ -283,9 +307,16 @@ public final class SmartLaunchHelper {
         context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_FHIR_CONTEXT);
     }
 
-    public static void saveNeedBannerToSession(AuthenticationFlowContext context, boolean needBanner) {
-        context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_NEED_BANNER,
-                Boolean.toString(needBanner));
+    public static void saveNeedBannerToSession(AuthenticationFlowContext context, String needBanner) {
+
+        Boolean needed = Boolean.parseBoolean(needBanner);
+
+        if (needBanner == null) {
+            context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_NEED_BANNER, needBanner);
+            return;
+        } else {
+            context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_NEED_BANNER, needed.toString());
+        }
     }
 
     public static boolean getNeedBannerFromSession(AuthenticationFlowContext context) {
@@ -328,6 +359,34 @@ public final class SmartLaunchHelper {
 
     public static void removeLaunchFromSession(AuthenticationFlowContext context) {
         context.getAuthenticationSession().removeAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN);
+    }
+
+    public static void saveAdditionalLaunchRequestParameters(AuthenticationFlowContext context){
+        logger.info("saveAdditionalLaunchRequestParameters() **** SMART on FHIR  ****");
+
+        // N.B. fhirContext is set by processsing the context payload, not passed as a request parameter, but if
+        // it is passed as a request parameter, it will be saved to the session, and later overridden if also
+        // processed from the context object.
+        String fhirContext = context.getUriInfo().getQueryParameters().getFirst(SMART_FHIR_CONTEXT_CLAIM);
+        if (fhirContext != null) {
+            logger.warn("Found fhirContext as a request parameter: This should be set in the context by the EMR... Saving anyway.");
+            saveFhirContextToSession(context, fhirContext);
+        }
+
+        String intent = context.getUriInfo().getQueryParameters().getFirst(SMART_INTENT_CLAIM);
+        setIntent(context, intent);
+
+
+        String styleUrl = context.getUriInfo().getQueryParameters().getFirst(SMART_STYLE_URL_CLAIM);
+        if (styleUrl != null) {
+            setStyleUrl(context, styleUrl);
+        }
+
+        String needBanner = context.getUriInfo().getQueryParameters().getFirst(SMART_NEED_BANNER_CLAIM);
+        saveNeedBannerToSession(context, needBanner);
+
+        String tenant = context.getUriInfo().getQueryParameters().getFirst(SMART_TENANT_CLAIM);
+        saveToUserSession(context, USER_SESSION_NOTE_SMART_TENANT, tenant);
     }
 
 }

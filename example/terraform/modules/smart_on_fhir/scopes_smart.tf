@@ -31,57 +31,40 @@ resource "keycloak_openid_client_scope" "online_access_scope" {
   include_in_token_scope = true
 }
 #------------------------------------------------------------
-resource "keycloak_openid_client_scope" "launch_context_scope" {
+resource "keycloak_openid_client_scope" "ehr_launch_context_scope" {
   realm_id               = data.keycloak_realm.realm.id
   name                   = "launch"
   description            = "EHR-Launch scope"
   include_in_token_scope = true
 }
 #------------------------------------------------------------
-resource "keycloak_openid_client_scope" "launch_patient_context_scope" {
+resource "keycloak_openid_client_scope" "standalone_launch_patient_context_scope" {
   realm_id               = data.keycloak_realm.realm.id
   name                   = "launch/patient"
   description            = "When launching outside the EHR, ask for a patient to be selected at launch time."
   include_in_token_scope = true
 }
 #------------------------------------------------------------
-resource "keycloak_generic_protocol_mapper" "launch_patient_context_protocol_mapper" {
-  realm_id        = keycloak_openid_client_scope.launch_patient_context_scope.realm_id
-  client_scope_id = keycloak_openid_client_scope.launch_patient_context_scope.id
+resource "keycloak_generic_protocol_mapper" "standalone_launch_patient_context_usermodel_protocol_mapper" {
+  realm_id        = keycloak_openid_client_scope.standalone_launch_patient_context_scope.realm_id
+  client_scope_id = keycloak_openid_client_scope.standalone_launch_patient_context_scope.id
   name            = "Patient ID Claim Mapper"
   protocol        = "openid-connect"
   protocol_mapper = "oidc-usermodel-attribute-mapper"
   config = {
-    "user.attribute"             = "resourceId",
-    "claim.name"                 = "patient",
-    "jsonType.label"             = "String",
-    "id.token.claim"             = "false",
-    "access.tokenResponse.claim" = "false",
-    "userinfo.token.claim"       = "true",
+    "user.attribute"             = "patientId"
+    "claim.name"                 = "patient"
+    "jsonType.label"             = "String"
+    "id.token.claim"             = "false"
+    "access.tokenResponse.claim" = "true"
+    "userinfo.token.claim"       = "true"
     "introspection.token.claim"  = "true"
   }
 }
 #------------------------------------------------------------
-resource "keycloak_openid_client_scope" "launch_encounter_context_scope" {
+resource "keycloak_openid_client_scope" "standalone_launch_encounter_context_scope" {
   realm_id               = data.keycloak_realm.realm.id
   name                   = "launch/encounter"
   description            = "When launching outside the EHR, ask for an encounter to be selected at launch time."
   include_in_token_scope = true
-}
-#------------------------------------------------------------
-resource "keycloak_generic_protocol_mapper" "launch_encounter_context_protocol_mapper" {
-  realm_id        = keycloak_openid_client_scope.launch_encounter_context_scope.realm_id
-  client_scope_id = keycloak_openid_client_scope.launch_encounter_context_scope.id
-  name            = "Encounter ID Claim Mapper"
-  protocol        = "openid-connect"
-  protocol_mapper = "oidc-usermodel-attribute-mapper"
-  config = {
-    "user.attribute"             = "encounterId",
-    "claim.name"                 = "encounter",
-    "jsonType.label"             = "String",
-    "id.token.claim"             = "false",
-    "access.tokenResponse.claim" = "false",
-    "userinfo.token.claim"       = "true",
-    "introspection.token.claim"  = "true"
-  }
 }

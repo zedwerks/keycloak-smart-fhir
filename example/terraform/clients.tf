@@ -28,6 +28,7 @@ locals {
       display_on_consent_screen                = client.display_on_consent_screen
       consent_screen_text                      = client.consent_screen_text
       smart_browser_flow                       = client.smart_browser_flow
+      smart_fhircast_browser_flow              = client.smart_fhircast_browser_flow
       login_theme                              = client.login_theme
       exclude_session_state_from_auth_response = client.exclude_session_state_from_auth_response
       use_refresh_tokens                       = client.use_refresh_tokens
@@ -72,7 +73,9 @@ resource "keycloak_openid_client" "clients" {
   display_on_consent_screen           = each.value.display_on_consent_screen
   consent_screen_text                 = each.value.consent_screen_text
   authentication_flow_binding_overrides {
-    browser_id = each.value.smart_browser_flow ? module.smart_on_fhir.smart_browser_flow_id : null
+    browser_id = each.value.smart_browser_flow ? module.smart_on_fhir.smart_browser_flow_id : (each.value.smart_fhircast_browser_flow ? 
+        module.smart_on_fhir.smart_fhircast_browser_flow_id : 
+        null)
   }
   login_theme                              = each.value.login_theme
   exclude_session_state_from_auth_response = each.value.exclude_session_state_from_auth_response

@@ -1,27 +1,67 @@
 {
 	"info": {
-		"_postman_id": "cc1874fb-0e4b-4cad-82fc-2e206a0f42f3",
+		"_postman_id": "a91e4519-36da-4b56-8b39-607fd19510d6",
 		"name": "keycloak-smart-fhir",
+		"description": "Example SMART on FHIR Launch flow.  \n  \n1\\. Authenticate as an EMR user and \"Set Context\"\n\n2\\. Mimic Auth Challenge for SMART app, which now has context launch token to pass to Auth Server.  \n3\\. Examine the resulting json response, my viewing the Postman console, and then view the access token in jwt.io",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "8297488"
+		"_exporter_id": "33726863"
 	},
 	"item": [
 		{
-			"name": "Postman SMART App",
+			"name": "EMR Context Client",
 			"item": [
 				{
-					"name": "userinfo - regular OIDC",
+					"name": "Set Context",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"resourceType\": \"Parameters\",\n    \"parameter\": [\n      {\n        \"name\": \"patient\",\n        \"valueString\": \"123456789\"\n      }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/realms/smart/smart-on-fhir/context",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"realms",
+								"smart",
+								"smart-on-fhir",
+								"context"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "userinfo",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{keycloak_base}}/realms/{{realm}}/protocol/openid-connect/userinfo",
+							"raw": "http://localhost:8080/realms/smart/protocol/openid-connect/userinfo",
+							"protocol": "http",
 							"host": [
-								"{{keycloak_base}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"realms",
-								"{{realm}}",
+								"smart",
 								"protocol",
 								"openid-connect",
 								"userinfo"
@@ -31,6 +71,143 @@
 					"response": []
 				}
 			],
+			"description": "This is the authenticated EMR that then has the ability to POST a new context just before it wants to launch a smart app",
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "scope",
+						"value": "openid",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "http://localhost:8080/realms/smart/protocol/openid-connect/token",
+						"type": "string"
+					},
+					{
+						"key": "authUrl",
+						"value": "http://localhost:8080/realms/smart/protocol/openid-connect/auth",
+						"type": "string"
+					},
+					{
+						"key": "clientSecret",
+						"value": "",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "postman-emr",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "authorization_code",
+						"type": "string"
+					},
+					{
+						"key": "tokenName",
+						"value": "postman-emr",
+						"type": "string"
+					},
+					{
+						"key": "refreshRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "tokenRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "authRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "challengeAlgorithm",
+						"value": "S256",
+						"type": "string"
+					},
+					{
+						"key": "useBrowser",
+						"value": true,
+						"type": "boolean"
+					},
+					{
+						"key": "state",
+						"value": "adsfdsfsdfsdfsdf",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					},
+					{
+						"key": "client_authentication",
+						"value": "body",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"// Parse the JSON response",
+							"var jsonData = pm.response.json();",
+							"",
+							"// Extract the userId",
+							"var contextId = jsonData.context_id;",
+							"",
+							"// Set the userId as a collection variable",
+							"pm.collectionVariables.set(\"context_id\", contextId);",
+							"",
+							"// Log the userId to the Postman console for verification",
+							"console.log(\"contextId: \" + contextId);"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Postman SMART App",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://111ce016-7858-49f2-bc89-2a9c35f322c1.mock.pstmn.io",
+							"protocol": "https",
+							"host": [
+								"111ce016-7858-49f2-bc89-2a9c35f322c1",
+								"mock",
+								"pstmn",
+								"io"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Represents a SMART app attempting to authenticate after having received the launch context during the request to launch. This launch parameter was set by the authenticated user directly from the EMR to its auth server (keycloak).",
 			"auth": {
 				"type": "oauth2",
 				"oauth2": [
@@ -39,7 +216,7 @@
 						"value": [
 							{
 								"key": "launch",
-								"value": "",
+								"value": "{{context_id}}",
 								"enabled": true,
 								"send_as": "request_url"
 							},
@@ -48,23 +225,53 @@
 								"value": "http://localhost:9000/fhir",
 								"enabled": true,
 								"send_as": "request_url"
+							},
+							{
+								"key": "smart_style_url",
+								"value": "http://localhost:8088/style",
+								"enabled": true,
+								"send_as": "request_url"
+							},
+							{
+								"key": "intent",
+								"value": "patient_summary_view",
+								"enabled": true,
+								"send_as": "request_url"
+							},
+							{
+								"key": "fhirContext",
+								"value": "[ {\"reference\" : \"Observation/1234\"}]",
+								"enabled": true,
+								"send_as": "request_url"
+							},
+							{
+								"key": "tenant",
+								"value": "some-1234556-tenant-id",
+								"enabled": true,
+								"send_as": "request_url"
+							},
+							{
+								"key": "need_patient_banner",
+								"value": "false",
+								"enabled": true,
+								"send_as": "request_url"
 							}
 						],
 						"type": "any"
 					},
 					{
+						"key": "scope",
+						"value": "openid launch patient/Patient.read",
+						"type": "string"
+					},
+					{
 						"key": "accessTokenUrl",
-						"value": "http://localhost:8080/realms/example/protocol/openid-connect/token",
+						"value": "http://localhost:8080/realms/smart/protocol/openid-connect/token",
 						"type": "string"
 					},
 					{
 						"key": "authUrl",
-						"value": "http://localhost:8080/realms/example/protocol/openid-connect/auth",
-						"type": "string"
-					},
-					{
-						"key": "scope",
-						"value": "openid launch fhircast/Patient-open.read",
+						"value": "http://localhost:8080/realms/smart/protocol/openid-connect/auth",
 						"type": "string"
 					},
 					{
@@ -154,98 +361,12 @@
 					}
 				}
 			]
-		},
+		}
+	],
+	"variable": [
 		{
-			"name": "Context Server",
-			"item": [
-				{
-					"name": "Create Fhircast Context",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "x-api-key",
-								"value": "e7ce47e88053fa31998de414423e82c47fd479688be5ad8dd9ecc0ac61108a8b",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"timestamp\": \"2024-02-07T20:33:52.029+0000\",\n  \"id\": \"11af15ee-a55b-4cd4-ac21-bb8308233b5c\",\n  \"event\": {\n    \"hub.topic\": \"d39ddeca-38b8-4fdc-bcbf-fd8aa4e203b9\",\n    \"hub.event\": \"Patient-open\",\n    \"context\": [\n      {\n        \"key\": \"patient\",\n        \"resource\": {\n          \"resourceType\": \"Patient\",\n          \"id\": \"9698717895\",\n          \"identifier\": [\n            {\n              \"type\": {\n                \"coding\": [\n                  {\n                    \"system\": \"https://fhir.infoway-inforoute.ca/NamingSystem/ca-bc-patient-healthcare-id\",\n                    \"value\": \"9698717895\"\n                  }\n                ]\n              }\n            }\n          ]\n        }\n      }\n    ]\n  }\n}\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8088/context",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8088",
-							"path": [
-								"context"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "FhirCast Context",
-					"protocolProfileBehavior": {
-						"disabledSystemHeaders": {
-							"user-agent": true
-						}
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJHMUpQcjRHWjdzLW1mVGZZUTBnenhuWVN2MWF2eVZXcWpjR3p1TjJvbEQ4In0.eyJleHAiOjE2OTI5OTkyMzMsImlhdCI6MTY5Mjk5ODkzMywianRpIjoiMWNlY2FhYzYtMmM0Ni00NmI0LTljOWItN2MzNTMyNGYxMzYwIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODAvYXV0aC9yZWFsbXMvcG9jIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijc3ZmUzMTIwLTZhOWMtNDg4My1iNjBiLTI1MGNlMDc1ZGViNSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNtaWxlLWNkciIsInNlc3Npb25fc3RhdGUiOiIyOGI3MTE2YS1hM2FkLTRlZTgtOTQ1Mi0zZDk0MThkNDljYTQiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcG9jIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsInVzZXIiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImNvbnRleHQiLCJzaWQiOiIyOGI3MTE2YS1hM2FkLTRlZTgtOTQ1Mi0zZDk0MThkNDljYTQiLCJjbGllbnRIb3N0IjoiMTcyLjIwLjAuMiIsImNsaWVudElkIjoic21pbGUtY2RyIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4yMC4wLjIifQ.pBVWmBQJmYcRRsenYClFO-rICFdiGxIZyaPpkgeC8gNPSqQBfBDtGGeM5tS03wyheq3nLyGqDQ9WR0s6n-9PlONTN6KouSVyQShm-09qz-kKHyHWLNQb0N2zOcp6XFz845dyKV9m8vJauK0oz2GP4hnXKkhFN5g2ogk_Pa8xXXynn_JUmflmIcbJLlYETrQGebH5L4E-aTur99Kq2T59AXv3j7YReCch7TIPzvUrUpOxQdok1p-yZ9RXaaQH5a12oaLWBWzOyERPO6y4TX-dWt7QucHf0xiooWZ6lDwri-kOg5hKS5qhMw7tD8GQBOmJItFC2S7nXE_EA_p6kGxbWw",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8088/context/86641ffd-aae0-422f-8c45-d9f087c28239",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8088",
-							"path": [
-								"context",
-								"86641ffd-aae0-422f-8c45-d9f087c28239"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Index (Swagger)",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8088/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8088",
-							"path": [
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"key": "context_id",
+			"value": ""
 		}
 	]
 }
