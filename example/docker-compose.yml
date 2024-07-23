@@ -23,18 +23,18 @@ services:
       - --import-realm
       - --features-disabled=account3,impersonation
       - --features=authorization
-  smartcontext:
+  #smartcontext:
     # This an example context service. It consumes any JSON and returns it as a response.
     # The default uses the FHIRcast JSON as shown in the FHIRcast examles folder.
-    container_name: smart-context
-    image: smartcontext
-    build:
-      context: https://github.com/zedwerks/smart-context.git#main
-    ports:
-      - "8088:8088"
-    environment:
-    - ISSUER=${ISSUER}
-    - JWKS_URI=${JWKS_URI}
-    - SCOPES=${SCOPES}
-    - API_KEY=${API_KEY}
+  #  container_name: smart-context
+  #  image: smartcontext
+  #  build:
+  #    context: https://github.com/zedwerks/smart-context.git#main
+  #  ports:
+  #    - "8088:8088"
+  #  environment:
+  #  - ISSUER=${ISSUER}
+  #  - JWKS_URI=${JWKS_URI}
+  #  - SCOPES=${SCOPES}
+  #  - API_KEY=${API_KEY}
 

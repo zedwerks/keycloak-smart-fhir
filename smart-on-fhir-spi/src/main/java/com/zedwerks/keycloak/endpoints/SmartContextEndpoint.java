@@ -23,21 +23,30 @@ import org.jboss.logging.Logger;
 
 import org.keycloak.events.EventBuilder;
 import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.RealmModel;
+import org.keycloak.models.UserSessionProvider;
 import org.keycloak.models.UserSessionModel;
 import org.keycloak.protocol.oidc.TokenManager;
+import org.keycloak.representations.AccessToken;
+import org.keycloak.services.managers.AuthenticationManager;
 import org.keycloak.services.resource.RealmResourceProvider;
+
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zedwerks.keycloak.authenticators.smart.SmartLaunchHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import java.util.Map;
 import java.util.UUID;
@@ -62,12 +71,13 @@ public class SmartContextEndpoint implements RealmResourceProvider {
     private KeycloakSession session = null;
     private TokenManager tokenManager = null;
     private EventBuilder event = null;
-
+    private UserSessionModel userSession = null;
 
     public SmartContextEndpoint(KeycloakSession session, TokenManager tokenManager, EventBuilder event) {
         this.session = session;
         this.tokenManager = tokenManager;
         this.event = event;
+
     }
 
     /**
@@ -81,47 +91,64 @@ public class SmartContextEndpoint implements RealmResourceProvider {
     @Path("/context")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response setSmartContext(@Context SecurityContext securityContext, Map<String, String> json) {
+    public Response postSmartContext(@HeaderParam("Authorization") String authorizationHeader,
+            Map<String, Object> jsonBody) {
 
-        if (json == null || json.isEmpty()) {
-            logger.error("No context provided in request");
+        logger.info("postSmartContext() **** POST: SMART on FHIR Context ****");
+
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            logger.error("Missing or invalid Authorization header");
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Missing or invalid Authorization header")
+                    .build();
+        }
+        if (jsonBody == null || jsonBody.isEmpty()) {
+            logger.error("*** No context provided in request ***");
             return Response.status(Status.BAD_REQUEST).build();
         }
-        if ((securityContext == null)  || (securityContext.getUserPrincipal() == null)) {
-            logger.error("No security context provided in request");
-            return Response.status(Status.UNAUTHORIZED).build();
-        }
-
-        String userId = securityContext.getUserPrincipal().getName();        
-        UserSessionModel userSession = session.sessions().getUserSession(session.getContext().getRealm(), userId);
-
-        if (userSession == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("User session not found").build();
-        }
-
-        // @Todo - parse the passed in json  to make sure it is well-formed JSON for our use.
-
-
-        // Generate a new GUID
-        String guid = UUID.randomUUID().toString();
-        
-        // Convert JSON Map to a String
-        String jsonString = "Error: Failed to convert context  JSON to string";
         try {
-            jsonString = new ObjectMapper().writeValueAsString(json);
+
+            String tokenString = authorizationHeader.substring("Bearer".length()).trim();
+
+            logger.info("Token: " + tokenString);
+
+            AccessToken token = this.session.tokens().decode(tokenString, AccessToken.class);
+
+            String userId = token.getSubject();
+            logger.info("User ID: " + userId);
+            String sessionId = token.getSessionState();
+            logger.info("Session ID: " + sessionId);
+            UserSessionProvider userSessionProvider = this.session.sessions();
+            RealmModel realm = this.session.getContext().getRealm();
+            logger.info("Realm: " + realm.getName());
+            userSession = userSessionProvider.getUserSession(realm, sessionId);
+
+            if (userSession == null) {
+                logger.error("User session not found");
+                return Response.status(Response.Status.BAD_REQUEST).entity("User session not found").build();
+            }
+        } catch (Exception e) {
+            logger.error("Invalid token: " + e.getMessage());
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid token").build();
+        }
+
+        ContextResponse contextResponse = new ContextResponse();
+        contextResponse.contextId = UUID.randomUUID().toString();;
+
+        // Convert JSON Map to a String
+        String jsonString = "Error: Failed to convert context JSON to string";
+        try {
+            jsonString = new ObjectMapper().writeValueAsString(jsonBody);
         } catch (JsonProcessingException e) {
             logger.error("Error converting JSON to string: " + e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonString).build();
         }
-        
-        // Store JSON in session notes with the new GUID as the key
+
+        // Store JSON in user session notes with the new GUID as the key
         // The context will be retrieved by the Keycloak Authenticator
         // and will return the resource identifiers as part of the auth response.
+        userSession.setNote(contextResponse.contextId, jsonString); 
 
-        userSession.setNote(guid, jsonString); // Here we just store it blind! If it is not well-formed JSON, we will have a problem later.
-
-        return Response.ok().entity(guid).build();
-
+        return Response.ok().entity(contextResponse).build();
     }
 
     @Override
@@ -132,5 +159,12 @@ public class SmartContextEndpoint implements RealmResourceProvider {
     @Override
     public Object getResource() {
         return this;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonTypeName("Context")
+    class ContextResponse {
+        @JsonProperty("context_id")
+        public String contextId;
     }
 }

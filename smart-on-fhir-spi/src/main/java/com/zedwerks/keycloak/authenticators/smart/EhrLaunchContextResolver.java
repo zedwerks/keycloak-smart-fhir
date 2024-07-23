@@ -21,6 +21,8 @@
  */
 package com.zedwerks.keycloak.authenticators.smart;
 
+import java.security.Key;
+
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
@@ -28,12 +30,16 @@ import org.keycloak.authentication.Authenticator;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
+import org.keycloak.models.UserSessionModel;
+import org.keycloak.models.UserSessionProvider;
 
 import com.zedwerks.smart.context.IContext;
 import com.zedwerks.smart.context.ContextPayload;
 import com.zedwerks.smart.context.ContextResource;
 
 import jakarta.ws.rs.core.Response;
+
+import java.util.Map;
 
 /**
  * This is an authenticator that is used to authenticate SMART on FHIR
@@ -147,7 +153,14 @@ public class EhrLaunchContextResolver implements Authenticator {
         // get the session parameter based upon the launch parameter
         String launchToken = SmartLaunchHelper.getLaunchParameter(context);
 
-        String jsonString = context.getAuthenticationSession().getUserSessionNotes().get(launchToken);
+        logger.info("Resolving launch token: " + launchToken);
+
+        KeycloakSession session = context.getSession();
+        UserSessionProvider userSessionProvider = session.sessions();
+        UserSessionModel userSession = userSessionProvider.getUserSession(context.getRealm(), context.getAuthenticationSession().getParentSession().getId());
+
+        String jsonString = userSession.getNote(launchToken);
+
         if (jsonString == null) {
             logger.warn("No launch context found for launch token: " + launchToken);
             return false;
@@ -158,11 +171,11 @@ public class EhrLaunchContextResolver implements Authenticator {
             logger.warn("Could not parse the launch context JSON string from session. Something is wrong.");
             return false;
         }
-        logger.info("Saving launch context parameters to user session - so they appear in/alongside the access token");
+        logger.info("Saving launch context resource Ids to user session.");
 
         for (ContextResource resource : contextPayload.getContextResources()) {
-            logger.info("From Context Resource Type: " + resource.getResourceKey());
-            logger.info("From Context Resource ID: " + resource.getResourceId());
+            logger.debug("From Context Resource Type: " + resource.getResourceKey());
+            logger.debug("From Context Resource ID: " + resource.getResourceId());
             SmartLaunchHelper.saveToUserSession(context, resource.getResourceKey(), resource.getResourceId());
         }
         return true;

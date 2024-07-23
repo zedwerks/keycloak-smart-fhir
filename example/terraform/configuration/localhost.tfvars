@@ -3,7 +3,7 @@
 // This is a sample configuration file for the Keycloak Smart Configuration module.
 // --------------------------------------------------
 keycloak_smart_configuration = {
-  fhir_audiences = "http://fhirserver.com"
+  fhir_audiences = "http://localhost:9000/fhir"
   fhircast_context_server_url = "http://smartcontext:8088/context"
   fhircast_context_server_scope = "launch/Context.read"
   fhircast_context_server_audience = "context-service"
@@ -52,8 +52,8 @@ clients = {
     valid_redirect_uris        = ["https://oauth.pstmn.io/v1/callback", "https://oauth.pstmn.io/v1/browser-callback"]
     web_origins                = ["https://oauth.pstmn.io"]
     root_url                   = "https://oauth.pstmn.io"
-    default_client_scopes      = ["openid", "profile", "email", "acr"]
-    optional_client_scopes = [ "user/Context.write", "fhircast/Patient-open.write"]
+    default_client_scopes      = ["openid", "profile", "email", "acr", "Context.write"]
+    optional_client_scopes = [ "fhircast/Patient-open.write", "user/*.read"]
   }
 }
 
