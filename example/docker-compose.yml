@@ -26,7 +26,7 @@ services:
   smartcontext:
     # This an example context service. It consumes any JSON and returns it as a response.
     # The default uses the FHIRcast JSON as shown in the FHIRcast examles folder.
-    container_name: smartcontext
+    container_name: smart-context
     image: smartcontext
     build:
       context: https://github.com/zedwerks/smart-context.git#main

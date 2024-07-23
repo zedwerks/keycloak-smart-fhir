@@ -1,10 +1,10 @@
 variable "keycloak_smart_configuration" {
   type = object({
     fhir_audiences = string
-    context_server_url = string
-    context_server_scope = optional(string, "launch")
-    context_server_audience = optional(string, "context-service")
-    context_server_class_factory = optional(string)
+    fhircast_context_server_url = string
+    fhircat_context_server_scope = optional(string, "launch")
+    fhircast_context_server_audience = optional(string, "context-service")
+    fhircast_context_server_class_factory = optional(string)
   })
   description = "SMART on FHIR Configurations"
 }

@@ -73,17 +73,6 @@ resource "keycloak_authentication_execution" "smart_browser_flow_s3e2" {
   depends_on = [ keycloak_authentication_execution.smart_browser_flow_s3e1 ]
 }
 
-resource "keycloak_authentication_execution_config" "smart_browser_flow_s3e2_config" {
-  realm_id     = data.keycloak_realm.realm.id
-  execution_id = keycloak_authentication_execution.smart_browser_flow_s3e2.id
-  alias        = "smart_browser_flow-smart-cookie-context-resolver-config"
-  config = {
-    context_server_url =  var.keycloak_smart_configuration.context_server_url
-    context_server_scope = var.keycloak_smart_configuration.context_server_scope
-    context_server_audience = var.keycloak_smart_configuration.context_server_audience
-    context_server_class_factory = var.keycloak_smart_configuration.context_server_class_factory
-  }
-}
 //==============================================================
 //------------------------  STEP 4 -----------------------------
 
@@ -111,17 +100,6 @@ resource "keycloak_authentication_execution" "smart_browser_flow_s4e2" {
   depends_on = [ keycloak_authentication_execution.smart_browser_flow_s4e1 ]
 }
 
-resource "keycloak_authentication_execution_config" "smart_browser_flow_s4e2_config" {
-  realm_id     = data.keycloak_realm.realm.id
-  execution_id = keycloak_authentication_execution.smart_browser_flow_s4e2.id
-  alias        = "smart_browser_flow-smart-idp-context-resolver-config"
-  config = {
-    context_server_url =  var.keycloak_smart_configuration.context_server_url
-    context_server_scope = var.keycloak_smart_configuration.context_server_scope
-    context_server_audience = var.keycloak_smart_configuration.context_server_audience
-    context_server_class_factory = var.keycloak_smart_configuration.context_server_class_factory
-  }
-}
 //==============================================================
 //------------------------  STEP 5 -----------------------------
 resource "keycloak_authentication_subflow" "smart_browser_flow_step5" {
@@ -149,18 +127,6 @@ resource "keycloak_authentication_execution" "smart_browser_flow_s5e2" {
   depends_on = [ keycloak_authentication_execution.smart_browser_flow_s5e1 ]
 }
 
-resource "keycloak_authentication_execution_config" "smart_browser_flow_s5e2_config" {
-  realm_id     = data.keycloak_realm.realm.id
-  execution_id = keycloak_authentication_execution.smart_browser_flow_s5e2.id
-  alias        = "smart_browser_flow-smart-login-form-context-resolver-config"
-  config = {
-    context_server_url =  var.keycloak_smart_configuration.context_server_url
-    context_server_scope = var.keycloak_smart_configuration.context_server_scope
-    context_server_audience = var.keycloak_smart_configuration.context_server_audience
-    context_server_class_factory = var.keycloak_smart_configuration.context_server_class_factory
-  }
-}
-
 
 // BIND THIS FLOW TO THE REALM-LEVEL BROWSER FLOW
 /*
@@ -168,4 +134,3 @@ resource "keycloak_authentication_bindings" "browser_authentication_binding" {
   realm_id     = keycloak_authentication_flow.smart_browser_flow.realm_id
   browser_flow = keycloak_authentication_flow.smart_browser_flow.alias
 } */
-

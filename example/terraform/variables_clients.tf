@@ -25,7 +25,8 @@ variable "clients" {
     consent_required                         = optional(bool, false)
     display_on_consent_screen                = optional(bool, false)
     consent_screen_text                      = optional(string, null)
-    smart_browser_flow                      = optional(bool, false)
+    smart_browser_flow                       = optional(bool, true)
+    smart_fhircast_browser_flow              = optional(bool, false)
     login_theme                              = optional(string, null)
     exclude_session_state_from_auth_response = optional(bool, false)
     use_refresh_tokens                       = optional(bool, true)
@@ -35,8 +36,8 @@ variable "clients" {
     backchannel_logout_revoke_offline_tokens = optional(bool, false)
     extra_config                             = optional(map(string), null)
     // Scopes are set by separate resource related to this client
-    default_client_scopes  = optional(list(string), ["openid", "web-origins"])
-    optional_client_scopes = optional(list(string), ["profile"])
+    default_client_scopes  = optional(list(string), ["openid", "web-origins", "profile", "email", "acr"])
+    optional_client_scopes = optional(list(string), [])
 
   }))
   description = "Clients to be created in Keycloak"

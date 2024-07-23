@@ -37,21 +37,21 @@ public class EhrLaunchFhircastContextResolverFactory implements AuthenticatorFac
     private static final EhrLaunchFhircastContextResolver SINGLETON = new EhrLaunchFhircastContextResolver();
 
     // Configuration Settings to connect to the Context API server
-    public static final String CONTEXT_SERVER_URL_PROP_NAME = "fhircast_server_url";
+    public static final String CONTEXT_SERVER_URL_PROP_NAME = "fhircast_context_server_url";
     public static final String CONTEXT_SERVER_URL_PROP_LABEL = "FHIRcast Server URL";
     public static final String CONTEXT_SERVER_URL_PROP_HELPTEXT = "The URL of the FHIRcast Context server";
 
-    public static final String CONTEXT_SERVER_SCOPE_PROP_NAME = "context_server_scope";
+    public static final String CONTEXT_SERVER_SCOPE_PROP_NAME = "fhircast_context_server_scope";
     public static final String CONTEXT_SERVER_SCOPE_PROP_LABEL = "Context Read Scope";
     public static final String CONTEXT_SERVER_SCOPE_PROP_HELPTEXT = "The Scope Needed to read/get Context API data";
     public static final String CONTEXT_SERVER_SCOPE_PROP_DEFAULT = "fhircast/Patient-open.read";
 
-    public static final String CONTEXT_SERVER_AUDIENCE_PROP_NAME = "context_server_audience";
+    public static final String CONTEXT_SERVER_AUDIENCE_PROP_NAME = "fhircast_context_server_audience";
     public static final String CONTEXT_SERVER_AUDIENCE_PROP_LABEL = "Context Audience";
     public static final String CONTEXT_SERVER_AUDIENCE_PROP_HELPTEXT = "The Audience expected in the Access Token to make the Context API get request";
     public static final String CONTEXT_SERVER_AUDIENCE_PROP_DEFAULT = "fhircast";
 
-    public static final String CONTEXT_SERVER_CLASS_FACTORY_PROP_NAME = "context_server_class_factory";
+    public static final String CONTEXT_SERVER_CLASS_FACTORY_PROP_NAME = "fhircast_context_server_class_factory";
     public static final String CONTEXT_SERVER_CLASS_FACTORY_PROP_LABEL = "Context Server Class Factory";
     public static final String CONTEXT_SERVER_CLASS_FACTORY_PROP_HELPTEXT = "The Class Factory used to create the Context API Service";
     public static final String CONTEXT_SERVER_CLASS_FACTORY_PROP_DEFAULT = "com.zedwerks.smart.fhircast.FhirCastServiceFactory";

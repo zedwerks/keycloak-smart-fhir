@@ -1,8 +1,6 @@
 /*
  * Copyright 2024 Zed Werks Inc.and/or its affiliates
  * and other contributors as indicated by the @author tags.
- * 
- *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +15,8 @@
  * limitations under the License.
  * 
  * @author brad@zedwerks.com
+ * 
+ * SPDX-License-Identifier: Apache-2.0
  * 
  */
 package com.zedwerks.smart.context.models;

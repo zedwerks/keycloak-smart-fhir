@@ -4,10 +4,10 @@
 // --------------------------------------------------
 keycloak_smart_configuration = {
   fhir_audiences = "http://fhirserver.com"
-  context_server_url = "http://smartcontext:8088/context"
-  context_server_scope = "launch/Context.read"
-  context_server_audience = "context-service"
-  context_server_class_factory = "com.zedwerks.smart.ContextServiceFactory"
+  fhircast_context_server_url = "http://smartcontext:8088/context"
+  fhircast_context_server_scope = "launch/Context.read"
+  fhircast_context_server_audience = "context-service"
+  fhircast_context_server_class_factory = "com.zedwerks.smart.ContextServiceFactory"
 }
 
 // --------------------------------------------------
