@@ -10,10 +10,17 @@ if [ -f $local_env_file ]; then
     source $local_env_file
 else
     echo "Local environment file not found: $local_env_file"
-    exit 1
+    echo "Will use .env.example to source variables."
+    local_env_file=".env.example"
+    if [ -f $local_env_file ]; then
+        source $local_env_file
+    else
+        echo ".env.example not found. Exiting..."
+        exit 1
+    fi
 fi
 
-echo "Environment variables:"pwd
+echo "Environment variables:"
 printenv | grep KC_
 printenv | grep KEYCLOAK
 printenv | grep TF_VAR_
