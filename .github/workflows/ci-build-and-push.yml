@@ -6,7 +6,8 @@ on:
       - main
 
 env:
-    REGISTRY: "https://registry.digitalocean.com/zedwerks"
+    REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
+    REGISTRY: registry.digitalocean.com/zedwerks
     IMAGE_NAME: keycloak-smart-fhir
 
 jobs:
@@ -37,8 +38,8 @@ jobs:
         run: docker login ${{ env.REGISTRY }}
 
       - name: Build Docker image
-        run: docker build . -t ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
+        run: docker build . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
 
       - name: Push Docker image to DigitalOcean Container Registry
-        run: docker push ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
 
