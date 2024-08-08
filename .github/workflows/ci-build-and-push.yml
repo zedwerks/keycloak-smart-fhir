@@ -34,7 +34,7 @@ jobs:
         run: echo "::set-output name=short_sha::${GITHUB_SHA::8}"
 
       - name: Build Docker image
-        run: docker build . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
+        run: docker build . -t ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
 
       - name: Push Docker image to DigitalOcean Container Registry
         run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
