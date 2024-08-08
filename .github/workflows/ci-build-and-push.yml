@@ -19,6 +19,7 @@ jobs:
       - name: Log in to DigitalOcean Container Registry
         uses: docker/login-action@v2
         with:
+          registry: registry.digitalocean.com
           username: $${ secrets.DOCKER_USERNAME }}
           password: $${ secrets.DOCKER_PASSWORD }}
 
@@ -26,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: registry.digitalocean.com/your-registry-name/your-image-name:latest
+          tags: registry.digitalocean.com/zedwerks/keycloak-smart-fhir:latest
 
       - name: Log out from DigitalOcean Container Registry
         run: docker logout registry.digitalocean.com
