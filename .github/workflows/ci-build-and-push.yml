@@ -33,6 +33,9 @@ jobs:
         id: vars
         run: echo "::set-output name=short_sha::${GITHUB_SHA::8}"
 
+      - name: Docker login
+       run: docker login ${{ env.REGISTRY }}
+
       - name: Build Docker image
         run: docker build . -t ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
 
