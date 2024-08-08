@@ -13,6 +13,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
+
     steps:
       - name: Checkout latest code
         uses: actions/checkout@v2
@@ -32,13 +33,9 @@ jobs:
         id: vars
         run: echo "::set-output name=short_sha::${GITHUB_SHA::8}"
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: |
-            ${{ env.IMAGE_NAME }}:latest
-            ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
-          
-      - name: Log out from DigitalOcean Container Registry
-        run: docker logout registry.digitalocean.com
+      - name: Build Docker image
+        run: docker build . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
+
+      - name: Push Docker image to DigitalOcean Container Registry
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
+
