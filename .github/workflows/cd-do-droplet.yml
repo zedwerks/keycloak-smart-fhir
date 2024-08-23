@@ -30,7 +30,7 @@ jobs:
           sudo mv doctl /usr/local/bin
       - name: Authenticate with DigitalOcean
         env:
-          DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_API_TOKEN }}
+          DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         run: doctl auth init -t $DIGITALOCEAN_API_TOKEN
 
       - name: Create Droplet
@@ -39,7 +39,7 @@ jobs:
           DROPLET_NAME: ${{ env.DROPLET_NAME }}
           DROPLET_REGION: ${{ env.DROPLET_REGION }}
           DROPLET_SIZE: ${{ env.DROPLET_SIZE }}
-          DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_API_TOKEN }}
+          DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           DROPLET_KEYS: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
         run: |
           doctl compute droplet create $DROPLET_NAME \
