@@ -14,6 +14,9 @@ env:
     DROPLET_NAME: smart-kc
     DROPLET_REGION: tor1
     DROPLET_SIZE: s-1vcpu-1gb
+    SSH_KEY_ID: "NONE"
+    SSH_KEY_FINGERPRINT: "NONE"
+    DROPLET_IP: "blank"
 
 jobs:
   deploy:
@@ -36,27 +39,47 @@ jobs:
           DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         run: doctl auth init -t $DIGITALOCEAN_API_TOKEN
 
-      - name: Create Droplet
+      - name: Check if droplet exists
+        id: check_droplet
+        env:
+          DROPLET_NAME: ${{ env.DROPLET_NAME }}
+        run: |
+          if doctl compute droplet list --no-header --format Name | grep -q "^$DROPLET_NAME$"; then
+            echo "Droplet already exists."
+            echo "droplet_exists=true" >> $GITHUB_ENV
+          else
+            echo "Droplet does not exist."
+            echo "droplet_exists=false" >> $GITHUB_ENV
+          fi
+
+      - name: Create Droplet if needed
+        if: steps.check_droplet.outputs.droplet_exists == 'false'
         id: create_droplet
         env:
           DROPLET_NAME: ${{ env.DROPLET_NAME }}
           DROPLET_REGION: ${{ env.DROPLET_REGION }}
           DROPLET_SIZE: ${{ env.DROPLET_SIZE }}
           DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          DROPLET_KEYS: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
+          DROPLET_KEY_FINGERPRINT: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
         run: |
-          doctl compute droplet create $DROPLET_NAME \
+          doctl compute droplet create smart-keycloak \
             --verbose \
             --region $DROPLET_REGION \
             --size $DROPLET_SIZE \
             --image docker-20-04 \
-            --ssh-keys $DROPLET_KEYS \
+            --ssh-keys $DROPLET_KEY_ID \
             --wait \
             --format ID,PublicIPv4 \
             --no-header \
             --output json > droplet.json
 
-          DROPLET_IP=$(jq -r '.[0].PublicIPv4' droplet.json)
+      - name: Get Droplet IP
+        if: steps.check_droplet.outputs.droplet_exists == 'true'
+        env:
+          DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          DROPLET_NAME: ${{ env.DROPLET_NAME }}
+        run: |
+          DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
 
       - name: Wait for Droplet SSH
@@ -79,6 +102,6 @@ jobs:
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           script: |
-            doctl registry login -t ${{ secrets.DIGITALOCEAN_API_TOKEN }}
+            doctl registry login -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
             docker run -d --name ${{ env.IMAGE_NAME }} -p 80:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
