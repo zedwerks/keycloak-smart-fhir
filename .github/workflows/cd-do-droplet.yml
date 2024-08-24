@@ -82,8 +82,11 @@ jobs:
         run: |
           DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
+      
+      - name: Intstall Docker
+        uses: docker-practice/actions-setup-docker@master
 
-      - name: SSH into Droplet and Deploy Docker Container
+      - name: Deploy to Digital Ocean Droplet and Run vis SSH Action
         uses: appleboy/ssh-action@master
         with:
           host: ${{ env.DROPLET_IP }}
