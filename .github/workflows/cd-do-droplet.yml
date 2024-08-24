@@ -1,10 +1,12 @@
 name: Deploy to DigitalOcean
 
 on:
-  workflow_run:
-    #workflows: ["Build & Push Docker Image"]  # Name of the first workflow
-    #types:
-    #  - completed
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Docker image tag'
+        required: true
+        default: 'latest'
 env:
     REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
     REGISTRY: registry.digitalocean.com/zedwerks
