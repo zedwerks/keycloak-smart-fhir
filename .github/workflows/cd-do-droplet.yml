@@ -94,8 +94,10 @@ jobs:
           port: 22
 
           script: |
+            echo "Pulling image from registry..."
             echo "docker image = ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}"
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
+            echo "Running container..."
             docker run -d --name ${{ env.IMAGE_NAME }} -p 80:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
 
           #script: |
