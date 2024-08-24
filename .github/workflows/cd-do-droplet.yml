@@ -19,11 +19,11 @@ env:
     DROPLET_IP: "blank"
     droplet_exists: "false"
 
-jobs:
+jobs:    
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Extract short SHA referencing the image tag
@@ -85,7 +85,7 @@ jobs:
         uses: docker-practice/actions-setup-docker@master
 
       - name: Deploy to Digital Ocean Droplet and Run vis SSH Action
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.0.2
         with:
           host: ${{ env.DROPLET_IP }}
           username: root
