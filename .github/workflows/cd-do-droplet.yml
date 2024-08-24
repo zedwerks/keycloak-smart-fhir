@@ -1,4 +1,4 @@
-name: Deploy to DigitalOcean
+name: Manual Deploy to DigitalOcean
 
 on:
   workflow_dispatch:
