@@ -45,6 +45,7 @@ jobs:
           DROPLET_KEYS: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
         run: |
           doctl compute droplet create $DROPLET_NAME \
+            --verbose \
             --region $DROPLET_REGION \
             --size $DROPLET_SIZE \
             --image docker-20-04 \
