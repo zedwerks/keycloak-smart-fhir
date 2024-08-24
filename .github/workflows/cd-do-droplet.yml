@@ -17,6 +17,7 @@ env:
     SSH_KEY_ID: "NONE"
     SSH_KEY_FINGERPRINT: "NONE"
     DROPLET_IP: "blank"
+    droplet_exists: "false"
 
 jobs:
   deploy:
@@ -53,7 +54,7 @@ jobs:
           fi
 
       - name: Create Droplet if needed
-        if: steps.check_droplet.outputs.droplet_exists == 'false'
+        if: env.droplet_exists == 'false'
         id: create_droplet
         env:
           DROPLET_NAME: ${{ env.DROPLET_NAME }}
@@ -82,26 +83,15 @@ jobs:
           DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
 
-      - name: Wait for Droplet SSH
-        id: wait_for_ssh
+       - name: SSH into Droplet and Deploy Docker Container
         uses: appleboy/ssh-action@master
         with:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          script: |
-            until nc -zv -w30 $HOST 22; do
-              echo "Waiting for SSH..."
-              sleep 5
-            done
+          port: 22
 
-      - name: SSH into Droplet and Deploy Docker Container
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ env.DROPLET_IP }}
-          username: root
-          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           script: |
-            doctl registry login -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            doctl registry login -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}  ${{ env.REGISTRY }}
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
             docker run -d --name ${{ env.IMAGE_NAME }} -p 80:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
