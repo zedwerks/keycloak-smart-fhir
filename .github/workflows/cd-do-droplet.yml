@@ -60,15 +60,14 @@ jobs:
           DROPLET_NAME: ${{ env.DROPLET_NAME }}
           DROPLET_REGION: ${{ env.DROPLET_REGION }}
           DROPLET_SIZE: ${{ env.DROPLET_SIZE }}
-          DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           DROPLET_KEY_FINGERPRINT: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
         run: |
-          doctl compute droplet create smart-keycloak \
+          doctl compute droplet create $DROPLET_NAME \
             --verbose \
             --region $DROPLET_REGION \
             --size $DROPLET_SIZE \
             --image docker-20-04 \
-            --ssh-keys $DROPLET_KEY_ID \
+            --ssh-keys $DROPLET_KEY_FINGERPRINT \
             --wait \
             --format ID,PublicIPv4 \
             --no-header \
@@ -77,7 +76,6 @@ jobs:
       - name: Get Droplet IP
         if: steps.check_droplet.outputs.droplet_exists == 'true'
         env:
-          DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           DROPLET_NAME: ${{ env.DROPLET_NAME }}
         run: |
           DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
