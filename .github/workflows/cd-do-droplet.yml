@@ -90,18 +90,13 @@ jobs:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          envs: DROPLET_IP=${{ env.DROPLET_IP }}, REGISTRY=${{ env.REGISTRY }}, IMAGE_NAME=${{ env.IMAGE_NAME }}, short_sha=${{ steps.vars.outputs.short_sha }}
+          envs: REGISTRY=${{ env.REGISTRY }}, IMAGE_NAME=${{ env.IMAGE_NAME }}, short_sha=${{ steps.vars.outputs.short_sha }}
           port: 22
-
           script: |
             echo "Pulling image from registry..."
             echo "docker image = ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}"
+            docker login -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -p ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} ${{ env.REGISTRY }}
+            doctl registry login -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}  ${{ env.REGISTRY }}
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
             echo "Running container..."
-            docker run -d --name ${{ env.IMAGE_NAME }} -p 80:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
-
-          #script: |
-            #docker login -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -p ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} ${{ env.REGISTRY }}
-            #doctl registry login -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}  ${{ env.REGISTRY }}
-          #  docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
-          #  docker run -d --name ${{ env.IMAGE_NAME }} -p 80:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            docker run -d --name ${{ env.IMAGE_NAME }} -p 80:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}         
