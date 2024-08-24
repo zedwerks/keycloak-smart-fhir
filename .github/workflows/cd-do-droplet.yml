@@ -12,7 +12,7 @@ env:
     REGISTRY: registry.digitalocean.com/zedwerks
     IMAGE_NAME: keycloak-smart-fhir
     DROPLET_NAME: smart-kc
-    DROPLET_REGION: canada
+    DROPLET_REGION: tor1
     DROPLET_SIZE: s-1vcpu-1gb
 
 jobs:

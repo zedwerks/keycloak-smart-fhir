@@ -1,0 +1,58 @@
+{
+  "resourceType": "CapabilityStatement",
+  "status": "active",
+  "date": "2024-08-19T12:34:56Z",
+  "publisher": "My FHIR Server",
+  "kind": "instance",
+  "fhirVersion": "4.0.1",
+  "format": [
+    "json"
+  ],
+  "rest": [
+    {
+      "mode": "server",
+      "security": {
+        "service": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/restful-security-service",
+                "code": "SMART-on-FHIR"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris",
+            "extension": [
+              {
+                "url": "authorize",
+                "valueUri": "http://localhost:8080/realms/smart/protocol/openid-connect/auth"
+              },
+              {
+                "url": "token",
+                "valueUri": "http://localhost:8080/realms/smart/protocol/openid-connect/token"
+              }
+            ]
+          }
+        ]
+      },
+      "resource": [
+        {
+          "type": "Patient",
+          "interaction": [
+            { "code": "read" },
+            { "code": "search-type" }
+          ],
+          "searchParam": [
+            {
+              "name": "name",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
