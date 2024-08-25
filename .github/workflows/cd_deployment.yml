@@ -15,8 +15,6 @@ env:
   DROPLET_NAME: smart-on-fhir
   DROPLET_REGION: tor1
   DROPLET_SIZE: s-1vcpu-1gb
-  DO_SSH_KEY_ID: "unset"
-  SSH_KEY_FINGERPRINT: "unset"
   DROPLET_IP: "blank"
   droplet_exists: "false"
 
@@ -80,6 +78,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Get Droplet IP
+        env:
+          DROPLET_NAME: ${{ env.DROPLET_NAME }}
+        run: |
+          DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
+          echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
 
       - name: Set up SSH
         run: |
