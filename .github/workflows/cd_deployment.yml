@@ -21,16 +21,11 @@ env:
   droplet_exists: "false"
 
 jobs:
-   deploy:
+   droplet:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Extract short SHA referencing the image tag
-        id: vars
-        run: echo "::set-output name=short_sha::${GITHUB_SHA::8}"
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
@@ -55,19 +50,10 @@ jobs:
             echo "droplet_exists=false" >> $GITHUB_ENV
           fi
 
-      - name: Get SSH Key ID from Fingerprint
-        env:
-          DROPLET_NAME: ${{ env.DROPLET_NAME }}
-          SSH_KEY_FINGERPRINT: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
-        run: |
-          DO_SSH_KEY_ID=$(doctl compute ssh-key list --no-header --format FingerPrint,ID | grep "$SSH_KEY_FINGERPRINT" | awk '{print $2}')
-          echo "DO_SSH_KEY_ID=${DO_SSH_KEY_ID}" >> $GITHUB_ENV
-
       - name: Create Droplet if needed
         if: env.droplet_exists == 'false'
         id: create_droplet
         env:
-          DO_SSH_KEY_ID: ${{ env.DO_SSH_KEY_ID }}
           DROPLET_NAME: ${{ env.DROPLET_NAME }}
           DROPLET_REGION: ${{ env.DROPLET_REGION }}
           DROPLET_SIZE: ${{ env.DROPLET_SIZE }}
@@ -77,11 +63,7 @@ jobs:
             --region $DROPLET_REGION \
             --size $DROPLET_SIZE \
             --image docker-20-04 \
-            --ssh-keys $DO_SSH_KEY_ID \
-            --wait \
-            --format ID,PublicIPv4 \
-            --no-header \
-            --output json > droplet.json
+            --ssh-keys $DO_S
 
       - name: Get Droplet IP
         env:
@@ -89,6 +71,25 @@ jobs:
         run: |
           DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
+   deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Authenticate with DigitalOcean
+        env:
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        run: doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
+
+      - name: Get SSH Key ID from Fingerprint
+        env:
+          DROPLET_NAME: ${{ env.DROPLET_NAME }}
+          SSH_KEY_FINGERPRINT: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
+        run: |
+          DO_SSH_KEY_ID=$(doctl compute ssh-key list --no-header --format FingerPrint,ID | grep "$SSH_KEY_FINGERPRINT" | awk '{print $2}')
+          echo "DO_SSH_KEY_ID=${DO_SSH_KEY_ID}" >> $GITHUB_ENV
 
       - name: Set up SSH
         run: |
