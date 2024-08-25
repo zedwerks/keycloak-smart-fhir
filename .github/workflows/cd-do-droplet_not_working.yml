@@ -1,4 +1,4 @@
-name: Broken
+name: AppleBoy
 
 on:
   workflow_dispatch:
@@ -21,48 +21,12 @@ env:
   droplet_exists: "false"
 
 jobs:
-  publish:
+   droplet:
+    name: Create Droplet, if not exists
     runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout latest code
-        uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-
-      - name: Log in to DigitalOcean Container Registry with short-lived token
-        run: doctl registry login --expiry-seconds 600
-
-      - name: Extract short SHA for tagging image
-        id: vars
-        run: echo "::set-output name=short_sha::${GITHUB_SHA::8}"
-
-      - name: Docker login
-        run: docker login ${{ env.REGISTRY }}
-
-      - name: Build Docker image
-        run: docker build . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
-
-      - name: Push Docker image to DigitalOcean Container Registry
-        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
-
-  deploy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    needs: publish
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Extract short SHA referencing the image tag
-        id: vars
-        run: echo "::set-output name=short_sha::${GITHUB_SHA::8}"
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
@@ -87,19 +51,10 @@ jobs:
             echo "droplet_exists=false" >> $GITHUB_ENV
           fi
 
-      - name: Get SSH Key ID from Fingerprint
-        env:
-          DROPLET_NAME: ${{ env.DROPLET_NAME }}
-          SSH_KEY_FINGERPRINT: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
-        run: |
-          DO_SSH_KEY_ID=$(doctl compute ssh-key list --no-header --format FingerPrint,ID | grep "$SSH_KEY_FINGERPRINT" | awk '{print $2}')
-          echo "DO_SSH_KEY_ID=${DO_SSH_KEY_ID}" >> $GITHUB_ENV
-
       - name: Create Droplet if needed
         if: env.droplet_exists == 'false'
         id: create_droplet
         env:
-          DO_SSH_KEY_ID: ${{ env.DO_SSH_KEY_ID }}
           DROPLET_NAME: ${{ env.DROPLET_NAME }}
           DROPLET_REGION: ${{ env.DROPLET_REGION }}
           DROPLET_SIZE: ${{ env.DROPLET_SIZE }}
@@ -109,11 +64,7 @@ jobs:
             --region $DROPLET_REGION \
             --size $DROPLET_SIZE \
             --image docker-20-04 \
-            --ssh-keys $DO_SSH_KEY_ID \
-            --wait \
-            --format ID,PublicIPv4 \
-            --no-header \
-            --output json > droplet.json
+            --ssh-keys $DO_S
 
       - name: Get Droplet IP
         env:
@@ -121,6 +72,14 @@ jobs:
         run: |
           DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
+   deploy:
+    name: Deploy to Digital Ocean Droplet
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: droplet
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up SSH
         run: |
@@ -130,7 +89,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan ${{ env.DROPLET_IP }} >> ~/.ssh/known_hosts
 
-      - name: Deploy to Droplet
+      - name: Deploy to Droplet with ssh-action
         uses: appleboy/ssh-action@master
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
@@ -138,14 +97,26 @@ jobs:
           REGISTRY_URL: ${{ env.REGISTRY_URL }}
           REGISTRY: ${{ env.REGISTRY }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
-          GITHUB_SHA: ${{ steps.vars.outputs.short_sha }}
+          DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
         with:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker login ${{ env.REGISTRY }}
-            doctl registry login --expiry-seconds 600
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
-            docker run -d -p 80:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
+            echo "Digital Ocean Droplet IP: $DROPLET_IP"
+ 
+
+#                      /snap/bin/doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
+
+#           docker login $REGISTRY
+#doctl registry login --expiry-seconds 600
+#docker pull $DOCKER_IMAGE
+#docker run -d -p 80:8080 $DOCKER_IMAGE
+#/snap/bin/doctl registry login --expiry-seconds 600
+
+#docker pull $DOCKER_IMAGE
+
+#docker run -d --name smart-keycloak -p 8080:8080 $DOCKER_IMAGE#
+#            #docker kill $(docker ps -q)
+#            docker system prune -a

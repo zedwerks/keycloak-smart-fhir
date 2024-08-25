@@ -101,17 +101,42 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
             command -v doctl >/dev/null 2>&1 || snap install doctl
-            mkdir -p ~/.config
             echo "Digital Ocean Droplet IP: $DROPLET_IP"
             echo "Digital Ocean Droplet Name: $DROPLET_NAME"
             echo "Digital Ocean API Token: $DIGITALOCEAN_ACCESS_TOKEN"
             echo "Docker Image: $DOCKER_IMAGE"
             echo "Registry URL: $REGISTRY_URL"
             echo "Registry: $REGISTRY"
-            /snap/bin/doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
-            /snap/bin/doctl registry login --expiry-seconds 600
-            docker pull $DOCKER_IMAGE
-            docker run -d --name smart-keycloak -p 8080:8080 $DOCKER_IMAGE
           EOF
+
+      - name: Deploy to Droplet with ssh-action
+        uses: appleboy/ssh-action@master
+        env:
+          DROPLET_IP: ${{ env.DROPLET_IP }}
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          REGISTRY_URL: ${{ env.REGISTRY_URL }}
+          REGISTRY: ${{ env.REGISTRY }}
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
+        with:
+          host: ${{ env.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            echo "Digital Ocean Droplet IP: $DROPLET_IP"
+ 
+
+#                      /snap/bin/doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
+
+#           docker login $REGISTRY
+#doctl registry login --expiry-seconds 600
+#docker pull $DOCKER_IMAGE
+#docker run -d -p 80:8080 $DOCKER_IMAGE
+#/snap/bin/doctl registry login --expiry-seconds 600
+
+#docker pull $DOCKER_IMAGE
+
+#docker run -d --name smart-keycloak -p 8080:8080 $DOCKER_IMAGE#
 #            #docker kill $(docker ps -q)
 #            docker system prune -a
