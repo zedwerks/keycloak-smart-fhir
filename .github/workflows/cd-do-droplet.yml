@@ -15,8 +15,8 @@ env:
   DROPLET_NAME: smart-on-fhir
   DROPLET_REGION: tor1
   DROPLET_SIZE: s-1vcpu-1gb
-  DO_SSH_KEY_ID: "NONE"
-  SSH_KEY_FINGERPRINT: ""
+  DO_SSH_KEY_ID: "unset"
+  SSH_KEY_FINGERPRINT: "unset"
   DROPLET_IP: "blank"
   droplet_exists: "false"
 
@@ -127,9 +127,8 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
           echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/authorized_keys
-          chmod 700 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           ssh-keyscan ${{ env.DROPLET_IP }} >> ~/.ssh/known_hosts
 
       - name: Deploy to Digital Ocean Droplet using SSH
