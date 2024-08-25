@@ -4,20 +4,20 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Docker image tag'
+        description: "Docker image tag"
         required: true
-        default: 'latest'
+        default: "latest"
 env:
-    REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
-    REGISTRY: registry.digitalocean.com/zedwerks
-    IMAGE_NAME: keycloak-smart-fhir
-    DROPLET_NAME: smart-kc
-    DROPLET_REGION: tor1
-    DROPLET_SIZE: s-1vcpu-1gb
-    SSH_KEY_ID: "NONE"
-    SSH_KEY_FINGERPRINT: "NONE"
-    DROPLET_IP: "blank"
-    droplet_exists: "false"
+  REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
+  REGISTRY: registry.digitalocean.com/zedwerks
+  IMAGE_NAME: keycloak-smart-fhir
+  DROPLET_NAME: smart-kc
+  DROPLET_REGION: tor1
+  DROPLET_SIZE: s-1vcpu-1gb
+  SSH_KEY_ID: "NONE"
+  SSH_KEY_FINGERPRINT: "NONE"
+  DROPLET_IP: "blank"
+  droplet_exists: "false"
 
 jobs:
   publish:
@@ -131,15 +131,9 @@ jobs:
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           GITHUB_SHA: ${{ steps.vars.outputs.short_sha }}
         run: |
-            ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << 'EOF'
-              docker --version
-              docker login -t $DIGITALOCEAN_ACCESS_TOKEN $REGISTRY_URL 
-              docker pull $REGISTRY/$IMAGE_NAME:$GITHUB_SHA
-              docker kill $(docker ps -q)
-              docker system prune -a
-              docker run -d --name $IMAGE_NAME -p 80:8080 $REGISTRY/$IMAGE_NAME:$GITHUB_SHA
-            EOF
-
-
-
-   
+          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP "echo Hello World"
+          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP "docker --version"
+          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP "docker pull $REGISTRY/$IMAGE_NAME:$GITHUB_SHA"
+          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP "docker kill $(docker ps -q)"
+          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP "docker system prune -a"
+          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP "docker run -d --name $IMAGE_NAME -p 80:8080 $REGISTRY/$IMAGE_NAME:$GITHUB_SHA"
