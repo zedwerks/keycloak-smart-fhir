@@ -133,10 +133,12 @@ jobs:
           GITHUB_SHA: ${{ steps.vars.outputs.short_sha }}
         with:
           debug: true
-          command_timeout: 60m
+          command_timeout: 30m
+          timeout: 60s
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          fingerprint: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
           port: 22
           script: |
             # Docker is already installed on the Droplet
