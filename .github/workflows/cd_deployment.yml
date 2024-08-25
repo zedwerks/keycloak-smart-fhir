@@ -128,6 +128,11 @@ jobs:
           port: 22
           script: |
             echo "Digital Ocean Droplet IP: $DROPLET_IP"
+            command -v doctl >/dev/null 2>&1 || snap install doctl
+            rehash
+            echo "Running doctl auth init"
+            doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
+
  
 
 #                      /snap/bin/doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
