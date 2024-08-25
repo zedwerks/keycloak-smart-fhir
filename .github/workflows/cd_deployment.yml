@@ -110,6 +110,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
             command -v doctl >/dev/null 2>&1 || sudo snap install doctl
+            mkdir -p ~/.config
             echo "Digital Ocean Droplet IP: $DROPLET_IP"
             echo "Digital Ocean Droplet Name: $DROPLET_NAME"
             echo "Digital Ocean API Token: $DIGITALOCEAN_ACCESS_TOKEN"
