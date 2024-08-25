@@ -1,6 +1,10 @@
 name: Deploy to Digital Ocean Droplet
 
 on:
+  workflow_run:
+    workflows: ["Publish Image to Digital Ocean Registry"]
+    types:
+      - completed
   workflow_dispatch:
     inputs:
       image_tag:
@@ -143,7 +147,13 @@ jobs:
           DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
         run: |
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
-            snap install doctl
+            command -v doctl >/dev/null 2>&1 || sudo snap install doctl
+            echo "Digital Ocean Droplet IP: $DROPLET_IP"
+            echo "Digital Ocean Droplet Name: $DROPLET_NAME"
+            echo "Digital Ocean API Token: $DIGITALOCEAN_ACCESS_TOKEN"
+            echo "Docker Image: $DOCKER_IMAGE"
+            echo "Registry URL: $REGISTRY_URL"
+            echo "Registry: $REGISTRY"
             doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
             doctl registry login --expiry-seconds 600
             docker pull $DOCKER_IMAGE

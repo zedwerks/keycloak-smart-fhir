@@ -1,0 +1,56 @@
+name: Publish Image to Digital Ocean Registry
+
+on:
+  workflow_run:
+    workflows: ["Build and Test"]
+    types:
+      - completed
+  workflow_dispatch:
+
+env:
+  REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
+  REGISTRY: registry.digitalocean.com/zedwerks
+  IMAGE_NAME: keycloak-smart-fhir
+  DROPLET_NAME: smart-on-fhir
+  DROPLET_REGION: tor1
+  DROPLET_SIZE: s-1vcpu-1gb
+  DO_SSH_KEY_ID: "unset"
+  SSH_KEY_FINGERPRINT: "unset"
+  DROPLET_IP: "blank"
+  droplet_exists: "false"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DigitalOcean Container Registry with short-lived token
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Extract short SHA for tagging image
+        id: vars
+        run: echo "::set-output name=short_sha::${GITHUB_SHA::8}"
+
+      - name: Docker login
+        run: docker login ${{ env.REGISTRY }}
+
+      - name: Build Docker image
+        run: docker build . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }} -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Push Docker image to DigitalOcean Container Registry
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
+
+      - name: Push 'latest' Docker image to DigitalOcean Container Registry
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+  
