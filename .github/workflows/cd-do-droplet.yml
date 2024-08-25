@@ -114,7 +114,7 @@ jobs:
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
 
       - name: Deploy to Digital Ocean Droplet
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
