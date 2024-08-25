@@ -1,9 +1,12 @@
 name: Build and Test
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["CodeQL", "tfsec"]
+    types:
+      - completed
+  workflow_dispatch:
+
 env:
     IMAGE_NAME: keycloak-smart-fhir
 
