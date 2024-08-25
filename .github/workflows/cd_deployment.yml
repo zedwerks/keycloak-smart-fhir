@@ -81,19 +81,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Authenticate with DigitalOcean
-        env:
-          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-        run: doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
-
-      - name: Get SSH Key ID from Fingerprint
-        env:
-          DROPLET_NAME: ${{ env.DROPLET_NAME }}
-          SSH_KEY_FINGERPRINT: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
-        run: |
-          DO_SSH_KEY_ID=$(doctl compute ssh-key list --no-header --format FingerPrint,ID | grep "$SSH_KEY_FINGERPRINT" | awk '{print $2}')
-          echo "DO_SSH_KEY_ID=${DO_SSH_KEY_ID}" >> $GITHUB_ENV
-
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
