@@ -144,7 +144,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@${{ env.DROPLET_IP }} << EOF
             snap install doctl
             doctl auth init -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-            doctl registy login --expiry-seconds 600
+            doctl registry login --expiry-seconds 600
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
             docker run -d --name ${{ env.IMAGE_NAME }} -p 8080:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
           EOF
