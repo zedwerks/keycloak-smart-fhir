@@ -53,6 +53,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: publish
     steps:
       - name: Checkout code
@@ -111,18 +112,19 @@ jobs:
         run: |
           DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
-      
+
       - name: Deploy to Digital Ocean Droplet
         uses: appleboy/ssh-action@master
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
-          DO_SSH_PRIVATE_KEY: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           REGISTRY_URL: ${{ env.REGISTRY_URL }}
           REGISTRY: ${{ env.REGISTRY }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           GITHUB_SHA: ${{ steps.vars.outputs.short_sha }}
         with:
+          debug: true
+          command_timeout: 60m
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
