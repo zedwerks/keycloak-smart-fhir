@@ -113,6 +113,14 @@ jobs:
           DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
 
+      - name: Setup SSH And authorized keys for SSH below.
+        run: |
+          echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/authorized_keys
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan ${{ env.DROPLET_IP }} >> ~/.ssh/known_hosts
+
       - name: Deploy to Digital Ocean Droplet
         uses: appleboy/ssh-action@v1.0.3
         env:
