@@ -1,4 +1,4 @@
-name: Publish and Deploy to DigitalOcean
+name: NEW Publish and Deploy to DigitalOcean
 
 on:
   workflow_dispatch:
@@ -127,9 +127,7 @@ jobs:
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            # Install Docker
-            apt-get update
-            apt-get install -y docker-ce docker-ce-cli containerd.io
+            # Docker is already installed on the Droplet
             docker --version
 
             # doctl login
