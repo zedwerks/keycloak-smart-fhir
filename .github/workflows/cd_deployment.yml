@@ -113,7 +113,7 @@ jobs:
           DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
         run: |
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
-            command -v doctl >/dev/null 2>&1 || sudo snap install doctl
+            command -v doctl >/dev/null 2>&1 || snap install doctl
             mkdir -p ~/.config
             echo "Digital Ocean Droplet IP: $DROPLET_IP"
             echo "Digital Ocean Droplet Name: $DROPLET_NAME"
@@ -121,8 +121,8 @@ jobs:
             echo "Docker Image: $DOCKER_IMAGE"
             echo "Registry URL: $REGISTRY_URL"
             echo "Registry: $REGISTRY"
-            doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
-            doctl registry login --expiry-seconds 600
+            /snap/bin/doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
+            /snap/bin/doctl registry login --expiry-seconds 600
             docker pull $DOCKER_IMAGE
             docker run -d --name smart-keycloak -p 8080:8080 $DOCKER_IMAGE
           EOF
