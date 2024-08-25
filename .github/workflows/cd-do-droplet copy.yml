@@ -1,9 +1,9 @@
-name: Deploy to DigitalOcean Droplet
+name: Using SSH Publish and Deploy to DigitalOcean
 
 on:
   workflow_dispatch:
     inputs:
-      image_tag:
+      tag:
         description: "Docker image tag"
         required: true
         default: "latest"
@@ -130,8 +130,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan ${{ env.DROPLET_IP }} >> ~/.ssh/known_hosts
 
-      - name: Deploy to Droplet
-        uses: appleboy/ssh-action@master
+      - name: Deploy to Digital Ocean Droplet using SSH
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
@@ -139,13 +138,12 @@ jobs:
           REGISTRY: ${{ env.REGISTRY }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           GITHUB_SHA: ${{ steps.vars.outputs.short_sha }}
-        with:
-          host: ${{ env.DROPLET_IP }}
-          username: root
-          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            docker login ${{ env.REGISTRY }}
+        run: |
+          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
+            docker --version
             doctl registry login --expiry-seconds 600
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.short_sha }}
-            docker run -d -p 80:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
+            docker pull $REGISTRY/$IMAGE_NAME:$GITHUB_SHA
+            docker run -d --name $IMAGE_NAME -p 80:8080 $REGISTRY/$IMAGE_NAME:$GITHUB_SHA
+          EOF
+#            #docker kill $(docker ps -q)
+#            docker system prune -a
