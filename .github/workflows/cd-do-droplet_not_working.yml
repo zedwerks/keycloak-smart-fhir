@@ -81,6 +81,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Get Droplet IP
+        env:
+          DROPLET_NAME: ${{ env.DROPLET_NAME }}
+        run: |
+          DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
+          echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
+
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
