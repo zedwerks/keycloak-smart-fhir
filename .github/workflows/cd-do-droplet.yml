@@ -109,8 +109,8 @@ jobs:
           SHA: ${{ steps.vars.outputs.short_sha }}
           REGISTRY_URL: ${{ env.REGISTRY_URL }}
         run: |
-            ssh root@$DROPLET_IP "doctl registry login -u $DIGITALOCEAN_ACCESS_TOKEN -t $DIGITALOCEAN_ACCESS_TOKEN  $REGISTRY"
-            ssh root@$DROPLET_IP "docker login -u $DIGITALOCEAN_ACCESS_TOKEN -p $DIGITALOCEAN_ACCESS_TOKEN $REGISTRY"
-            ssh root@$DROPLET_IP "docker pull $REGISTRY/$IMAGE_NAME:$SHA"
-            ssh root@$DROPLET_IP "docker run -d --name $IMAGE_NAME -p 80:8080 $REGISTRY/$IMAGE_NAME:$SHA"      
+            ssh -i ~/.ssh/id_rsa root@$DROPLET_IP "doctl registry login -u $DIGITALOCEAN_ACCESS_TOKEN -t $DIGITALOCEAN_ACCESS_TOKEN  $REGISTRY"
+            ssh -i ~/.ssh/id_rsa root@$DROPLET_IP "docker login -u $DIGITALOCEAN_ACCESS_TOKEN -p $DIGITALOCEAN_ACCESS_TOKEN $REGISTRY"
+            ssh -i ~/.ssh/id_rsa root@$DROPLET_IP "docker pull $REGISTRY/$IMAGE_NAME:$SHA"
+            ssh -i ~/.ssh/id_rsa root@$DROPLET_IP "docker run -d --name $IMAGE_NAME -p 80:8080 $REGISTRY/$IMAGE_NAME:$SHA"      
             echo "Deployed $REGISTRY/$IMAGE_NAME:$SHA to $DROPLET_IP"
