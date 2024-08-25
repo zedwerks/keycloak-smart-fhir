@@ -87,7 +87,6 @@ jobs:
             echo "droplet_exists=false" >> $GITHUB_ENV
           fi
 
-      
       - name: Get SSH Key ID from Fingerprint
         env:
           DROPLET_NAME: ${{ env.DROPLET_NAME }}
