@@ -91,10 +91,18 @@ jobs:
           mkdir -p ~/.ssh
           echo "$DO_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          cat >> ~/.ssh/config <<END
+          Host $DROPLET_IP
+            HostName droplet
+            StrictHostKeyChecking no
+            User root
+            IdentityFile ~/.ssh/id_rsa
+          END
           ssh-keyscan -H $DROPLET_IP >> ~/.ssh/known_hosts
+          ssh-keyscan -H droplet >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      - name: Deploy to Digital Ocean Droplet and Run via SSH 
+      - name: Deploy to Digital Ocean Droplet
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
@@ -103,12 +111,8 @@ jobs:
           SHA: ${{ steps.vars.outputs.short_sha }}
           REGISTRY_URL: ${{ env.REGISTRY_URL }}
         run: |
-            ssh root@$DROPLET_IP << 'EOF'
-              echo "Pulling image from registry..."
-              echo "docker image = $REGISTRY/$IMAGE_NAME:$SHA"
-              docker login -u $DIGITALOCEAN_ACCESS_TOKEN -p $DIGITALOCEAN_ACCESS_TOKEN $REGISTRY 
-              doctl registry login -u $DIGITALOCEAN_ACCESS_TOKEN -t $DIGITALOCEAN_ACCESS_TOKEN  $REGISTRY
-              docker pull $REGISTRY/$IMAGE_NAME:$SHA
-              echo "Running container..."
-              docker run -d --name $IMAGE_NAME -p 80:8080 $REGISTRY/$IMAGE_NAME:$SHA       
-            EOF
+            ssh droplet "doctl registry login -u $DIGITALOCEAN_ACCESS_TOKEN -t $DIGITALOCEAN_ACCESS_TOKEN  $REGISTRY"
+            ssh droplet "docker login -u $DIGITALOCEAN_ACCESS_TOKEN -p $DIGITALOCEAN_ACCESS_TOKEN $REGISTRY"
+            ssh droplet "docker pull $REGISTRY/$IMAGE_NAME:$SHA"
+            ssh droplet "docker run -d --name $IMAGE_NAME -p 80:8080 $REGISTRY/$IMAGE_NAME:$SHA"      
+            echo "Deployed $REGISTRY/$IMAGE_NAME:$SHA to $DROPLET_IP"
