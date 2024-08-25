@@ -113,17 +113,16 @@ jobs:
           DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
 
-      - name: Setup SSH And authorized keys for SSH below.
+      - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
           echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/authorized_keys
-          chmod 600 ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
           ssh-keyscan ${{ env.DROPLET_IP }} >> ~/.ssh/known_hosts
 
-      - name: Deploy to Digital Ocean Droplet
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Deploy to Digital Ocean Droplet using SSH
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
@@ -131,35 +130,15 @@ jobs:
           REGISTRY: ${{ env.REGISTRY }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           GITHUB_SHA: ${{ steps.vars.outputs.short_sha }}
-        with:
-          debug: true
-          command_timeout: 30m
-          timeout: 60s
-          host: ${{ env.DROPLET_IP }}
-          username: root
-          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          fingerprint: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
-          port: 22
-          script: |
-            # Docker is already installed on the Droplet
-            docker --version
-
-            # doctl login
-            #doctl registry login -t $DIGITALOCEAN_ACCESS_TOKEN $REGISTRY
-            # Login to Digital Ocean Container Registry
-            docker login -t $DIGITALOCEAN_ACCESS_TOKEN $REGISTRY_URL 
-
-            # Pull the Docker Image 
-            docker pull $REGISTRY/$IMAGE_NAME:$GITHUB_SHA
-
-            # Stop all running Docker Containers
-            docker kill $(docker ps -q)
-
-            # Free up space
-            docker system prune -a
-
-            # Run a new container from a new image
-            docker run -d --name $IMAGE_NAME -p 80:8080 $REGISTRY/$IMAGE_NAME:$GITHUB_SHA
+        run: |
+            ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << 'EOF'
+              docker --version
+              docker login -t $DIGITALOCEAN_ACCESS_TOKEN $REGISTRY_URL 
+              docker pull $REGISTRY/$IMAGE_NAME:$GITHUB_SHA
+              docker kill $(docker ps -q)
+              docker system prune -a
+              docker run -d --name $IMAGE_NAME -p 80:8080 $REGISTRY/$IMAGE_NAME:$GITHUB_SHA
+            EOF
 
 
 
