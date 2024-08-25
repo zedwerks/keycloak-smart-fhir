@@ -7,15 +7,16 @@ on:
         description: "Docker image tag"
         required: true
         default: "latest"
+
 env:
   REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
   REGISTRY: registry.digitalocean.com/zedwerks
   IMAGE_NAME: keycloak-smart-fhir
-  DROPLET_NAME: smart-kc
+  DROPLET_NAME: smart-on-fhir
   DROPLET_REGION: tor1
   DROPLET_SIZE: s-1vcpu-1gb
   SSH_KEY_ID: "NONE"
-  SSH_KEY_FINGERPRINT: "NONE"
+  SSH_KEY_FINGERPRINT: ""
   DROPLET_IP: "blank"
   droplet_exists: "false"
 
