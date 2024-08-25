@@ -139,14 +139,15 @@ jobs:
           REGISTRY_URL: ${{ env.REGISTRY_URL }}
           REGISTRY: ${{ env.REGISTRY }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
-          GITHUB_SHA: ${{ steps.vars.outputs.short_sha }}
+          IMAGE_TAG: ${{ inputs.image_tag }}
+          DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
         run: |
-          ssh -o StrictHostKeyChecking=no root@${{ env.DROPLET_IP }} << EOF
+          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
             snap install doctl
-            doctl auth init -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
             doctl registry login --expiry-seconds 600
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
-            docker run -d --name ${{ env.IMAGE_NAME }} -p 8080:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
+            docker pull $DOCKER_IMAGE
+            docker run -d --name smart-keycloak -p 8080:8080 $DOCKER_IMAGE
           EOF
 #            #docker kill $(docker ps -q)
 #            docker system prune -a
