@@ -98,7 +98,6 @@ jobs:
             IdentityFile ~/.ssh/id_rsa
           END
           ssh-keyscan -H $DROPLET_IP >> ~/.ssh/known_hosts
-          ssh-keyscan -H droplet >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
       - name: Deploy to Digital Ocean Droplet
