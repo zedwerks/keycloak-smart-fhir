@@ -74,7 +74,6 @@ jobs:
             --output json > droplet.json
 
       - name: Get Droplet IP
-        if: steps.check_droplet.outputs.droplet_exists == 'true'
         env:
           DROPLET_NAME: ${{ env.DROPLET_NAME }}
         run: |
