@@ -15,7 +15,7 @@ env:
   DROPLET_NAME: smart-on-fhir
   DROPLET_REGION: tor1
   DROPLET_SIZE: s-1vcpu-1gb
-  SSH_KEY_ID: "NONE"
+  DO_SSH_KEY_ID: "NONE"
   SSH_KEY_FINGERPRINT: ""
   DROPLET_IP: "blank"
   droplet_exists: "false"
@@ -87,21 +87,30 @@ jobs:
             echo "droplet_exists=false" >> $GITHUB_ENV
           fi
 
+      
+      - name: Get SSH Key ID from Fingerprint
+        env:
+          DROPLET_NAME: ${{ env.DROPLET_NAME }}
+          SSH_KEY_FINGERPRINT: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
+        run: |
+          DO_SSH_KEY_ID=$(doctl compute ssh-key list --no-header --format FingerPrint,ID | grep "$SSH_KEY_FINGERPRINT" | awk '{print $2}')
+          echo "DO_SSH_KEY_ID=${DO_SSH_KEY_ID}" >> $GITHUB_ENV
+
       - name: Create Droplet if needed
         if: env.droplet_exists == 'false'
         id: create_droplet
         env:
+          DO_SSH_KEY_ID: ${{ env.DO_SSH_KEY_ID }}
           DROPLET_NAME: ${{ env.DROPLET_NAME }}
           DROPLET_REGION: ${{ env.DROPLET_REGION }}
           DROPLET_SIZE: ${{ env.DROPLET_SIZE }}
-          DROPLET_KEY_FINGERPRINT: ${{ secrets.DO_SSH_KEY_FINGERPRINT }}
         run: |
           doctl compute droplet create $DROPLET_NAME \
             --verbose \
             --region $DROPLET_REGION \
             --size $DROPLET_SIZE \
             --image docker-20-04 \
-            --ssh-keys $DROPLET_KEY_FINGERPRINT \
+            --ssh-keys $DO_SSH_KEY_ID \
             --wait \
             --format ID,PublicIPv4 \
             --no-header \
