@@ -22,6 +22,7 @@ env:
 
 jobs:
    droplet:
+    name: Create Droplet, if not exists
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -72,6 +73,7 @@ jobs:
           DROPLET_IP=$(doctl compute droplet list --no-header --format Name,PublicIPv4 | grep "$DROPLET_NAME" | awk '{print $2}')
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
    deploy:
+    name: Deploy to Digital Ocean Droplet
     runs-on: ubuntu-latest
     timeout-minutes: 5
     needs: droplet
