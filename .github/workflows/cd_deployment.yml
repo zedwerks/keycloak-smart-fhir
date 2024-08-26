@@ -111,11 +111,11 @@ jobs:
             echo "Registry URL: $REGISTRY_URL"
             echo "Registry: $REGISTRY"
             doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
-            doctl registry login --expiry-seconds 600
             echo $YOUR_DIGITALOCEAN_API_TOKEN | docker login $REGISTRY -u doctl --password-stdin
             docker pull $DOCKER_IMAGE
+            docker kill $(docker ps -q)
+            echo y | docker system prune -a
             docker run -d --name smart-keycloak -p 8080:8080 $DOCKER_IMAGE
+            echo "Docker container started"
+            rm -rf ~/.ssh/config*
           EOF
-#docker run -d --name smart-keycloak -p 8080:8080 $DOCKER_IMAGE#
-#            #docker kill $(docker ps -q)
-#            docker system prune -a
