@@ -71,7 +71,8 @@ jobs:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         run: |
           IMAGES_TO_KEEP=5  # Number of images to keep
-          IMAGE_LIST=$(doctl registry repository list-manifests $REGISTRY --format Digest,UpdatedAt --no-header | sort -k2 | head -n -$IMAGES_TO_KEEP)
+          IMAGE_LIST=$(doctl registry repository list-manifests $REGISTRY --access-token $DIGITALOCEAN_ACCESS_TOKEN --interactive false -o text | sort -k2 | head -n -$IMAGES_TO_KEEP)
+          echo $IMAGE_LIST
           echo "$IMAGE_LIST" | while read -r DIGEST UPDATED_AT; do
             echo "Deleting image at $UPDATED_AT"
             doctl registry repository delete-manifest $REGISTRY $DIGEST --access-token $DIGITALOCEAN_ACCESS_TOKEN --force --verbose --interactive false
