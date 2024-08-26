@@ -13,10 +13,16 @@ get_access() {
     #echo "Input: $1"
     # Loop through each character in the string
     output=""
+    counter=0
     for char in $(echo $1 | fold -w1); do
         #echo "Char: $char"
         word=$(lookup_word "$char")  # Look up the word using the function
-        output="$output $word"
+        if [ $counter -eq 0 ]; then
+            output="$word"
+        else
+            output="$output, $word"
+        fi
+        counter=$((counter+1))
     done
     echo $output
 }
@@ -33,8 +39,27 @@ lookup_word() {
   esac
 }
 
+rm -rf scopes
 mkdir -p scopes
 cd scopes
+
+## first create the wildcard scopes for all the CRUDS actions
+filename="scopes_resources_wildcard_stu2_2.tf"
+for prefix in "${PREFIXES[@]//,/}"; do
+    # Create combinations of actions
+    for action in "${ACCESS[@]//,/}"; do
+        access_meaning=$(get_access $action)
+        echo "resource keycloak_openid_client_scope \"${prefix}_wildcard_${action}\" {" >> $filename
+        echo "  count                  = var.fhir_resources_supported.${resource} ? 1 : 0" >> $filename
+        echo "  realm_id               = data.keycloak_realm.realm.id" >> $filename
+        echo "  name                   = \"${prefix}/*.${action}\"" >> $filename
+        echo "  description            = \"${access_meaning} access to any resource for ${prefix}.\"" >> $filename
+        echo "  consent_screen_text    = \"${access_meaning} access to any resource for ${prefix}.\"" >> $filename
+        echo "  include_in_token_scope = true" >> $filename
+        echo "}" >> $filename
+        echo "" >> $filename
+    done
+done
 
 for resource in "${RESOURCES[@]//,/}"; do
   filename="scopes_resource_${resource}_stu2_2.tf"  # Lowercase the resource name for filename
@@ -51,10 +76,13 @@ for resource in "${RESOURCES[@]//,/}"; do
       echo "  name                   = \"${prefix}/${resource}.${action}\"" >> $filename
       echo "  description            = \"${access_meaning} access to ${resource} resource for ${prefix}.\"" >> $filename
       echo "  consent_screen_text    = \"${access_meaning} access to ${resource} resource for ${prefix}.\"" >> $filename
-      echo "  protocol               = \"openid-connect\"" >> $filename
       echo "  include_in_token_scope = true" >> $filename
       echo "}" >> $filename
       echo "" >> $filename
     done
   done
 done
+
+echo "Done creating scopes!"
+echo "Copying the files to the main directory..."
+cp *.tf ../../../terraform/modules/smart_on_fhir/.
