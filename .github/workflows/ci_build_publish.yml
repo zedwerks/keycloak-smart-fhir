@@ -66,6 +66,18 @@ jobs:
         id: vars
         run: echo "::set-output name=short_sha::${GITHUB_SHA::8}"
 
+      - name: Clean up older Docker images
+        env:
+          IMAGES_TO_KEEP: 7
+          REGISTRY: ${{ env.REGISTRY }}
+        run: |
+          IMAGES_TO_KEEP=5  # Number of images to keep
+          IMAGE_LIST=$(doctl registry repository list-manifests $REGISTRY --format Digest,UpdatedAt --no-header | sort -k2 | head -n -$IMAGES_TO_KEEP)
+          echo "$IMAGE_LIST" | while read -r DIGEST UPDATED_AT; do
+            echo "Deleting image with digest: $DIGEST updated at $UPDATED_AT"
+            doctl registry repository delete-manifest $REGISTRY --digest $DIGEST --force
+          done
+
       - name: Docker login
         run: docker login ${{ env.REGISTRY }}
 
