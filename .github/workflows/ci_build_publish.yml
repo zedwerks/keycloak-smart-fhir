@@ -45,7 +45,7 @@ jobs:
   publish:
     name: Publish Image to DO Registry
     runs-on: ubuntu-latest
-    needs:
+    needs: build
 
     steps:
       - name: Checkout latest code
