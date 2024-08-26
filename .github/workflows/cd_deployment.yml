@@ -111,6 +111,8 @@ jobs:
             echo "Registry URL: $REGISTRY_URL"
             echo "Registry: $REGISTRY"
             doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
+            doctl registry login --expiry-seconds 600
+            docker pull $DOCKER_IMAGE
           EOF
 
       - name: Deploy to Droplet with ssh-action
@@ -122,6 +124,7 @@ jobs:
           REGISTRY_URL: ${{ env.REGISTRY_URL }}
           REGISTRY: ${{ env.REGISTRY }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          IMAGE_TAG: ${{ inputs.image_tag }}
           DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
         with:
           host: ${{ env.DROPLET_IP }}
