@@ -112,6 +112,7 @@ jobs:
             echo "Registry: $REGISTRY"
             doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
             doctl registry login --expiry-seconds 600
+            docker login $REGISTRY -u doctl -p $YOUR_DIGITALOCEAN_API_TOKEN
             docker pull $DOCKER_IMAGE
           EOF
 
@@ -127,6 +128,7 @@ jobs:
           IMAGE_TAG: ${{ inputs.image_tag }}
           DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
         with:
+          envs: DROPLET_IP, DIGITALOCEAN_ACCESS_TOKEN, REGISTRY_URL, REGISTRY, IMAGE_NAME, IMAGE_TAG, DOCKER_IMAGE
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
