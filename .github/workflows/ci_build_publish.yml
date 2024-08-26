@@ -70,12 +70,13 @@ jobs:
         env:
           IMAGES_TO_KEEP: 7
           REGISTRY: ${{ env.REGISTRY }}
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         run: |
           IMAGES_TO_KEEP=5  # Number of images to keep
           IMAGE_LIST=$(doctl registry repository list-manifests $REGISTRY --format Digest,UpdatedAt --no-header | sort -k2 | head -n -$IMAGES_TO_KEEP)
           echo "$IMAGE_LIST" | while read -r DIGEST UPDATED_AT; do
-            echo "Deleting image with digest: $DIGEST updated at $UPDATED_AT"
-            doctl registry repository delete-manifest $REGISTRY --digest $DIGEST --force
+            echo "Deleting image at $UPDATED_AT"
+            doctl registry repository delete-manifest $REGISTRY --access-token $DIGITALOCEAN_ACCESS_TOKEN --force
           done
 
       - name: Docker login
