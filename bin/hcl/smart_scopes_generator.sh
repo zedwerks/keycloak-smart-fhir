@@ -49,8 +49,7 @@ for prefix in "${PREFIXES[@]//,/}"; do
     # Create combinations of actions
     for action in "${ACCESS[@]//,/}"; do
         access_meaning=$(get_access $action)
-        echo "resource keycloak_openid_client_scope \"${prefix}_wildcard_${action}\" {" >> $filename
-        echo "  count                  = var.fhir_resources_supported.${resource} ? 1 : 0" >> $filename
+        echo "resource keycloak_openid_client_scope \"${prefix}_wildcard_${action}_scope\" {" >> $filename
         echo "  realm_id               = data.keycloak_realm.realm.id" >> $filename
         echo "  name                   = \"${prefix}/*.${action}\"" >> $filename
         echo "  description            = \"${access_meaning} access to any resource for ${prefix}.\"" >> $filename
