@@ -1,4 +1,4 @@
-name: Deploy to Digital Ocean Droplet
+name: Keep Deploy to Digital Ocean Droplet
 
 on:
   workflow_dispatch:
@@ -110,11 +110,10 @@ jobs:
             echo "Docker Image: $DOCKER_IMAGE"
             echo "Registry URL: $REGISTRY_URL"
             echo "Registry: $REGISTRY"
-            doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
           EOF
 
       - name: Deploy to Droplet with ssh-action
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@master
         id: ssh-action
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
