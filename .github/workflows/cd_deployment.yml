@@ -128,9 +128,15 @@ jobs:
           port: 22
           script: |
             echo "Digital Ocean Droplet IP: $DROPLET_IP"
+            echo "Digital Ocean Droplet IP: $DROPLET_IP"
+            echo "Digital Ocean Droplet Name: $DROPLET_NAME"
+            echo "Digital Ocean API Token: $DIGITALOCEAN_ACCESS_TOKEN"
+            echo "Docker Image: $DOCKER_IMAGE"
+            echo "Registry URL: $REGISTRY_URL"
+            echo "Registry: $REGISTRY"
             command -v doctl >/dev/null 2>&1 || snap install doctl
             rehash
-            echo "Running doctl auth init"
+            echo "Running doctl auth init ---access-token $DIGITALOCEAN_ACCESS_TOKEN"
             doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
 
  
