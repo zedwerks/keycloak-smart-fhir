@@ -14,8 +14,6 @@ env:
   DROPLET_NAME: smart-on-fhir
   DROPLET_REGION: tor1
   DROPLET_SIZE: s-1vcpu-1gb
-  DO_SSH_KEY_ID: "unset"
-  SSH_KEY_FINGERPRINT: "unset"
   DROPLET_IP: "blank"
   droplet_exists: "false"
 
@@ -76,7 +74,7 @@ jobs:
           IMAGE_LIST=$(doctl registry repository list-manifests $REGISTRY --format Digest,UpdatedAt --no-header | sort -k2 | head -n -$IMAGES_TO_KEEP)
           echo "$IMAGE_LIST" | while read -r DIGEST UPDATED_AT; do
             echo "Deleting image at $UPDATED_AT"
-            doctl registry repository delete-manifest $REGISTRY --access-token $DIGITALOCEAN_ACCESS_TOKEN --force
+            doctl registry repository delete-manifest $REGISTRY $DIGEST --access-token $DIGITALOCEAN_ACCESS_TOKEN --force --verbose --interactive false
           done
 
       - name: Docker login
