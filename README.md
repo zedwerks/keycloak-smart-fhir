@@ -6,7 +6,7 @@
 
 ## About
 
-This is a custom Service Provider Interface (extension) for Keycloak that supports SMART on FHIR  EHR-Launch.
+This is a custom Service Provider Interface (extension) for Keycloak that supports SMART on FHIR  EHR-Launch. 
 
 - Support for mapping 'patient' context response into JWT JSON response as well as Bearer Token.
 - Support for fhirUser claim in ID Token, a URL representing the authenticated user (as RelatedPerson, or Practitioner or Patient)
@@ -14,6 +14,14 @@ This is a custom Service Provider Interface (extension) for Keycloak that suppor
 - The above is managed via custom mappers and custom Auth Flows that are configured to allow SMART on FHIR.
 - Support for mandatory ```aud``` audience request parameter for SMART on FHIR, with additional support for this aliased to ```audience``` or ```resource```. As per SMART on FHIR specs, this audience value must be a fully qualified base FHIR Server endpoint.
 - Configuration to set the allowable FHIR resource servers as part of the 'aud' request parameter.
+
+
+### Future Releases / Roadmap
+- Support for additional context settings like 'intent', 'fhirContext' and returned alongside the Access Token to the SMART app.
+- Support for Standalone launch, including style-able web page to select the Patient, and to skip selection if Patient claim is resolved by authN, such as for PHRs.
+- Extract the FHIRcast module into a separate module and authenticaiton flow to avoid unecessary configuration. 
+- Add support for Canada Health Infoway Jurisdictional Context setting model, based loosely on FHIRcast.
+- Add more support for STU 2.2 features includin some experimental features.
 
 ## Packaging the Extensions
 
