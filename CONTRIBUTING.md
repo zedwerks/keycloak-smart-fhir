@@ -18,8 +18,9 @@ Open an [issue](https://github.com/zedwerks/keycloak-smart-fhir/issues) or do pu
 
 ## Copyright
 
-Each source file should include a copyright statement and must include a link to the Apache
-Software License 2.0. Using the SPDX format is the simplest approach:
+Each source file should include our copyright statement and must include a link to the Apache
+Software License 2.0. Add your own copyright statment if you have substantively contributed a new file, or
+at the very least, add the name and email address of your contributor. Using the SPDX format is the simplest approach:
 
 ```java
 
@@ -34,7 +35,7 @@ Or, if modifying an existing file:
 
 ```java
 /*
-(C) Copyright <original copyright holder> and others 2024
+(C) Copyright Zed Werks Inc. and others 2024
 
 SPDX-License-Identifier: Apache-2.0
 */
