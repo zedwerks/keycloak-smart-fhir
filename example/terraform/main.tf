@@ -16,6 +16,7 @@ provider "keycloak" {
 
 module "smart_on_fhir" {
   source = "../../terraform/modules/smart_on_fhir/"
+  # source = "https://github.com/zedwersk/terraform/modules/smart_on_fhir"
 
   fhir_resources_supported         = var.fhir_resources_supported
   keycloak_realm                   = var.keycloak_realm
