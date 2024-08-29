@@ -27,12 +27,12 @@ Please avoid sharing any sensitive information in public forums such as GitHub i
 
 We will notify you about security updates through the following channels:
 
-- [GitHub Releases](https://github.com/your-repo/releases)
-- [Project Website](https://www.yourproject.com)
+- [GitHub Releases](https://github.com/zedwerks/keycloak-smart-fhir/releases)
+- [Project Website](https://www.zedwerks.com/smartaz) 
 
 ## Security Resources
 
-For more information about our security procedures and policies, please visit our [Security Policy](https://www.yourproject.com/security).
+TBA
 
 ## Responsible Disclosure Policy
 
