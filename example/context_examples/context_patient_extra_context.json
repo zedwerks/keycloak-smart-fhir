@@ -6,6 +6,14 @@
         "valueString": "12345"
       },
       {
+        "name": "intent",
+        "valueString": "action={oceanAction}&resource={oceanResource}"
+      },
+      {
+        "name": "tenant",
+        "valueString": "b2329379-60f0-4134-af16-c22c66726890"
+      }
+      {
         "name": "fhirContext",
         "part": [
           {
