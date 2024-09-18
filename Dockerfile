@@ -38,7 +38,7 @@ RUN cd /app/keycloak/import && rm r1.json r2.json r3.json
 
 ## =================================================================================================
 # Package Stage - add to an official Keycloak image
-FROM quay.io/keycloak/keycloak:24.0.5-0 
+FROM quay.io/keycloak/keycloak:25.0.4-0 
 ## Need this for AWS Aurora Edition of PostgreSQL JDBC driver
 
 # need the Keycloak Port ENV var set so we can use it in entrypoint to 
