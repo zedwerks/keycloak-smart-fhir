@@ -10,7 +10,7 @@
 
   <properties>
     <java.version>11</java.version>
-    <keycloak.version>25.0.4</keycloak.version>
+    <keycloak.version>25.0.6</keycloak.version>
     <org.glassfish.jersey.version>4.0.0-M1</org.glassfish.jersey.version>
     <org.jboss.logging.version>3.6.1.Final</org.jboss.logging.version>
     <org.junit.jupiter.version>5.11.0</org.junit.jupiter.version>
