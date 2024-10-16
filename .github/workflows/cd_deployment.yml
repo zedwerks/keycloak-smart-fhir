@@ -100,6 +100,7 @@ jobs:
           REGISTRY: ${{ env.REGISTRY }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           IMAGE_TAG: ${{ inputs.image_tag }}
+          KEYCLOAK_PASSWORD: ${{ secrets.KEYCLOAK_PASSWORD }}
           DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
         run: |
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
@@ -115,7 +116,10 @@ jobs:
             docker pull $DOCKER_IMAGE
             docker kill $(docker ps -q)
             echo y | docker system prune -a
-            docker run -d --name smart-keycloak -p 8080:8080 $DOCKER_IMAGE
+            docker run -d --name smart-keycloak -p 8080:8080 -p 8443:8443 \
+              -e KEYCLOAK_USER=admin \
+              -e KEYCLOAK_PASSWORD=$KEYCLOAK_PASSWORD \
+              $DOCKER_IMAGE
             echo "Docker container started"
             rm -rf ~/.ssh/config*
           EOF
