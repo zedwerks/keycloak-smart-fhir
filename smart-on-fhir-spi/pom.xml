@@ -5,7 +5,7 @@
   <groupId>com.zedwerks.keycloak</groupId>
   <artifactId>keycloak-smart-on-fhir</artifactId>
   <packaging>jar</packaging>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.1-SNAPSHOT</version>
   <name>keycloak-smart-on-fhir</name>
 
   <properties>
