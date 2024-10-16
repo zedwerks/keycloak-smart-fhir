@@ -5,16 +5,21 @@
   <groupId>com.zedwerks.keycloak</groupId>
   <artifactId>keycloak-smart-on-fhir</artifactId>
   <packaging>jar</packaging>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.2-SNAPSHOT</version>
   <name>keycloak-smart-on-fhir</name>
 
   <properties>
     <java.version>11</java.version>
-    <keycloak.version>25.0.4</keycloak.version>
+    <junit.version>4.13.2</junit.version>
+    <keycloak.version>25.0.6</keycloak.version>
+    <commons-io.version>2.16.1</commons-io.version>
+    <org.codehaus.mojo.version>2.17.1</org.codehaus.mojo.version>
     <org.glassfish.jersey.version>4.0.0-M1</org.glassfish.jersey.version>
+    <org.jakarta.ws.rs.version>4.0.0</org.jakarta.ws.rs.version>
     <org.jboss.logging.version>3.6.1.Final</org.jboss.logging.version>
     <org.junit.jupiter.version>5.11.0</org.junit.jupiter.version>
-    <org.mockito.version>5.13.0</org.mockito.version>
+    <org.mockito-inline.version>5.2.0</org.mockito-inline.version>
+    <org.mockito.version>5.13.0</org.mockito.version>    
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
@@ -22,7 +27,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13.2</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -46,7 +51,7 @@
     <dependency>
       <groupId>jakarta.ws.rs</groupId>
       <artifactId>jakarta.ws.rs-api</artifactId>
-      <version>4.0.0</version>
+      <version>${org.jakarta.ws.rs.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -91,7 +96,7 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.16.1</version>
+      <version>${commons-io.version}</version>
     </dependency>
   </dependencies>
   <build>
@@ -99,7 +104,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>2.17.1</version> <!-- or the latest version -->
+          <version>${org.codehaus.mojo.version}</version>
         </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

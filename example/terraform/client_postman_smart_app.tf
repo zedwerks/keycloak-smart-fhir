@@ -11,6 +11,9 @@ resource "keycloak_openid_client" "postman_smart_app" {
   base_url                   = "https://oauth.pstmn.io"
   pkce_code_challenge_method = "S256"
 
+  authentication_flow_binding_overrides {                           # Must be set to this to bind to the SMART on FHIR authenication flow.
+    browser_id = module.smart_on_fhir.smart_browser_flow_id
+  }
 }
 
 
