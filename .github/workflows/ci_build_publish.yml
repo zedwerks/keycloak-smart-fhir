@@ -1,4 +1,4 @@
-name: Build
+name: Build & Publish Image
 
 on:
   workflow_run:
