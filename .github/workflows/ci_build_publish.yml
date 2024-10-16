@@ -1,4 +1,4 @@
-name: Build & Publish Image
+name: Build and Publish Image
 
 on:
   workflow_run:
@@ -11,11 +11,6 @@ env:
   REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
   REGISTRY: registry.digitalocean.com/zedwerks
   IMAGE_NAME: keycloak-smart-fhir
-  DROPLET_NAME: smart-on-fhir
-  DROPLET_REGION: tor1
-  DROPLET_SIZE: s-1vcpu-1gb
-  DROPLET_IP: "blank"
-  droplet_exists: "false"
 
 jobs:
   test:
@@ -68,11 +63,10 @@ jobs:
 
       - name: Prune up older Docker images
         env:
-          IMAGES_TO_KEEP: 7
+          IMAGES_TO_KEEP: 5
           REGISTRY: ${{ env.REGISTRY }}
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         run: |
-          IMAGES_TO_KEEP=5  # Number of images to keep
           IMAGE_LIST=$(doctl registry repository list-manifests $REGISTRY --access-token $DIGITALOCEAN_ACCESS_TOKEN --interactive false -o text | sort -k2 | head -n -$IMAGES_TO_KEEP)
           echo $IMAGE_LIST
           if [ -z "$IMAGE_LIST" ]; then
