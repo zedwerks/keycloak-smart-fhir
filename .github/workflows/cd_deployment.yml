@@ -99,14 +99,18 @@ jobs:
 
       - name: Set environment
         run: echo "Deploying to ${{ matrix.environment }} environment"
+
+      - name: Log in to DigitalOcean Container Registry with short-lived token
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Docker registry login
+        run: docker login ${{ env.REGISTRY }}
     
       - name: Deploy to Digital Ocean Droplet using SSH
         env:
           CONTAINER_NAME: ${{ env.IMAGE_NAME }}
           DROPLET_IP: ${{ env.DROPLET_IP }}
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          REGISTRY_URL: ${{ env.REGISTRY_URL }}
-          REGISTRY: ${{ env.REGISTRY }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           IMAGE_TAG: ${{ inputs.image_tag }}
           KEYCLOAK_PASSWORD: ${{ secrets.KEYCLOAK_PASSWORD }}
@@ -118,10 +122,6 @@ jobs:
             echo "Digital Ocean Droplet Name: $DROPLET_NAME"
             echo "Digital Ocean API Token: $DIGITALOCEAN_ACCESS_TOKEN"
             echo "Docker Image: $DOCKER_IMAGE"
-            echo "Registry URL: $REGISTRY_URL"
-            echo "Registry name: $REGISTRY"
-            doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
-            echo $DIGITALOCEAN_ACCESS_TOKEN | docker login $REGISTRY -u doctl --password-stdin
             docker pull $DOCKER_IMAGE
             docker stop $CONTAINER_NAME || true
             CONTAINER_ID=$(docker ps -q)
