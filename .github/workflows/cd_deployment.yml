@@ -102,6 +102,7 @@ jobs:
     
       - name: Deploy to Digital Ocean Droplet using SSH
         env:
+          CONTAINER_NAME: ${{ env.IMAGE_NAME }}
           DROPLET_IP: ${{ env.DROPLET_IP }}
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           REGISTRY_URL: ${{ env.REGISTRY_URL }}
@@ -122,12 +123,13 @@ jobs:
             doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
             echo $DIGITALOCEAN_ACCESS_TOKEN | docker login $REGISTRY -u doctl --password-stdin
             docker pull $DOCKER_IMAGE
+            docker stop $CONTAINER_NAME || true
             CONTAINER_ID=$(docker ps -q)
             if [ -n "$CONTAINER_ID" ]; then
               docker kill $CONTAINER_ID
             fi
             echo y | docker system prune -a
-            docker run -d --name smart-keycloak -p 8080:8080 -p 8443:8443 \
+            docker run -d --name $CONTAINER_NAME -p 8080:8080 -p 8443:8443 \
               -e KEYCLOAK_USER=admin \
               -e KEYCLOAK_PASSWORD=$KEYCLOAK_PASSWORD \
               $DOCKER_IMAGE
