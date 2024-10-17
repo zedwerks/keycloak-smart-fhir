@@ -158,13 +158,14 @@ jobs:
           EOF
         timeout-minutes: 5
 
-      - name: Setup Terraform client realm role
+      - name: Add realm-admin for terraform client
         env:
           CONTAINER_NAME: ${{ env.IMAGE_NAME }}
           DROPLET_IP: ${{ env.DROPLET_IP }}
         run: |
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF 
-            echo "Setting up realm-admin for the Terraform client..."
+            echo "Setting up realm-admin for the terraform client..."
+            docker exec -it $CONTAINER_NAME /bin/ls /opt/keycloak/bin/terraform-realm-admin.sh
             docker exec -it $CONTAINER_NAME /bin/bash /opt/keycloak/bin/terraform-realm-admin.sh
           EOF
 
