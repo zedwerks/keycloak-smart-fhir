@@ -105,30 +105,31 @@ jobs:
 
       - name: Docker registry login
         run: docker login ${{ env.REGISTRY }}
+
+      - name: Pull Docker image from Digital Ocean Registry
+        env:
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          IMAGE_TAG: ${{ inputs.image_tag }}
+          DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
+        run: docker pull $DOCKER_IMAGE
     
       - name: Deploy to Digital Ocean Droplet using SSH
         env:
           CONTAINER_NAME: ${{ env.IMAGE_NAME }}
           DROPLET_IP: ${{ env.DROPLET_IP }}
-          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          IMAGE_NAME: ${{ env.IMAGE_NAME }}
           IMAGE_TAG: ${{ inputs.image_tag }}
           KEYCLOAK_PASSWORD: ${{ secrets.KEYCLOAK_PASSWORD }}
           DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
         run: |
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
-            command -v doctl >/dev/null 2>&1 || snap install doctl
-            echo "Digital Ocean Droplet IP: $DROPLET_IP"
-            echo "Digital Ocean Droplet Name: $DROPLET_NAME"
-            echo "Digital Ocean API Token: $DIGITALOCEAN_ACCESS_TOKEN"
-            echo "Docker Image: $DOCKER_IMAGE"
-            docker pull $DOCKER_IMAGE
             docker stop $CONTAINER_NAME || true
+            docker rm $CONTAINER_NAME || true
             CONTAINER_ID=$(docker ps -q)
             if [ -n "$CONTAINER_ID" ]; then
               docker kill $CONTAINER_ID
             fi
             echo y | docker system prune -a
+            docker pull $DOCKER_IMAGE
             docker run -d --name $CONTAINER_NAME -p 8080:8080 -p 8443:8443 \
               -e KEYCLOAK_USER=admin \
               -e KEYCLOAK_PASSWORD=$KEYCLOAK_PASSWORD \
