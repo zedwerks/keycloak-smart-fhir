@@ -123,7 +123,7 @@ jobs:
             fi
             echo y | docker system prune -a
             docker pull $DOCKER_IMAGE
-            docker run -d --name $CONTAINER_NAME -p 8080:8080 -p 8443:8443 \
+            docker run -d --name $CONTAINER_NAME -p 80:8080 -p 443:8443 \
               -e KEYCLOAK_USER=admin \
               -e KEYCLOAK_PASSWORD=$KEYCLOAK_PASSWORD \
               $DOCKER_IMAGE
