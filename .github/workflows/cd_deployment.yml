@@ -12,6 +12,7 @@ env:
   REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
   REGISTRY: registry.digitalocean.com/zedwerks
   IMAGE_NAME: keycloak-smart-fhir
+  CONTAINER_NAME: keycloak-smart-fhir
   DROPLET_NAME: smart-on-fhir
   DROPLET_REGION: tor1
   DROPLET_SIZE: s-1vcpu-1gb
@@ -108,7 +109,6 @@ jobs:
 
       - name: Deploy to Digital Ocean Droplet using SSH
         env:
-          CONTAINER_NAME: ${{ env.IMAGE_NAME }}
           DROPLET_IP: ${{ env.DROPLET_IP }}
           IMAGE_TAG: ${{ inputs.image_tag }}
           KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIIN_PASSWORD }}
@@ -141,7 +141,6 @@ jobs:
 
       - name: Wait for Keycloak to start
         env:
-          CONTAINER_NAME: ${{ env.IMAGE_NAME }}
           DROPLET_IP: ${{ env.DROPLET_IP }}
         run: |
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
@@ -160,7 +159,6 @@ jobs:
 
       - name: Add realm-admin for terraform client
         env:
-          CONTAINER_NAME: ${{ env.IMAGE_NAME }}
           DROPLET_IP: ${{ env.DROPLET_IP }}
         run: |
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF 
