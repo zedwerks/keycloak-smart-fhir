@@ -118,9 +118,9 @@ jobs:
             echo "Digital Ocean API Token: $DIGITALOCEAN_ACCESS_TOKEN"
             echo "Docker Image: $DOCKER_IMAGE"
             echo "Registry URL: $REGISTRY_URL"
-            echo "Registry: $REGISTRY"
+            echo "Registry name: $REGISTRY"
             doctl auth init --access-token $DIGITALOCEAN_ACCESS_TOKEN
-            echo $YOUR_DIGITALOCEAN_API_TOKEN | docker login $REGISTRY -u doctl --password-stdin
+            echo $DIGITALOCEAN_ACCESS_TOKEN | docker login $REGISTRY -u doctl --password-stdin
             docker pull $DOCKER_IMAGE
             CONTAINER_ID=$(docker ps -q)
             if [ -n "$CONTAINER_ID" ]; then
