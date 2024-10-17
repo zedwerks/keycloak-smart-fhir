@@ -21,6 +21,10 @@ env:
   DROPLET_SIZE: s-1vcpu-1gb
   DROPLET_IP: "blank"
   droplet_exists: "false"
+  IMAGE_TAG: ${{ inputs.image_tag }}
+  KEYCLOAK_HOSTNAME_URL: 'http://localhost:8080'
+  KEYCLOAK_TARGET_REALM: 'smart'
+  KEYCLOAK_TERRAFORM_CLIENT_ID: 'terraform'
 
 jobs:
    droplet:
