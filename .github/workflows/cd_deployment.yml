@@ -7,7 +7,10 @@ on:
         description: "Docker image tag"
         required: true
         default: "latest"
-
+      target_environment:
+        description: "Target Environment"
+        required: true
+        default: "demo"
 env:
   REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
   REGISTRY: registry.digitalocean.com/zedwerks
@@ -69,10 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     needs: droplet
-
-    strategy: 
-      matrix: 
-        environment: [demo] # Define the environments
+    environment: ${{ inputs.target_environment }}
     
     steps:
       - name: Checkout code
