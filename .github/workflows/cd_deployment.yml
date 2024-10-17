@@ -122,11 +122,11 @@ jobs:
               docker kill $CONTAINER_ID
             fi
             echo y | docker system prune -a
-            docker pull $DOCKER_IMAGE"
+            docker pull $DOCKER_IMAGE
             docker run -d --name $CONTAINER_NAME -p 8080:8080 -p 8443:8443 \
               -e KEYCLOAK_USER=admin \
               -e KEYCLOAK_PASSWORD=$KEYCLOAK_PASSWORD \
               $DOCKER_IMAGE
-            echo "Docker container started"do
+            echo "Docker Keycloak container started"
             rm -rf ~/.ssh/config*
           EOF
