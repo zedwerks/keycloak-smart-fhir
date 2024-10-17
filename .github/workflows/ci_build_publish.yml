@@ -11,6 +11,7 @@ env:
   REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
   REGISTRY: registry.digitalocean.com/zedwerks
   IMAGE_NAME: keycloak-smart-fhir
+  KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
 
 jobs:
   test:

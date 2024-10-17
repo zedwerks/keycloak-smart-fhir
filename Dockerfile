@@ -28,14 +28,6 @@ RUN mvn -B -DskipTests -f smart-on-fhir-spi/pom.xml clean package
 # Make the script executable
 RUN chmod +x keycloak/bin/*.sh
 
-# Modify the realm.json file to contain ENV variables for realm name and terraform client secret
-# sed -i does not work in alpine, so we have to use a temporary file...
-RUN cd /app/keycloak/import && sed "s/{{place_realm_name_here}}/$target_realm/g" realm-template.json > r1.json
-RUN cd /app/keycloak/import && sed "s/{{place_realm_display_name_here}}/$target_realm_display_name/g" r1.json > r2.json
-RUN cd /app/keycloak/import && sed "s/{{place_terraform_client_name_here}}/$terraform_client/g" r2.json > r3.json
-RUN cd /app/keycloak/import && sed "s/{{place_terraform_client_secret_here}}/$terraform_client_secret/g" r3.json > realm.json
-RUN cd /app/keycloak/import && rm r1.json r2.json r3.json
-
 ## =================================================================================================
 # Package Stage - add to an official Keycloak image
 FROM quay.io/keycloak/keycloak:25.0.6-0 
@@ -45,6 +37,14 @@ FROM quay.io/keycloak/keycloak:25.0.6-0
 # apply realm admin rights to the terraform client. 
 # Used in: /opt/keycloak/bin/terraform_realm_admin.sh
 ENV KEYCLOAK_PORT=8080
+
+# Default ENV vars for the Keycloak image
+ENV KEYCLOAK_ADMIN=admin
+ENV KEYCLOAK_ADMIN_PASSWORD=admin
+ENV KEYCLOAK_TARGET_REALM_DISPLAY_NAME="SMART on FHIR Realm."
+ENV KEYCLOAK_TARGET_REALM=smart
+ENV KEYCLOAK_TERRAFORM_CLIENT_ID=terraform
+ENV KEYCLOAK_TERRAFORM_CLIENT_SECRET=terraform!secret
 
 # Set the working directory in the container
 WORKDIR /opt/keycloak/

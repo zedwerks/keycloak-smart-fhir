@@ -111,7 +111,11 @@ jobs:
           CONTAINER_NAME: ${{ env.IMAGE_NAME }}
           DROPLET_IP: ${{ env.DROPLET_IP }}
           IMAGE_TAG: ${{ inputs.image_tag }}
-          KEYCLOAK_PASSWORD: ${{ secrets.KEYCLOAK_PASSWORD }}
+          KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIIN_PASSWORD }}
+          KEYCLOAK_HOSTNAME_URL: ${{ env.KEYCLOAK_HOSTNAME_URL }}
+          KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
+          KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
+          KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
           DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
         run: |
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
@@ -124,9 +128,43 @@ jobs:
             echo y | docker system prune -a
             docker pull $DOCKER_IMAGE
             docker run -d --name $CONTAINER_NAME -p 80:8080 -p 443:8443 \
-              -e KEYCLOAK_USER=admin \
-              -e KEYCLOAK_PASSWORD=$KEYCLOAK_PASSWORD \
+              -e KEYCLOAK_ADMIN=admin \
+              -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_PASSWORD \
+              -e KC_HOSTNAME_STRICT_HTTPS=true \
+              -e KC_HOSTNAME_URL=$KEYCLOAK_HOSTNAME_URL \
+              -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
+              -e KEYCLOAK_TERRAFORM_CLIENT_ID=$KEYCLOAK_TERRAFORM_CLIENT_ID \
+              -e KEYCLOAK_TERRAFORM_CLIENT_SECRET=$KEYCLOAK_TERRAFORM_CLIENT_SECRET \
               $DOCKER_IMAGE
             echo "Docker Keycloak container started"
-            rm -rf ~/.ssh/config*
           EOF
+
+      - name: Wait for Keycloak to start
+        env:
+          CONTAINER_NAME: ${{ env.IMAGE_NAME }}
+          DROPLET_IP: ${{ env.DROPLET_IP }}
+        run: |
+          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
+            echo "Waiting for Keycloak to start..."
+            for i in {1..30 }; do
+              if docker exec -it $CONTAINER_NAME /bin/bash -c "curl -s -k -I https://localhost:8080/realms/master/.well-known/openid-configuration" > /dev/null; then
+                echo "Keycloak is up and running!"
+                break
+              else
+                echo "Keycloak is not up yet. Waiting..."
+                sleep 5 
+              fi
+            done
+          EOF
+        timeout-minutes: 5
+
+      - name: Setup Terraform client realm role
+        env:
+          CONTAINER_NAME: ${{ env.IMAGE_NAME }}
+          DROPLET_IP: ${{ env.DROPLET_IP }}
+        run: |
+          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF 
+            echo "Setting up realm-admin for the Terraform client..."
+            docker exec -it $CONTAINER_NAME /bin/bash /opt/keycloak/bin/terraform-realm-admin.sh
+          EOF
+
