@@ -129,7 +129,7 @@ jobs:
             echo y | docker system prune -a
             docker run -d --name smart-keycloak -p 8080:8080 -p 8443:8443 \
               -e KEYCLOAK_USER=admin \
-              -e KEYCLOAK_PASSWORD=$KEYCLOAK_PASSWORD\
+              -e KEYCLOAK_PASSWORD=$KEYCLOAK_PASSWORD \
               $DOCKER_IMAGE
             echo "Docker container started"
             rm -rf ~/.ssh/config*
