@@ -246,5 +246,4 @@ jobs:
               -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
-              -w /opt/keycloak/bin \
-              $CONTAINER_NAME "/bin/bash ./terraform-realm-admin.sh"
+              $CONTAINER_NAME "/bin/bash /opt/keycloak/bin/terraform-realm-admin.sh"
