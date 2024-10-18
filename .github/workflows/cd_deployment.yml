@@ -111,7 +111,7 @@ jobs:
       - name: Docker registry login
         run: docker login ${{ env.REGISTRY }}
 
-      - name: Deploy to Digital Ocean Droplet using SSH
+      - name: Deploy and Run Keycloak on Droplet using SSH
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           IMAGE_TAG: ${{ inputs.image_tag }}
@@ -132,6 +132,8 @@ jobs:
             echo y | docker system prune -a
             docker pull $DOCKER_IMAGE
             docker run -d --name $CONTAINER_NAME -p 80:8080 -p 443:8443 \
+              -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
+              -e KC_BOOTSTRAP_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_ADMIN=admin \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KC_HOSTNAME_STRICT_HTTPS=true \
@@ -166,7 +168,7 @@ jobs:
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
-          KEYCLOAK_ADMIN: ${{ env.KEYCLOAK_ADMIN }}
+          KEYCLOAK_ADMIN: admin
           KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
           KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
         run: |
