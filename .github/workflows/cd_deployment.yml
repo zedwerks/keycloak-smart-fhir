@@ -1,4 +1,4 @@
-name: Deploy to Digital Ocean Droplet
+name: Deploy Keycloak with HTTPS
 
 on:
   workflow_dispatch:
@@ -79,9 +79,6 @@ jobs:
     environment: ${{ inputs.target_environment }}
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
@@ -95,12 +92,9 @@ jobs:
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
 
       - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/authorized_keys
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan ${{ env.DROPLET_IP }} >> ~/.ssh/known_hosts
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
 
       - name: Set environment
         run: echo "Deploying to ${{ github.events.inputs.environment }} environment"
@@ -111,7 +105,22 @@ jobs:
       - name: Docker registry login
         run: docker login ${{ env.REGISTRY }}
 
-      - name: Deploy and Run Keycloak on Droplet using SSH
+      - name: Install Certbot on Droplet
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ env.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          script: |
+            # Install Certbot for SSL certificate generation (if using Let's Encrypt)
+            if ! command -v certbot &> /dev/null
+            then
+              apt-get update
+              apt-get install -y certbot
+            fi
+
+      - name: Deploy Keycloak with HTTPS
+        uses: appleboy/ssh-action@v1.1.0
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           IMAGE_TAG: ${{ inputs.image_tag }}
@@ -121,18 +130,37 @@ jobs:
           KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
           KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
           DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
-        run: |
-          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
-            docker stop $CONTAINER_NAME || true
-            docker rm $CONTAINER_NAME || true
-            CONTAINER_ID=$(docker ps -q)
-            if [ -n "$CONTAINER_ID" ]; then
-              docker kill $CONTAINER_ID
-            fi
+        with:
+          host: ${{ env.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          script: |
+
+            # Set the domain name
+            DOMAIN_NAME=kc.zedwerks.com
+            # Set the email address
+            EMAIL=brad@zedwerks.com
+            # Generate SSL certificate using Certbot
+            certbot certonly --standalone -d $DOMAIN_NAME --non-interactive --agree-tos -m $EMAIL
+            
+            # Pull the latest Docker image
             echo y | docker system prune -a
             docker pull $DOCKER_IMAGE
-            echo "Starting Keycloak container..."
-            docker run -d --name $CONTAINER_NAME -p 80:8080 -p 443:8443 \
+
+            # Stop and remove any existing Keycloak containers
+            docker stop $CONTAINER_NAME || true
+            docker rm $CONTAINER_NAME || true
+
+            # Run Keycloak with HTTPS configured
+            docker run -d \
+              --name $CONTAINER_NAME \
+              -p 80:8080 \
+              -p 443:8443 \
+              -v /etc/letsencrypt/live/$DOMAIN_NAME:/etc/x509/https \
+              -v /etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem:/etc/x509/https/fullchain.pem:ro \
+              -v /etc/letsencrypt/live/$DOMAIN_NAME/privkey.pem:/etc/x509/https/privkey.pem:ro \
+              -e KC_HTTPS_CERTIFICATE_FILE=/etc/x509/https/fullchain.pem \
+              -e KC_HTTPS_CERTIFICATE_KEY_FILE=/etc/x509/https/privkey.pem \
               -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
               -e KC_BOOTSTRAP_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_ADMIN=admin \
@@ -142,21 +170,27 @@ jobs:
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
               -e KEYCLOAK_TERRAFORM_CLIENT_ID=$KEYCLOAK_TERRAFORM_CLIENT_ID \
               -e KEYCLOAK_TERRAFORM_CLIENT_SECRET=$KEYCLOAK_TERRAFORM_CLIENT_SECRET \
-              $DOCKER_IMAGE
-            echo "Docker Keycloak container started"
-          EOF
-          echo "Keycloak container started"
+              $DOCKER_IMAGE \
+                start-dev \
+                  --https-key-store-file=/etc/x509/https/privkey.pem \
+                  --https-key-store-password=password \
+                  --import-realm \
+                  --features-disabled=account3,impersonation \
+                  --health-enabled=true
 
       - name: Wait for Keycloak to start
+        uses: appleboy/ssh-action@v1.1.0
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
-        run: |
-          echo "Waiting for Keycloak to start..."
-          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
+          with:
+            host: ${{ env.DROPLET_IP }}
+            username: root
+            key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          script: |
             echo "Waiting for Keycloak to start..."
             for i in {1..30 }; do
-              if docker exec -t $CONTAINER_NAME /bin/bash -c "curl -s -k -I https://localhost:8080/realms/master/.well-known/openid-configuration" > /dev/null; then
+              if docker exec -t $CONTAINER_NAME /bin/bash -c "curl -s -k -I http://localhost:80/realms/master/.well-known/openid-configuration" > /dev/null; then
                 echo "Keycloak is up and running!"
                 break
               else
@@ -165,10 +199,10 @@ jobs:
               fi
             done
             docker ps -a
-          EOF
         timeout-minutes: 5
 
       - name: Add realm-admin for terraform client
+        uses: appleboy/ssh-action@v1.1.0
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
@@ -176,13 +210,15 @@ jobs:
           KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
           KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
           CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
-        run: |
-          echo "Setting up realm-admin for the terraform client..."
-          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF 
+        with:
+            host: ${{ env.DROPLET_IP }}
+            username: root
+            key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          script: |
             echo "Setting up realm-admin for the terraform client..."
-            docker exec -t -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
+            docker exec -t \
+              -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
               -w /opt/keycloak/bin \
-              $CONTAINER_NAME /bin/bash ./terraform-realm-admin.sh
-          EOF
+              $CONTAINER_NAME /bin/bash -c ./terraform-realm-admin.sh
