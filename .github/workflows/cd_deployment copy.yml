@@ -94,7 +94,7 @@ jobs:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
 
       - name: Set environment
         run: echo "Deploying to ${{ github.events.inputs.environment }} environment"
@@ -110,7 +110,7 @@ jobs:
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           script: |
             # Install Certbot for SSL certificate generation (if using Let's Encrypt)
             if ! command -v certbot &> /dev/null
@@ -124,7 +124,7 @@ jobs:
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           script: |
             docker stop $CONTAINER_NAME || true
             docker rm $CONTAINER_NAME || true
@@ -148,7 +148,7 @@ jobs:
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           script: |
             # Set the domain name
             DOMAIN_NAME=zedwerks.com
