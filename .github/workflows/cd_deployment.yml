@@ -155,25 +155,16 @@ jobs:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          envs: DOCKER_IMAGE, \
-            DOCKER_REGISTRY, \
-            CONTAINER_NAME, \
-            KEYCLOAK_ADMIN_PASSWORD, \
-            KEYCLOAK_HOSTNAME_URL, \
-            KEYCLOAK_TARGET_REALM, \
-            KEYCLOAK_TERRAFORM_CLIENT_ID, \
-            KEYCLOAK_TERRAFORM_CLIENT_SECRET
+          envs: DOCKER_IMAGE, DOCKER_REGISTRY, CONTAINER_NAME, KEYCLOAK_ADMIN_PASSWORD, KEYCLOAK_HOSTNAME_URL, KEYCLOAK_TARGET_REALM, KEYCLOAK_TERRAFORM_CLIENT_ID, KEYCLOAK_TERRAFORM_CLIENT_SECRET
           script: | 
-            echo "logging envs: ["
-             echo "DOCKER_IMAGE: $DOCKER_IMAGE"
-              echo "DOCKER_REGISTRY: $DOCKER_REGISTRY"
-              echo "CONTAINER_NAME: $CONTAINER_NAME"
-              echo "KEYCLOAK_ADMIN_PASSWORD: $KEYCLOAK_ADMIN_PASSWORD"
-              echo "KEYCLOAK_HOSTNAME_URL: $KEYCLOAK_HOSTNAME_URL"
-              echo "KEYCLOAK_TARGET_REALM: $KEYCLOAK_TARGET_REALM"
-              echo "KEYCLOAK_TERRAFORM_CLIENT_ID: $KEYCLOAK_TERRAFORM_CLIENT_ID"
-              echo "KEYCLOAK_TERRAFORM_CLIENT_SECRET: $KEYCLOAK_TERRAFORM_CLIENT_SECRET"
-              echo "]"
+            echo "DOCKER_IMAGE: $DOCKER_IMAGE"
+            echo "DOCKER_REGISTRY: $DOCKER_REGISTRY"
+            echo "CONTAINER_NAME: $CONTAINER_NAME"
+            echo "KEYCLOAK_ADMIN_PASSWORD: $KEYCLOAK_ADMIN_PASSWORD"
+            echo "KEYCLOAK_HOSTNAME_URL: $KEYCLOAK_HOSTNAME_URL"
+            echo "KEYCLOAK_TARGET_REALM: $KEYCLOAK_TARGET_REALM"
+            echo "KEYCLOAK_TERRAFORM_CLIENT_ID: $KEYCLOAK_TERRAFORM_CLIENT_ID"
+            echo "KEYCLOAK_TERRAFORM_CLIENT_SECRET: $KEYCLOAK_TERRAFORM_CLIENT_SECRET"
             # Remove all older images not in use, etc.
             echo y | docker system prune -a
 
