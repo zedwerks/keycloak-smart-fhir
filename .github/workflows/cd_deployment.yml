@@ -128,10 +128,13 @@ jobs:
             # poke the firewall of the droplet
             ufw allow 80
             ufw allow 443
+
             # Set the domain name
             DOMAIN_NAME=kc.zedwerks.com
+
             # Set the email address
             EMAIL=brad@zedwerks.com
+            
             # Generate SSL certificate using Certbot
             certbot certonly --standalone -d $DOMAIN_NAME --non-interactive --agree-tos -m $EMAIL
             certbot renew --dry-run
@@ -139,6 +142,7 @@ jobs:
       - name: Deploy Keycloak with HTTPS
         uses: appleboy/ssh-action@v1.1.0
         env:
+          CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
           KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
           KEYCLOAK_HOSTNAME_URL: ${{ env.KEYCLOAK_HOSTNAME_URL }}
           KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
@@ -150,6 +154,15 @@ jobs:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          envs: |
+            DOCKER_IMAGE=$DOCKER_IMAGE
+            REGISTRY=$DOCKER_REGISTRY
+            CONTAINER_NAME=$CONTAINER_NAME
+            KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD
+            KEYCLOAK_HOSTNAME_URL=$KEYCLOAK_HOSTNAME_URL
+            KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM
+            KEYCLOAK_TERRAFORM_CLIENT_ID=$KEYCLOAK_TERRAFORM_CLIENT_ID
+            KEYCLOAK_TERRAFORM_CLIENT_SECRET=$KEYCLOAK_TERRAFORM_CLIENT_SECRET
           script: | 
             # Remove all older images not in use, etc.
             echo y | docker system prune -a
@@ -157,18 +170,18 @@ jobs:
             printenv
             
             # Login to the registry
-            docker login ${{ env.REGISTRY }}
+            docker login $DOCKER_REGISTRY
 
             # Pull the latest Docker image
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
+            docker pull $DOCKER_IMAGE
 
             # Stop and remove any existing Keycloak containers
-            docker stop ${{ env.CONTAINER_NAME }} || true
-            docker ${{ env.CONTAINER_NAME }} || true
+            docker stop $CONTAINER_NAME || true
+            docker $CONTAINER_NAME || true
 
             # Run Keycloak with HTTPS configured
             docker run -d \
-              --name ${{ env.CONTAINER_NAME }} || true\
+              --name $CONTAINER_NAME || true \
               -p 80:8080 \
               -p 443:8443 \
               -v /etc/letsencrypt/live/$DOMAIN_NAME:/etc/x509/https \
