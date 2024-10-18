@@ -184,4 +184,3 @@ jobs:
               -w /opt/keycloak/bin \
               $CONTAINER_NAME /bin/bash ./terraform-realm-admin.sh
           EOF
-
