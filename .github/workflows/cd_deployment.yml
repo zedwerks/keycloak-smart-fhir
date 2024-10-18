@@ -131,6 +131,7 @@ jobs:
             fi
             echo y | docker system prune -a
             docker pull $DOCKER_IMAGE
+            echo "Starting Keycloak container..."
             docker run -d --name $CONTAINER_NAME -p 80:8080 -p 443:8443 \
               -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
               -e KC_BOOTSTRAP_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
@@ -144,11 +145,13 @@ jobs:
               $DOCKER_IMAGE
             echo "Docker Keycloak container started"
           EOF
+          echo "Keycloak container started"
 
       - name: Wait for Keycloak to start
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
         run: |
+          echo "Waiting for Keycloak to start..."
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
             echo "Waiting for Keycloak to start..."
             for i in {1..30 }; do
@@ -172,6 +175,7 @@ jobs:
           KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
           KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
         run: |
+          echo "Setting up realm-admin for the terraform client..."
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF 
             echo "Setting up realm-admin for the terraform client..."
             docker exec -it -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
