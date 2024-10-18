@@ -216,16 +216,16 @@ jobs:
           script: |
             echo "Waiting for Keycloak to start..."
             for i in {1..30 }; do
-              if docker exec -t $CONTAINER_NAME /bin/bash -c "curl -s -k -I http://localhost:80/realms/master/.well-known/openid-configuration" > /dev/null; then
+              if docker exec -t $CONTAINER_NAME bash -c "curl -s -k -I http://localhost:80/realms/master/.well-known/openid-configuration" > /dev/null; then
                 echo "Keycloak is up and running!"
                 break
               else
                 echo "Keycloak is not up yet. Waiting..."
                 sleep 5 
               fi
-            done
+            donedocke
             docker ps -a
-        timeout-minutes: 5
+        timeout-minutes: 6
 
       - name: Add realm-admin for terraform client
         uses: appleboy/ssh-action@v1.1.0
@@ -246,4 +246,4 @@ jobs:
               -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
-              $CONTAINER_NAME "/bin/bash /opt/keycloak/bin/terraform-realm-admin.sh"
+              $CONTAINER_NAME bash /opt/keycloak/bin/terraform-realm-admin.sh
