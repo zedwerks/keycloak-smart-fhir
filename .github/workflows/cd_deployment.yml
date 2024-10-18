@@ -145,14 +145,18 @@ jobs:
           KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
           KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
           DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
+          DOCKER_REGISTRY: ${{ env.REGISTRY }}
         with:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          script: |
+          script: | 
             # Remove all older images not in use, etc.
             echo y | docker system prune -a
             
+            # Login to the registry
+            docker login $DOCKER_REGISTRY
+
             # Pull the latest Docker image
             docker pull $DOCKER_IMAGE
 
