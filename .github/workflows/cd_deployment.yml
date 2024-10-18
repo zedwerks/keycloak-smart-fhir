@@ -115,7 +115,7 @@ jobs:
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           IMAGE_TAG: ${{ inputs.image_tag }}
-          KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIIN_PASSWORD }}
+          KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
           KEYCLOAK_HOSTNAME_URL: ${{ env.KEYCLOAK_HOSTNAME_URL }}
           KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
           KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
@@ -133,7 +133,7 @@ jobs:
             docker pull $DOCKER_IMAGE
             docker run -d --name $CONTAINER_NAME -p 80:8080 -p 443:8443 \
               -e KEYCLOAK_ADMIN=admin \
-              -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_PASSWORD \
+              -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KC_HOSTNAME_STRICT_HTTPS=true \
               -e KC_HOSTNAME_URL=$KEYCLOAK_HOSTNAME_URL \
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
@@ -158,6 +158,7 @@ jobs:
                 sleep 5 
               fi
             done
+            docker ps -a
           EOF
         timeout-minutes: 5
 
