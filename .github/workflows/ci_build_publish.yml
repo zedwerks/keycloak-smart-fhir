@@ -7,7 +7,8 @@ on:
     paths-ignore:
       - '.github/workflows/**'
       - 'docs/**'
-      - 'REAMDE.md'
+      - '*.md'
+      - '.vscode/**'
 
 env:
   REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
