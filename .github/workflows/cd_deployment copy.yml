@@ -92,7 +92,7 @@ jobs:
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
 
       - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
+        uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
 
@@ -106,7 +106,7 @@ jobs:
         run: docker login ${{ env.REGISTRY }}
 
       - name: Install Certbot on Droplet
-        uses: appleboy/ssh-action@v0.1.5
+        uses: appleboy/ssh-action@v1.1.0
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: root
@@ -120,7 +120,7 @@ jobs:
             fi
 
       - name: Shutdown existing running containers
-        uses: appleboy/ssh-action@v0.1.5
+        uses: appleboy/ssh-action@v1.1.0
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: root
@@ -135,7 +135,7 @@ jobs:
             echo y | docker system prune -a
 
       - name: Deploy Keycloak with HTTPS
-        uses: appleboy/ssh-action@v0.1.5
+        uses: appleboy/ssh-action@v1.1.0
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           IMAGE_TAG: ${{ inputs.image_tag }}
