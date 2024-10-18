@@ -178,7 +178,7 @@ jobs:
           echo "Setting up realm-admin for the terraform client..."
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF 
             echo "Setting up realm-admin for the terraform client..."
-            docker exec -it -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
+            docker exec -t -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
               -w /opt/keycloak/bin \
