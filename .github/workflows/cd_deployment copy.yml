@@ -1,4 +1,4 @@
-name: Deploy to Digital Ocean Droplet
+name: Deploy to Digital Ocean Droplet with appleboy
 
 on:
   workflow_dispatch:
@@ -79,9 +79,6 @@ jobs:
     environment: ${{ inputs.target_environment }}
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
@@ -95,12 +92,9 @@ jobs:
           echo "DROPLET_IP=${DROPLET_IP}" >> $GITHUB_ENV
 
       - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/authorized_keys
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan ${{ env.DROPLET_IP }} >> ~/.ssh/known_hosts
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Set environment
         run: echo "Deploying to ${{ github.events.inputs.environment }} environment"
@@ -111,7 +105,37 @@ jobs:
       - name: Docker registry login
         run: docker login ${{ env.REGISTRY }}
 
-      - name: Deploy and Run Keycloak on Droplet using SSH
+      - name: Install Certbot on Droplet
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Install Certbot for SSL certificate generation (if using Let's Encrypt)
+            if ! command -v certbot &> /dev/null
+            then
+              apt-get update
+              apt-get install -y certbot
+            fi
+
+      - name: Shutdown existing running containers
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker stop $CONTAINER_NAME || true
+            docker rm $CONTAINER_NAME || true
+            CONTAINER_ID=$(docker ps -q)
+            if [ -n "$CONTAINER_ID" ]; then
+              docker kill $CONTAINER_ID
+            fi
+            echo y | docker system prune -a
+
+      - name: Deploy Keycloak with HTTPS
+        uses: appleboy/ssh-action@v0.1.5
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           IMAGE_TAG: ${{ inputs.image_tag }}
@@ -121,18 +145,29 @@ jobs:
           KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
           KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
           DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
-        run: |
-          ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
-            docker stop $CONTAINER_NAME || true
-            docker rm $CONTAINER_NAME || true
-            CONTAINER_ID=$(docker ps -q)
-            if [ -n "$CONTAINER_ID" ]; then
-              docker kill $CONTAINER_ID
-            fi
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Set the domain name
+            DOMAIN_NAME=zedwerks.com
+            # Set the email address
+            EMAIL=brad@zedwerks.com
+            # Generate SSL certificate using Certbot
+            certbot certonly --standalone -d $DOMAIN_NAME --non-interactive --agree-tos -m $EMAIL
+            # Pull the latest Docker image
             echo y | docker system prune -a
             docker pull $DOCKER_IMAGE
-            echo "Starting Keycloak container..."
-            docker run -d --name $CONTAINER_NAME -p 80:8080 -p 443:8443 \
+            
+            # Run Keycloak with HTTPS configured
+            docker run -d \
+              --name $CONTAINER_NAME \
+              -p 80:8080 \
+              -p 443:8443 \
+              -v /etc/letsencrypt/live/$DOMAIN_NAME:/etc/x509/https \
+              -e KC_HTTPS_CERTIFICATE_FILE=/etc/x509/https/fullchain.pem \
+              -e KC_HTTPS_CERTIFICATE_KEY_FILE=/etc/x509/https/privkey.pem \
               -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
               -e KC_BOOTSTRAP_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_ADMIN=admin \
@@ -142,10 +177,8 @@ jobs:
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
               -e KEYCLOAK_TERRAFORM_CLIENT_ID=$KEYCLOAK_TERRAFORM_CLIENT_ID \
               -e KEYCLOAK_TERRAFORM_CLIENT_SECRET=$KEYCLOAK_TERRAFORM_CLIENT_SECRET \
+              --start-dev --https-key-store-file=/etc/x509/https/privkey.pem --https-key-store-password=password
               $DOCKER_IMAGE
-            echo "Docker Keycloak container started"
-          EOF
-          echo "Keycloak container started"
 
       - name: Wait for Keycloak to start
         env:
@@ -156,7 +189,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF
             echo "Waiting for Keycloak to start..."
             for i in {1..30 }; do
-              if docker exec -t $CONTAINER_NAME /bin/bash -c "curl -s -k -I https://localhost:8080/realms/master/.well-known/openid-configuration" > /dev/null; then
+              if docker exec -t $CONTAINER_NAME /bin/bash -c "curl -s -k -I http://localhost:80/realms/master/.well-known/openid-configuration" > /dev/null; then
                 echo "Keycloak is up and running!"
                 break
               else
@@ -184,5 +217,5 @@ jobs:
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
               -w /opt/keycloak/bin \
-              $CONTAINER_NAME /bin/bash ./terraform-realm-admin.sh
+              $CONTAINER_NAME /bin/bash -c ./terraform-realm-admin.sh
           EOF
