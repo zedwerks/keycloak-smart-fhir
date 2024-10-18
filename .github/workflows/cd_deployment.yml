@@ -103,7 +103,7 @@ jobs:
           ssh-keyscan ${{ env.DROPLET_IP }} >> ~/.ssh/known_hosts
 
       - name: Set environment
-        run: echo "Deploying to ${{ matrix.environment }} environment"
+        run: echo "Deploying to ${{ github.events.inputs.environment }} environment"
 
       - name: Log in to DigitalOcean Container Registry with short-lived token
         run: doctl registry login --expiry-seconds 600
@@ -164,10 +164,17 @@ jobs:
       - name: Add realm-admin for terraform client
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
+          KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
+          KEYCLOAK_ADMIN: ${{ env.KEYCLOAK_ADMIN }}
+          KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
+          KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
         run: |
           ssh -o StrictHostKeyChecking=no root@$DROPLET_IP << EOF 
             echo "Setting up realm-admin for the terraform client..."
-            docker exec -it $CONTAINER_NAME /bin/ls /opt/keycloak/bin/terraform-realm-admin.sh
-            docker exec -it $CONTAINER_NAME /bin/bash /opt/keycloak/bin/terraform-realm-admin.sh
+            docker exec -it -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
+              -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
+              -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
+              -w /opt/keycloak/bin \
+              $CONTAINER_NAME /bin/bash ./terraform-realm-admin.sh
           EOF
 
