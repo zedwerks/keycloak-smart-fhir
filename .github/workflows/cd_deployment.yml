@@ -134,7 +134,7 @@ jobs:
 
             # Set the email address
             EMAIL=brad@zedwerks.com
-            
+
             # Generate SSL certificate using Certbot
             certbot certonly --standalone -d $DOMAIN_NAME --non-interactive --agree-tos -m $EMAIL
             certbot renew --dry-run
@@ -154,21 +154,18 @@ jobs:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          envs: |
-            DOCKER_IMAGE=$DOCKER_IMAGE
-            REGISTRY=$DOCKER_REGISTRY
-            CONTAINER_NAME=$CONTAINER_NAME
-            KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD
-            KEYCLOAK_HOSTNAME_URL=$KEYCLOAK_HOSTNAME_URL
-            KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM
-            KEYCLOAK_TERRAFORM_CLIENT_ID=$KEYCLOAK_TERRAFORM_CLIENT_ID
-            KEYCLOAK_TERRAFORM_CLIENT_SECRET=$KEYCLOAK_TERRAFORM_CLIENT_SECRET
+          envs: DOCKER_IMAGE, \
+            DOCKER_REGISTRY, \
+            CONTAINER_NAME, \
+            KEYCLOAK_ADMIN_PASSWORD, \
+            KEYCLOAK_HOSTNAME_URL, \
+            KEYCLOAK_TARGET_REALM, \
+            KEYCLOAK_TERRAFORM_CLIENT_ID, \
+            KEYCLOAK_TERRAFORM_CLIENT_SECRET
           script: | 
             # Remove all older images not in use, etc.
             echo y | docker system prune -a
 
-            printenv
-            
             # Login to the registry
             docker login $DOCKER_REGISTRY
 
@@ -208,12 +205,12 @@ jobs:
       - name: Wait for Keycloak to start
         uses: appleboy/ssh-action@v1.1.0
         env:
-          DROPLET_IP: ${{ env.DROPLET_IP }}
           CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
         with:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          envs: CONTAINER_NAME
           script: |
             echo "Waiting for Keycloak to start..."
             for i in {1..30 }; do
@@ -231,7 +228,6 @@ jobs:
       - name: Add realm-admin for terraform client
         uses: appleboy/ssh-action@v1.1.0
         env:
-          DROPLET_IP: ${{ env.DROPLET_IP }}
           KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
           KEYCLOAK_ADMIN: admin
           KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
@@ -241,6 +237,10 @@ jobs:
             host: ${{ env.DROPLET_IP }}
             username: root
             key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+            envs: KEYCLOAK_ADMIN, \
+              KEYCLOAK_ADMIN_PASSWORD, \
+              KEYCLOAK_TARGET_REALM, \
+              CONTAINER_NAME
             script: |
              echo "Setting up realm-admin for the terraform client..."
              docker exec -t \
