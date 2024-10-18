@@ -137,6 +137,8 @@ jobs:
             # Generate SSL certificate using Certbot
             certbot certonly --standalone -d $DOMAIN_NAME --non-interactive --agree-tos -m $EMAIL
             #certbot renew --dry-run
+            chmod 655 /etc/letsencrypt/live/$DOMAIN_NAME/privkey.pem
+            chmod 655 /etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem
 
       - name: Deploy Keycloak with HTTPS
         uses: appleboy/ssh-action@v1.1.0
@@ -203,7 +205,7 @@ jobs:
                   --import-realm \
                   --features-disabled=account3,impersonation \
                   --hostname=kc.zedwerks.com \
-                  --health-enabled=true
+                  --health-enabled=true --verbose
 
       - name: Wait for Keycloak to start
         uses: appleboy/ssh-action@v1.1.0
