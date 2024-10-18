@@ -119,6 +119,22 @@ jobs:
               apt-get install -y certbot
             fi
 
+      - name: Create Certificate for HTTPS
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ env.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          script: |
+            # Set the domain name
+            DOMAIN_NAME=kc.zedwerks.com
+            # Set the email address
+            EMAIL=brad@zedwerks.com
+            # Generate SSL certificate using Certbot
+            certbot certonly --standalone -d $DOMAIN_NAME --non-interactive --agree-tos -m $EMAIL
+            certbot renew --dry-run
+            ufw allow 443/tcp
+
       - name: Deploy Keycloak with HTTPS
         uses: appleboy/ssh-action@v1.1.0
         env:
@@ -135,13 +151,6 @@ jobs:
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           script: |
-
-            # Set the domain name
-            DOMAIN_NAME=kc.zedwerks.com
-            # Set the email address
-            EMAIL=brad@zedwerks.com
-            # Generate SSL certificate using Certbot
-            certbot certonly --standalone -d $DOMAIN_NAME --non-interactive --agree-tos -m $EMAIL
             
             # Pull the latest Docker image
             echo y | docker system prune -a
@@ -165,7 +174,7 @@ jobs:
               -e KC_BOOTSTRAP_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_ADMIN=admin \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
-              -e KC_HOSTNAME_STRICT_HTTPS=false \
+              -e KC_HOSTNAME_STRICT_HTTPS=true \
               -e KC_HOSTNAME_URL=$KEYCLOAK_HOSTNAME_URL \
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
               -e KEYCLOAK_TERRAFORM_CLIENT_ID=$KEYCLOAK_TERRAFORM_CLIENT_ID \
