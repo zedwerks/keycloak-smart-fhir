@@ -125,6 +125,9 @@ jobs:
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           script: |
+            # poke the firewall of the droplet
+            ufw allow 80
+            ufw allow 443
             # Set the domain name
             DOMAIN_NAME=kc.zedwerks.com
             # Set the email address
@@ -132,7 +135,6 @@ jobs:
             # Generate SSL certificate using Certbot
             certbot certonly --standalone -d $DOMAIN_NAME --non-interactive --agree-tos -m $EMAIL
             certbot renew --dry-run
-            ufw allow 443/tcp
 
       - name: Deploy Keycloak with HTTPS
         uses: appleboy/ssh-action@v1.1.0
