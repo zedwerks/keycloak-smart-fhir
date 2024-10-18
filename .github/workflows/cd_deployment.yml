@@ -216,7 +216,7 @@ jobs:
           script: |
             echo "Waiting for Keycloak to start..."
             for i in {1..30 }; do
-              if docker exec -t $CONTAINER_NAME bash -c "curl -s -k -I http://localhost:80/realms/master/.well-known/openid-configuration" > /dev/null; then
+              if docker exec -t $CONTAINER_NAME /usr/bin/bash -c "curl -s -k -I http://localhost:80/realms/master/.well-known/openid-configuration" > /dev/null; then
                 echo "Keycloak is up and running!"
                 break
               else
@@ -246,4 +246,4 @@ jobs:
               -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
-              $CONTAINER_NAME bash /opt/keycloak/bin/terraform-realm-admin.sh
+              $CONTAINER_NAME /usr/bin/bash /opt/keycloak/bin/terraform-realm-admin.sh
