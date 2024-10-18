@@ -176,11 +176,11 @@ jobs:
 
             # Stop and remove any existing Keycloak containers
             docker stop $CONTAINER_NAME || true
-            docker $CONTAINER_NAME || true
+            docker rm $CONTAINER_NAME || true
 
             # Run Keycloak with HTTPS configured
-            docker run -d \
-              --name $CONTAINER_NAME || true \
+            echo "Starting Keycloak with HTTPS..."
+            docker run -d --name $CONTAINER_NAME \
               -p 80:8080 \
               -p 443:8443 \
               -v /etc/letsencrypt/live/$DOMAIN_NAME:/etc/x509/https \
