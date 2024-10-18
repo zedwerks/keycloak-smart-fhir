@@ -239,10 +239,7 @@ jobs:
             host: ${{ env.DROPLET_IP }}
             username: root
             key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-            envs: KEYCLOAK_ADMIN, \
-              KEYCLOAK_ADMIN_PASSWORD, \
-              KEYCLOAK_TARGET_REALM, \
-              CONTAINER_NAME
+            envs: KEYCLOAK_ADMIN, KEYCLOAK_ADMIN_PASSWORD, KEYCLOAK_TARGET_REALM, CONTAINER_NAME
             script: |
              echo "Setting up realm-admin for the terraform client..."
              docker exec -t \
@@ -250,4 +247,4 @@ jobs:
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
               -w /opt/keycloak/bin \
-              $CONTAINER_NAME /bin/bash -c ./terraform-realm-admin.sh
+              $CONTAINER_NAME /bin/bash -c "./terraform-realm-admin.sh"
