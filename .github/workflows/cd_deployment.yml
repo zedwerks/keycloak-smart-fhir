@@ -73,7 +73,7 @@ jobs:
    deploy:
     name: Deploy to Digital Ocean Droplet
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: droplet
     environment: ${{ inputs.target_environment }}
     
@@ -124,6 +124,7 @@ jobs:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          envs: DOMAIN_NAME, EMAIL
           script: |
             # poke the firewall of the droplet
             ufw allow 80
@@ -137,7 +138,7 @@ jobs:
 
             # Generate SSL certificate using Certbot
             certbot certonly --standalone -d $DOMAIN_NAME --non-interactive --agree-tos -m $EMAIL
-            certbot renew --dry-run
+            #certbot renew --dry-run
 
       - name: Deploy Keycloak with HTTPS
         uses: appleboy/ssh-action@v1.1.0
