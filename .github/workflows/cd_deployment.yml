@@ -1,5 +1,4 @@
-name: Deploy Keycloak with HTTPS
-
+name: Deploy Keycloak
 on:
   workflow_dispatch:
     inputs:
@@ -151,7 +150,6 @@ jobs:
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           script: |
-            
             # Pull the latest Docker image
             echo y | docker system prune -a
             docker pull $DOCKER_IMAGE
@@ -223,9 +221,9 @@ jobs:
             host: ${{ env.DROPLET_IP }}
             username: root
             key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          script: |
-            echo "Setting up realm-admin for the terraform client..."
-            docker exec -t \
+            script: |
+             echo "Setting up realm-admin for the terraform client..."
+             docker exec -t \
               -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
               -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
