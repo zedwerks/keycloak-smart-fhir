@@ -190,10 +190,10 @@ jobs:
         env:
           DROPLET_IP: ${{ env.DROPLET_IP }}
           CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
-          with:
-            host: ${{ env.DROPLET_IP }}
-            username: root
-            key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+        with:
+          host: ${{ env.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           script: |
             echo "Waiting for Keycloak to start..."
             for i in {1..30 }; do
