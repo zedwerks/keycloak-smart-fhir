@@ -1,0 +1,48 @@
+name: Configure Keycloak Realm using Terraform
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Docker image tag"
+        required: true
+        default: "latest"
+      target_environment:
+        description: "Target Environment"
+        required: true
+        default: "demo"
+env:
+  KEYCLOAK_HOSTNAME_URL: "https://kc.zedwerks.com"
+  KEYCLOAK_TARGET_REALM: "smart"
+  KEYCLOAK_TERRAFORM_CLIENT_ID: "terraform"
+
+jobs:
+  terraform_state:
+    name: Terraform State Bucket Check 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if Digital Ocean Spaces S3 bucket exists
+        id: check_bucket
+        run: |
+          aws s3api head-bucket --bucket ${{ secrets.TF_STATE_BUCKET }}
+          echo "::set-output name=exists::true"
+          continue-on-error: true
+
+  terraform:
+    name: Terraform Init
+    runs-on: ubuntu-latest
+    needs: terraform_state
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v4
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+      - name: Terraform Init
+        run: terraform init -backend-config="bucket=${{ secrets.TF_STATE_BUCKET }}"
+      - name: Apply Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
