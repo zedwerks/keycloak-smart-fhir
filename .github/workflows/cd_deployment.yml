@@ -239,6 +239,7 @@ jobs:
             }
             # Call the function to wait for Keycloak to be ready
             wait_for_keycloak_ready
+            docker ps
         timeout-minutes: 5
 
       - name: Add realm-admin for terraform client
