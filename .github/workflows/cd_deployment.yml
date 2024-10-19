@@ -222,7 +222,7 @@ jobs:
             URL="http://localhost:8080/realms/master/.well-known/openid-configuration"
             echo "Waiting for Keycloak to start..."
             for i in {1..30 }; do
-              HTTP_STATUS=$(docker exec -t -e URL=$URL $CONTAINER_NAME /usr/bin/bash -c "curl -s -o /dev/null -w '%{http_code}' $URL )
+              HTTP_STATUS=$(docker exec -t -e URL=$URL $CONTAINER_NAME /usr/bin/bash -c "curl -s -o /dev/null -w '%{http_code}' $URL" )
               if [ "$HTTP_STATUS" -eq 200 ]; then
                 echo "Keycloak is up and running!"
                 break
