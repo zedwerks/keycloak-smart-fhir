@@ -219,20 +219,33 @@ jobs:
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           envs: CONTAINER_NAME
           script: |
-            URL="http://localhost:8080/realms/master/.well-known/openid-configuration"
             echo "Waiting for Keycloak to start..."
-            for i in {1..30 }; do
-              HTTP_STATUS=$(docker exec -t -e URL=$URL $CONTAINER_NAME /usr/bin/bash -c "curl -s -o /dev/null -w '%{http_code}' $URL" )
-              if [ "$HTTP_STATUS" -eq 200 ]; then
-                echo "Keycloak is up and running!"
-                break
-              else
-                echo "Keycloak is not up yet. Waiting..."
-                sleep 3 
-              fi
-            done
-            docker ps -a
         timeout-minutes: 5
+
+      - name: Wait for Keycloak to be ready
+        run: |
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} << EOF
+          # Function to check Keycloak readiness
+          function wait_for_keycloak_ready() {
+            MAX_RETRIES=30
+            SLEEP_TIME=10
+            URL="http://localhost:80/health/ready"
+            #URL="http://localhost:80/realms/master/.well-known/openid-configuration"
+            RETRIES=0
+            until [[ $(curl -s -o /dev/null -w '%{http_code}' $URL) == 200 ]]; do
+              RETRIES=$((RETRIES+1))
+              if [ "$RETRIES" -ge "$MAX_RETRIES" ]; then
+                echo "Keycloak readiness check failed after $RETRIES retries. Exiting."
+                exit 1
+              fi
+              echo "Waiting for Keycloak to be ready... ($RETRIES/$MAX_RETRIES)"
+              sleep $SLEEP_TIME
+            done
+          }
+
+          # Call the function to wait for Keycloak to be ready
+          wait_for_keycloak_ready
+
 
       - name: Add realm-admin for terraform client
         uses: appleboy/ssh-action@v1.1.0
