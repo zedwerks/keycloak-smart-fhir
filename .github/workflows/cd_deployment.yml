@@ -224,8 +224,8 @@ jobs:
             function wait_for_keycloak_ready() {
               MAX_RETRIES=30
               SLEEP_TIME=10
-              URL="http://localhost:80/health/ready"
-              #URL="http://localhost:80/realms/master/.well-known/openid-configuration"
+              #URL="http://localhost:80/health/ready"
+              URL="http://localhost:80/realms/master/.well-known/openid-configuration"
               RETRIES=0
               until [[ $(curl -s -o /dev/null -w '%{http_code}' $URL) == 200 ]]; do
                 RETRIES=$((RETRIES+1))
