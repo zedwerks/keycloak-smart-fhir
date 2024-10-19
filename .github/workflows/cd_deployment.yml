@@ -259,11 +259,11 @@ jobs:
               -e SERVICE_ACCOUNT=$SERVICE_ACCOUNT \
               -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
-              $CONTAINER_NAME /usr/bin/bash /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080 --realm master --user $KEYCLOAK_ADMIN --password $KEYCLOAK_ADMIN_PASSWORD
+              $CONTAINER_NAME /usr/bin/bash -c "bash /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080 --realm master --user $KEYCLOAK_ADMIN --password $KEYCLOAK_ADMIN_PASSWORD"
               docker exec -t \
               -e REAM=$KEYCLOAK_TARGET_REALM \
               -e SERVICE_ACCOUNT=service-account-$KEYCLOAK_TERRAFORM_CLIENT_ID" \
               -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
-              $CONTAINER_NAME /usr/bin/bash /opt/keycloak/bin/kcadm.sh add-roles --uusername $SERVICE_ACCOUNT --cclientid realm-management --rolename realm-admin -r $REALM_NAME
+              $CONTAINER_NAME /usr/bin/bash -c "bash /opt/keycloak/bin/kcadm.sh add-roles --uusername $SERVICE_ACCOUNT --cclientid realm-management --rolename realm-admin -r $REALM_NAME"
 
