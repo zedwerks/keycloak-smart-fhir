@@ -254,6 +254,7 @@ jobs:
             key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
             envs: KEYCLOAK_TERRAFORM_CLIENT_ID,KEYCLOAK_ADMIN,KEYCLOAK_ADMIN_PASSWORD,KEYCLOAK_TARGET_REALM
             script: |
+              SERVICE_ACCOUNT=service-account-$KEYCLOAK_TERRAFORM_CLIENT_ID
               echo "Setting up realm-admin for the terraform client..."
               docker exec -t \
               -e SERVICE_ACCOUNT=$SERVICE_ACCOUNT \
