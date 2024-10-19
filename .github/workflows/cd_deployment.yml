@@ -249,11 +249,12 @@ jobs:
           KEYCLOAK_ADMIN: admin
           KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
           KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
+          CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
         with:
             host: ${{ env.DROPLET_IP }}
             username: root
             key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-            envs: KEYCLOAK_TERRAFORM_CLIENT_ID,KEYCLOAK_ADMIN,KEYCLOAK_ADMIN_PASSWORD,KEYCLOAK_TARGET_REALM
+            envs: CONTAINER_NAME,KEYCLOAK_TERRAFORM_CLIENT_ID,KEYCLOAK_ADMIN,KEYCLOAK_ADMIN_PASSWORD,KEYCLOAK_TARGET_REALM
             script: |
               SERVICE_ACCOUNT=service-account-$KEYCLOAK_TERRAFORM_CLIENT_ID
               echo "Setting up realm-admin for the terraform client..."
