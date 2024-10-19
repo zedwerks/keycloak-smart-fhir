@@ -250,23 +250,26 @@ jobs:
           KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
           KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
           CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
+          SERVER_URL: 'http://localhost:8080'
         with:
             host: ${{ env.DROPLET_IP }}
             username: root
             key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
             envs: CONTAINER_NAME,KEYCLOAK_TERRAFORM_CLIENT_ID,KEYCLOAK_ADMIN,KEYCLOAK_ADMIN_PASSWORD,KEYCLOAK_TARGET_REALM
             script: |
-              SERVICE_ACCOUNT=service-account-$KEYCLOAK_TERRAFORM_CLIENT_ID
+              SERVER_URL='http://localhost:8080'
+              SERVICE_ACCOUNT="service-account-$KEYCLOAK_TERRAFORM_CLIENT_ID"
               echo "Setting up realm-admin for the terraform client..."
               docker exec -t \
+              -e SERVER_URL=$SERVER_URL \
               -e SERVICE_ACCOUNT=$SERVICE_ACCOUNT \
               -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
-              $CONTAINER_NAME bash /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080 --realm master --user $KEYCLOAK_ADMIN --password $KEYCLOAK_ADMIN_PASSWORD
+              $CONTAINER_NAME bash /opt/keycloak/bin/kcadm.sh config credentials --server $SERVER_URL --realm master --user $KEYCLOAK_ADMIN --password $KEYCLOAK_ADMIN_PASSWORD
               docker exec -t \
-              -e REAM=$KEYCLOAK_TARGET_REALM \
-              -e SERVICE_ACCOUNT=service-account-$KEYCLOAK_TERRAFORM_CLIENT_ID" \
+              -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
+              -e SERVICE_ACCOUNT=service-account-$KEYCLOAK_TERRAFORM_CLIENT_ID \
               -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
               -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
-              $CONTAINER_NAME bash /opt/keycloak/bin/kcadm.sh add-roles --uusername $SERVICE_ACCOUNT --cclientid realm-management --rolename realm-admin -r $REALM_NAME
+              $CONTAINER_NAME bash /opt/keycloak/bin/kcadm.sh add-roles --uusername $SERVICE_ACCOUNT --cclientid realm-management --rolename realm-admin -r $KEYCLOAK_TARGET_REALM
 
