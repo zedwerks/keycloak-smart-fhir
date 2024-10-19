@@ -4,7 +4,6 @@ resource "keycloak_openid_client" "postman_emr" {
   name                       = "Postman EMR Client"
   enabled                    = true
   access_type                = "CONFIDENTIAL"
-  client_secret              = var.keycloak_postman_emr_client_secret
   standard_flow_enabled      = true
   valid_redirect_uris        = ["https://oauth.pstmn.io/v1/callback", "https://oauth.pstmn.io/v1/browser-callback"]
   web_origins                = ["https://oauth.pstmn.io"]

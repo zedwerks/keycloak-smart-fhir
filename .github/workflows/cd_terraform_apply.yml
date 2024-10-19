@@ -12,6 +12,7 @@ on:
         default: "demo"
 env:
   KEYCLOAK_HOSTNAME_URL: "https://kc.zedwerks.com"
+  DO_SPACES_URL: "https://zedwerks-terraform-s3.tor1.digitaloceanspaces.com"
   KEYCLOAK_TARGET_REALM: "smart"
   KEYCLOAK_TERRAFORM_CLIENT_ID: "terraform"
 

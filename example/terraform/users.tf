@@ -1,15 +1,16 @@
-resource "keycloak_user" "alice" {
-    realm_id = var.keycloak_realm
-    username = "alice"
-    email = "alice@doctors.ca"
-    first_name = "Alice"
-    last_name = "Smith"
-    enabled = true
-    attributes = {
-        "fhirUser" = "Practitioner/12939994"
-    }
-    initial_password {
-        value = "password"
-        temporary = false
-    }
+resource "keycloak_user" "test_user_alice" {
+  realm_id       = data.keycloak_realm.realm.id
+  username       = "alice"
+  enabled        = true
+  first_name     = "Alice"
+  last_name      = "Smith"
+  email          = "alice@doctors.ca"
+  email_verified = true
+  attributes = {
+    fhirUser = "Practitioner/1234494959"
+  }
+  initial_password {
+    value     = var.test_user_password
+    temporary = false
+  }
 }

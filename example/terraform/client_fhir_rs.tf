@@ -1,11 +1,17 @@
 variable "client_fhir_rs" {
   type = object({
-    client_id     = string
-    client_secret = string
-    audience      = string
     enabled       = optional(bool, true)
-    base_url      = string
+    client_id     = optional(string, "fhir-rs")
+    client_secret = optional(string)
+    audience      = optional(string)
+    base_url      = optional(string)
   })
+  default = {
+    enabled       = true
+    client_id     = "fhir-rs"
+    audience      = "https://localhost:9000/fhir"
+    base_url      = "https://localhost:9000/"
+  }
   description = "FHIR Resource Server OIDC Client"
 }
 
@@ -17,23 +23,21 @@ resource "keycloak_openid_client" "client_fhir_rs" {
   enabled                      = var.client_fhir_rs.enabled
   access_type                  = "CONFIDENTIAL"
   client_authenticator_type    = "client-secret"
-  client_secret                = var.client_fhir_rs.client_secret
   direct_access_grants_enabled = false
   implicit_flow_enabled        = false
   standard_flow_enabled        = false
   base_url                     = var.client_fhir_rs.base_url
-  valid_redirect_uris          = []
   web_origins                  = []
   service_accounts_enabled     = true
   full_scope_allowed           = false
-  authorization {
-    policy_enforcement_mode          = "ENFORCING"
-    allow_remote_resource_management = true
-    decision_strategy                = "AFFIRMATIVE"
-  }
-  extra_config = {
-    "authorizationServicesEnabled" = true
-  }
+#  authorization {
+#    policy_enforcement_mode          = "ENFORCING"
+#    allow_remote_resource_management = true
+#    decision_strategy                = "AFFIRMATIVE"
+#  }
+#  extra_config = {
+#    "authorizationServicesEnabled" = true
+#  }
 }
 
 resource "keycloak_openid_client_default_scopes" "client_fhir_rs_default_scopes" {
