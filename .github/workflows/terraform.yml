@@ -1,4 +1,4 @@
-name: 'Terraform Apply to Keycloak'
+name: 'Terraform Apply'
 
 on:
   workflow_dispatch:  # Allows manually triggering the workflow
