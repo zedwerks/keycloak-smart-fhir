@@ -18,6 +18,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: 'Override Backend Configuration'
+        working-directory: ./example/terraform
         run: |
           pwd
           cp environments/${{ inputs.target_environment }}/backend.tf backend_override.tf
@@ -28,7 +29,7 @@ jobs:
           terraform_version: 4.4.0  # Use your required Terraform version
 
       - name: 'Terraform Init'
-        working-directory: example/terraform
+        working-directory: ./example/terraform
         run: |
           terraform init \
             -backend-config="do_spaces_access_key=${{ secrets.DO_SPACES_ACCESS_KEY }}" \
@@ -38,7 +39,7 @@ jobs:
             -var-file=environments/${{ inputs.target_environment }}/terraform.tfvars
             
       - name: 'Terraform Imports'
-        working-directory: example/terraform
+        working-directory: ./example/terraform
         env:
           KEYCLOAK_HOSTNAME_URL: ${{ env.KEYCLOAK_HOSTNAME_URL }}
           KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
@@ -49,13 +50,13 @@ jobs:
           sh ./scripts/tfimports.sh -var-file ${{ env.VAR_FILE }}
 
       - name: 'Terraform Plan'
-        working-directory: example/terraform
+        working-directory: ./example/terraform
         run: |
           terraform plan \
             -var-file=environments/${{ inputs.target_environment }}/terraform.tfvars 
 
       - name: 'Terraform Apply'
-        working-directory: example/terraform
+        working-directory: ./example/terraform
         run: | 
           terraform apply -auto-approve
             -var-file=environments/${{ inputs.target_environment }}/terraform.tfvars 
