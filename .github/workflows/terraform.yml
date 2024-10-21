@@ -19,6 +19,7 @@ jobs:
 
       - name: 'Override Backend Configuration'
         run: |
+          pwd
           cp environments/${{ inputs.target_environment }}/backend.tf backend_override.tf
 
       - name: 'Set up Terraform'
