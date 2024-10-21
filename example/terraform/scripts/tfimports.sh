@@ -91,31 +91,31 @@ if [ ! -z "$CHDIR" ]; then
     cd $CHDIR
 fi
 
-if [ -z "${TF_VAR_keycloak_base_url}" ]; then
-    echo "TF_VAR_keycloak_base_url is not set. Please set the environment variables."
+if [ -z "${KEYCLOAK_HOSTNAME_URL}" ]; then
+    echo "KEYCLOAK_HOSTNAME_URL is not set. Please set the environment variables."
     exit 1
 fi
 
-if [ -z "${TF_VAR_keycloak_realm}" ]; then
-    echo "TF_VAR_keycloak_realm is not set. Please set the environment variables."
+if [ -z "${KEYCLOAK_TARGET_REALM}" ]; then
+    echo "KEYCLOAK_TARGET_REALM is not set. Please set the environment variables."
     exit 1
 fi
 
-if [ -z "${TF_VAR_keycloak_terraform_client_secret}" ]; then
-    echo "TF_VAR_keycloak_terraform_client_secret is not set. Please set the environment variables."
+if [ -z "${KEYCLOAK_TERRAFORM_CLIENT_SECRET}" ]; then
+    echo "KEYCLOAK_TERRAFORM_CLIENT_SECRET is not set. Please set the environment variables."
     exit 1
 fi
 
-if [ -z "${TF_VAR_keycloak_terraform_client_id}" ]; then
+if [ -z "${KEYCLOAK_TERRAFORM_CLIENT_ID}" ]; then
     echo "TF_VAR_keycloak_terraform_client_id is not set. Using default 'terraform'."
-    TF_VAR_keycloak_terraform_client_id="terraform"
+    KEYCLOAK_TERRAFORM_CLIENT_ID="terraform"
 fi
 
-## Now set the variables needed below... based on the TF_VAR_ environment variables
-KEYCLOAK_HOSTNAME_URL=$TF_VAR_keycloak_base_url
-KEYCLOAK_TARGET_REALM=$TF_VAR_keycloak_realm
-KEYCLOAK_TERRAFORM_CLIENT_ID=$TF_VAR_keycloak_terraform_client_id
-KEYCLOAK_TERRAFORM_CLIENT_SECRET=$TF_VAR_keycloak_terraform_client_secret
+## These are needed...
+#KEYCLOAK_HOSTNAME_URL
+#KEYCLOAK_TARGET_REALM
+#KEYCLOAK_TERRAFORM_CLIENT_ID
+#KEYCLOAK_TERRAFORM_CLIENT_SECRET
 
 #========================================================
 # for applying imports

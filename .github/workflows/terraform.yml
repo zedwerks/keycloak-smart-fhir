@@ -1,0 +1,63 @@
+name: 'Terraform Apply to Keycloak'
+
+on:
+  push:
+    branches:
+      - main  # Run when changes are pushed to the main branch
+  workflow_dispatch:  # Allows manually triggering the workflow
+    inputs:
+      target_environment:
+        description: "Target Environment"
+        required: true
+        default: "demo"
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.target_environment }}
+
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v3
+
+      - name: 'Override Backend Configuration'
+        run: |
+          cp environments/${{ github.events.inputs.environment }}/backend.tf backend_override.tf
+
+      - name: 'Set up Terraform'
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 4.4.0  # Use your required Terraform version
+
+      - name: 'Terraform Init'
+        working-directory: example/terraform
+        run: |
+          terraform init \
+            -backend-config="do_spaces_access_key=${{ secrets.DO_SPACES_ACCESS_KEY }}" \
+            -backend-config="do_spaces_secret_key=${{ secrets.DO_SPACES_SECRET_KEY }}" \
+            -backend-config="do_spaces_region=${{ env.DO_SPACES_REGION }} \
+            -backend-config="do_spaces_endpoint=${{ env.DO_SPACES_ENDPOINT }}"
+            -var-file=environments/${{ github.events.inputs.environment }}/terraform.tfvars
+            
+      - name: 'Terraform Imports'
+        working-directory: example/terraform
+        env:
+          KEYCLOAK_HOSTNAME_URL: ${{ env.KEYCLOAK_HOSTNAME_URL }}
+          KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
+          KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
+          KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
+          VAR_FILE: environments/${{ github.events.inputs.environment }}/terraform.tfvars
+        run: |
+          sh ./scripts/tfimports.sh -var-file ${{ env.VAR_FILE }}
+
+      - name: 'Terraform Plan'
+        working-directory: example/terraform
+        run: |
+          terraform plan \
+            -var-file=environments/${{ github.events.inputs.environment }}/terraform.tfvars 
+
+      - name: 'Terraform Apply'
+        working-directory: example/terraform
+        run: | 
+          terraform apply -auto-approve
+            -var-file=environments/${{ github.events.inputs.environment }}/terraform.tfvars 
