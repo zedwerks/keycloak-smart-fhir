@@ -1,9 +1,6 @@
 name: 'Terraform Apply to Keycloak'
 
 on:
-  push:
-    branches:
-      - main  # Run when changes are pushed to the main branch
   workflow_dispatch:  # Allows manually triggering the workflow
     inputs:
       target_environment:
@@ -22,7 +19,7 @@ jobs:
 
       - name: 'Override Backend Configuration'
         run: |
-          cp environments/${{ github.events.inputs.environment }}/backend.tf backend_override.tf
+          cp environments/${{ inputs.target_environment }}/backend.tf backend_override.tf
 
       - name: 'Set up Terraform'
         uses: hashicorp/setup-terraform@v3
@@ -37,7 +34,7 @@ jobs:
             -backend-config="do_spaces_secret_key=${{ secrets.DO_SPACES_SECRET_KEY }}" \
             -backend-config="do_spaces_region=${{ env.DO_SPACES_REGION }} \
             -backend-config="do_spaces_endpoint=${{ env.DO_SPACES_ENDPOINT }}"
-            -var-file=environments/${{ github.events.inputs.environment }}/terraform.tfvars
+            -var-file=environments/${{ inputs.target_environment }}/terraform.tfvars
             
       - name: 'Terraform Imports'
         working-directory: example/terraform
@@ -46,7 +43,7 @@ jobs:
           KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
           KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
           KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
-          VAR_FILE: environments/${{ github.events.inputs.environment }}/terraform.tfvars
+          VAR_FILE: environments/${{ inputs.target_environment }}/terraform.tfvars
         run: |
           sh ./scripts/tfimports.sh -var-file ${{ env.VAR_FILE }}
 
@@ -54,10 +51,10 @@ jobs:
         working-directory: example/terraform
         run: |
           terraform plan \
-            -var-file=environments/${{ github.events.inputs.environment }}/terraform.tfvars 
+            -var-file=environments/${{ inputs.target_environment }}/terraform.tfvars 
 
       - name: 'Terraform Apply'
         working-directory: example/terraform
         run: | 
           terraform apply -auto-approve
-            -var-file=environments/${{ github.events.inputs.environment }}/terraform.tfvars 
+            -var-file=environments/${{ inputs.target_environment }}/terraform.tfvars 
