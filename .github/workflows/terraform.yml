@@ -20,8 +20,9 @@ jobs:
       - name: 'Override Backend Configuration'
         working-directory: ./example/terraform
         run: |
-          pwd
-          cp environments/${{ inputs.target_environment }}/backend.tf backend_override.tf
+          rm -f backend.tf || true
+          cp environments/${{ inputs.target_environment }}/backend.tf backend.tf
+          ls back*.tf
 
       - name: 'Set up Terraform'
         uses: hashicorp/setup-terraform@v3
