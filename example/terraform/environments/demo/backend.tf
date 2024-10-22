@@ -6,8 +6,6 @@ terraform {
     endpoints {
       s3 = "https://tor1.digitaloceanspaces.com" # Set your endpoint
     }
-    access_key = "" # passed in from  secrets variables
-    secret_key = "" # Provided through secrets variables
     # Deactivate a few AWS-specific checks
     skip_credentials_validation = true
     skip_metadata_api_check     = true

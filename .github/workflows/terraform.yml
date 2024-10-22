@@ -32,13 +32,11 @@ jobs:
       - name: "Terraform Init"
         working-directory: ./example/terraform
         env:
-          DO_SPACES_ACCESS_KEY_CONFIG: "access_key=${{ secrets.DO_SPACES_ACCESS_KEY }}"
-          DO_SPACES_SECRET_KEY_CONFIG: "secret_key=${{ secrets.DO_SPACES_SECRET_KEY }}"
           ENVIRONMENT: ${{ inputs.target_environment }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
         run: |
           terraform init \
-            -backend-config=$DO_SPACES_ACCESS_KEY_CONFIG \
-            -backend-config=$DO_SPACES_SECRET_KEY_CONFIG \
             --upgrade \
             -var-file=environments/$ENVIRONMENT/terraform.tfvars
 
