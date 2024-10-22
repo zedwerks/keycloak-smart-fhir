@@ -7,9 +7,6 @@ on:
         description: "Target Environment"
         required: true
         default: "demo"
-env:
-  DO_SPACES_REGION: "tor1"
-  DO_SPACES_ENDPOINT: "https://zedwerks-terraform-s3.tor1.digitaloceanspaces.com"
 jobs:
   terraform:
     runs-on: ubuntu-latest

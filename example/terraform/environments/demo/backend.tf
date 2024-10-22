@@ -1,4 +1,10 @@
 terraform {
+  required_providers {
+    digitalocean = {
+      source  = "digitalocean/digitalocean"
+      version = "~>2.5.0"
+    }
+  }
   backend "s3" {
     bucket = "zedwerks-terraform-s3" # Your bucket name
     key    = "demo/terraform.tfstate"
@@ -10,10 +16,7 @@ terraform {
     secret_key = "" # Provided through secrets variables
     # Deactivate a few AWS-specific checks
     skip_credentials_validation = true
-    skip_requesting_account_id  = true
     skip_metadata_api_check     = true
-    skip_region_validation      = true
-    skip_s3_checksum            = true
   }
 }
 
