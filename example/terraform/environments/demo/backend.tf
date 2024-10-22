@@ -1,10 +1,4 @@
 terraform {
-  required_providers {
-    digitalocean = {
-      source  = "digitalocean/digitalocean"
-      version = "~>2.5.0"
-    }
-  }
   backend "s3" {
     bucket = "zedwerks-terraform-s3" # Your bucket name
     key    = "demo/terraform.tfstate"

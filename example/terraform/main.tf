@@ -4,6 +4,10 @@ terraform {
       source  = "mrparkers/keycloak"
       version = ">= 4.4.0"
     }
+    digitalocean = {
+      source  = "digitalocean/digitalocean"
+      version = "~>2.5.0"
+    }
   }
 }
 
