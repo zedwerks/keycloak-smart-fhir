@@ -10,13 +10,7 @@ on:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
-  KEYCLOAK_HOSTNAME_URL: ${{ env.KEYCLOAK_HOSTNAME_URL }}
-  KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
-  KEYCLOAK_TERRAFORM_CLIENT_ID:  ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
   TF_VAR_keycloak_terraform_client_secret: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
-  TF_VAR_keycloak_realm: ${{ env.KEYCLOAK_TARGET_REALM }}
-  TF_VAR_keycloak_terraform_client_id: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
-  TF_VAR_keycloak_base_url: ${{ env.KEYCLOAK_HOSTNAME_URL }}
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -55,6 +49,9 @@ jobs:
           KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
           KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
           KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
+          TF_VAR_keycloak_realm: ${{ env.KEYCLOAK_TARGET_REALM }}
+          TF_VAR_keycloak_terraform_client_id: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
+          TF_VAR_keycloak_base_url: ${{ env.KEYCLOAK_HOSTNAME_URL }}
           ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           printenv | grep KEYCLOAK
@@ -71,6 +68,9 @@ jobs:
       - name: "Terraform Apply"
         working-directory: ./example/terraform
         env:
+          TF_VAR_keycloak_realm: ${{ env.KEYCLOAK_TARGET_REALM }}
+          TF_VAR_keycloak_terraform_client_id: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
+          TF_VAR_keycloak_base_url: ${{ env.KEYCLOAK_HOSTNAME_URL }}
           ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           terraform apply \
