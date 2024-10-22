@@ -74,4 +74,5 @@ jobs:
         env:
           ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
-          terraform apply -auto-approve -compact-warnings -var-file=./environments/$ENVIRONMENT/variables.tfvars
+          terraform apply \
+            -auto-approve -compact-warnings -var-file=./environments/$ENVIRONMENT/variables.tfvars
