@@ -34,8 +34,6 @@ jobs:
         env:
           DO_SPACES_ACCESS_KEY_CONFIG: "access_key=${{ secrets.DO_SPACES_ACCESS_KEY }}"
           DO_SPACES_SECRET_KEY_CONFIG: "secret_key=${{ secrets.DO_SPACES_SECRET_KEY }}"
-          AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
           ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           terraform init \
