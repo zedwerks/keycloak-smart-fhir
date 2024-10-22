@@ -52,8 +52,7 @@ jobs:
           ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           printenv | grep KEYCLOAK
-          workdir=$(pwd)
-          bash ./scripts/tfimports.sh -workdir $workdir -var-file ./environments/$ENVIRONMENT/terraform.tfvars
+          bash ./scripts/tfimports.sh -var-file ./environments/$ENVIRONMENT/terraform.tfvars
 
       - name: "Terraform Plan"
         working-directory: ./example/terraform
