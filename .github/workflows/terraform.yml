@@ -7,6 +7,15 @@ on:
         description: "Target Environment"
         required: true
         default: "demo"
+env:
+  KEYCLOAK_HOSTNAME_URL: "https://kc.zedwerks.com"
+  DO_SPACES_URL: "https://zedwerks-terraform-s3.tor1.digitaloceanspaces.com"
+  KEYCLOAK_TARGET_REALM: "smart"
+  KEYCLOAK_TERRAFORM_CLIENT_ID: "terraform"
+  TF_VAR_keycloak_terraform_client_secret: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
+  TF_VAR_keycloak_realm: "smart"
+  TF_VAR_keycloak_terraform_client_id: "terraform"
+  TF_VAR_keycloak_base_url: "https://kc.zedwerks.com"
 jobs:
   terraform:
     runs-on: ubuntu-latest
