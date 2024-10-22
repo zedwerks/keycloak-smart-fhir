@@ -49,10 +49,11 @@ jobs:
           KEYCLOAK_TARGET_REALM: "smart"
           KEYCLOAK_TERRAFORM_CLIENT_ID: "terraform"
           KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
-          VAR_FILE: environments/${{ inputs.target_environment }}/terraform.tfvars
+          ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           printenv | grep KEYCLOAK
-          bash ./scripts/tfimports.sh -var-file $VAR_FILE
+          workdir=$(pwd)
+          bash ./scripts/tfimports.sh -workdir $workdir -var-file ./environments/$ENVIRONMENT/terraform.tfvars
 
       - name: "Terraform Plan"
         working-directory: ./example/terraform
