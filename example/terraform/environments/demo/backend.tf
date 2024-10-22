@@ -3,7 +3,7 @@ terraform {
     bucket = "zedwerks-terraform-s3" # Your bucket name
     key    = "demo/terraform.tfstate"
     region = "ca-central-1" # This is actually a aws region, but it is not used here, but must be set.
-    endpoints {
+    endpoints = {
       s3 = "https://tor1.digitaloceanspaces.com" # Set your endpoint
     }
     # Deactivate a few AWS-specific checks
