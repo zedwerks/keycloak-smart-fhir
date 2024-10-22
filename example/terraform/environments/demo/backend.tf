@@ -1,15 +1,19 @@
 terraform {
   backend "s3" {
-    bucket                      = "demo-terraform-state" # Your bucket name
-    key                         = "demo/terraform.tfstate"
-    region                      = "tor1"              # Set your region (nyc3, sfo3, tor1, etc.)
+    bucket = "demo-terraform-state" # Your bucket name
+    key    = "demo/terraform.tfstate"
+    region = "tor1" # Set your region (nyc3, sfo3, tor1, etc.)
     endpoints {
-      s3                      = "https://some-space-s3.tor1.digitaloceanspaces.com" # DO endpoint for your region, provided in env variables
+      s3 = "https://tor1.digitaloceanspaces.com" # Set your endpoint
     }
-    access_key                  = ""                  # passed in from  secrets variables
-    secret_key                  = ""                  # Provided through secrets variables
-    skip_credentials_validation = true                # Skips AWS-specific validation
-    skip_metadata_api_check     = true                # Skips AWS metadata API check
+    access_key                  = ""   # passed in from  secrets variables
+    secret_key                  = ""   # Provided through secrets variables
+    # Deactivate a few AWS-specific checks
+    skip_credentials_validation = true
+    skip_requesting_account_id  = true
+    skip_metadata_api_check     = true
+    skip_region_validation      = true
+    skip_s3_checksum            = true
   }
 }
 
