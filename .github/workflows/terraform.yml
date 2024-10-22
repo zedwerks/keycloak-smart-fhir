@@ -18,6 +18,7 @@ jobs:
       KEYCLOAK_HOSTNAME_URL: ${{ vars.KEYCLOAK_HOSTNAME_URL }}
       KEYCLOAK_TARGET_REALM: ${{ vars.KEYCLOAK_TARGET_REALM }}
       KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ vars.KEYCLOAK_TERRAFORM_CLIENT_ID }}
+      KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
       TF_VAR_keycloak_terraform_client_secret: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
       TF_VAR_keycloak_realm: ${{ vars.KEYCLOAK_TARGET_REALM }}
       TF_VAR_keycloak_terraform_client_id: ${{ vars.KEYCLOAK_TERRAFORM_CLIENT_ID }}
