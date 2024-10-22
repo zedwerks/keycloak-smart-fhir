@@ -49,7 +49,7 @@ jobs:
           KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
           VAR_FILE: environments/${{ inputs.target_environment }}/terraform.tfvars
         run: |
-          sh ./scripts/tfimports.sh -var-file $VAR_FILE
+          bash ./scripts/tfimports.sh -var-file $VAR_FILE
 
       - name: "Terraform Plan"
         working-directory: ./example/terraform
