@@ -19,10 +19,13 @@ jobs:
 
       - name: "Override Backend Configuration"
         working-directory: ./example/terraform
+        env:
+          ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           rm -f backend.tf || true
-          cp environments/${{ inputs.target_environment }}/backend.tf backend.tf
+          cp environments/$ENVIRONMENT/backend.tf backend.tf
           ls back*.tf
+          cat backend.tf
 
       - name: "Set up Terraform"
         uses: hashicorp/setup-terraform@v3
@@ -32,15 +35,19 @@ jobs:
       - name: "Terraform Init"
         working-directory: ./example/terraform
         env:
-          AWS_REGION: ${{ env.DO_SPACES_REGION }}
+          DO_SPACES_REGION: ${{ env.DO_SPACES_REGION }}
+          DO_SPACES_ACCESS_KEY: ${{ secrets.DO_SPACES_ACCESS_KEY }}
+          DO_SPACES_SECRET_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
+          DO_SPACES_ENDPOINT: ${{ env.DO_SPACES_ENDPOINT }}
+          ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           terraform init \
-            -backend-config="access_key=${{ secrets.DO_SPACES_ACCESS_KEY }}" \
-            -backend-config="secret_key=${{ secrets.DO_SPACES_SECRET_KEY }}" \
-            -backend-config="region=${{ env.DO_SPACES_REGION }}" \
-            -backend-config="endpoint='${{ env.DO_SPACES_ENDPOINT }}'" \
+            -backend-config="access_key=$ACCESS_KEY_ID" \
+            -backend-config="secret_key=$DO_SPACES_SECRET_KEY" \
+            -backend-config="region=$DO_SPACES_REGION" \
+            -backend-config="endpoint=$DO_SPACES_ENDPOINT" \
             --upgrade \
-            -var-file=environments/${{ inputs.target_environment }}/terraform.tfvars
+            -var-file=environments/$ENVIRONMENT/terraform.tfvars
 
       - name: "Terraform Imports"
         working-directory: ./example/terraform
@@ -51,16 +58,20 @@ jobs:
           KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
           VAR_FILE: environments/${{ inputs.target_environment }}/terraform.tfvars
         run: |
-          sh ./scripts/tfimports.sh -var-file ${{ env.VAR_FILE }}
+          sh ./scripts/tfimports.sh -var-file $VAR_FILE
 
       - name: "Terraform Plan"
         working-directory: ./example/terraform
+        env:
+          ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           terraform plan \
-            -var-file=environments/${{ inputs.target_environment }}/terraform.tfvars
+            -var-file=environments/$ENVIRONMENT/terraform.tfvars
 
       - name: "Terraform Apply"
         working-directory: ./example/terraform
+        env:
+          ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           terraform apply -auto-approve
-            -var-file=environments/${{ inputs.target_environment }}/terraform.tfvars
+            -var-file=environments/$ENVIRONMENT/terraform.tfvars
