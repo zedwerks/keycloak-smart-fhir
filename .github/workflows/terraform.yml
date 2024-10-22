@@ -24,8 +24,6 @@ jobs:
         run: |
           rm -f backend.tf || true
           cp environments/$ENVIRONMENT/backend.tf backend.tf
-          ls back*.tf
-          cat backend.tf
 
       - name: "Set up Terraform"
         uses: hashicorp/setup-terraform@v3
@@ -35,17 +33,17 @@ jobs:
       - name: "Terraform Init"
         working-directory: ./example/terraform
         env:
-          DO_SPACES_REGION: ${{ env.DO_SPACES_REGION }}
-          DO_SPACES_ACCESS_KEY: ${{ secrets.DO_SPACES_ACCESS_KEY }}
-          DO_SPACES_SECRET_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
-          DO_SPACES_ENDPOINT: ${{ env.DO_SPACES_ENDPOINT }}
+          DO_SPACES_REGION_CONFIG: "region=${{ env.DO_SPACES_REGION }}"
+          DO_SPACES_ENDPOINT_CONFIG: "endpoints.s3=${{ env.DO_SPACES_ENDPOINT }}"
+          DO_SPACES_ACCESS_KEY_CONFIG: "access_key=${{ secrets.DO_SPACES_ACCESS_KEY }}"
+          DO_SPACES_SECRET_KEY_CONFIG: "secret_key=${{ secrets.DO_SPACES_SECRET_KEY }}"
           ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           terraform init \
-            -backend-config="access_key=$ACCESS_KEY_ID" \
-            -backend-config="secret_key=$DO_SPACES_SECRET_KEY" \
-            -backend-config="region=$DO_SPACES_REGION" \
-            -backend-config="endpoint=$DO_SPACES_ENDPOINT" \
+            -backend-config=$DO_SPACES_ACCESS_KEY_CONFIG \
+            -backend-config=$DO_SPACES_SECRET_KEY_CONFIG \
+            -backend-config=$DO_SPACES_REGION_CONFIG \
+            -backend-config=$DO_SPACES_ENDPOINT_CONFIG \
             --upgrade \
             -var-file=environments/$ENVIRONMENT/terraform.tfvars
 

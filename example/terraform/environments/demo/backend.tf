@@ -3,7 +3,9 @@ terraform {
     bucket                      = "demo-terraform-state" # Your bucket name
     key                         = "demo/terraform.tfstate"
     region                      = "tor1"              # Set your region (nyc3, sfo3, tor1, etc.)
-    endpoint                    = "some-space-s3.tor1.digitaloceanspaces.com" # DO endpoint for your region, provided in env variables
+    endpoints {
+      s3                      = "https://some-space-s3.tor1.digitaloceanspaces.com" # DO endpoint for your region, provided in env variables
+    }
     access_key                  = ""                  # passed in from  secrets variables
     secret_key                  = ""                  # Provided through secrets variables
     skip_credentials_validation = true                # Skips AWS-specific validation
