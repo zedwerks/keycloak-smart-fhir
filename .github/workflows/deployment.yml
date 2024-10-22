@@ -11,7 +11,7 @@ on:
         required: true
         default: "demo"
 env:
-  DOMAIN_NAME: kc.zedwerks.com
+  DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
   REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
   REGISTRY: registry.digitalocean.com/zedwerks
   IMAGE_NAME: keycloak-smart-fhir
@@ -22,8 +22,8 @@ env:
   DROPLET_IP: "blank"
   droplet_exists: "false"
   IMAGE_TAG: ${{ inputs.image_tag }}
-  KEYCLOAK_HOSTNAME_URL: 'https://kc.zedwerks.com'
-  KEYCLOAK_TARGET_REALM: 'smart'
+  KEYCLOAK_HOSTNAME_URL: ${{ vars.KEYCLOAK_HOSTNAME_URL }}
+  KEYCLOAK_TARGET_REALM: ${{ vars.KEYCLOAK_TARGET_REALM }}
   KEYCLOAK_TERRAFORM_CLIENT_ID: 'terraform'
 
 jobs:
@@ -98,7 +98,7 @@ jobs:
           ssh-private-key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
 
       - name: Set environment
-        run: echo "Deploying to ${{ github.events.inputs.environment }} environment"
+        run: echo "Deploying to ${{ inputs.target_environment }} environment"
 
       - name: Log in to DigitalOcean Container Registry with short-lived token
         run: doctl registry login --expiry-seconds 600
