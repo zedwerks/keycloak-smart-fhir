@@ -1,10 +1,10 @@
 terraform {
   backend "s3" {
-    bucket = "demo-terraform-state" # Your bucket name
+    bucket = "zedwerks-terraform-s3" # Your bucket name
     key    = "demo/terraform.tfstate"
     region = "tor1" # Set your region (nyc3, sfo3, tor1, etc.)
     endpoints {
-      s3 = "https://zedwerks-terraform-s3.tor1.digitaloceanspaces.com" # Set your endpoint
+      s3 = "https://tor1.digitaloceanspaces.com" # Set your endpoint
     }
     access_key = "" # passed in from  secrets variables
     secret_key = "" # Provided through secrets variables
