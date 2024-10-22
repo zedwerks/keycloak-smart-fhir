@@ -255,9 +255,8 @@ jobs:
             host: ${{ env.DROPLET_IP }}
             username: root
             key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-            envs: CONTAINER_NAME,KEYCLOAK_TERRAFORM_CLIENT_ID,KEYCLOAK_ADMIN,KEYCLOAK_ADMIN_PASSWORD,KEYCLOAK_TARGET_REALM
+            envs: SERVER_URL,CONTAINER_NAME,KEYCLOAK_TERRAFORM_CLIENT_ID,KEYCLOAK_ADMIN,KEYCLOAK_ADMIN_PASSWORD,KEYCLOAK_TARGET_REALM
             script: |
-              SERVER_URL='http://localhost:8080'
               SERVICE_ACCOUNT="service-account-$KEYCLOAK_TERRAFORM_CLIENT_ID"
               echo "Setting up realm-admin for the terraform client..."
               docker exec -t \
