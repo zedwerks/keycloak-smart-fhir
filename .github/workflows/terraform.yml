@@ -7,23 +7,28 @@ on:
         description: "Target Environment"
         required: true
         default: "demo"
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
-  TF_VAR_keycloak_terraform_client_secret: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
 jobs:
   terraform:
     runs-on: ubuntu-latest
     environment: ${{ inputs.target_environment }}
-
+    env:
+      ENVIRONMENT: ${{ inputs.target_environment }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
+      KEYCLOAK_HOSTNAME_URL: ${{ vars.KEYCLOAK_HOSTNAME_URL }}
+      KEYCLOAK_TARGET_REALM: ${{ vars.KEYCLOAK_TARGET_REALM }}
+      KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ vars.KEYCLOAK_TERRAFORM_CLIENT_ID }}
+      KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
+      TF_VAR_keycloak_terraform_client_secret: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
+      TF_VAR_keycloak_realm: ${{ vars.KEYCLOAK_TARGET_REALM }}
+      TF_VAR_keycloak_terraform_client_id: ${{ vars.KEYCLOAK_TERRAFORM_CLIENT_ID }}
+      TF_VAR_keycloak_base_url: ${{ vars.KEYCLOAK_HOSTNAME_URL }}
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3
 
       - name: "Override Backend Configuration"
         working-directory: ./example/terraform
-        env:
-          ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           rm -f backend.tf || true
           cp environments/$ENVIRONMENT/backend.tf backend.tf
@@ -34,9 +39,9 @@ jobs:
           terraform_version: 1.9.5 # Use your required Terraform version
 
       - name: "Terraform Init"
-        working-directory: ./example/terraform
         env:
           ENVIRONMENT: ${{ inputs.target_environment }}
+        working-directory: ./example/terraform
         run: |
           terraform init \
             --upgrade \
@@ -44,34 +49,18 @@ jobs:
 
       - name: "Terraform Imports"
         working-directory: ./example/terraform
-        env:
-          KEYCLOAK_HOSTNAME_URL: ${{ env.KEYCLOAK_HOSTNAME_URL }}
-          KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
-          KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
-          KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
-          TF_VAR_keycloak_realm: ${{ env.KEYCLOAK_TARGET_REALM }}
-          TF_VAR_keycloak_terraform_client_id: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
-          TF_VAR_keycloak_base_url: ${{ env.KEYCLOAK_HOSTNAME_URL }}
-          ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           printenv | grep KEYCLOAK
           bash ./scripts/tfimports.sh -var-file ./environments/$ENVIRONMENT/variables.tfvars
 
       - name: "Terraform Plan"
         working-directory: ./example/terraform
-        env:
-          ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           terraform plan \
             -var-file=./environments/$ENVIRONMENT/variables.tfvars
 
       - name: "Terraform Apply"
         working-directory: ./example/terraform
-        env:
-          TF_VAR_keycloak_realm: ${{ env.KEYCLOAK_TARGET_REALM }}
-          TF_VAR_keycloak_terraform_client_id: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
-          TF_VAR_keycloak_base_url: ${{ env.KEYCLOAK_HOSTNAME_URL }}
-          ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           terraform apply \
             -auto-approve -compact-warnings -var-file=./environments/$ENVIRONMENT/variables.tfvars

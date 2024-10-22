@@ -50,7 +50,7 @@ see the folder ```example``` for details.
 In order for these extensions to work, you must use the flow structure as defined in the Terraform file:
 
 ```bash
-cd example/terraform/auth_flow_smart_browser.tf
+example/terraform/auth_flow_smart_browser.tf
 ```
 
 ## Quick Start
