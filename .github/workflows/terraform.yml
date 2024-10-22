@@ -10,14 +10,13 @@ on:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
-  KEYCLOAK_HOSTNAME_URL: "https://kc.zedwerks.com"
-  DO_SPACES_URL: "https://zedwerks-terraform-s3.tor1.digitaloceanspaces.com"
-  KEYCLOAK_TARGET_REALM: "smart"
-  KEYCLOAK_TERRAFORM_CLIENT_ID: "terraform"
+  KEYCLOAK_HOSTNAME_URL: ${{ env.KEYCLOAK_HOSTNAME_URL }}
+  KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
+  KEYCLOAK_TERRAFORM_CLIENT_ID:  ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
   TF_VAR_keycloak_terraform_client_secret: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
-  TF_VAR_keycloak_realm: "smart"
-  TF_VAR_keycloak_terraform_client_id: "terraform"
-  TF_VAR_keycloak_base_url: "https://kc.zedwerks.com"
+  TF_VAR_keycloak_realm: ${{ env.KEYCLOAK_TARGET_REALM }}
+  TF_VAR_keycloak_terraform_client_id: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
+  TF_VAR_keycloak_base_url: ${{ env.KEYCLOAK_HOSTNAME_URL }}
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -52,9 +51,9 @@ jobs:
       - name: "Terraform Imports"
         working-directory: ./example/terraform
         env:
-          KEYCLOAK_HOSTNAME_URL: "https://kc.zedwerks.com"
-          KEYCLOAK_TARGET_REALM: "smart"
-          KEYCLOAK_TERRAFORM_CLIENT_ID: "terraform"
+          KEYCLOAK_HOSTNAME_URL: ${{ env.KEYCLOAK_HOSTNAME_URL }}
+          KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
+          KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
           KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
           ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
