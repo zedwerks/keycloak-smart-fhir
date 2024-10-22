@@ -35,8 +35,6 @@ jobs:
       - name: "Terraform Init"
         working-directory: ./example/terraform
         env:
-          DO_SPACES_REGION_CONFIG: "region=${{ env.DO_SPACES_REGION }}"
-          DO_SPACES_ENDPOINT_CONFIG: "endpoints.s3=${{ env.DO_SPACES_ENDPOINT }}"
           DO_SPACES_ACCESS_KEY_CONFIG: "access_key=${{ secrets.DO_SPACES_ACCESS_KEY }}"
           DO_SPACES_SECRET_KEY_CONFIG: "secret_key=${{ secrets.DO_SPACES_SECRET_KEY }}"
           AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
@@ -46,7 +44,6 @@ jobs:
           terraform init \
             -backend-config=$DO_SPACES_ACCESS_KEY_CONFIG \
             -backend-config=$DO_SPACES_SECRET_KEY_CONFIG \
-            -backend-config=$DO_SPACES_REGION_CONFIG \
             --upgrade \
             -var-file=environments/$ENVIRONMENT/terraform.tfvars
 
