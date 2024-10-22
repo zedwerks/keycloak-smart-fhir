@@ -43,6 +43,8 @@ jobs:
       - name: "Terraform Imports"
         working-directory: ./example/terraform
         env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
           KEYCLOAK_HOSTNAME_URL: "https://kc.zedwerks.com"
           KEYCLOAK_TARGET_REALM: "smart"
           KEYCLOAK_TERRAFORM_CLIENT_ID: "terraform"
@@ -55,6 +57,8 @@ jobs:
       - name: "Terraform Plan"
         working-directory: ./example/terraform
         env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
           ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           terraform plan \
@@ -63,6 +67,8 @@ jobs:
       - name: "Terraform Apply"
         working-directory: ./example/terraform
         env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
           ENVIRONMENT: ${{ inputs.target_environment }}
         run: |
           terraform apply -auto-approve
