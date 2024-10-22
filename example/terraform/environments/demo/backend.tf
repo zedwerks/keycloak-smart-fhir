@@ -4,10 +4,10 @@ terraform {
     key    = "demo/terraform.tfstate"
     region = "tor1" # Set your region (nyc3, sfo3, tor1, etc.)
     endpoints {
-      s3 = "https://tor1.digitaloceanspaces.com" # Set your endpoint
+      s3 = "https://zedwerks-terraform-s3.tor1.digitaloceanspaces.com" # Set your endpoint
     }
-    access_key                  = ""   # passed in from  secrets variables
-    secret_key                  = ""   # Provided through secrets variables
+    access_key = "" # passed in from  secrets variables
+    secret_key = "" # Provided through secrets variables
     # Deactivate a few AWS-specific checks
     skip_credentials_validation = true
     skip_requesting_account_id  = true

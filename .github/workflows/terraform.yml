@@ -47,7 +47,6 @@ jobs:
             -backend-config=$DO_SPACES_ACCESS_KEY_CONFIG \
             -backend-config=$DO_SPACES_SECRET_KEY_CONFIG \
             -backend-config=$DO_SPACES_REGION_CONFIG \
-            -backend-config=$DO_SPACES_ENDPOINT_CONFIG \
             --upgrade \
             -var-file=environments/$ENVIRONMENT/terraform.tfvars
 
