@@ -33,10 +33,10 @@ jobs:
         working-directory: ./example/terraform
         run: |
           terraform init \
-            -backend-config="do_spaces_access_key=${{ secrets.DO_SPACES_ACCESS_KEY }}" \
-            -backend-config="do_spaces_secret_key=${{ secrets.DO_SPACES_SECRET_KEY }}" \
-            -backend-config="do_spaces_region=${{ env.DO_SPACES_REGION }}" \
-            -backend-config="do_spaces_endpoint=${{ env.DO_SPACES_ENDPOINT }}" \
+            -backend-config="access_key=${{ secrets.DO_SPACES_ACCESS_KEY }}" \
+            -backend-config="secret_key=${{ secrets.DO_SPACES_SECRET_KEY }}" \
+            -backend-config="region=${{ env.DO_SPACES_REGION }}" \
+            -backend-config="endpoint=${{ env.DO_SPACES_ENDPOINT }}" \
             --upgrade \
             -var-file=environments/${{ inputs.target_environment }}/terraform.tfvars
             
