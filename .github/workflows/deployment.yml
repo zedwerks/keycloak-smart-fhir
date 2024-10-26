@@ -206,8 +206,7 @@ jobs:
                   --https-key-store-password=password \
                   --import-realm \
                   --features-disabled=account3,impersonation \
-                  --hostname=kc.zedwerks.com \
-                  --health-enabled=true --verbose
+                  --hostname=kc.zedwerks.com
 
       - name: Wait for Keycloak to start
         uses: appleboy/ssh-action@v1.1.0
