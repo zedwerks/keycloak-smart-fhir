@@ -205,7 +205,7 @@ jobs:
                   --https-key-store-file=/etc/x509/https/privkey.pem \
                   --https-key-store-password=password \
                   --import-realm \
-                  --features-disabled=account3,impersonation \
+                  --health-enabled=true \
                   --hostname=kc.zedwerks.com
 
       - name: Wait for Keycloak to start

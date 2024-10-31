@@ -31,7 +31,6 @@ RUN chmod +x keycloak/bin/*.sh
 ## =================================================================================================
 # Package Stage - add to an official Keycloak image
 FROM quay.io/keycloak/keycloak:26.0.4-0 
-## Need this for AWS Aurora Edition of PostgreSQL JDBC driver
 
 # need the Keycloak Port ENV var set so we can use it in entrypoint to 
 # apply realm admin rights to the terraform client. 
@@ -70,4 +69,4 @@ EXPOSE $KEYCLOAK_PORT
 
 # Start Keycloak with the import-realm optin to load in the SMART on FHIR realm
 ENTRYPOINT ["/opt/keycloak/bin/bootstrap.sh"]
-CMD ["start-dev", "--import-realm", "--features-disabled=account3,impersonation","--health-enabled=true"]
+CMD ["start-dev", "--import-realm", "--health-enabled=true"]
