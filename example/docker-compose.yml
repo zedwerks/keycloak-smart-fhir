@@ -22,7 +22,7 @@ services:
       - start-dev
       - --log-level=INFO
       - --import-realm
-      - --features-disabled=account3,impersonation
+      - --health-enabled=true
       - --features=authorization
 
 
