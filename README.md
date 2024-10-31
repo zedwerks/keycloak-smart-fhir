@@ -25,6 +25,10 @@ mvn clean package
 cp target/*.jar $KEYCLOAK_HOME/standalone/deployments
 ```
 
+## Release
+
+- Supports Kecyloak 26. For suppport for previous editions, see tags and or release packages. 
+
 ## Keycloak Auth Flow Configuration
 
 See example-usage folder. Alternatively,

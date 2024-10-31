@@ -10,16 +10,16 @@
 
   <properties>
     <java.version>11</java.version>
+    <keycloak.version>26.0.4</keycloak.version>
+    <commons-io.version>2.17.0</commons-io.version>
     <junit.version>4.13.2</junit.version>
-    <keycloak.version>25.0.6</keycloak.version>
-    <commons-io.version>2.16.1</commons-io.version>
+    <org.junit.jupiter.version>5.11.3</org.junit.jupiter.version>
     <org.codehaus.mojo.version>2.17.1</org.codehaus.mojo.version>
     <org.glassfish.jersey.version>4.0.0-M1</org.glassfish.jersey.version>
     <org.jakarta.ws.rs.version>4.0.0</org.jakarta.ws.rs.version>
     <org.jboss.logging.version>3.6.1.Final</org.jboss.logging.version>
-    <org.junit.jupiter.version>5.11.0</org.junit.jupiter.version>
     <org.mockito-inline.version>5.2.0</org.mockito-inline.version>
-    <org.mockito.version>5.13.0</org.mockito.version>    
+    <org.mockito.version>5.14.2</org.mockito.version>    
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>

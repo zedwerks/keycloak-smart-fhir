@@ -21,6 +21,7 @@
  */
 package com.zedwerks.keycloak.authenticators.smart;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -30,6 +31,8 @@ import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.models.ClientModel;
 import org.keycloak.models.ClientScopeModel;
+import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.UserModel;
 import org.keycloak.protocol.oidc.OIDCLoginProtocol;
 import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.sessions.AuthenticationSessionModel;
@@ -169,9 +172,11 @@ public final class SmartLaunchHelper {
 
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         ClientModel client = authSession.getClient();
+        KeycloakSession session = context.getSession();
+        UserModel user = authSession.getAuthenticatedUser();
 
         String requestedScopesString = authSession.getClientNote(OIDCLoginProtocol.SCOPE_PARAM);
-        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(requestedScopesString, client);
+        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(session, requestedScopesString, client, user);
 
         if (clientScopes == null) {
             logger.debug("No scopes found");
@@ -197,9 +202,11 @@ public final class SmartLaunchHelper {
 
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         ClientModel client = authSession.getClient();
+        KeycloakSession session = context.getSession();
+        UserModel user = authSession.getAuthenticatedUser();
 
         String requestedScopesString = authSession.getClientNote(OIDCLoginProtocol.SCOPE_PARAM);
-        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(requestedScopesString, client);
+        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(session, requestedScopesString, client, user);
 
         if (clientScopes == null) {
             logger.debug("No scopes found");

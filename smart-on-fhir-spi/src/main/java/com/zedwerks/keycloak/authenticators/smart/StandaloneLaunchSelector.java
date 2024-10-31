@@ -22,6 +22,7 @@
 package com.zedwerks.keycloak.authenticators.smart;
 
 import java.util.stream.Stream;
+import java.security.Key;
 import java.util.ArrayList;
 
 import org.jboss.logging.Logger;
@@ -55,9 +56,11 @@ public class StandaloneLaunchSelector implements Authenticator {
 
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         ClientModel client = authSession.getClient();
+        UserModel user = authSession.getAuthenticatedUser();
+        KeycloakSession session = context.getSession();
 
         String requestedScopesString = authSession.getClientNote(OIDCLoginProtocol.SCOPE_PARAM);
-        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(requestedScopesString, client);
+        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(session, requestedScopesString, client, user);
 
         logger.info("Requested Scopes: " + requestedScopesString);
 
