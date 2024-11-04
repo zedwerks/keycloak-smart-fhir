@@ -162,11 +162,8 @@ jobs:
             echo "DOCKER_IMAGE: $DOCKER_IMAGE"
             echo "DOCKER_REGISTRY: $DOCKER_REGISTRY"
             echo "CONTAINER_NAME: $CONTAINER_NAME"
-            echo "KEYCLOAK_ADMIN_PASSWORD: $KEYCLOAK_ADMIN_PASSWORD"
             echo "KEYCLOAK_HOSTNAME_URL: $KEYCLOAK_HOSTNAME_URL"
             echo "KEYCLOAK_TARGET_REALM: $KEYCLOAK_TARGET_REALM"
-            echo "KEYCLOAK_TERRAFORM_CLIENT_ID: $KEYCLOAK_TERRAFORM_CLIENT_ID"
-            echo "KEYCLOAK_TERRAFORM_CLIENT_SECRET: $KEYCLOAK_TERRAFORM_CLIENT_SECRET"
             echo "DOMAIN_NAME: $DOMAIN_NAME"
             # Remove all older images not in use, etc.
             echo y | docker system prune -a
@@ -205,7 +202,6 @@ jobs:
                   --https-key-store-file=/etc/x509/https/privkey.pem \
                   --https-key-store-password=password \
                   --import-realm \
-                  --health-enabled=true \
                   --hostname=kc.zedwerks.com
 
       - name: Wait for Keycloak to start
@@ -223,7 +219,6 @@ jobs:
             function wait_for_keycloak_ready() {
               MAX_RETRIES=30
               SLEEP_TIME=10
-              #URL="http://localhost:80/health/ready"
               URL="http://localhost:80/realms/master/.well-known/openid-configuration"
               RETRIES=0
               until [[ $(curl -s -o /dev/null -w '%{http_code}' $URL) == 200 ]]; do
