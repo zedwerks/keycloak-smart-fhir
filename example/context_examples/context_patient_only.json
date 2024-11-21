@@ -1,9 +1,4 @@
 {
-    "resourceType": "Parameters",
-    "parameter": [
-      {
-        "name": "patient",
-        "valueString": "12345"
-      }
-    ]
+    "resourceType": "LaunchContext",
+    "patient": "12345"
 }
