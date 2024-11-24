@@ -1,6 +1,5 @@
 /*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
- * and other contributors as indicated by the @author tags.
+ * Copyright 2024 Zed Werks Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,10 +32,7 @@ import org.keycloak.models.UserModel;
 import org.keycloak.models.UserSessionModel;
 import org.keycloak.models.UserSessionProvider;
 
-import com.zedwerks.smart.context.IContext;
-import com.zedwerks.smart.context.ContextPayload;
-import com.zedwerks.smart.context.ContextResource;
-
+import com.zedwerks.smart.launch.LaunchContext;
 import jakarta.ws.rs.core.Response;
 
 import java.util.Map;
@@ -89,7 +85,7 @@ public class EhrLaunchContextResolver implements Authenticator {
         logger.info("authenticate() **** SMART on FHIRcast Context ****");
 
         boolean hasLaunchScope = SmartLaunchHelper.hasLaunchScope(context);
-        String launchToken = SmartLaunchHelper.getLaunchFromSession(context);
+        String launchToken = SmartLaunchHelper.getLaunchFromSession(context); // the opaque ?launch={launchToken}
 
         if (!hasLaunchScope || (launchToken == null)) {
             logger.info("*** SMART on FHIR EHR-Launch: No launch in-flight.");
@@ -106,10 +102,10 @@ public class EhrLaunchContextResolver implements Authenticator {
             logger.warn(msg);
             context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
                     Response.status(302)
-                    .header("Location", context.getAuthenticationSession().getRedirectUri() +
-                            "?error=server_error" +
-                            "&error_description=" + msg)
-                    .build());
+                            .header("Location", context.getAuthenticationSession().getRedirectUri() +
+                                    "?error=server_error" +
+                                    "&error_description=" + msg)
+                            .build());
             return;
         }
 
@@ -146,7 +142,6 @@ public class EhrLaunchContextResolver implements Authenticator {
         // NOOP
     }
 
-    
     private boolean resolveEhrLaunchContext(AuthenticationFlowContext context) {
 
         // Retrieve the user session
@@ -157,26 +152,45 @@ public class EhrLaunchContextResolver implements Authenticator {
 
         KeycloakSession session = context.getSession();
         UserSessionProvider userSessionProvider = session.sessions();
-        UserSessionModel userSession = userSessionProvider.getUserSession(context.getRealm(), context.getAuthenticationSession().getParentSession().getId());
+        UserSessionModel userSession = userSessionProvider.getUserSession(context.getRealm(),
+                context.getAuthenticationSession().getParentSession().getId());
 
-        String jsonString = userSession.getNote(launchToken);
-
-        if (jsonString == null) {
+        String contextJsonString = userSession.getNote(launchToken); // get the luanch context JSON by key value of the
+                                                                     // opaque token.
+        if (contextJsonString == null) {
             logger.warn("No launch context found for launch token: " + launchToken);
             return false;
-        }   
+        }
 
-        IContext contextPayload = new ContextPayload();
-        if (contextPayload.parseJson(jsonString) == false) {
+        try {
+            LaunchContext contextPayload = LaunchContext.fromJson(contextJsonString);
+        } catch (RuntimeException ex) {
             logger.warn("Could not parse the launch context JSON string from session. Something is wrong.");
             return false;
         }
+
         logger.info("Saving launch context resource Ids to user session.");
 
-        for (ContextResource resource : contextPayload.getContextResources()) {
-            logger.debug("From Context Resource Type: " + resource.getResourceKey());
-            logger.debug("From Context Resource ID: " + resource.getResourceId());
-            SmartLaunchHelper.saveToUserSession(context, resource.getResourceKey(), resource.getResourceId());
+        // Save the core context elemement we know of...
+        String patient = contextPayload.getPatient();
+        if (patient != null) {
+            SnartLaunchHelper.savePatientToSession(context, patient);
+        }
+        String encounter = contextPayload.getEncounter();
+        if (encounter != null) {
+            SmartLaunchHelper.saveEncounterToSession(context, encounter);
+        }
+
+        try {
+            String additionalParametersStr = contextPayload.additionalParametersAsString();
+
+            if (additionalParameters != null) {
+                SmartLaunchHelper.saveToUserSession(context, "additionalParameters", additionalParametersStr);
+            }
+        } catch (RuntimeException ex) {
+            logger.warn(
+                    "Could not serialize the launch context additional Parameters. Something is wrong withe the Context JSON.");
+            return false;
         }
         return true;
     }

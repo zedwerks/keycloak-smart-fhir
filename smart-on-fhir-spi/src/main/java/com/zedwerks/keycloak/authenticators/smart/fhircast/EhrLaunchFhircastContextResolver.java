@@ -19,7 +19,7 @@
  * @author brad@zedwerks.com
  * 
  */
-package com.zedwerks.keycloak.authenticators.smart;
+package com.zedwerks.keycloak.authenticators.smart.fhircast;
 
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -42,7 +42,7 @@ import org.keycloak.sessions.AuthenticationSessionModel;
 
 import com.zedwerks.smart.context.IContextService;
 import com.zedwerks.smart.context.IContextServiceFactory;
-import com.zedwerks.smart.fhircast.IFhirCastContext;
+import com.zedwerks.smart.context.fhircast.IFhirCastContext;
 import com.zedwerks.smart.context.IContext;
 import com.zedwerks.smart.context.ContextResource;
 

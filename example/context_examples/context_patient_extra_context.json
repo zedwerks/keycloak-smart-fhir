@@ -1,27 +1,29 @@
 {
   "resourceType": "LaunchContext",
-  "$schema": "https://kc.zedwerks.com/smart/launch-context/v1_1.json",
+  "$schema": "https://kc.zedwerks.com/smart/launch-context/v2.json",
   "patient": "12345",
   "encounter": "229299395",
-  "fhirContext": [
-    { "reference": "DiagnosticReport/12345" },
-    { "reference": "Observation/123456" },
-    { "reference": "Encounter/234567" },
-    { "reference": "Appointment/345678" },
-    {
-      "reference": "List/1234",
-      "role": "https://example.org/med-list-at-home"
-    },
-    {
-      "role": "https://example.org/role/questionnaire-to-display",
-      "type": "Questionnaire",
-      "canonical": "https://example.org/Questionnaire/123/|v2023-05-03"
-    }
-  ],
-  "intent" : "reconcile-medications",
-  "need_patient_banner": "false",
-  "smart_style_url": "https://ehr.com/styles/smart.json",
-  "tenant": "2ddd6c3a-8e9a-44c6-a305-52111ad302a2",
-  "customClaim" : "anthing goes here",
-  "ocean-api-key" : "some-api-key-goes-here"
+  "additionalParameters": {
+    "fhirContext": [
+      { "reference": "DiagnosticReport/12345" },
+      { "reference": "Observation/123456" },
+      { "reference": "Encounter/234567" },
+      { "reference": "Appointment/345678" },
+      {
+        "reference": "List/1234",
+        "role": "https://example.org/med-list-at-home"
+      },
+      {
+        "role": "https://example.org/role/questionnaire-to-display",
+        "type": "Questionnaire",
+        "canonical": "https://example.org/Questionnaire/123/|v2023-05-03"
+      }
+    ],
+    "intent": "reconcile-medications",
+    "need_patient_banner": "false",
+    "smart_style_url": "https://ehr.com/styles/smart.json",
+    "tenant": "2ddd6c3a-8e9a-44c6-a305-52111ad302a2",
+    "custom_claim": "anthing goes here",
+    "ocean-api-key": "some-api-key-goes-here"
+  }
 }

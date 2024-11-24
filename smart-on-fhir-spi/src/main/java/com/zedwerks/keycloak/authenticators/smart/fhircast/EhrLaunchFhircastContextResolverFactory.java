@@ -1,6 +1,5 @@
 /*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
- * and other contributors as indicated by the @author tags.
+ * Copyright 2024 Zed Werks Inc.
  * 
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -19,7 +18,7 @@
  * @author brad@zedwerks.com
  * 
  */
-package com.zedwerks.keycloak.authenticators.smart;
+package com.zedwerks.keycloak.authenticators.smart.fhircast;
 
 import org.keycloak.Config;
 import org.keycloak.authentication.Authenticator;

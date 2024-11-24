@@ -119,10 +119,6 @@ public class SmartLaunchDetector implements Authenticator {
             SmartLaunchHelper.saveLaunchToSession(context, launch); // tuck this away for the context resolver.
         }
 
-        // Saves the additional request parameters into user session that were provided in the launch as HTTP request parameters.
-        // examples are 'intent', 'fhirContext', 'need_patient_banner', etc.
-        SmartLaunchHelper.saveAdditionalLaunchRequestParameters(context);
-
         context.attempted(); // Do not set this to success???, as we are not done authenticating the user.
         return;
     }
