@@ -162,8 +162,10 @@ public class EhrLaunchContextResolver implements Authenticator {
             return false;
         }
 
+        LaunchContext contextPayload = null;
+
         try {
-            LaunchContext contextPayload = LaunchContext.fromJson(contextJsonString);
+            contextPayload = LaunchContext.fromJson(contextJsonString);
         } catch (RuntimeException ex) {
             logger.warn("Could not parse the launch context JSON string from session. Something is wrong.");
             return false;
@@ -174,7 +176,7 @@ public class EhrLaunchContextResolver implements Authenticator {
         // Save the core context elemement we know of...
         String patient = contextPayload.getPatient();
         if (patient != null) {
-            SnartLaunchHelper.savePatientToSession(context, patient);
+            SmartLaunchHelper.savePatientToSession(context, patient);
         }
         String encounter = contextPayload.getEncounter();
         if (encounter != null) {
@@ -182,10 +184,10 @@ public class EhrLaunchContextResolver implements Authenticator {
         }
 
         try {
-            String additionalParametersStr = contextPayload.additionalParametersAsString();
+            String additionalParametersStr = contextPayload.additionalParametersToString();
 
-            if (additionalParameters != null) {
-                SmartLaunchHelper.saveToUserSession(context, "additionalParameters", additionalParametersStr);
+            if (additionalParametersStr != null) {
+                SmartLaunchHelper.saveAdditionalParametersToSession(context, additionalParametersStr);
             }
         } catch (RuntimeException ex) {
             logger.warn(

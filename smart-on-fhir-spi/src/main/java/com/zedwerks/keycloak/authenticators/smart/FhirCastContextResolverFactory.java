@@ -18,7 +18,7 @@
  * @author brad@zedwerks.com
  * 
  */
-package com.zedwerks.keycloak.authenticators.smart.fhircast;
+package com.zedwerks.keycloak.authenticators.smart;
 
 import org.keycloak.Config;
 import org.keycloak.authentication.Authenticator;
@@ -31,9 +31,9 @@ import org.keycloak.provider.ProviderConfigProperty;
 import java.util.Arrays;
 import java.util.List;
 
-public class EhrLaunchFhircastContextResolverFactory implements AuthenticatorFactory {
+public class FhirCastContextResolverFactory implements AuthenticatorFactory {
     private static final String PROVIDER_ID = "smart-launch-fhircast-resolver";
-    private static final EhrLaunchFhircastContextResolver SINGLETON = new EhrLaunchFhircastContextResolver();
+    private static final FhirCastContextResolver SINGLETON = new FhirCastContextResolver();
 
     // Configuration Settings to connect to the Context API server
     public static final String CONTEXT_SERVER_URL_PROP_NAME = "fhircast_context_server_url";

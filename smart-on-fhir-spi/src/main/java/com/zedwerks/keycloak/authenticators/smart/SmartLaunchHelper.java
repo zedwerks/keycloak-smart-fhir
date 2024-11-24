@@ -63,22 +63,12 @@ public final class SmartLaunchHelper {
 
     // These Token Claims are added to the Access Token Response, alongside the
     // access_token.
-    public static final String SMART_TENANT_CLAIM = "tenant";
-    public static final String SMART_NEED_BANNER_CLAIM = "need_patient_banner";
-    public static final String SMART_INTENT_CLAIM = "intent";
-    public static final String SMART_STYLE_URL_CLAIM = "smart_style_url";
-    public static final String SMART_FHIR_CONTEXT_CLAIM = "fhirContext";
+    public static final String USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON = "smart_additionalParameters";
 
     // SMART on FHIR Session Notes - set by the LAUNCH CONTEXT resolution.
     public static final String USER_SESSION_NOTE_PATIENT = "patient";
     public static final String USER_SESSION_NOTE_ENCOUNTER = "encounter";
-
-    public static final String USER_SESSION_NOTE_AUDIENCE = "smart_aud";
-    public static final String USER_SESSION_NOTE_FHIR_CONTEXT = "smart_fhirContext";
-    public static final String USER_SESSION_NOTE_NEED_BANNER = "smart_need_patient_banner";
-    public static final String USER_SESSION_NOTE_INTENT = "smart_intent";
-    public static final String USER_SESSION_NOTE_SMART_STYLE_URL = "smart_style_url";
-    public static final String USER_SESSION_NOTE_SMART_TENANT = "smart_tenant";
+    public static final String USER_SESSION_NOTE_AUDIENCE = "aud";
 
     public static final String AUTH_SESSION_NOTE_LAUNCH_TOKEN = "launch_token";
 
@@ -125,7 +115,7 @@ public final class SmartLaunchHelper {
         boolean hasAud = (requestedAud != null) && !requestedAud.isBlank();
         boolean hasResource = (requestedResource != null) && !requestedResource.isBlank();
 
-        return  (hasAudience || hasAud || hasResource);
+        return (hasAudience || hasAud || hasResource);
     }
 
     public static boolean hasLaunchParameter(AuthenticationFlowContext context) {
@@ -176,7 +166,8 @@ public final class SmartLaunchHelper {
         UserModel user = authSession.getAuthenticatedUser();
 
         String requestedScopesString = authSession.getClientNote(OIDCLoginProtocol.SCOPE_PARAM);
-        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(session, requestedScopesString, client, user);
+        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(session, requestedScopesString,
+                client, user);
 
         if (clientScopes == null) {
             logger.debug("No scopes found");
@@ -184,7 +175,8 @@ public final class SmartLaunchHelper {
         }
         ArrayList<String> scopes = new ArrayList<String>();
 
-        clientScopes.forEach(scope -> scopes.add(scope.getName()!=null?scope.getName():"")); // to protect against null entries
+        clientScopes.forEach(scope -> scopes.add(scope.getName() != null ? scope.getName() : "")); // to protect against
+                                                                                                   // null entries
 
         if (scopes.size() == 0) {
             logger.debug("No scopes found");
@@ -206,7 +198,8 @@ public final class SmartLaunchHelper {
         UserModel user = authSession.getAuthenticatedUser();
 
         String requestedScopesString = authSession.getClientNote(OIDCLoginProtocol.SCOPE_PARAM);
-        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(session, requestedScopesString, client, user);
+        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(session, requestedScopesString,
+                client, user);
 
         if (clientScopes == null) {
             logger.debug("No scopes found");
@@ -214,7 +207,8 @@ public final class SmartLaunchHelper {
         }
         ArrayList<String> scopes = new ArrayList<String>();
 
-        clientScopes.forEach(scope -> scopes.add(scope.getName()!=null?scope.getName():"")); // to protect against null entries
+        clientScopes.forEach(scope -> scopes.add(scope.getName() != null ? scope.getName() : "")); // to protect against
+                                                                                                   // null entries
 
         logger.info("Requested Scopes: " + scopes.toString());
 
@@ -225,11 +219,14 @@ public final class SmartLaunchHelper {
 
         boolean hasScopes = (scopes.size() > 0) && (scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_PATIENT) ||
                 scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER));
-                // @TODO: Implement the following:
-                // setup a configuration for this authenticator to set what scopes are considered for launching standalone.
-                // we limit to launch/Patient and launch/Encounter for now, but this should be configurable.
-                //||
-                // scopes.stream().anyMatch(s -> s.startsWith(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ANY_PREFIX)));
+        // @TODO: Implement the following:
+        // setup a configuration for this authenticator to set what scopes are
+        // considered for launching standalone.
+        // we limit to launch/Patient and launch/Encounter for now, but this should be
+        // configurable.
+        // ||
+        // scopes.stream().anyMatch(s ->
+        // s.startsWith(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ANY_PREFIX)));
 
         return hasScopes;
     }
@@ -290,6 +287,18 @@ public final class SmartLaunchHelper {
         context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_AUDIENCE);
     }
 
+    public static void saveEncounterToSession(AuthenticationFlowContext context, String encounterId) {
+        context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_ENCOUNTER, encounterId);
+    }
+
+    public static String getEncounterFromSession(AuthenticationFlowContext context) {
+        return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_ENCOUNTER);
+    }
+
+    public static void removeEncounterFromSession(AuthenticationFlowContext context) {
+        context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_ENCOUNTER);
+    }
+
     public static void savePatientToSession(AuthenticationFlowContext context, String patientId) {
         context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_PATIENT, patientId);
     }
@@ -302,57 +311,12 @@ public final class SmartLaunchHelper {
         context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_PATIENT);
     }
 
-    public static void saveFhirContextToSession(AuthenticationFlowContext context, String fhirContext) {
-        context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_FHIR_CONTEXT, fhirContext);
+    public static void saveAdditionalParametersToSession(AuthenticationFlowContext context, String params) {
+        context.getAuthenticationSession().setUserSessionNote(USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON, params);
     }
 
-    public static String getFhirContextFromSession(AuthenticationFlowContext context) {
-        return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_FHIR_CONTEXT);
-    }
-
-    public static void removeFhirContextFromSession(AuthenticationFlowContext context) {
-        context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_FHIR_CONTEXT);
-    }
-
-    public static void saveNeedBannerToSession(AuthenticationFlowContext context, String needBanner) {
-
-        Boolean needed = Boolean.parseBoolean(needBanner);
-
-        if (needBanner == null) {
-            context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_NEED_BANNER, needBanner);
-            return;
-        } else {
-            context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_NEED_BANNER, needed.toString());
-        }
-    }
-
-    public static boolean getNeedBannerFromSession(AuthenticationFlowContext context) {
-        String needBanner = context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_NEED_BANNER);
-        return Boolean.parseBoolean(needBanner);
-    }
-
-    public static void removeNeedBannerFromSession(AuthenticationFlowContext context) {
-        context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_NEED_BANNER);
-    }
-
-    public static void setIntent(AuthenticationFlowContext context, String intent) {
-        context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_INTENT, intent);
-    }
-
-    public static String getIntent(AuthenticationFlowContext context) {
-        return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_INTENT);
-    }
-
-    public static void removeIntent(AuthenticationFlowContext context) {
-        context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_INTENT);
-    }
-
-    public static void setStyleUrl(AuthenticationFlowContext context, String styleUrl) {
-        context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_SMART_STYLE_URL, styleUrl);
-    }
-
-    public static void removeStyleUrl(AuthenticationFlowContext context) {
-        context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_SMART_STYLE_URL);
+    public static String getAdditionalParameters(AuthenticationFlowContext context) {
+        return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON);
     }
 
     public static void saveLaunchToSession(AuthenticationFlowContext context, String launch) {
@@ -367,33 +331,4 @@ public final class SmartLaunchHelper {
     public static void removeLaunchFromSession(AuthenticationFlowContext context) {
         context.getAuthenticationSession().removeAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN);
     }
-
-    public static void saveAdditionalLaunchRequestParameters(AuthenticationFlowContext context){
-        logger.info("saveAdditionalLaunchRequestParameters() **** SMART on FHIR  ****");
-
-        // N.B. fhirContext is set by processsing the context payload, not passed as a request parameter, but if
-        // it is passed as a request parameter, it will be saved to the session, and later overridden if also
-        // processed from the context object.
-        String fhirContext = context.getUriInfo().getQueryParameters().getFirst(SMART_FHIR_CONTEXT_CLAIM);
-        if (fhirContext != null) {
-            logger.warn("Found fhirContext as a request parameter: This should be set in the context by the EMR... Saving anyway.");
-            saveFhirContextToSession(context, fhirContext);
-        }
-
-        String intent = context.getUriInfo().getQueryParameters().getFirst(SMART_INTENT_CLAIM);
-        setIntent(context, intent);
-
-
-        String styleUrl = context.getUriInfo().getQueryParameters().getFirst(SMART_STYLE_URL_CLAIM);
-        if (styleUrl != null) {
-            setStyleUrl(context, styleUrl);
-        }
-
-        String needBanner = context.getUriInfo().getQueryParameters().getFirst(SMART_NEED_BANNER_CLAIM);
-        saveNeedBannerToSession(context, needBanner);
-
-        String tenant = context.getUriInfo().getQueryParameters().getFirst(SMART_TENANT_CLAIM);
-        saveToUserSession(context, USER_SESSION_NOTE_SMART_TENANT, tenant);
-    }
-
 }
