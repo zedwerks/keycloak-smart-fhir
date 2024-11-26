@@ -326,8 +326,9 @@ public final class SmartLaunchHelper {
 
     public static boolean addLaunchContextToSession(AuthenticationFlowContext context, String contextJson) {
 
-        try {
+        clearUserSessionNotes(context); // Clear out the previous Launch context information, no longer needed.
 
+        try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(contextJson);
             boolean isLegacy = false;
@@ -396,7 +397,6 @@ public final class SmartLaunchHelper {
     }
 
     public static void saveLaunchToken(AuthenticationFlowContext context, String launch) {
-        clearUserSessionNotes(context); // Clear out the previous Launch context information
         logger.infof("Save to Session Auth Note: %s = %s", AUTH_SESSION_NOTE_LAUNCH_TOKEN, launch);
         context.getAuthenticationSession().setAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN, launch);
     }
