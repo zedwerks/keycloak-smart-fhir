@@ -32,9 +32,7 @@ import org.keycloak.models.UserModel;
 import org.keycloak.models.UserSessionModel;
 import org.keycloak.models.UserSessionProvider;
 
-import com.zedwerks.smart.launch.LaunchContext;
 import jakarta.ws.rs.core.Response;
-
 import java.util.Map;
 
 /**
@@ -162,39 +160,8 @@ public class EhrLaunchContextResolver implements Authenticator {
             return false;
         }
 
-        LaunchContext contextPayload = null;
-
-        try {
-            contextPayload = LaunchContext.fromJson(contextJsonString);
-        } catch (RuntimeException ex) {
-            logger.warn("Could not parse the launch context JSON string from session. Something is wrong.");
-            return false;
-        }
-
         logger.info("Saving launch context resource Ids to user session.");
-
-        // Save the core context elemement we know of...
-        String patient = contextPayload.getPatient();
-        if (patient != null) {
-            SmartLaunchHelper.savePatientToSession(context, patient);
-        }
-        String encounter = contextPayload.getEncounter();
-        if (encounter != null) {
-            SmartLaunchHelper.saveEncounterToSession(context, encounter);
-        }
-
-        try {
-            String additionalParametersStr = contextPayload.additionalParametersToString();
-
-            if (additionalParametersStr != null) {
-                SmartLaunchHelper.saveAdditionalParametersToSession(context, additionalParametersStr);
-            }
-        } catch (RuntimeException ex) {
-            logger.warn(
-                    "Could not serialize the launch context additional Parameters. Something is wrong withe the Context JSON.");
-            return false;
-        }
-        return true;
+        return SmartLaunchHelper.processLaunchContextToSession(context, contextJsonString);
     }
 
 }

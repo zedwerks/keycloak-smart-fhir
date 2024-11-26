@@ -3,9 +3,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.zedwerks.keycloak</groupId>
-  <artifactId>keycloak-smart-on-fhir</artifactId>
+  <artifactId>com.zedwerks.keycloak-smart-on-fhir</artifactId>
   <packaging>jar</packaging>
-  <version>1.1-SNAPSHOT</version>
+  <!--<version>1.2-SNAPSHOT</version>-->
+  <version>1.2</version>
   <name>keycloak-smart-on-fhir</name>
 
   <properties>

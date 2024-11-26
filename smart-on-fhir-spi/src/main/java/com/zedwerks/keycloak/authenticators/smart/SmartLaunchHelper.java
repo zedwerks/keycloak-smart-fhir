@@ -24,6 +24,11 @@ package com.zedwerks.keycloak.authenticators.smart;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.stream.Stream;
+import java.util.Iterator;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.security.auth.AuthPermission;
 
@@ -33,6 +38,7 @@ import org.keycloak.models.ClientModel;
 import org.keycloak.models.ClientScopeModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.UserModel;
+import org.keycloak.models.UserSessionModel;
 import org.keycloak.protocol.oidc.OIDCLoginProtocol;
 import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.sessions.AuthenticationSessionModel;
@@ -63,14 +69,21 @@ public final class SmartLaunchHelper {
 
     // These Token Claims are added to the Access Token Response, alongside the
     // access_token.
-    public static final String USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON = "smart_additionalParameters";
+    public static final String USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON = "additionalParameters";
 
     // SMART on FHIR Session Notes - set by the LAUNCH CONTEXT resolution.
-    public static final String USER_SESSION_NOTE_PATIENT = "patient";
-    public static final String USER_SESSION_NOTE_ENCOUNTER = "encounter";
-    public static final String USER_SESSION_NOTE_AUDIENCE = "aud";
+    public static final String USER_SESSION_NOTE_PATIENT = SMART_TOKEN_PATIENT_CLAIM;
+    public static final String USER_SESSION_NOTE_ENCOUNTER = SMART_TOKEN_ENCOUNTER_CLAIM;
+    public static final String USER_SESSION_NOTE_AUDIENCE = SMART_AUD_PARAM;
 
     public static final String AUTH_SESSION_NOTE_LAUNCH_TOKEN = "launch_token";
+
+    public static void clearUserSessionNotes(AuthenticationFlowContext context) {
+
+        AuthenticationSessionModel authSession = context.getAuthenticationSession();
+        context.getAuthenticationSession().getUserSessionNotes().clear();
+        logger.info("Cleared User Session Notes");
+    }
 
     public static boolean isEhrLaunch(AuthenticationFlowContext context) {
         boolean ehrLaunch = hasLaunchParameter(context) || hasLaunchScope(context);
@@ -283,20 +296,12 @@ public final class SmartLaunchHelper {
         return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_AUDIENCE);
     }
 
-    public static void removeAudienceFromSession(AuthenticationFlowContext context) {
-        context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_AUDIENCE);
-    }
-
     public static void saveEncounterToSession(AuthenticationFlowContext context, String encounterId) {
         context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_ENCOUNTER, encounterId);
     }
 
     public static String getEncounterFromSession(AuthenticationFlowContext context) {
         return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_ENCOUNTER);
-    }
-
-    public static void removeEncounterFromSession(AuthenticationFlowContext context) {
-        context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_ENCOUNTER);
     }
 
     public static void savePatientToSession(AuthenticationFlowContext context, String patientId) {
@@ -307,12 +312,44 @@ public final class SmartLaunchHelper {
         return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_PATIENT);
     }
 
-    public static void removePatientFromSession(AuthenticationFlowContext context) {
-        context.getAuthenticationSession().getUserSessionNotes().remove(USER_SESSION_NOTE_PATIENT);
-    }
+    public static boolean processLaunchContextToSession(AuthenticationFlowContext context, String contextJson) {
 
-    public static void saveAdditionalParametersToSession(AuthenticationFlowContext context, String params) {
-        context.getAuthenticationSession().setUserSessionNote(USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON, params);
+        try {
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(contextJson);
+
+            // Iterate over top-level nodes
+            rootNode.fields().forEachRemaining(field -> {
+                String key = field.getKey();
+                String value = field.getValue().asText();
+
+                if (key.equals(SMART_TOKEN_PATIENT_CLAIM)) {
+                    savePatientToSession(context, value);
+                } else if (key.equals(SMART_TOKEN_ENCOUNTER_CLAIM)) {
+                    saveEncounterToSession(context, value);
+                }
+            });
+
+            JsonNode paramsNode = rootNode.get("additionalParameters");
+
+            if (paramsNode != null && paramsNode.isObject()) {
+                Iterator<Map.Entry<String, JsonNode>> params = paramsNode.fields();
+                while (params.hasNext()) {
+                    Map.Entry<String, JsonNode> param = params.next();
+                    String paramName = param.getKey();
+                    JsonNode paramValueNode = param.getValue();
+                    String paramValue = paramValueNode.isTextual() ? paramValueNode.asText() : paramValueNode.toString();
+                    saveToUserSession(context, paramName, paramValue);
+                }
+
+            }
+        } catch (Exception ex) {
+            logger.warn("Could not make sense of the SMART Launch Context JSON: " + ex.toString());
+            return false;
+        }
+        return true;
+
     }
 
     public static String getAdditionalParameters(AuthenticationFlowContext context) {

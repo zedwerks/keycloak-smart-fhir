@@ -1,1 +1,1 @@
-com.zedwerks.keycloak.mappers.CustomUserAttributeMapper
+com.zedwerks.keycloak.mappers.SmartContextSessionNoteMapper

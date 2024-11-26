@@ -1,6 +1,5 @@
 {
-  "resourceType": "LaunchContext",
-  "$schema": "https://kc.zedwerks.com/smart/launch-context/v2.json",
+  "resourceType" : "LaunchContext",
   "patient": "12345",
   "encounter": "229299395",
   "additionalParameters": {

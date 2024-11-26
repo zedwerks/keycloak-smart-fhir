@@ -84,11 +84,10 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_aud_m
   name                = "user-session-smart-audience-mapper"
   claim_name          = "aud"
   claim_value_type    = "String"
-  session_note        = "smart_aud"
+  session_note        = "aud"
   add_to_access_token = true
   add_to_id_token     = false
   depends_on          = [keycloak_openid_client_scope.ehr_launch_context_scope]
-
 }
 
 resource "keycloak_generic_protocol_mapper" "launch_smart_fhir_context_mapper" {
@@ -98,9 +97,9 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_fhir_context_mapper" {
   protocol        = "openid-connect"
   protocol_mapper = "oidc-usersessionmodel-note-mapper"
   config = {
-    "user.session.note"          = "smart_fhirContext"
+    "user.session.note"          = "fhirContext"
     "claim.name"                 = "fhirContext"
-    "jsonType.label"             = "String"
+    "jsonType.label"             = "JSON"
     "introspection.token.claim"  = "false"
     "userinfo.token.claim"       = "false"
     "id.token.claim"             = "false"
@@ -117,7 +116,7 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_patient_banner_mapper"
   protocol        = "openid-connect"
   protocol_mapper = "oidc-usersessionmodel-note-mapper"
   config = {
-    "user.session.note"          = "smart_need_patient_banner"
+    "user.session.note"          = "need_patient_banner"
     "claim.name"                 = "need_patient_banner"
     "jsonType.label"             = "String"
     "introspection.token.claim"  = "false"
@@ -136,7 +135,7 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_intent_mapper" {
   protocol        = "openid-connect"
   protocol_mapper = "oidc-usersessionmodel-note-mapper"
   config = {
-    "user.session.note"          = "smart_intent"
+    "user.session.note"          = "intent"
     "claim.name"                 = "intent"
     "introspection.token.claim"  = "false"
     "userinfo.token.claim"       = "false"
@@ -174,7 +173,7 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_tenant_mapper" {
   protocol        = "openid-connect"
   protocol_mapper = "oidc-usersessionmodel-note-mapper"
   config = {
-    "user.session.note"          = "smart_tenant"
+    "user.session.note"          = "tenant"
     "claim.name"                 = "tenant"
     "jsonType.label"             = "String"
     "introspection.token.claim"  = "false"
