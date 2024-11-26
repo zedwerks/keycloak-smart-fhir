@@ -116,14 +116,14 @@ public class SmartLaunchDetector implements Authenticator {
 
         if (isEhrLaunch) {
             String launch = SmartLaunchHelper.getLaunchParameter(context);
-            SmartLaunchHelper.saveLaunchToSession(context, launch); // tuck this away for the context resolver.
+            SmartLaunchHelper.saveLaunchToken(context, launch); // tuck this away for the context resolver.
         }
 
         context.attempted(); // Do not set this to success???, as we are not done authenticating the user.
         return;
     }
 
-    @Override
+    @Override              
     public boolean requiresUser() {
         logger.debug("requiresUser() **** SMART on FHIR EHR-Launch Authenticator ****");
         return false;

@@ -83,7 +83,7 @@ public class EhrLaunchContextResolver implements Authenticator {
         logger.info("authenticate() **** SMART on FHIRcast Context ****");
 
         boolean hasLaunchScope = SmartLaunchHelper.hasLaunchScope(context);
-        String launchToken = SmartLaunchHelper.getLaunchFromSession(context); // the opaque ?launch={launchToken}
+        String launchToken = SmartLaunchHelper.getLaunchToken(context); // the opaque ?launch={launchToken}
 
         if (!hasLaunchScope || (launchToken == null)) {
             logger.info("*** SMART on FHIR EHR-Launch: No launch in-flight.");
@@ -153,15 +153,14 @@ public class EhrLaunchContextResolver implements Authenticator {
         UserSessionModel userSession = userSessionProvider.getUserSession(context.getRealm(),
                 context.getAuthenticationSession().getParentSession().getId());
 
-        String contextJsonString = userSession.getNote(launchToken); // get the luanch context JSON by key value of the
+
+        String contextJsonString = userSession.getNote(launchToken); // get the launch context JSON by key value of the
                                                                      // opaque token.
         if (contextJsonString == null) {
             logger.warn("No launch context found for launch token: " + launchToken);
             return false;
         }
-
-        logger.info("Saving launch context resource Ids to user session.");
-        return SmartLaunchHelper.processLaunchContextToSession(context, contextJsonString);
+        return SmartLaunchHelper.addLaunchContextToSession(context, contextJsonString);
     }
 
 }

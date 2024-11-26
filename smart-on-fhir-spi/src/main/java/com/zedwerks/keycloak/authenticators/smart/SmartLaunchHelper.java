@@ -81,8 +81,20 @@ public final class SmartLaunchHelper {
     public static void clearUserSessionNotes(AuthenticationFlowContext context) {
 
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
-        context.getAuthenticationSession().getUserSessionNotes().clear();
-        logger.info("Cleared User Session Notes");
+
+        /* if (authSession != null) {
+            Map<String, String> authNotes = authSession.getAuthNotes();
+            authNotes.clear();
+            logger.info("Cleared all authentication session notes");
+        } */
+        UserSessionModel userSession = context.getSession().sessions().getUserSession(context.getRealm(), authSession.getParentSession().getId());
+
+        // Clear user session notes
+        if (userSession != null) {
+            Map<String, String> userNotes = userSession.getNotes();
+            userNotes.clear(); // Remove all user session notes
+            logger.info("Cleared all user session notes.");
+        }
     }
 
     public static boolean isEhrLaunch(AuthenticationFlowContext context) {
@@ -278,8 +290,8 @@ public final class SmartLaunchHelper {
         return null;
     }
 
-    public static void saveToUserSession(AuthenticationFlowContext context, String key, String value) {
-        logger.infof("Save to User Session: %s = %s", key, value);
+    public static void saveToUserSessionNote(AuthenticationFlowContext context, String key, String value) {
+        logger.infof("Save to User Session Note: %s = %s", key, value);
         context.getAuthenticationSession().setUserSessionNote(key, value);
     }
 
@@ -288,8 +300,8 @@ public final class SmartLaunchHelper {
     }
 
     public static void saveAudienceToSession(AuthenticationFlowContext context, String audience) {
-        logger.infof("Save to User Session: %s = %s", USER_SESSION_NOTE_AUDIENCE, audience);
-        context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_AUDIENCE, audience);
+        saveToUserSessionNote(context, USER_SESSION_NOTE_AUDIENCE, audience);
+
     }
 
     public static String getAudienceFromSession(AuthenticationFlowContext context) {
@@ -297,7 +309,7 @@ public final class SmartLaunchHelper {
     }
 
     public static void saveEncounterToSession(AuthenticationFlowContext context, String encounterId) {
-        context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_ENCOUNTER, encounterId);
+        saveToUserSessionNote(context, USER_SESSION_NOTE_ENCOUNTER, encounterId);
     }
 
     public static String getEncounterFromSession(AuthenticationFlowContext context) {
@@ -305,14 +317,14 @@ public final class SmartLaunchHelper {
     }
 
     public static void savePatientToSession(AuthenticationFlowContext context, String patientId) {
-        context.getAuthenticationSession().setUserSessionNote(USER_SESSION_NOTE_PATIENT, patientId);
+        saveToUserSessionNote(context, USER_SESSION_NOTE_PATIENT, patientId);
     }
 
     public static String getPatientFromSession(AuthenticationFlowContext context) {
         return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_PATIENT);
     }
 
-    public static boolean processLaunchContextToSession(AuthenticationFlowContext context, String contextJson) {
+    public static boolean addLaunchContextToSession(AuthenticationFlowContext context, String contextJson) {
 
         try {
 
@@ -371,7 +383,7 @@ public final class SmartLaunchHelper {
                     JsonNode paramValueNode = param.getValue();
                     String paramValue = paramValueNode.isTextual() ? paramValueNode.asText()
                             : paramValueNode.toString();
-                    saveToUserSession(context, paramName, paramValue);
+                    saveToUserSessionNote(context, paramName, paramValue);
                 }
 
             }
@@ -383,20 +395,17 @@ public final class SmartLaunchHelper {
 
     }
 
-    public static String getAdditionalParameters(AuthenticationFlowContext context) {
-        return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON);
-    }
-
-    public static void saveLaunchToSession(AuthenticationFlowContext context, String launch) {
+    public static void saveLaunchToken(AuthenticationFlowContext context, String launch) {
+        clearUserSessionNotes(context); // Clear out the previous Launch context information
         logger.infof("Save to Session Auth Note: %s = %s", AUTH_SESSION_NOTE_LAUNCH_TOKEN, launch);
         context.getAuthenticationSession().setAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN, launch);
     }
 
-    public static String getLaunchFromSession(AuthenticationFlowContext context) {
+    public static String getLaunchToken(AuthenticationFlowContext context) {
         return context.getAuthenticationSession().getAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN);
     }
 
-    public static void removeLaunchFromSession(AuthenticationFlowContext context) {
+    public static void removeLaunchToken(AuthenticationFlowContext context) {
         context.getAuthenticationSession().removeAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN);
     }
 }
