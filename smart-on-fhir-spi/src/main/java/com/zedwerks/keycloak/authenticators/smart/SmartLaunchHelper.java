@@ -318,28 +318,59 @@ public final class SmartLaunchHelper {
 
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(contextJson);
+            boolean isLegacy = false;
 
-            // Iterate over top-level nodes
-            rootNode.fields().forEachRemaining(field -> {
-                String key = field.getKey();
-                String value = field.getValue().asText();
+            // Is this legacy format?
+            JsonNode resourceTypeNode = rootNode.get("resourceType");
+            if (resourceTypeNode != null && resourceTypeNode.isTextual()) {
+                String value = resourceTypeNode.asText();
+                if (value.equals("Parameters")) {
+                    logger.info("Received legacy Launch Context JSON. Processing parameter array...");
+                    JsonNode parameterArray = rootNode.get("parameter");
+                    if (parameterArray != null && parameterArray.isArray()) {
+                        // Iterate over each element in the array
+                        for (JsonNode entry : parameterArray) {
+                            // Extract "name" and "valueString" fields
+                            String name = entry.get("name").asText();
+                            String valueString = entry.get("valueString").asText();
 
-                if (key.equals(SMART_TOKEN_PATIENT_CLAIM)) {
-                    savePatientToSession(context, value);
-                } else if (key.equals(SMART_TOKEN_ENCOUNTER_CLAIM)) {
-                    saveEncounterToSession(context, value);
+                            if (name.equals(SMART_TOKEN_PATIENT_CLAIM)) {
+                                savePatientToSession(context, valueString);
+                            }
+                            if (name.equals(SMART_SCOPE_LAUNCH_ENCOUNTER)) {
+                                saveEncounterToSession(context, valueString);
+                            }
+                        }
+                    } else {
+                        logger.warn("The Legacy Launch Context JSON 'parameter' field is not an array or is missing.");
+                    }
                 }
-            });
+            } else {
+                // Iterate over top-level nodes
+                rootNode.fields().forEachRemaining(field -> {
+                    String key = field.getKey();
+                    String value = field.getValue().asText();
 
-            JsonNode paramsNode = rootNode.get("additionalParameters");
+                    if (key.equals(SMART_TOKEN_PATIENT_CLAIM)) {
+                        savePatientToSession(context, value);
+                    } else if (key.equals(SMART_TOKEN_ENCOUNTER_CLAIM)) {
+                        saveEncounterToSession(context, value);
+                    }
+                });
+
+            }
+
+            JsonNode paramsNode = rootNode.get(USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON);
 
             if (paramsNode != null && paramsNode.isObject()) {
+                logger.info("Processing Launch Context additional Parameters...");
                 Iterator<Map.Entry<String, JsonNode>> params = paramsNode.fields();
                 while (params.hasNext()) {
                     Map.Entry<String, JsonNode> param = params.next();
                     String paramName = param.getKey();
                     JsonNode paramValueNode = param.getValue();
-                    String paramValue = paramValueNode.isTextual() ? paramValueNode.asText() : paramValueNode.toString();
+                    String paramValue = paramValueNode.isTextual() ? paramValueNode.asText()
+                            : paramValueNode.toString();
                     saveToUserSession(context, paramName, paramValue);
                 }
 
