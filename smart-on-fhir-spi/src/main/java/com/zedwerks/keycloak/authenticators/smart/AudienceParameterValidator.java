@@ -93,7 +93,7 @@ public class AudienceParameterValidator implements Authenticator {
 
         for (int i = 0; i < audiences.size(); i++) {
             audiences.set(i, audiences.get(i).trim());
-            logger.info("Configured FHIR audience: " + audiences.get(i));
+            logger.debug("Configured FHIR audience: " + audiences.get(i));
         }
 
         if (audiences.size() < 1) {

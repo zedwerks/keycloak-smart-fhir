@@ -97,9 +97,9 @@ public class FhirCastContextResolver implements Authenticator {
         logger.info("authenticate() **** SMART on FHIR FHIRcast Context Resolver ****");
 
         boolean hasLaunchScope = SmartLaunchHelper.hasLaunchScope(context);
-        String launchToken = SmartLaunchHelper.getLaunchToken(context);
+        String launchContextId = SmartLaunchDetector.launchContextAuthNote(context);
 
-        if (!hasLaunchScope || (launchToken == null)) {
+        if (!hasLaunchScope || (launchContextId == null)) {
             logger.info("*** SMART on FHIR EHR-Launch: No launch in-flight.");
             context.success(); // just carry on... not a SMART on FHIR request
             return;
@@ -135,7 +135,7 @@ public class FhirCastContextResolver implements Authenticator {
         }
 
         // Resolve the launch parameter to the patient resource id
-        if (!resolveLaunchParameter(context, launchToken)) {
+        if (!resolveLaunchParameter(context, launchContextId)) {
             String msg = "*** Could not resolve launch parameter to resource id(s). Failing the request. ***";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
@@ -314,11 +314,11 @@ public class FhirCastContextResolver implements Authenticator {
         if (launchContext instanceof IFhirCastContext) {
             logger.info("We are dealing with a FHIRcast context service.");
             IFhirCastContext fhirCastContext = (IFhirCastContext) launchContext;
-            SmartLaunchHelper.saveToUserSessionNote(context, IFhirCastContext.HUB_TOPIC_KEY, fhirCastContext.getHubTopic());
+            SmartLaunchHelper.saveUserSessionNote(context, IFhirCastContext.HUB_TOPIC_KEY, fhirCastContext.getHubTopic());
 
             String hubUrl = context.getAuthenticatorConfig().getConfig()
                 .get(FhirCastContextResolverFactory.CONTEXT_SERVER_URL_PROP_NAME);
-            SmartLaunchHelper.saveToUserSessionNote(context, IFhirCastContext.HUB_URL_KEY, hubUrl);
+            SmartLaunchHelper.saveUserSessionNote(context, IFhirCastContext.HUB_URL_KEY, hubUrl);
         }
 
         Collection<ContextResource> resources = launchContext.getContextResources();
@@ -333,7 +333,7 @@ public class FhirCastContextResolver implements Authenticator {
             // Or these goe nowhere... 
             // e.g. if the key is patient - we need a mapper that maps this to the token response.
 
-            SmartLaunchHelper.saveToUserSessionNote(context, resource.getResourceKey(), resource.getResourceId());
+            SmartLaunchHelper.saveUserSessionNote(context, resource.getResourceKey(), resource.getResourceId());
         }
 
         return true;

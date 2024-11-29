@@ -37,7 +37,7 @@ public class EhrLaunchConditional implements ConditionalAuthenticator {
 
         logger.info("matchCondition() **** SMART on FHIR EHR Launch Conditional ****");
         boolean isEhrLaunch = SmartLaunchHelper.isEhrLaunch(context);
-        isEhrLaunch |= SmartLaunchHelper.getLaunchToken(context) != null;   // the launch parameter may have been set in the session
+        //isEhrLaunch |= SmartLaunchHelper.launchContextId(context) != null;   // the launch parameter may have been set in the session
         logger.debug("isEhrLaunch: " + isEhrLaunch);
         return isEhrLaunch;
     }

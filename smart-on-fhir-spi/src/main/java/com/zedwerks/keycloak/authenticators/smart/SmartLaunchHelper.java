@@ -58,60 +58,29 @@ public final class SmartLaunchHelper {
     public static final String SMART_AUDIENCE_PARAM = "audience"; // accepted alias for aud
     public static final String SMART_RESOURCE_PARAM = "resource"; // accepted alias for aud
 
+
+
     // These Token Claims are added to the ID Token by the SMART on FHIR
     // Authenticator.
     public static final String SMART_FHIR_USER_CLAIM = "fhirUser";
-
-    // These Token Claims are added to the Access Token Response, alongside the
-    // access_token.
     public static final String SMART_TOKEN_PATIENT_CLAIM = "patient";
     public static final String SMART_TOKEN_ENCOUNTER_CLAIM = "encounter";
 
-    // These Token Claims are added to the Access Token Response, alongside the
-    // access_token.
-    public static final String USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON = "additionalParameters";
-
-    // SMART on FHIR Session Notes - set by the LAUNCH CONTEXT resolution.
     public static final String USER_SESSION_NOTE_PATIENT = SMART_TOKEN_PATIENT_CLAIM;
     public static final String USER_SESSION_NOTE_ENCOUNTER = SMART_TOKEN_ENCOUNTER_CLAIM;
     public static final String USER_SESSION_NOTE_AUDIENCE = SMART_AUD_PARAM;
 
-    public static final String AUTH_SESSION_NOTE_LAUNCH_TOKEN = "launch_token";
-
-    public static void clearUserSessionNotes(AuthenticationFlowContext context) {
-
-        AuthenticationSessionModel authSession = context.getAuthenticationSession();
-
-        /* if (authSession != null) {
-            Map<String, String> authNotes = authSession.getAuthNotes();
-            authNotes.clear();
-            logger.info("Cleared all authentication session notes");
-        } */
-        UserSessionModel userSession = context.getSession().sessions().getUserSession(context.getRealm(), authSession.getParentSession().getId());
-
-        // Clear user session notes
-        if (userSession != null) {
-            Map<String, String> userNotes = userSession.getNotes();
-            userNotes.clear(); // Remove all user session notes
-            logger.info("Cleared all user session notes.");
-        }
-    }
-
     public static boolean isEhrLaunch(AuthenticationFlowContext context) {
-        boolean ehrLaunch = hasLaunchParameter(context) || hasLaunchScope(context);
+        boolean ehrLaunch = hasLaunchContextIdParameter(context) || hasLaunchScope(context);
         logger.debugf("Is a SMART on FHIR EHR-launch Request? %s.", ehrLaunch ? "YES" : "NO");
+
         return ehrLaunch;
     }
 
     public static boolean isStandaloneLaunch(AuthenticationFlowContext context) {
-        boolean standalone = !hasLaunchParameter(context) && hasStandaloneLaunchScopes(context);
+        boolean standalone = !hasLaunchContextIdParameter(context) && hasStandaloneLaunchScopes(context);
         logger.debugf("Is a SMART on FHIR standalone launch Request? %s.", standalone ? "YES" : "NO");
         return standalone;
-    }
-
-    public static boolean isEhrLaunchValid(AuthenticationFlowContext context) {
-        boolean valid = hasLaunchParameter(context) && hasLaunchScope(context) && hasAudienceParameter(context);
-        return valid;
     }
 
     public static boolean isStandaloneLaunchValid(AuthenticationFlowContext context) {
@@ -143,9 +112,9 @@ public final class SmartLaunchHelper {
         return (hasAudience || hasAud || hasResource);
     }
 
-    public static boolean hasLaunchParameter(AuthenticationFlowContext context) {
+    public static boolean hasLaunchContextIdParameter(AuthenticationFlowContext context) {
 
-        logger.debug("hasLaunchParameter() **** SMART on FHIR  ****");
+        logger.debug("hasLaunchContextIdParameter() **** SMART on FHIR  ****");
 
         if (context.getUriInfo() == null) {
             logger.debug("No URI Info found");
@@ -160,25 +129,6 @@ public final class SmartLaunchHelper {
 
         boolean hasLaunch = (launchParam != null) && !launchParam.isBlank();
         return hasLaunch;
-    }
-
-    public static String getLaunchParameter(AuthenticationFlowContext context) {
-
-        if (context.getUriInfo() == null) {
-            logger.debug("No URI Info found");
-            return null;
-        }
-        if (context.getUriInfo().getQueryParameters() == null) {
-            logger.debug("No Query Parameters found");
-            return null;
-        }
-
-        logger.debug("getLaunchParam() **** SMART on FHIR  ****");
-
-        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartLaunchHelper.LAUNCH_REQUEST_PARAM);
-
-        logger.debug("SMART Launch Parameter: " + launchParam);
-        return launchParam;
     }
 
     public static boolean hasLaunchScope(AuthenticationFlowContext context) {
@@ -256,6 +206,12 @@ public final class SmartLaunchHelper {
         return hasScopes;
     }
 
+    public static boolean isEhrLaunchValid(AuthenticationFlowContext context) {
+        boolean valid = hasLaunchContextIdParameter(context) && hasLaunchScope(context)
+                && hasAudienceParameter(context);
+        return valid;
+    }
+
     public static String getAudienceParameter(AuthenticationFlowContext context) {
 
         logger.debug("getAudienceParam() **** SMART on FHIR  ****");
@@ -290,122 +246,24 @@ public final class SmartLaunchHelper {
         return null;
     }
 
-    public static void saveToUserSessionNote(AuthenticationFlowContext context, String key, String value) {
-        logger.infof("Save to User Session Note: %s = %s", key, value);
+    public static void saveUserSessionNote(AuthenticationFlowContext context, String key, String value) {
+        logger.infof("Save User Session Note: %s = %s", key, value);
         context.getAuthenticationSession().setUserSessionNote(key, value);
     }
 
-    public static String getFromUserSession(AuthenticationFlowContext context, String key) {
+    public static String userSessionNote(AuthenticationFlowContext context, String key) {
+        logger.debugf("Returning User Session value for key: %s", key);
+
         return context.getAuthenticationSession().getUserSessionNotes().get(key);
     }
 
+    public static void removeUserSessionNote(AuthenticationFlowContext context, String key) {
+        logger.infof("Removing User Session key: %s", key);
+        context.getAuthenticationSession().getUserSessionNotes().remove(key);
+    }
+
     public static void saveAudienceToSession(AuthenticationFlowContext context, String audience) {
-        saveToUserSessionNote(context, USER_SESSION_NOTE_AUDIENCE, audience);
-
+        saveUserSessionNote(context, USER_SESSION_NOTE_AUDIENCE, audience);
     }
 
-    public static String getAudienceFromSession(AuthenticationFlowContext context) {
-        return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_AUDIENCE);
-    }
-
-    public static void saveEncounterToSession(AuthenticationFlowContext context, String encounterId) {
-        saveToUserSessionNote(context, USER_SESSION_NOTE_ENCOUNTER, encounterId);
-    }
-
-    public static String getEncounterFromSession(AuthenticationFlowContext context) {
-        return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_ENCOUNTER);
-    }
-
-    public static void savePatientToSession(AuthenticationFlowContext context, String patientId) {
-        saveToUserSessionNote(context, USER_SESSION_NOTE_PATIENT, patientId);
-    }
-
-    public static String getPatientFromSession(AuthenticationFlowContext context) {
-        return context.getAuthenticationSession().getUserSessionNotes().get(USER_SESSION_NOTE_PATIENT);
-    }
-
-    public static boolean addLaunchContextToSession(AuthenticationFlowContext context, String contextJson) {
-
-        clearUserSessionNotes(context); // Clear out the previous Launch context information, no longer needed.
-
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(contextJson);
-            boolean isLegacy = false;
-
-            // Is this legacy format?
-            JsonNode resourceTypeNode = rootNode.get("resourceType");
-            if (resourceTypeNode != null && resourceTypeNode.isTextual()) {
-                String value = resourceTypeNode.asText();
-                if (value.equals("Parameters")) {
-                    logger.info("Received legacy Launch Context JSON. Processing parameter array...");
-                    JsonNode parameterArray = rootNode.get("parameter");
-                    if (parameterArray != null && parameterArray.isArray()) {
-                        // Iterate over each element in the array
-                        for (JsonNode entry : parameterArray) {
-                            // Extract "name" and "valueString" fields
-                            String name = entry.get("name").asText();
-                            String valueString = entry.get("valueString").asText();
-
-                            if (name.equals(SMART_TOKEN_PATIENT_CLAIM)) {
-                                savePatientToSession(context, valueString);
-                            }
-                            if (name.equals(SMART_SCOPE_LAUNCH_ENCOUNTER)) {
-                                saveEncounterToSession(context, valueString);
-                            }
-                        }
-                    } else {
-                        logger.warn("The Legacy Launch Context JSON 'parameter' field is not an array or is missing.");
-                    }
-                }
-            } else {
-                // Iterate over top-level nodes
-                rootNode.fields().forEachRemaining(field -> {
-                    String key = field.getKey();
-                    String value = field.getValue().asText();
-
-                    if (key.equals(SMART_TOKEN_PATIENT_CLAIM)) {
-                        savePatientToSession(context, value);
-                    } else if (key.equals(SMART_TOKEN_ENCOUNTER_CLAIM)) {
-                        saveEncounterToSession(context, value);
-                    }
-                });
-
-            }
-
-            JsonNode paramsNode = rootNode.get(USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON);
-
-            if (paramsNode != null && paramsNode.isObject()) {
-                logger.info("Processing Launch Context additional Parameters...");
-                Iterator<Map.Entry<String, JsonNode>> params = paramsNode.fields();
-                while (params.hasNext()) {
-                    Map.Entry<String, JsonNode> param = params.next();
-                    String paramName = param.getKey();
-                    JsonNode paramValueNode = param.getValue();
-                    String paramValue = paramValueNode.isTextual() ? paramValueNode.asText()
-                            : paramValueNode.toString();
-                    saveToUserSessionNote(context, paramName, paramValue);
-                }
-
-            }
-        } catch (Exception ex) {
-            logger.warn("Could not make sense of the SMART Launch Context JSON: " + ex.toString());
-            return false;
-        }
-        return true;
-
-    }
-
-    public static void saveLaunchToken(AuthenticationFlowContext context, String launch) {
-        logger.infof("Save to Session Auth Note: %s = %s", AUTH_SESSION_NOTE_LAUNCH_TOKEN, launch);
-        context.getAuthenticationSession().setAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN, launch);
-    }
-
-    public static String getLaunchToken(AuthenticationFlowContext context) {
-        return context.getAuthenticationSession().getAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN);
-    }
-
-    public static void removeLaunchToken(AuthenticationFlowContext context) {
-        context.getAuthenticationSession().removeAuthNote(AUTH_SESSION_NOTE_LAUNCH_TOKEN);
-    }
 }

@@ -115,15 +115,14 @@ public class SmartLaunchDetector implements Authenticator {
         SmartLaunchHelper.saveAudienceToSession(context, audience);
 
         if (isEhrLaunch) {
-            String launch = SmartLaunchHelper.getLaunchParameter(context);
-            SmartLaunchHelper.saveLaunchToken(context, launch); // tuck this away for the context resolver.
+            SmartLaunchDetector.setLaunchContextAuthNote(context, getLaunchParameter(context)); // Tuck away in Auth Note
         }
 
         context.attempted(); // Do not set this to success???, as we are not done authenticating the user.
         return;
     }
 
-    @Override              
+    @Override
     public boolean requiresUser() {
         logger.debug("requiresUser() **** SMART on FHIR EHR-Launch Authenticator ****");
         return false;
@@ -152,4 +151,35 @@ public class SmartLaunchDetector implements Authenticator {
         logger.debug("close() **** SMART on FHIR EHR-Launch Validator ****");
         // NOOP
     }
+
+    // helper functions ------------------------
+    public static String getLaunchParameter(AuthenticationFlowContext context) {
+
+        if (context.getUriInfo() == null) {
+            logger.debug("No URI Info found");
+            return null;
+        }
+        if (context.getUriInfo().getQueryParameters() == null) {
+            logger.debug("No Query Parameters found");
+            return null;
+        }
+
+        logger.debug("getLaunchParam() **** SMART on FHIR  ****");
+
+        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartLaunchHelper.LAUNCH_REQUEST_PARAM);
+
+        logger.debug("SMART Launch Parameter: " + launchParam);
+        return launchParam;
+    }
+
+    public static final String AUTH_NOTE_LAUNCH_CONTEXT_ID = SmartLaunchHelper.LAUNCH_REQUEST_PARAM;
+
+    public static void setLaunchContextAuthNote(AuthenticationFlowContext context, String contextId) {
+        context.getAuthenticationSession().setAuthNote(AUTH_NOTE_LAUNCH_CONTEXT_ID, contextId);
+    }
+
+    public static String launchContextAuthNote(AuthenticationFlowContext context) {
+        return context.getAuthenticationSession().getAuthNote(AUTH_NOTE_LAUNCH_CONTEXT_ID);
+    }
+
 }
