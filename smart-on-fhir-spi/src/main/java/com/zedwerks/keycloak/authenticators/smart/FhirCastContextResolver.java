@@ -314,11 +314,12 @@ public class FhirCastContextResolver implements Authenticator {
         if (launchContext instanceof IFhirCastContext) {
             logger.info("We are dealing with a FHIRcast context service.");
             IFhirCastContext fhirCastContext = (IFhirCastContext) launchContext;
-            SmartLaunchHelper.saveUserSessionNote(context, IFhirCastContext.HUB_TOPIC_KEY, fhirCastContext.getHubTopic());
+            context.getAuthenticationSession().setUserSessionNote(IFhirCastContext.HUB_TOPIC_KEY, fhirCastContext.getHubTopic());
 
             String hubUrl = context.getAuthenticatorConfig().getConfig()
                 .get(FhirCastContextResolverFactory.CONTEXT_SERVER_URL_PROP_NAME);
-            SmartLaunchHelper.saveUserSessionNote(context, IFhirCastContext.HUB_URL_KEY, hubUrl);
+            context.getAuthenticationSession().setUserSessionNote(IFhirCastContext.HUB_URL_KEY, hubUrl);
+
         }
 
         Collection<ContextResource> resources = launchContext.getContextResources();
@@ -330,10 +331,9 @@ public class FhirCastContextResolver implements Authenticator {
 
         for (ContextResource resource : resources) {
             // This relies on user session mappers, as configured against the 'launch' scope
-            // Or these goe nowhere... 
+            // Or these go nowhere... 
             // e.g. if the key is patient - we need a mapper that maps this to the token response.
-
-            SmartLaunchHelper.saveUserSessionNote(context, resource.getResourceKey(), resource.getResourceId());
+            context.getAuthenticationSession().setUserSessionNote(resource.getResourceKey(), resource.getResourceId());
         }
 
         return true;

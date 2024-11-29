@@ -74,7 +74,7 @@ import jakarta.ws.rs.core.Response;
 public class EhrLaunchContextResolver implements Authenticator {
 
     public static final String USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON = "additionalParameters";
-    public static final String AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID = "launch_context_id";
+    public static final String AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID = "smart_contextid";
     public static final String AUTH_NOTE_LAUNCH_CONTEXT_ID = "launch";
 
     public static final Logger logger = Logger.getLogger(EhrLaunchContextResolver.class);
@@ -100,7 +100,6 @@ public class EhrLaunchContextResolver implements Authenticator {
 
         if (!hasLaunchScope || (launchContextId == null)) {
             logger.info("*** SMART on FHIR EHR-Launch: No launch in-flight.");
-            clearLaunchUserSessionNotes(context); // clear out any old launch context stuff.
             context.success(); // just carry on... not a SMART on FHIR request
             return;
         }
@@ -154,34 +153,68 @@ public class EhrLaunchContextResolver implements Authenticator {
         // NOOP
     }
 
+    /**
+     * Retrieve the user session Context that was previously set into session by the EHR ahead of launch,
+     * and then parse and save the claims as User Session Note Mapper values for the auth
+     * this way, they are returned in and alongside the token(s) as per the corresponding mapper.
+     * @param context
+     * @param launchContextId
+     * @return true when the context was found and resolved, otherwise false.
+     */
     private static boolean resolveEhrLaunchContext(AuthenticationFlowContext context, String launchContextId) {
 
-        // Retrieve the user session
         logger.info("Resolving launch context: " + launchContextId);
-
         return saveLaunchContextToUserSession(context, launchContextId);
+    }
+
+
+    private static String userSessionNote(AuthenticationFlowContext context, String name) {
+        KeycloakSession session = context.getSession();
+        UserSessionProvider userSessionProvider = session.sessions();
+        UserSessionModel userSession = userSessionProvider.getUserSession(context.getRealm(),
+                context.getAuthenticationSession().getParentSession().getId());
+
+        String contextJsonString = userSession.getNote(name); 
+        return contextJsonString;
+    }
+
+    private static void setUserSessionNote(AuthenticationFlowContext context, String noteName, String noteValue) {
+        KeycloakSession session = context.getSession();
+        UserSessionProvider userSessionProvider = session.sessions();
+        UserSessionModel userSession = userSessionProvider.getUserSession(context.getRealm(),
+                context.getAuthenticationSession().getParentSession().getId());
+
+        userSession.setNote(noteName, noteValue);
+    }
+
+    private static void clearUserSessionNote(AuthenticationFlowContext context, String noteName) {
+        KeycloakSession session = context.getSession();
+        UserSessionProvider userSessionProvider = session.sessions();
+        UserSessionModel userSession = userSessionProvider.getUserSession(context.getRealm(),
+                context.getAuthenticationSession().getParentSession().getId());
+
+        userSession.removeNote(noteName);
     }
 
     private static boolean saveLaunchContextToUserSession(AuthenticationFlowContext context, String newContextId) {
 
         if (newContextId == null) {
-            logger.warn("Launch Context ID is null. Unexpected during an EHR launch.");
+            logger.warn("*** SMART Launch Context ID is null. Unexpected during an EHR launch.");
             return false;
         }
 
-        String contextJson = launchContextJson(context, newContextId);
+        String contextJson = userSessionNote(context, newContextId);
 
         if (contextJson == null) {
-            logger.warn("Launch Context JSON is null. Unexpected during an EHR launch.");
+            logger.warn("*** SMART Launch Context JSON is missing. Unexpected during an EHR launch. Likely due to bad luanch parameter sent by SMART App");
             return false;
         }
         logger.debugf("New Context JSON = %s", contextJson);
-        clearLaunchUserSessionNotes(context);
+        clearUserSessionNotes(context);
 
-        SmartLaunchHelper.saveUserSessionNote(context, AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID, newContextId);
+        setUserSessionNote(context, AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID, newContextId);
 
         try {
-            logger.info("About to process contextJson");
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(contextJson);
             boolean isLegacy = false;
@@ -191,7 +224,7 @@ public class EhrLaunchContextResolver implements Authenticator {
             if (resourceTypeNode != null && resourceTypeNode.isTextual()) {
                 String resourceTypeText = resourceTypeNode.asText();
                 if (resourceTypeText.equals("Parameters")) {
-                    logger.warn("Received Deprecaated Launch Context JSON. Processing Parameters...");
+                    logger.warn("*** SMART Context: Deprecated Launch Context JSON found. Will process. Future releases my drop support.");
                     JsonNode parameterArray = rootNode.get("parameter");
                     if (parameterArray != null && parameterArray.isArray()) {
                         // Iterate over each element in the array
@@ -201,31 +234,27 @@ public class EhrLaunchContextResolver implements Authenticator {
                             String valueString = entry.get("valueString").asText();
 
                             if (name.equals(SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM)) {
-                                SmartLaunchHelper.saveUserSessionNote(context,
-                                        SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM, valueString);
+                                setUserSessionNote(context,  SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM, valueString);
                             }
                             if (name.equals(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER)) {
-                                SmartLaunchHelper.saveUserSessionNote(context,
-                                        SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER, valueString);
+                                setUserSessionNote(context, SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER, valueString);
                             }
                         }
                     } else {
-                        logger.warn("The Legacy Launch Context JSON 'parameter' field is not an array or is missing.");
+                        logger.error("The Legacy Launch Context JSON 'parameter' field is not an array or is missing.");
                     }
                 }
             }
 
-            logger.info("Save top-level Context key/value pairs");
+            logger.debug("Save top-level Context key/value pairs");
             rootNode.fields().forEachRemaining(field -> {
                 String key = field.getKey();
                 String value = field.getValue().asText();
 
                 if (key.equals(SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM)) {
-                    SmartLaunchHelper.saveUserSessionNote(context, SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM,
-                            value);
+                    setUserSessionNote(context, SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM, value);
                 } else if (key.equals(SmartLaunchHelper.SMART_TOKEN_ENCOUNTER_CLAIM)) {
-                    SmartLaunchHelper.saveUserSessionNote(context, SmartLaunchHelper.SMART_TOKEN_ENCOUNTER_CLAIM,
-                            value);
+                    setUserSessionNote(context, SmartLaunchHelper.SMART_TOKEN_ENCOUNTER_CLAIM, value);
                 }
             });
 
@@ -240,7 +269,7 @@ public class EhrLaunchContextResolver implements Authenticator {
                     JsonNode paramValueNode = param.getValue();
                     String paramValue = paramValueNode.isTextual() ? paramValueNode.asText()
                             : paramValueNode.toString();
-                    SmartLaunchHelper.saveUserSessionNote(context, paramName, paramValue);
+                    setUserSessionNote(context, paramName, paramValue);
                 }
             }
         } catch (Exception ex) {
@@ -251,36 +280,31 @@ public class EhrLaunchContextResolver implements Authenticator {
 
     }
 
-    private static String launchContextJson(AuthenticationFlowContext context, String launchContextId) {
-        KeycloakSession session = context.getSession();
-        UserSessionProvider userSessionProvider = session.sessions();
-        UserSessionModel userSession = userSessionProvider.getUserSession(context.getRealm(),
-                context.getAuthenticationSession().getParentSession().getId());
+    private static void clearUserSessionNotes(AuthenticationFlowContext context) {
 
-        String contextJsonString = userSession.getNote(launchContextId); // This was set by the EHR ahead of launch
-                                                                         // against the user's session.
-        return contextJsonString;
-    }
+        logger.info(" *** SMART: Clearing Previous Launch Context User Session Notes");
 
-    private static void clearLaunchUserSessionNotes(AuthenticationFlowContext context) {
+        // clear known launch items that may have been set on prior auth under same User
+        // session
+        clearUserSessionNote(context, SmartLaunchHelper.CONTEXT_PATIENT);
+        clearUserSessionNote(context, SmartLaunchHelper.CONTEXT_ENCOUNTER);
+        clearUserSessionNote(context, SmartLaunchHelper.SMART_AUD_PARAM);
+        clearUserSessionNote(context, SmartLaunchHelper.CONTEXT_FHIR_CONTEXT);
+        clearUserSessionNote(context, SmartLaunchHelper.CONTEXT_INTENT);
+        clearUserSessionNote(context, SmartLaunchHelper.CONTEXT_NEED_PATIENT_BANNER);
+        clearUserSessionNote(context, SmartLaunchHelper.SMART_STYLE_URL);
 
-        logger.info(" *** Clearing Launch Context User Session Notes");
-
-        String currentLaunchContextId = SmartLaunchHelper.userSessionNote(context, AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID);
+        String currentLaunchContextId = userSessionNote(context, AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID);
 
         if (currentLaunchContextId != null) {
-            logger.infof("Clearing Current Launch Context In Session %s", currentLaunchContextId);
+            logger.debugf("*** Clearing Current Launch Context In Session %s", currentLaunchContextId);
 
-            // clear known launch items that may have been set on prior auth under same User
-            // session
-            SmartLaunchHelper.removeUserSessionNote(context, SmartLaunchHelper.USER_SESSION_NOTE_PATIENT);
-            SmartLaunchHelper.removeUserSessionNote(context, SmartLaunchHelper.USER_SESSION_NOTE_ENCOUNTER);
-            SmartLaunchHelper.removeUserSessionNote(context, SmartLaunchHelper.USER_SESSION_NOTE_AUDIENCE);
+            String contextJson = userSessionNote(context, currentLaunchContextId);
 
-            String contextJson = launchContextJson(context, currentLaunchContextId);
+            logger.debugf("DEBUG: Old Context JSON to be cleared: %s", contextJson);
 
             if (contextJson != null) {
-                logger.info("Clearing out User Session Notes for context parameters");
+                logger.info("*** SMART: Removing old EHR Context from User Session");
                 try {
                     ObjectMapper objectMapper = new ObjectMapper();
                     JsonNode rootNode = objectMapper.readTree(contextJson);
@@ -288,24 +312,25 @@ public class EhrLaunchContextResolver implements Authenticator {
                     // Iterate over top-level nodes
                     rootNode.fields().forEachRemaining(field -> {
                         String key = field.getKey();
-                        SmartLaunchHelper.removeUserSessionNote(context, key);
+                        clearUserSessionNote(context, key);
                     });
                     JsonNode paramsNode = rootNode.get(USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON);
 
                     if (paramsNode != null && paramsNode.isObject()) {
-                        logger.info("Clearing Launch Context additional Parameters...");
+                        logger.debug("Clearing Launch Context additional Parameters...");
                         Iterator<Map.Entry<String, JsonNode>> params = paramsNode.fields();
                         while (params.hasNext()) {
                             Map.Entry<String, JsonNode> param = params.next();
                             String paramName = param.getKey();
-                            SmartLaunchHelper.removeUserSessionNote(context, paramName);
+                            clearUserSessionNote(context, paramName);
                         }
                     }
                 } catch (Exception ex) {
-                    logger.warn("Could not make sense of the SMART Launch Context JSON: " + ex.toString());
+                    logger.warn("*** SMART: Could not make sense of the SMART Launch Context JSON: ");
                 }
             }
-            SmartLaunchHelper.removeUserSessionNote(context, AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID);
+            clearUserSessionNote(context, currentLaunchContextId);  // Clear out previous JSON context payload
+            clearUserSessionNote(context, AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID);  // Clear out the Key
         }
     }
 

@@ -99,7 +99,7 @@ public class StandaloneLaunchSelector implements Authenticator {
     private void succeed(AuthenticationFlowContext context, String patient) {
         logger.info("SMART on FHIR launch/patient request succeeded!");
         // Add selected information to authentication session
-        context.getAuthenticationSession().saveUserSessionNote("patient_id", patient);
+        context.getAuthenticationSession().setUserSessionNote("patient", patient);
         context.success();
     } */
 

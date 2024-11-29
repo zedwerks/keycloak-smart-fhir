@@ -58,22 +58,22 @@ public final class SmartLaunchHelper {
     public static final String SMART_AUDIENCE_PARAM = "audience"; // accepted alias for aud
     public static final String SMART_RESOURCE_PARAM = "resource"; // accepted alias for aud
 
-
-
     // These Token Claims are added to the ID Token by the SMART on FHIR
     // Authenticator.
     public static final String SMART_FHIR_USER_CLAIM = "fhirUser";
     public static final String SMART_TOKEN_PATIENT_CLAIM = "patient";
     public static final String SMART_TOKEN_ENCOUNTER_CLAIM = "encounter";
 
-    public static final String USER_SESSION_NOTE_PATIENT = SMART_TOKEN_PATIENT_CLAIM;
-    public static final String USER_SESSION_NOTE_ENCOUNTER = SMART_TOKEN_ENCOUNTER_CLAIM;
-    public static final String USER_SESSION_NOTE_AUDIENCE = SMART_AUD_PARAM;
+    public static final String CONTEXT_PATIENT = SMART_TOKEN_PATIENT_CLAIM;
+    public static final String CONTEXT_ENCOUNTER = SMART_TOKEN_ENCOUNTER_CLAIM;
+    public static final String CONTEXT_FHIR_CONTEXT ="fhirContext";
+    public static final String CONTEXT_INTENT = "intent";
+    public static final String CONTEXT_NEED_PATIENT_BANNER = "need_patient_banner";
+    public static final String SMART_STYLE_URL = "smart_style_url";
 
     public static boolean isEhrLaunch(AuthenticationFlowContext context) {
         boolean ehrLaunch = hasLaunchContextIdParameter(context) || hasLaunchScope(context);
         logger.debugf("Is a SMART on FHIR EHR-launch Request? %s.", ehrLaunch ? "YES" : "NO");
-
         return ehrLaunch;
     }
 
@@ -206,12 +206,6 @@ public final class SmartLaunchHelper {
         return hasScopes;
     }
 
-    public static boolean isEhrLaunchValid(AuthenticationFlowContext context) {
-        boolean valid = hasLaunchContextIdParameter(context) && hasLaunchScope(context)
-                && hasAudienceParameter(context);
-        return valid;
-    }
-
     public static String getAudienceParameter(AuthenticationFlowContext context) {
 
         logger.debug("getAudienceParam() **** SMART on FHIR  ****");
@@ -246,24 +240,9 @@ public final class SmartLaunchHelper {
         return null;
     }
 
-    public static void saveUserSessionNote(AuthenticationFlowContext context, String key, String value) {
-        logger.infof("Save User Session Note: %s = %s", key, value);
-        context.getAuthenticationSession().setUserSessionNote(key, value);
-    }
-
-    public static String userSessionNote(AuthenticationFlowContext context, String key) {
-        logger.debugf("Returning User Session value for key: %s", key);
-
-        return context.getAuthenticationSession().getUserSessionNotes().get(key);
-    }
-
-    public static void removeUserSessionNote(AuthenticationFlowContext context, String key) {
-        logger.infof("Removing User Session key: %s", key);
-        context.getAuthenticationSession().getUserSessionNotes().remove(key);
-    }
-
     public static void saveAudienceToSession(AuthenticationFlowContext context, String audience) {
-        saveUserSessionNote(context, USER_SESSION_NOTE_AUDIENCE, audience);
+        logger.debugf("Save Audience Parameter to User Session: %s", audience);
+        context.getAuthenticationSession().setUserSessionNote(SMART_AUD_PARAM, audience);
     }
 
 }

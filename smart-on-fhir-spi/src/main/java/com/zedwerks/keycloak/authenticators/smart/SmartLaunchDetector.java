@@ -97,7 +97,7 @@ public class SmartLaunchDetector implements Authenticator {
                             .build());
             return;
         }
-        if (isEhrLaunch && !SmartLaunchHelper.isEhrLaunchValid(context)) {
+        if (isEhrLaunch && !isEhrLaunchValid(context)) {
             String msg = "Invalid EHR launch request!";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
@@ -108,13 +108,11 @@ public class SmartLaunchDetector implements Authenticator {
                             .build());
             return;
         }
-
-        // If we are here, then we have a valid launch request.
-        // Let's save the audience parameter to the session.
+        // Save the audience param. For EHR Launch we also need to save it to AuthNote so we can clear user session notes.
         String audience = SmartLaunchHelper.getAudienceParameter(context);
-        SmartLaunchHelper.saveAudienceToSession(context, audience);
 
         if (isEhrLaunch) {
+            SmartLaunchDetector.setAudienceAuthNote(context, audience);
             SmartLaunchDetector.setLaunchContextAuthNote(context, getLaunchParameter(context)); // Tuck away in Auth Note
         }
 
@@ -153,6 +151,11 @@ public class SmartLaunchDetector implements Authenticator {
     }
 
     // helper functions ------------------------
+    public static boolean isEhrLaunchValid(AuthenticationFlowContext context) {
+        boolean valid = SmartLaunchHelper.hasLaunchContextIdParameter(context) && SmartLaunchHelper.hasLaunchScope(context)
+                && SmartLaunchHelper.hasAudienceParameter(context);
+        return valid;
+    }
     public static String getLaunchParameter(AuthenticationFlowContext context) {
 
         if (context.getUriInfo() == null) {
@@ -173,6 +176,8 @@ public class SmartLaunchDetector implements Authenticator {
     }
 
     public static final String AUTH_NOTE_LAUNCH_CONTEXT_ID = SmartLaunchHelper.LAUNCH_REQUEST_PARAM;
+    public static final String AUTH_NOTE_AUDIENCE = SmartLaunchHelper.SMART_AUD_PARAM;
+
 
     public static void setLaunchContextAuthNote(AuthenticationFlowContext context, String contextId) {
         context.getAuthenticationSession().setAuthNote(AUTH_NOTE_LAUNCH_CONTEXT_ID, contextId);
@@ -181,5 +186,14 @@ public class SmartLaunchDetector implements Authenticator {
     public static String launchContextAuthNote(AuthenticationFlowContext context) {
         return context.getAuthenticationSession().getAuthNote(AUTH_NOTE_LAUNCH_CONTEXT_ID);
     }
+
+    public static void setAudienceAuthNote(AuthenticationFlowContext context, String contextId) {
+        context.getAuthenticationSession().setAuthNote(AUTH_NOTE_AUDIENCE, contextId);
+    }
+
+    public static String audienceAuthNote(AuthenticationFlowContext context) {
+        return context.getAuthenticationSession().getAuthNote(AUTH_NOTE_AUDIENCE);
+    }
+
 
 }
