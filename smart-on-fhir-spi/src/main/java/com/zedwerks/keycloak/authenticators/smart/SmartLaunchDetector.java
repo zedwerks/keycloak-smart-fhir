@@ -97,7 +97,7 @@ public class SmartLaunchDetector implements Authenticator {
                             .build());
             return;
         }
-        if (isEhrLaunch && !SmartLaunchHelper.isEhrLaunchValid(context)) {
+        if (isEhrLaunch && !isEhrLaunchValid(context)) {
             String msg = "Invalid EHR launch request!";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
@@ -108,20 +108,13 @@ public class SmartLaunchDetector implements Authenticator {
                             .build());
             return;
         }
-
-        // If we are here, then we have a valid launch request.
-        // Let's save the audience parameter to the session.
-        String audience = SmartLaunchHelper.getAudienceParameter(context);
-        SmartLaunchHelper.saveAudienceToSession(context, audience);
+        // Save the audience param. For this is a required field for both standalone and ehr launch
+        // and we have a user session note mapper for this to get into the access token.
+        SmartLaunchHelper.saveAudienceToSession(context, SmartLaunchHelper.getAudienceParameter(context));
 
         if (isEhrLaunch) {
-            String launch = SmartLaunchHelper.getLaunchParameter(context);
-            SmartLaunchHelper.saveLaunchToSession(context, launch); // tuck this away for the context resolver.
+            SmartLaunchDetector.setLaunchContextAuthNote(context, getLaunchParameter(context)); // Tuck away in Auth Note
         }
-
-        // Saves the additional request parameters into user session that were provided in the launch as HTTP request parameters.
-        // examples are 'intent', 'fhirContext', 'need_patient_banner', etc.
-        SmartLaunchHelper.saveAdditionalLaunchRequestParameters(context);
 
         context.attempted(); // Do not set this to success???, as we are not done authenticating the user.
         return;
@@ -156,4 +149,51 @@ public class SmartLaunchDetector implements Authenticator {
         logger.debug("close() **** SMART on FHIR EHR-Launch Validator ****");
         // NOOP
     }
+
+    // helper functions ------------------------
+    public static boolean isEhrLaunchValid(AuthenticationFlowContext context) {
+        boolean valid = SmartLaunchHelper.hasLaunchContextIdParameter(context) && SmartLaunchHelper.hasLaunchScope(context)
+                && SmartLaunchHelper.hasAudienceParameter(context);
+        return valid;
+    }
+    public static String getLaunchParameter(AuthenticationFlowContext context) {
+
+        if (context.getUriInfo() == null) {
+            logger.debug("No URI Info found");
+            return null;
+        }
+        if (context.getUriInfo().getQueryParameters() == null) {
+            logger.debug("No Query Parameters found");
+            return null;
+        }
+
+        logger.debug("getLaunchParam() **** SMART on FHIR  ****");
+
+        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartLaunchHelper.LAUNCH_REQUEST_PARAM);
+
+        logger.debug("SMART Launch Parameter: " + launchParam);
+        return launchParam;
+    }
+
+    public static final String AUTH_NOTE_LAUNCH_CONTEXT_ID = SmartLaunchHelper.LAUNCH_REQUEST_PARAM;
+    public static final String AUTH_NOTE_AUDIENCE = SmartLaunchHelper.SMART_AUD_PARAM;
+
+
+    public static void setLaunchContextAuthNote(AuthenticationFlowContext context, String contextId) {
+        context.getAuthenticationSession().setAuthNote(AUTH_NOTE_LAUNCH_CONTEXT_ID, contextId);
+    }
+
+    public static String launchContextAuthNote(AuthenticationFlowContext context) {
+        return context.getAuthenticationSession().getAuthNote(AUTH_NOTE_LAUNCH_CONTEXT_ID);
+    }
+
+    public static void setAudienceAuthNote(AuthenticationFlowContext context, String contextId) {
+        context.getAuthenticationSession().setAuthNote(AUTH_NOTE_AUDIENCE, contextId);
+    }
+
+    public static String audienceAuthNote(AuthenticationFlowContext context) {
+        return context.getAuthenticationSession().getAuthNote(AUTH_NOTE_AUDIENCE);
+    }
+
+
 }

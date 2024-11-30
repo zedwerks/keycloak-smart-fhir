@@ -82,7 +82,7 @@ To try this out, use Postman. Included in this repo, is ```example/postman``` fo
    - copy the returned context identifier to your pasteboard.
 2. Click on  the 'Postman SMART App' folder in Postman:
    - In the Authorization tab, set the 'launch' request parameter to the content identifier you copied by pasting it there
-   - On Docker Desktop, open the console to view the logs from Keycloak. This is so you can see the smart extension in action.
+   - On Docker Desktop, open the console to view the logs from Keycloak. This is so you can see the.smart.nsion in action.
    - Tap the run button on Postman to submit the authentication request.
 3. Paste the context identifier UUID into the request parameter named 'launch'
 4. Now try submitting the authorization by clicking on the 'Get New Access Token' button, at the bottom of the Authorization form.
