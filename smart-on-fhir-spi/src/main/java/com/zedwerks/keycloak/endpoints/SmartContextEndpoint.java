@@ -147,7 +147,7 @@ public class SmartContextEndpoint implements RealmResourceProvider {
         // The context will be retrieved by the Keycloak Authenticator
         // and will return the resource identifiers as part of the auth response.
         userSession.setNote(contextResponse.contextId, jsonString); 
-        logger.infof("Saved EHR-Launch Context[%s] to User Session Note", contextResponse.contextId);
+        logger.infof("*** SMART: Saved EHR-Launch Context[%s]. Ready for app launch.", contextResponse.contextId);
         return Response.ok().entity(contextResponse).build();
     }
 

@@ -5,15 +5,16 @@
 }
 
 .login-pf body {
-    background: url("../img/keycloak-bg.png") no-repeat center center fixed;
-    background-size: cover;
-    height: 100%;
+    background-image: url("../img/smart-bg.png");
+    background-repeat: repeat;
+    background-size: 372px 372px;
+    background-color: #000033; /* Fallback background color */
 }
 
 div.kc-logo-text {
-    background-image: url(../img/keycloak-logo-text.png);
+    background-image: url(../img/keycloak-zed-smart.png);
     background-repeat: no-repeat;
-    height: 63px;
+    height: 91px;
     width: 300px;
     margin: 0 auto;
 }

@@ -108,11 +108,11 @@ public class SmartLaunchDetector implements Authenticator {
                             .build());
             return;
         }
-        // Save the audience param. For EHR Launch we also need to save it to AuthNote so we can clear user session notes.
-        String audience = SmartLaunchHelper.getAudienceParameter(context);
+        // Save the audience param. For this is a required field for both standalone and ehr launch
+        // and we have a user session note mapper for this to get into the access token.
+        SmartLaunchHelper.saveAudienceToSession(context, SmartLaunchHelper.getAudienceParameter(context));
 
         if (isEhrLaunch) {
-            SmartLaunchDetector.setAudienceAuthNote(context, audience);
             SmartLaunchDetector.setLaunchContextAuthNote(context, getLaunchParameter(context)); // Tuck away in Auth Note
         }
 
