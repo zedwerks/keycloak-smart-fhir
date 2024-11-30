@@ -71,7 +71,7 @@ public class AudienceParameterValidator implements Authenticator {
         }
 
         String audience = SmartLaunchHelper.getAudienceParameter(context);
-        logger.infof("Requested audience: %s", audience);
+        logger.debugf("Requested audience: %s", audience);
 
         if (audience == null || audience.isBlank()) {
             String msg = "A SMART on FHIR Request must include an 'aud', 'audience', or 'resource' parameter";
@@ -93,7 +93,7 @@ public class AudienceParameterValidator implements Authenticator {
 
         for (int i = 0; i < audiences.size(); i++) {
             audiences.set(i, audiences.get(i).trim());
-            logger.info("Configured FHIR audience: " + audiences.get(i));
+            logger.debug("Configured FHIR audience: " + audiences.get(i));
         }
 
         if (audiences.size() < 1) {
@@ -122,7 +122,7 @@ public class AudienceParameterValidator implements Authenticator {
                 return; // early exit
             }
         }
-        logger.infof("*** Great! Audience is known: '%s'. It will be used for SMART Launch", audience);
+        logger.infof("*** SMART Audience Parameter is known: '%s'. It will be used for SMART Launch", audience);
         context.attempted();
     }
 

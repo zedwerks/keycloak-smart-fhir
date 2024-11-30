@@ -109,17 +109,17 @@ public class SmartContextEndpoint implements RealmResourceProvider {
 
             String tokenString = authorizationHeader.substring("Bearer".length()).trim();
 
-            logger.info("Token: " + tokenString);
+            logger.debug("Token: " + tokenString);
 
             AccessToken token = this.session.tokens().decode(tokenString, AccessToken.class);
 
             String userId = token.getSubject();
-            logger.info("User ID: " + userId);
-            String sessionId = token.getSessionState();
-            logger.info("Session ID: " + sessionId);
+            logger.debug("User ID: " + userId);
+            String sessionId = token.getSessionId();
+            logger.debug("Session ID: " + sessionId);
             UserSessionProvider userSessionProvider = this.session.sessions();
             RealmModel realm = this.session.getContext().getRealm();
-            logger.info("Realm: " + realm.getName());
+            logger.debug("Realm: " + realm.getName());
             userSession = userSessionProvider.getUserSession(realm, sessionId);
 
             if (userSession == null) {
@@ -147,7 +147,7 @@ public class SmartContextEndpoint implements RealmResourceProvider {
         // The context will be retrieved by the Keycloak Authenticator
         // and will return the resource identifiers as part of the auth response.
         userSession.setNote(contextResponse.contextId, jsonString); 
-
+        logger.infof("*** SMART: Saved EHR-Launch Context[%s]. Ready for app launch.", contextResponse.contextId);
         return Response.ok().entity(contextResponse).build();
     }
 

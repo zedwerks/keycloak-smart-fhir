@@ -82,10 +82,10 @@ resource "keycloak_authentication_execution_config" "smart_fhircast_browser_flow
   execution_id = keycloak_authentication_execution.smart_fhircast_browser_flow_s3e2.id
   alias        = "smart-fhircast-browser-cookie-fhircast-context-resolver-config"
   config = {
-    fhircast_context_server_url           = var.keycloak_smart_configuration.fhircast_context_server_url
-    fhircast_context_server_scope         = var.keycloak_smart_configuration.fhircast_context_server_scope
-    fhircast_context_server_audience      = var.keycloak_smart_configuration.fhircast_context_server_audience
-    fhircast_context_server_class_factory = var.keycloak_smart_configuration.fhircast_context_server_class_factory
+    fhircast_context_server_url           = var.keycloak_smart_fhircast_configuration.fhircast_context_server_url
+    fhircast_context_server_scope         = var.keycloak_smart_fhircast_configuration.fhircast_context_server_scope
+    fhircast_context_server_audience      = var.keycloak_smart_fhircast_configuration.fhircast_context_server_audience
+    fhircast_context_server_class_factory = var.keycloak_smart_fhircast_configuration.fhircast_context_server_class_factory
   }
 }
 //==============================================================
@@ -120,10 +120,10 @@ resource "keycloak_authentication_execution_config" "smart_fhircast_browser_flow
   execution_id = keycloak_authentication_execution.smart_fhircast_browser_flow_s4e2.id
   alias        = "smart-fhircast-browser-idp-resolver-config"
   config = {
-    fhircast_context_server_url           = var.keycloak_smart_configuration.fhircast_context_server_url
-    fhircast_context_server_scope         = var.keycloak_smart_configuration.fhircast_context_server_scope
-    fhircast_context_server_audience      = var.keycloak_smart_configuration.fhircast_context_server_audience
-    fhircast_context_server_class_factory = var.keycloak_smart_configuration.fhircast_context_server_class_factory
+    fhircast_context_server_url           = var.keycloak_smart_fhircast_configuration.fhircast_context_server_url
+    fhircast_context_server_scope         = var.keycloak_smart_fhircast_configuration.fhircast_context_server_scope
+    fhircast_context_server_audience      = var.keycloak_smart_fhircast_configuration.fhircast_context_server_audience
+    fhircast_context_server_class_factory = var.keycloak_smart_fhircast_configuration.fhircast_context_server_class_factory
   }
 }
 //==============================================================
@@ -159,9 +159,9 @@ resource "keycloak_authentication_execution_config" "smart_fhircast_browser_flow
   execution_id = keycloak_authentication_execution.smart_fhircast_browser_flow_s5e2.id
   alias        = "smart-fhircast-browswer-login-form-context-resolver-config"
   config = {
-    fhircast_context_server_url           = var.keycloak_smart_configuration.fhircast_context_server_url
-    fhircast_context_server_scope         = var.keycloak_smart_configuration.fhircast_context_server_scope
-    fhircast_context_server_audience      = var.keycloak_smart_configuration.fhircast_context_server_audience
-    fhircast_context_server_class_factory = var.keycloak_smart_configuration.fhircast_context_server_class_factory
+    fhircast_context_server_url           = var.keycloak_smart_fhircast_configuration.fhircast_context_server_url
+    fhircast_context_server_scope         = var.keycloak_smart_fhircast_configuration.fhircast_context_server_scope
+    fhircast_context_server_audience      = var.keycloak_smart_fhircast_configuration.fhircast_context_server_audience
+    fhircast_context_server_class_factory = var.keycloak_smart_fhircast_configuration.fhircast_context_server_class_factory
   }
 }

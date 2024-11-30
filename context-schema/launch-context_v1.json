@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "https://build.fhir.org/ig/HL7/smart-app-launch/scopes-and-launch-context.html",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "LaunchContext"
+    },
+    "$schema": {
+      "type": "string",
+      "format": "uri"
+    },
+    "patient": {
+      "type": "string"
+    },
+    "encounter": {
+      "type": "string"
+    },
+    "fhirContext": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "reference": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "canonical": {
+            "type": "string",
+            "format": "uri"
+          },
+          "identifier": {
+            "type": "string"
+          }
+        }
+      },
+      "oneOf": [
+        { "required": ["canonical"] },
+        { "required": ["reference"] },
+        { "required": ["identifier"] }
+      ]
+    },
+    "intent": {
+      "type": "string"
+    },
+    "need_patient_banner": {
+      "type": "string",
+      "enum": ["true", "false"]
+    },
+    "smart_style_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "tenant": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "customClaim": {
+      "type": "string"
+    },
+    "ocean-api-key": {
+      "type": "string"
+    },
+    "additionalProperties": true
+  },
+  "required": ["resourceType", "$schema"],
+  "oneOf": [{ "required": ["patient"] }, { "required": ["encounter"] }],
+  "additionalProperties": true
+}
