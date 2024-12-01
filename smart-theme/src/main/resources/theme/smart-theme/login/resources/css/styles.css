@@ -5,10 +5,9 @@
 }
 
 .login-pf body {
-    background-image: url("../img/smart-bg.png");
-    background-repeat: repeat;
-    background-size: 372px 372px;
-    background-color: #000033; /* Fallback background color */
+    background: url("../img/keycloak-bg.png") no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
 }
 
 div.kc-logo-text {

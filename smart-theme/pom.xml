@@ -2,10 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.zedwerks</groupId>
-    <version>0.0.1-SNAPSHOT</version>
-    <artifactId>smart-theme</artifactId>
+  <groupId>com.zedwerks.keycloak</groupId>
+    <artifactId>com.zedwerks.keycloak-smart-theme</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
     <name>Zedwerks SMART on FHIR Theme</name>
     <description/>
     <packaging>jar</packaging>
