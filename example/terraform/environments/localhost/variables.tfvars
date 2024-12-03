@@ -3,7 +3,7 @@
 // This is a sample configuration file for the Keycloak Smart Configuration module.
 // --------------------------------------------------
 keycloak_smart_configuration = {
-  fhir_audiences               = "http://fhirserver.com"
+  fhir_audiences               = "http://fhirserver.com##http://localhost:9000/fhir"
 }
 
 // --------------------------------------------------

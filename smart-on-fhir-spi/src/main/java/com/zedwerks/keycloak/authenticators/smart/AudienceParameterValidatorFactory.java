@@ -41,7 +41,7 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
 
     static final String AUDIENCES_PROP_NAME = "smart_audiences";
     private static final String AUDIENCES_PROP_LABEL = "Accepted FHIR Server URLs";
-    private static final String AUDIENCES_PROP_DESCRIPTION = "Comma-separated audience values for clients to request using 'aud', 'audience' or 'resource' request parameters. These must be FHIR Server URL(s)";
+    private static final String AUDIENCES_PROP_DESCRIPTION = "Audience values for clients. These are  requested by SMART app using 'aud', 'audience' or 'resource' request parameters. They must be FHIR Server URL(s). Eeach URL is separated bith ##";
 
     @Override
     public String getDisplayType() {
