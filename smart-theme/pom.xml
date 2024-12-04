@@ -11,7 +11,10 @@
       <groupId>com.zedwerks.keycloak</groupId>
       <artifactId>smart-on-fhir</artifactId>
       <version>1.2</version>
-  </parent>
+    </parent>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <packaging>jar</packaging>
     <build>
         <resources>
