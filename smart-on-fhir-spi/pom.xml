@@ -8,11 +8,6 @@
   <!--<version>1.2-SNAPSHOT</version>-->
   <version>1.2</version>
   <name>keycloak-smart-on-fhir</name>
-  <parent>
-      <groupId>com.zedwerks.keycloak</groupId>
-      <artifactId>smart-on-fhir</artifactId>
-      <version>1.2</version>
-  </parent>
   <properties>
     <java.version>11</java.version>
     <keycloak.version>26.0.6</keycloak.version>
