@@ -2,7 +2,7 @@
 
 ![Badge-License]
 
-![Badge-Maturing]
+![Badge-Stable]
 
 ## About
 
