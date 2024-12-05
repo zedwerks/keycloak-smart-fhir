@@ -80,4 +80,6 @@ To try this out, use Postman. Included in this repo, is ```example/postman``` fo
 
 [Badge-License]: https://img.shields.io/badge/license-apache%202.0-60C060.svg
 [Badge-Maturing]: https://img.shields.io/badge/Lifecycle-Maturing-007EC6
+[Badge-Stable]: https://img.shields.io/badge/status-Stable-brightgreen
+
 
