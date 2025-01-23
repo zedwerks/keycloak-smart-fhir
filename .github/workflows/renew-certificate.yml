@@ -8,8 +8,6 @@ on:
         default: "demo"
 env:
   DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
-  REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
-  REGISTRY: registry.digitalocean.com/zedwerks
   CONTAINER_NAME: keycloak-smart-fhir
   DROPLET_NAME: smart-on-fhir
   DROPLET_REGION: tor1
@@ -45,11 +43,6 @@ jobs:
       - name: Set environment
         run: echo "Deploying to ${{ inputs.target_environment }} environment"
 
-      - name: Log in to DigitalOcean Container Registry with short-lived token
-        run: doctl registry login --expiry-seconds 600
-
-      - name: Docker registry login
-        run: docker login ${{ env.REGISTRY }}
 
       - name: Install Certbot on Droplet
         uses: appleboy/ssh-action@v1.1.0
@@ -100,14 +93,12 @@ jobs:
       - name: Start Keycloak with renewed Certificate for HTTPS
         uses: appleboy/ssh-action@v1.1.0
         env:
-          DOMAIN_NAME: ${{ env.DOMAIN_NAME }}
           CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
-          DOCKER_REGISTRY: ${{ env.REGISTRY }}
         with:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          envs: DOMAIN_NAME, DOCKER_IMAGE, DOCKER_REGISTRY, CONTAINER_NAME, KEYCLOAK_ADMIN_PASSWORD, KEYCLOAK_HOSTNAME_URL, KEYCLOAK_TARGET_REALM, KEYCLOAK_TERRAFORM_CLIENT_ID, KEYCLOAK_TERRAFORM_CLIENT_SECRET
+          envs: CONTAINER_NAME
           script: | 
             docker start $CONTAINER_NAME 
 
