@@ -1,11 +1,7 @@
-name: Deploy Keycloak
+name: Renew Certificate for Keycloak HTTPS
 on:
   workflow_dispatch:
     inputs:
-      image_tag:
-        description: "Docker image tag"
-        required: true
-        default: "latest"
       target_environment:
         description: "Target Environment"
         required: true
@@ -27,56 +23,10 @@ env:
   KEYCLOAK_TERRAFORM_CLIENT_ID: 'terraform'
 
 jobs:
-   droplet:
-    name: Create Droplet, if not exists
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-
-      - name: Authenticate with DigitalOcean
-        env:
-          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-        run: doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
-
-      - name: Check if droplet exists
-        id: check_droplet
-        env:
-          DROPLET_NAME: ${{ env.DROPLET_NAME }}
-        run: |
-          if doctl compute droplet list --no-header --format Name | grep -q "^$DROPLET_NAME$"; then
-            echo "Droplet already exists."
-            echo "droplet_exists=true" >> $GITHUB_ENV
-          else
-            echo "Droplet does not exist."
-            echo "droplet_exists=false" >> $GITHUB_ENV
-          fi
-
-      - name: Create Droplet if needed
-        if: env.droplet_exists == 'false'
-        id: create_droplet
-        env:
-          DROPLET_NAME: ${{ env.DROPLET_NAME }}
-          DROPLET_REGION: ${{ env.DROPLET_REGION }}
-          DROPLET_SIZE: ${{ env.DROPLET_SIZE }}
-        run: |
-          doctl compute droplet create $DROPLET_NAME \
-            --verbose \
-            --region $DROPLET_REGION \
-            --size $DROPLET_SIZE \
-            --image docker-20-04 \
-            --ssh-keys $DO_S
-
-   deploy:
-    name: Deploy to Digital Ocean Droplet
+   renew:
+    name: Renew HTTPS certificat on Digital Ocean Droplet
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: droplet
     environment: ${{ inputs.target_environment }}
     
     steps:
@@ -120,7 +70,24 @@ jobs:
               apt-get install -y certbot
             fi
 
-      - name: Create Certificate for HTTPS
+      - name: Stop Keycloak with HTTPS
+        uses: appleboy/ssh-action@v1.1.0
+        env:
+          CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
+          DOCKER_REGISTRY: ${{ env.REGISTRY }}
+        with:
+          host: ${{ env.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          envs: DOCKER_REGISTRY, CONTAINER_NAME
+          script: | 
+            # Login to the registry
+            docker login $DOCKER_REGISTRY
+
+            # Stop existing Keycloak containers
+            docker stop $CONTAINER_NAME || true
+
+      - name: Renew Certificate for HTTPS
         uses: appleboy/ssh-action@v1.1.0
         env: 
           DOMAIN_NAME: ${{ env.DOMAIN_NAME }}
@@ -136,12 +103,9 @@ jobs:
             ufw allow 443
 
             # Generate SSL certificate using Certbot
-            certbot certonly --standalone -d $DOMAIN_NAME --non-interactive --agree-tos -m $EMAIL
             certbot renew --quiet
-            chmod 655 /etc/letsencrypt/live/$DOMAIN_NAME/privkey.pem
-            chmod 655 /etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem
 
-      - name: Deploy Keycloak with HTTPS
+      - name: Start Keycloak with renewed Certificate for HTTPS
         uses: appleboy/ssh-action@v1.1.0
         env:
           DOMAIN_NAME: ${{ env.DOMAIN_NAME }}
@@ -170,13 +134,6 @@ jobs:
 
             # Login to the registry
             docker login $DOCKER_REGISTRY
-
-            # Pull the latest Docker image
-            docker pull $DOCKER_IMAGE
-
-            # Stop and remove any existing Keycloak containers
-            docker stop $CONTAINER_NAME || true
-            docker rm $CONTAINER_NAME || true
 
             # Run Keycloak with HTTPS configured
             echo "Starting Keycloak with HTTPS..."
