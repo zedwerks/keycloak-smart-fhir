@@ -137,7 +137,7 @@ jobs:
 
             # Generate SSL certificate using Certbot
             certbot certonly --standalone -d $DOMAIN_NAME --non-interactive --agree-tos -m $EMAIL
-            #certbot renew --dry-run
+            certbot renew --quiet
             chmod 655 /etc/letsencrypt/live/$DOMAIN_NAME/privkey.pem
             chmod 655 /etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem
 
