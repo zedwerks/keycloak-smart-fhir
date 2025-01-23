@@ -4,6 +4,8 @@
 
 ![Badge-Stable]
 
+[![CodeQL](https://github.com/zedwerks/keycloak-smart-fhir/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/zedwerks/keycloak-smart-fhir/actions/workflows/github-code-scanning/codeql)
+
 ## About
 
 This is a custom Service Provider Interface (extension) for Keycloak that supports SMART on FHIR  EHR-Launch.
