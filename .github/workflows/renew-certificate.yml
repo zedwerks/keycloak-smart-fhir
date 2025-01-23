@@ -10,21 +10,16 @@ env:
   DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
   REGISTRY_URL: "https://registry.digitalocean.com/zedwerks"
   REGISTRY: registry.digitalocean.com/zedwerks
-  IMAGE_NAME: keycloak-smart-fhir
   CONTAINER_NAME: keycloak-smart-fhir
   DROPLET_NAME: smart-on-fhir
   DROPLET_REGION: tor1
   DROPLET_SIZE: s-1vcpu-1gb
   DROPLET_IP: "blank"
   droplet_exists: "false"
-  IMAGE_TAG: ${{ inputs.image_tag }}
-  KEYCLOAK_HOSTNAME_URL: ${{ vars.KEYCLOAK_HOSTNAME_URL }}
-  KEYCLOAK_TARGET_REALM: ${{ vars.KEYCLOAK_TARGET_REALM }}
-  KEYCLOAK_TERRAFORM_CLIENT_ID: 'terraform'
 
 jobs:
    renew:
-    name: Renew HTTPS certificat on Digital Ocean Droplet
+    name: Renew HTTPS certificate on Digital Ocean Droplet
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: ${{ inputs.target_environment }}
@@ -74,18 +69,15 @@ jobs:
         uses: appleboy/ssh-action@v1.1.0
         env:
           CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
-          DOCKER_REGISTRY: ${{ env.REGISTRY }}
         with:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          envs: DOCKER_REGISTRY, CONTAINER_NAME
+          envs: CONTAINER_NAME
           script: | 
-            # Login to the registry
-            docker login $DOCKER_REGISTRY
-
             # Stop existing Keycloak containers
             docker stop $CONTAINER_NAME || true
+            docker ps
 
       - name: Renew Certificate for HTTPS
         uses: appleboy/ssh-action@v1.1.0
@@ -110,12 +102,6 @@ jobs:
         env:
           DOMAIN_NAME: ${{ env.DOMAIN_NAME }}
           CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
-          KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
-          KEYCLOAK_HOSTNAME_URL: ${{ env.KEYCLOAK_HOSTNAME_URL }}
-          KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
-          KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
-          KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
-          DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
           DOCKER_REGISTRY: ${{ env.REGISTRY }}
         with:
           host: ${{ env.DROPLET_IP }}
@@ -123,43 +109,7 @@ jobs:
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           envs: DOMAIN_NAME, DOCKER_IMAGE, DOCKER_REGISTRY, CONTAINER_NAME, KEYCLOAK_ADMIN_PASSWORD, KEYCLOAK_HOSTNAME_URL, KEYCLOAK_TARGET_REALM, KEYCLOAK_TERRAFORM_CLIENT_ID, KEYCLOAK_TERRAFORM_CLIENT_SECRET
           script: | 
-            echo "DOCKER_IMAGE: $DOCKER_IMAGE"
-            echo "DOCKER_REGISTRY: $DOCKER_REGISTRY"
-            echo "CONTAINER_NAME: $CONTAINER_NAME"
-            echo "KEYCLOAK_HOSTNAME_URL: $KEYCLOAK_HOSTNAME_URL"
-            echo "KEYCLOAK_TARGET_REALM: $KEYCLOAK_TARGET_REALM"
-            echo "DOMAIN_NAME: $DOMAIN_NAME"
-            # Remove all older images not in use, etc.
-            echo y | docker system prune -a
-
-            # Login to the registry
-            docker login $DOCKER_REGISTRY
-
-            # Run Keycloak with HTTPS configured
-            echo "Starting Keycloak with HTTPS..."
-            docker run -d --name $CONTAINER_NAME \
-              -p 80:8080 \
-              -p 443:8443 \
-              -v /etc/letsencrypt/live/$DOMAIN_NAME:/etc/x509/https \
-              -v /etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem:/etc/x509/https/fullchain.pem:ro \
-              -v /etc/letsencrypt/live/$DOMAIN_NAME/privkey.pem:/etc/x509/https/privkey.pem:ro \
-              -e KC_HTTPS_CERTIFICATE_FILE=/etc/x509/https/fullchain.pem \
-              -e KC_HTTPS_CERTIFICATE_KEY_FILE=/etc/x509/https/privkey.pem \
-              -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
-              -e KC_BOOTSTRAP_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
-              -e KEYCLOAK_ADMIN=admin \
-              -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
-              -e KC_HOSTNAME_STRICT_HTTPS=true \
-              -e KC_HOSTNAME_URL=$KEYCLOAK_HOSTNAME_URL \
-              -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
-              -e KEYCLOAK_TERRAFORM_CLIENT_ID=$KEYCLOAK_TERRAFORM_CLIENT_ID \
-              -e KEYCLOAK_TERRAFORM_CLIENT_SECRET=$KEYCLOAK_TERRAFORM_CLIENT_SECRET \
-              -e KC_HTTPS_REDIRECT_ENABLED=true \
-              $DOCKER_IMAGE start-dev \
-                  --https-key-store-file=/etc/x509/https/privkey.pem \
-                  --https-key-store-password=password \
-                  --import-realm \
-                  --hostname=kc.zedwerks.com
+            docker start $CONTAINER_NAME 
 
       - name: Wait for Keycloak to start
         uses: appleboy/ssh-action@v1.1.0
@@ -193,32 +143,4 @@ jobs:
             docker ps | grep $CONTAINER_NAME
         timeout-minutes: 5
 
-      - name: Add realm-admin for terraform client
-        uses: appleboy/ssh-action@v1.1.0
-        env:
-          KEYCLOAK_TERRAFORM_CLIENT_ID: ${{ env.KEYCLOAK_TERRAFORM_CLIENT_ID }}
-          KEYCLOAK_ADMIN: admin
-          KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
-          KEYCLOAK_TARGET_REALM: ${{ env.KEYCLOAK_TARGET_REALM }}
-          CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
-          SERVER_URL: 'http://localhost:8080'
-        with:
-            host: ${{ env.DROPLET_IP }}
-            username: root
-            key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-            envs: SERVER_URL,CONTAINER_NAME,KEYCLOAK_TERRAFORM_CLIENT_ID,KEYCLOAK_ADMIN,KEYCLOAK_ADMIN_PASSWORD,KEYCLOAK_TARGET_REALM
-            script: |
-              SERVICE_ACCOUNT="service-account-$KEYCLOAK_TERRAFORM_CLIENT_ID"
-              echo "Setting up realm-admin for the terraform client..."
-              docker exec -t \
-              -e SERVER_URL=$SERVER_URL \
-              -e SERVICE_ACCOUNT=$SERVICE_ACCOUNT \
-              -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
-              -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
-              $CONTAINER_NAME bash /opt/keycloak/bin/kcadm.sh config credentials --server $SERVER_URL --realm master --user $KEYCLOAK_ADMIN --password $KEYCLOAK_ADMIN_PASSWORD
-              docker exec -t \
-              -e KEYCLOAK_TARGET_REALM=$KEYCLOAK_TARGET_REALM \
-              -e SERVICE_ACCOUNT=service-account-$KEYCLOAK_TERRAFORM_CLIENT_ID \
-              -e KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN \
-              -e KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD \
-              $CONTAINER_NAME bash /opt/keycloak/bin/kcadm.sh add-roles --uusername $SERVICE_ACCOUNT --cclientid realm-management --rolename realm-admin -r $KEYCLOAK_TARGET_REALM
+      
