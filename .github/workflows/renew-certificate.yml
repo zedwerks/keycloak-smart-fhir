@@ -1,11 +1,13 @@
 name: Renew Certificate for Keycloak HTTPS
 on:
+  schedule:
+    - cron: '0 3 20 4,7,10 *'
   workflow_dispatch:
     inputs:
       target_environment:
         description: "Target Environment"
-        required: true
-        default: "demo"
+        required: false
+        default: "demo"  
 env:
   DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
   CONTAINER_NAME: keycloak-smart-fhir
@@ -41,8 +43,9 @@ jobs:
           ssh-private-key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
 
       - name: Set environment
-        run: echo "Deploying to ${{ inputs.target_environment }} environment"
-
+        run: |
+          environment="${{ github.event.inputs.target_environment || 'demo' }}" 
+          echo "Deploying to ${{ environment }} environment"
 
       - name: Install Certbot on Droplet
         uses: appleboy/ssh-action@v1.1.0
