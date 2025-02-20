@@ -10,7 +10,7 @@
   <name>keycloak-smart-on-fhir</name>
   <properties>
     <java.version>11</java.version>
-    <keycloak.version>26.0.6</keycloak.version>
+    <keycloak.version>26.1.2</keycloak.version>
     <commons-io.version>2.17.0</commons-io.version>
     <junit.version>4.13.2</junit.version>
     <org.junit.jupiter.version>5.11.3</org.junit.jupiter.version>
