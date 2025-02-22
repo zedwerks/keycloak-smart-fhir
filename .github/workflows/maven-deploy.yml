@@ -34,6 +34,6 @@ jobs:
 
       - name: Build and Deploy to GitHub Packages
         working-directory: ${{ github.workspace }}/smart-on-fhir-spi
-        run: mvn --batch-mode deploy -DskipTests
+        run: mvn --batch-mode -X deploy -DskipTests
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
