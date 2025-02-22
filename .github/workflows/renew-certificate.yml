@@ -45,7 +45,7 @@ jobs:
       - name: Set environment
         run: |
           environment="${{ github.event.inputs.target_environment || 'demo' }}" 
-          echo "Deploying to ${{ environment }} environment"
+          echo "Deploying to ${environment} environment"
 
       - name: Install Certbot on Droplet
         uses: appleboy/ssh-action@v1.1.0
