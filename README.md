@@ -79,7 +79,6 @@ This will build and deploy the docker group/bundle consisting of two services:
 
 To try this out, use Postman. Included in this repo, is ```example/postman``` folder containing a postman collection you can import into Postman app. To try out the smart service.
 
-
 [Badge-License]: https://img.shields.io/badge/license-apache%202.0-60C060.svg
 [Badge-Maturing]: https://img.shields.io/badge/Lifecycle-Maturing-007EC6
 [Badge-Stable]: https://img.shields.io/badge/status-Stable-brightgreen
