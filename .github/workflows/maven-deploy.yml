@@ -1,0 +1,37 @@
+name: Maven Deploy to GitHub Packages
+
+on:
+  push:
+    tags:
+      - 'v*'  # Triggers only on version tags like v1.0.0
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write  # Required to publish to GitHub Packages
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'  # Eclipse Temurin JDK
+          java-version: '17'
+          server-id: github  # Matches settings.xml <server> ID
+          settings-path: ${{ github.workspace }}
+
+      - name: Configure Maven
+        run: |
+          mkdir -p ~/.m2
+          echo "<settings><servers><server><id>github</id><username>${GITHUB_ACTOR}</username><password>${{ secrets.GITHUB_TOKEN }}</password></server></servers></settings>" > ~/.m2/settings.xml
+
+      - name: Build and Deploy to GitHub Packages
+        run: mvn --batch-mode deploy -DskipTests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

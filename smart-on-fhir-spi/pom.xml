@@ -1,14 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
+  <distributionManagement>
+   <repository>
+     <id>github</id>
+     <name>GitHub ZedWerks Apache Maven Packages</name>
+     <url>https://maven.pkg.github.com/zedwerks/keycloak-smart-on-fhir</url>
+   </repository>
+  </distributionManagement>
   <groupId>com.zedwerks.keycloak</groupId>
   <artifactId>com.zedwerks.keycloak-smart-on-fhir</artifactId>
   <packaging>jar</packaging>
   <!--<version>1.2-SNAPSHOT</version>-->
-  <version>1.2</version>
+  <version>1.2.1</version>
   <name>keycloak-smart-on-fhir</name>
   <properties>
+    <gpg.skip>true</gpg.skip>
     <java.version>11</java.version>
     <keycloak.version>26.1.2</keycloak.version>
     <commons-io.version>2.17.0</commons-io.version>
@@ -170,11 +177,4 @@
       </plugin>
     </plugins>
   </build>
-  <distributionManagement>
-   <repository>
-     <id>github</id>
-     <name>GitHub ZedWerks Apache Maven Packages</name>
-     <url>https://maven.pkg.github.com/zedwerks/keycloak-smart-on-fhir</url>
-   </repository>
-</distributionManagement>
 </project>
