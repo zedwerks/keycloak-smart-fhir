@@ -170,4 +170,11 @@
       </plugin>
     </plugins>
   </build>
+  <distributionManagement>
+   <repository>
+     <id>github</id>
+     <name>GitHub ZedWerks Apache Maven Packages</name>
+     <url>https://maven.pkg.github.com/zedwerks/keycloak-smart-on-fhir</url>
+   </repository>
+</distributionManagement>
 </project>
