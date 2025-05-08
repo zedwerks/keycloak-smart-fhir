@@ -13,6 +13,14 @@ else
     exit 1
 fi
 
+if ! command -v terraform &> /dev/null; then
+    echo "Terraform is not installed or not in PATH."
+    exit 1
+else
+    echo "Terraform is installed:"
+    terraform version
+fi
+
 # okay, so now let's get terraform with realm-managmeent roles to 
 # be able to administer the realm.
 

@@ -5,6 +5,22 @@ local_env_file=".env.local"
 keycloak_url="http://localhost:8080"
 keycloak_container_name="smart-keycloak"
 
+if ! command -v docker &> /dev/null
+then
+    echo "Docker is not installed or not in PATH."
+    exit 1
+else
+    echo "Docker is installed:"
+    docker --version
+fi
+
+if ! docker info > /dev/null 2>&1; then
+    echo "Docker is installed but not running (or you don't have permission)."
+    exit 1
+else
+    echo "Docker is running."
+fi
+
 if [ -f $local_env_file ]; then
     echo "Using local environment file: $local_env_file"
     source $local_env_file
