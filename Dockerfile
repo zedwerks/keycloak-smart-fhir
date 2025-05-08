@@ -30,7 +30,7 @@ RUN chmod +x keycloak/bin/*.sh
 
 ## =================================================================================================
 # Package Stage - add to an official Keycloak image
-FROM quay.io/keycloak/keycloak:26.0.4-0 
+FROM quay.io/keycloak/keycloak:26.2.2 
 
 # need the Keycloak Port ENV var set so we can use it in entrypoint to 
 # apply realm admin rights to the terraform client. 
