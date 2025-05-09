@@ -47,8 +47,7 @@ if [ $? -ne 0 ]; then
     echo "Terraform init failed. Exiting..."
     exit 1
 fi
-
-echo "\nrunning terraform imports..."
+echo "Running terraform imports..."
 echo "This allows us to adjust realm setting, and adjust presence of standard claims in the tokens, introspection, profile."
 sh $workdir/scripts/tfimports.sh -chdir $workdir -var-file "$tfvars_file"
 if [ $? -ne 0 ]; then
