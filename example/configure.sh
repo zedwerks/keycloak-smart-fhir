@@ -3,7 +3,7 @@
 
 keycloak_url="http://localhost:8080"
 workdir="terraform"
-local_env_file=".env.example"
+local_env_file="localhost-env"
 
 if [ -f $local_env_file ]; then
     echo "Using local environment file: $local_env_file"

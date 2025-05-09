@@ -3,7 +3,7 @@
 
 $keycloakUrl = "http://localhost:8080"
 $workdir = "terraform"
-$localEnvFile = ".env.example"
+$localEnvFile = "localhost-env"
 
 # Load environment variables
 if (Test-Path $localEnvFile) {

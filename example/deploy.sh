@@ -1,7 +1,7 @@
 #!/bin/sh
 # Script to locally run the docker container including re-building the image, if necessary.
 
-local_env_file=".env.local"
+local_env_file="localhost-env"
 keycloak_url="http://localhost:8080"
 keycloak_container_name="smart-keycloak"
 
@@ -26,14 +26,7 @@ if [ -f $local_env_file ]; then
     source $local_env_file
 else
     echo "Local environment file not found: $local_env_file"
-    echo "Will use .env.example to source variables."
-    local_env_file=".env.example"
-    if [ -f $local_env_file ]; then
-        source $local_env_file
-    else
-        echo ".env.example not found. Exiting..."
-        exit 1
-    fi
+    exit 1
 fi
 
 echo "Environment variables:"

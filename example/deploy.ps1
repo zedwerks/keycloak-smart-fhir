@@ -26,6 +26,9 @@ if (-not (Get-Command terraform -ErrorAction SilentlyContinue)) {
     exit 1
 }
 
+$localEnvFile = "localhost-env"
+
+# Load environment variables
 if (Test-Path $localEnvFile) {
     Write-Host "Using local environment file: $localEnvFile"
     Get-Content $localEnvFile | ForEach-Object {
@@ -35,18 +38,7 @@ if (Test-Path $localEnvFile) {
     }
 } else {
     Write-Host "Local environment file not found: $localEnvFile"
-    $localEnvFile = ".env.example"
-    if (Test-Path $localEnvFile) {
-        Write-Host "Using fallback environment file: $localEnvFile"
-        Get-Content $localEnvFile | ForEach-Object {
-            if ($_ -match "^\s*([^#][^=]+?)\s*=\s*(.+)$") {
-                [System.Environment]::SetEnvironmentVariable($matches[1], $matches[2], "Process")
-            }
-        }
-    } else {
-        Write-Host ".env.example not found. Exiting..."
-        exit 1
-    }
+    exit 1
 }
 
 Write-Host "Environment variables:"
@@ -58,5 +50,5 @@ docker compose down --remove-orphans
 
 Start-Sleep -Seconds 3
 Write-Host "Building and starting keycloak..."
-docker compose build
-docker compose up -d
+docker compose --env-file $local_env_file build
+docker compose --env-file $local_env_file up -d
