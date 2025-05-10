@@ -12,11 +12,12 @@ usage() {
 
 # Execute Terraform command and exit if it fails
 exec_terraform() {
+    printf "."
     errormsg=`terraform $@ 2>&1`
     local exit_code=$?
     if [ $exit_code -ne 0 ]; then
         echo "Error[$exit_code] terraform $@"
-        if [[ $errormsg =~ "Resource already managed" ]]; then
+        if [[ $errormsg =~ "Resource already managed" ]]; thenpwd
             echo "Resource already managed. Continuing..."
         else
             echo $errormsg
@@ -91,46 +92,46 @@ if [ ! -z "$CHDIR" ]; then
     cd $CHDIR
 fi
 
-if [ -z "${KEYCLOAK_HOSTNAME_URL}" ]; then
-    echo "KEYCLOAK_HOSTNAME_URL is not set. Please set the environment variables."
+if [ -z "${TF_VAR_keycloak_base_url}" ]; then
+    echo "TF_VAR_keycloak_base_url is not set. Please set the environment variables."
     exit 1
 fi
 
-if [ -z "${KEYCLOAK_TARGET_REALM}" ]; then
-    echo "KEYCLOAK_TARGET_REALM is not set. Please set the environment variables."
+if [ -z "${TF_VAR_keycloak_realm}" ]; then
+    echo "TF_VAR_keycloak_realm is not set. Please set the environment variables."
     exit 1
 fi
 
-if [ -z "${KEYCLOAK_TERRAFORM_CLIENT_SECRET}" ]; then
-    echo "KEYCLOAK_TERRAFORM_CLIENT_SECRET is not set. Please set the environment variables."
+if [ -z "${TF_VAR_keycloak_terraform_client_secret}" ]; then
+    echo "TF_VAR_keycloak_terraform_client_secret is not set. Please set the environment variables."
     exit 1
 fi
 
-if [ -z "${KEYCLOAK_TERRAFORM_CLIENT_ID}" ]; then
-    echo "TF_VAR_keycloak_terraform_client_id is not set. Using default 'terraform'."
-    KEYCLOAK_TERRAFORM_CLIENT_ID="terraform"
+if [ -z "${TF_VAR_keycloak_terraform_client_id}" ]; then
+    echo "TF_VAR_TF_VAR_keycloak_terraform_client_id is not set. Using default 'terraform'."
+    TF_VAR_keycloak_terraform_client_id="terraform"
 fi
 
 ## These are needed...
-#KEYCLOAK_HOSTNAME_URL
-#KEYCLOAK_TARGET_REALM
-#KEYCLOAK_TERRAFORM_CLIENT_ID
-#KEYCLOAK_TERRAFORM_CLIENT_SECRET
+#TF_VAR_keycloak_base_url
+#TF_VAR_keycloak_realm
+#TF_VAR_keycloak_terraform_client_id
+#TF_VAR_keycloak_terraform_client_secret
 
 #========================================================
 # for applying imports
 authorize_client() {
     local token_response=$(curl -s -X POST \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "grant_type=client_credentials&client_id=$KEYCLOAK_TERRAFORM_CLIENT_ID&client_secret=$KEYCLOAK_TERRAFORM_CLIENT_SECRET" \
-        $KEYCLOAK_HOSTNAME_URL/realms/$KEYCLOAK_TARGET_REALM/protocol/openid-connect/token | jq -r '.access_token')
+  -d "grant_type=client_credentials&client_id=$TF_VAR_keycloak_terraform_client_id&client_secret=$TF_VAR_keycloak_terraform_client_secret" \
+        $TF_VAR_keycloak_base_url/realms/$TF_VAR_keycloak_realm/protocol/openid-connect/token | jq -r '.access_token')
     echo "$token_response"
 }
 
 get_profile_scope() {
     local profile_json=$(curl -s -X GET \
         -H "Authorization: Bearer $1" \
-        -H "Accept: application/json" $KEYCLOAK_HOSTNAME_URL/admin/realms/$KEYCLOAK_TARGET_REALM/client-scopes | 
+        -H "Accept: application/json" $TF_VAR_keycloak_base_url/admin/realms/$TF_VAR_keycloak_realm/client-scopes | 
         jq -r '.[] | select(.name == "profile")')
     echo "$profile_json"
 }
@@ -138,7 +139,7 @@ get_profile_scope() {
 get_email_scope() {
     local email_json=$(curl -s -X GET \
         -H "Authorization: Bearer $1" \
-        -H "Accept: application/json" $KEYCLOAK_HOSTNAME_URL/admin/realms/$KEYCLOAK_TARGET_REALM/client-scopes | 
+        -H "Accept: application/json" $TF_VAR_keycloak_base_url/admin/realms/$TF_VAR_keycloak_realm/client-scopes | 
         jq -r '.[] | select(.name == "email")')
     echo "$email_json"
 }
@@ -200,71 +201,72 @@ apply_imports() {
 
     echo "Importing existing objects into terraform state for the $1 environment..."
 
-    exec_terraform import -input=false $VAR_FILE_ARG $VARS_ARGS 'keycloak_realm.realm' "$KEYCLOAK_TARGET_REALM"
-
+    exec_terraform import -input=false $VAR_FILE_ARG $VARS_ARGS 'keycloak_realm.realm' "$TF_VAR_keycloak_realm"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.email_email_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$EMAIL_SCOPE_ID/$email_id"
+        "$TF_VAR_keycloak_realm/client-scope/$EMAIL_SCOPE_ID/$email_id"
+    
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.email_email_verified_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$EMAIL_SCOPE_ID/$email_verified_id"
+        "$TF_VAR_keycloak_realm/client-scope/$EMAIL_SCOPE_ID/$email_verified_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_birthdate_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$birthdate_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$birthdate_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_given_name_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$given_name_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$given_name_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_website_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$website_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$website_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_zoneinfo_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$zoneinfo_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$zoneinfo_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_locale_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$locale_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$locale_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_username_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$username_id" 
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$username_id" 
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_middle_name_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$middle_name_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$middle_name_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_picture_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$picture_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$picture_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_gender_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$gender_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$gender_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_generic_protocol_mapper.profile_full_name_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$full_name_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$full_name_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_family_name_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$family_name_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$family_name_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_nickname_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$nickname_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$nickname_id"
 
     exec_terraform import -input=false $TFARGS \
         'keycloak_openid_user_attribute_protocol_mapper.profile_profile_user_attribute_mapper' \
-        "$KEYCLOAK_TARGET_REALM/client-scope/$PROFILE_SCOPE_ID/$profile_id"
+        "$TF_VAR_keycloak_realm/client-scope/$PROFILE_SCOPE_ID/$profile_id"
 }
 #========================================================
 
 echo "Running terraform import scripts."
 apply_imports
+printf "\n"
 exit 0
