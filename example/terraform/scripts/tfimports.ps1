@@ -24,7 +24,7 @@ if ($Chdir) {
     Set-Location -Path $Chdir
 }
 
-function Authorize-Client {
+function Invoke-Authorize-Client {
     $tokenUrl = "$($env:TF_VAR_keycloak_base_url)/realms/$($env:TF_VAR_keycloak_realm)/protocol/openid-connect/token"
     $body = @{
         grant_type    = "client_credentials"
@@ -62,13 +62,17 @@ function Get-MapperId {
     return ($mappers | Where-Object { $_.name -eq $mapperName }).id
 }
 
-function Exec-Terraform {
-    param ([string]$args)
+$ErrorLog = "./stderr.log"
+if (Test-Path $ErrorLog) {
+    Remove-Item -Path $ErrorLog -Force
+}
+function Invoke-Terraform {
+    param ([string]$arguments)
     Write-Host "." -NoNewline
-    $proc = Start-Process terraform -ArgumentList $args -NoNewWindow -Wait -PassThru -RedirectStandardError stderr.log -RedirectStandardOutput stdout.log
+    $proc = Start-Process terraform -ArgumentList $arguments -NoNewWindow -Wait -PassThru -RedirectStandardError $ErrorLog
     if ($proc.ExitCode -ne 0) {
-        $stderr = Get-Content -Path stderr.log -Raw
-        Write-Host "`nError[$($proc.ExitCode)] terraform $args"
+        $stderr = Get-Content -Path $ErrorLog -Raw
+        Write-Host "Error[$($proc.ExitCode)] terraform $arguments"
         if ($stderr -match "Resource already managed") {
             Write-Host "Resource already managed. Continuing..."
         } else {
@@ -78,9 +82,9 @@ function Exec-Terraform {
     }
 }
 
-function Apply-Imports {
+function Invoke-Imports {
     Write-Host "Authenticating as the terraform client..."
-    $token = Authorize-Client
+    $token = Invoke-Authorize-Client
 
     Write-Host "Fetching profile and email scope protocol mappers..."
     $profileScope = Get-Profile-Scope $token
@@ -105,7 +109,7 @@ function Apply-Imports {
         $tfName = $name -replace ' ', '_'
         $resource = "keycloak_openid_user_attribute_protocol_mapper.profile_${tfName}_user_attribute_mapper"
         $target = "$($env:TF_VAR_keycloak_realm)/client-scope/$profileId/$id"
-        Exec-Terraform "-input=false -var-file $VarFile -var $Var terraform import $resource $target"
+        Invoke-Terraform "-input=false -var-file $VarFile -var $Var terraform import $resource $target"
     }
 
     $emailMappers = @("email", "email verified")
@@ -114,10 +118,10 @@ function Apply-Imports {
         $tfName = $name -replace ' ', '_'
         $resource = "keycloak_openid_user_attribute_protocol_mapper.email_${tfName}_user_attribute_mapper"
         $target = "$($env:TF_VAR_keycloak_realm)/client-scope/$emailId/$id"
-        Exec-Terraform "-input=false -var-file $VarFile -var $Var terraform import $resource $target"
+        Invoke-Terraform "-input=false -var-file $VarFile -var $Var terraform import $resource $target"
     }
 }
 
 Write-Host "Running terraform import script..."
-Apply-Imports
+Invoke-Imports
 Write-Host "Done."
