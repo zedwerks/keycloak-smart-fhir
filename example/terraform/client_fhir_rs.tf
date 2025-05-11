@@ -7,10 +7,10 @@ variable "client_fhir_rs" {
     base_url      = optional(string)
   })
   default = {
-    enabled       = true
-    client_id     = "fhir-rs"
-    audience      = "https://localhost:9000/fhir"
-    base_url      = "https://localhost:9000/"
+    enabled   = true
+    client_id = "fhir-rs"
+    audience  = "https://localhost:9000/fhir"
+    base_url  = "https://localhost:9000/"
   }
   description = "FHIR Resource Server OIDC Client"
 }
@@ -30,14 +30,14 @@ resource "keycloak_openid_client" "client_fhir_rs" {
   web_origins                  = []
   service_accounts_enabled     = true
   full_scope_allowed           = false
-#  authorization {
-#    policy_enforcement_mode          = "ENFORCING"
-#    allow_remote_resource_management = true
-#    decision_strategy                = "AFFIRMATIVE"
-#  }
-#  extra_config = {
-#    "authorizationServicesEnabled" = true
-#  }
+  #  authorization {
+  #    policy_enforcement_mode          = "ENFORCING"
+  #    allow_remote_resource_management = true
+  #    decision_strategy                = "AFFIRMATIVE"
+  #  }
+  #  extra_config = {
+  #    "authorizationServicesEnabled" = true
+  #  }
 }
 
 resource "keycloak_openid_client_default_scopes" "client_fhir_rs_default_scopes" {
@@ -65,12 +65,12 @@ resource "keycloak_role" "client_fhir_lra_rs_role" {
 }
 
 resource "keycloak_openid_audience_protocol_mapper" "fhir_rs_custom_audience_mapper" {
-  realm_id  = keycloak_realm.realm.id
-  client_id = keycloak_openid_client.client_fhir_rs.id
-  name      = "audience-mapper"
+  realm_id                 = keycloak_openid_client.client_fhir_rs.realm_id
+  client_id                = keycloak_openid_client.client_fhir_rs.id
+  name                     = "audience-mapper"
   included_custom_audience = var.client_fhir_rs.audience
-  add_to_access_token = true
-  add_to_id_token     = true
+  add_to_access_token      = true
+  add_to_id_token          = true
 }
 
 

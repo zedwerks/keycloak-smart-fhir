@@ -56,7 +56,7 @@ see the folder ```example``` for details.
 In order for these extensions to work, you must use the flow structure as defined in the Terraform file:
 
 ```bash
-example/terraform/auth_flow_smart_browser.tf
+./terraform/modules/smart_on_fhir/auth_flow_smart_browser.tf
 ```
 
 ## Quick Start
@@ -70,7 +70,11 @@ See the postman library.
 #### Quick start script
 
 ```bash
-sh quick-start.sh
+sh ./quick-start.sh
+```
+
+```powershell
+.\quick-start.ps1
 ```
 
 This quick start allows you to try out this Keycloak extension and related configurations. It expects that you have Docker Desktop installed.

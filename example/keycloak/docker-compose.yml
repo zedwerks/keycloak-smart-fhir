@@ -2,7 +2,8 @@ services:
   keycloak:
     container_name: keycloak-smart-fhir  # If you change this, you must also change it in deploy.sh
     build:
-      context: https://github.com/zedwerks/keycloak-smart-fhir.git#main
+      #context: https://github.com/zedwerks/keycloak-smart-fhir.git
+      context: ../../.
       dockerfile: Dockerfile
     environment:
       - KC_HTTP_ENABLED=true

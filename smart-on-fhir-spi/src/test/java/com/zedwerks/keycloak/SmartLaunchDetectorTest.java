@@ -22,9 +22,12 @@
 package com.zedwerks.keycloak;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
+
+import org.mockito.MockedStatic;
 
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
@@ -40,6 +43,8 @@ import org.keycloak.models.UserModel;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.mockito.MockitoAnnotations;
 
+import org.keycloak.common.Profile;
+
 import com.zedwerks.keycloak.authenticators.smart.SmartLaunchDetector;
 import com.zedwerks.keycloak.authenticators.smart.SmartLaunchDetectorFactory;
 
@@ -50,17 +55,23 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collections;
+import java.util.Set;
 
 public class SmartLaunchDetectorTest {
 
     @BeforeClass
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        System.setProperty("keycloak.profile", "preview");
     }
 
     @Test
     public void testIsEhrLaunch() {
         // Mock the necessary dependencies
+        MockedStatic<Profile> mocked = mockStatic(Profile.class);
+        Profile mockProfile = mock(Profile.class);
+        when(mockProfile.getName()).thenReturn(Profile.ProfileName.PREVIEW);
 
         KeycloakSession session = mock(KeycloakSession.class);
         KeycloakContext keycloakContext = mock(KeycloakContext.class);
@@ -200,7 +211,6 @@ public class SmartLaunchDetectorTest {
         when(uriInfo.getQueryParameters()).thenReturn(queryParameters);
         when(context.getUriInfo()).thenReturn(uriInfo);
         when(context.getUriInfo().getQueryParameters()).thenReturn(queryParameters);
-
 
         ClientScopeModel defaultScope = mock(ClientScopeModel.class);
         ClientScopeModel profileScope = mock(ClientScopeModel.class);
