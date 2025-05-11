@@ -32,6 +32,7 @@ variable "keycloak_smart_fhircast_configuration" {
 
 variable "keycloak_smart_configuration" {
   type = object({
+    fhircast_enabled = optional(bool, false)
     fhir_audiences = optional(string, "http://example.fhir.org")
     smart_v1_scopes = optional(bool, true)
     smart_v2_scopes = optional(bool, false)

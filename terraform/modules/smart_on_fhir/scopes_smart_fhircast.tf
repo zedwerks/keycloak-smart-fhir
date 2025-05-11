@@ -1,4 +1,5 @@
 resource "keycloak_openid_client_scope" "smart_fhircast_patient_open_read_scope" {
+  count                 = var.keycloak_smart_configuration.fhircast_enabled ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "fhircast/Patient-open.read"
   description            = "Permission to receive notification when the patient context changes."
@@ -6,6 +7,7 @@ resource "keycloak_openid_client_scope" "smart_fhircast_patient_open_read_scope"
 }
 
 resource "keycloak_openid_client_scope" "smart_fhircast_patient_open_write_scope" {
+  count                 = var.keycloak_smart_configuration.fhircast_enabled ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "fhircast/Patient-open.write"
   description            = "Permission to request a context change for patient."
@@ -13,6 +15,7 @@ resource "keycloak_openid_client_scope" "smart_fhircast_patient_open_write_scope
 }
 
 resource "keycloak_openid_audience_protocol_mapper" "fhircast2_scope_audience_mapper" {
+  count                 = var.keycloak_smart_configuration.fhircast_enabled ? 1 : 0
   realm_id                 = data.keycloak_realm.realm.id
   client_scope_id          = keycloak_openid_client_scope.smart_fhircast_patient_open_write_scope.id
   name                     = "fhircast-patient-open-write-audience-mapper"
@@ -22,6 +25,7 @@ resource "keycloak_openid_audience_protocol_mapper" "fhircast2_scope_audience_ma
 }
 
 resource "keycloak_openid_audience_protocol_mapper" "fhircast1_scope_audience_mapper" {
+  count                 = var.keycloak_smart_configuration.fhircast_enabled ? 1 : 0
   realm_id                 = data.keycloak_realm.realm.id
   client_scope_id          = keycloak_openid_client_scope.smart_fhircast_patient_open_read_scope.id
   name                     = "fhircast-patient-open-read-audience-mapper"

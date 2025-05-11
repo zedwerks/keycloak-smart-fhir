@@ -46,7 +46,7 @@ public class ContextPayload implements IContext {
             this.contextModel = mapper.readValue(json, ContextModel.class);
             return true;
         } catch (JsonProcessingException e) {
-            logger.error("Error parsing FhirCastModel: " + e.getMessage());
+            logger.error("Error parsing ContextModel: " + e.getMessage());
         }
         return false;
     }
