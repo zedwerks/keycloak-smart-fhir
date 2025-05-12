@@ -27,7 +27,6 @@ resource "keycloak_openid_client_optional_scopes" "postman_emr_optional_scopes" 
   optional_scopes = [
     "Context.write",
     "Context.read",
-    "online_access",
     "user/Patient.read",
     "user/Patient.write",
     "user/Patient.*",
