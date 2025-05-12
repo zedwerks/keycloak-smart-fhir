@@ -6,7 +6,7 @@
 
 # Build Stage
 #FROM maven:3.8.3-openjdk-11-slim AS builder
-FROM maven:3.9.4-eclipse-temurin-21-alpine AS builder
+FROM maven:3.9.9-eclipse-temurin-24-alpine AS builder
 
 # Set the working directory in the container
 WORKDIR /app
