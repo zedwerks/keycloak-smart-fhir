@@ -47,12 +47,6 @@ jobs:
             --upgrade \
             -var-file=environments/$ENVIRONMENT/terraform.tfvars
 
-      - name: "Terraform Plan"
-        working-directory: ./example/terraform
-        run: |
-          terraform plan \
-            -var-file=./environments/$ENVIRONMENT/variables.tfvars
-
       - name: "Terraform Apply"
         working-directory: ./example/terraform
         run: |
