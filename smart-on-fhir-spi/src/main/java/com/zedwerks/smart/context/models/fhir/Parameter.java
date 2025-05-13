@@ -26,9 +26,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-import com.zedwerks.smart.fhircast.model.Resource;
-
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Parameter {
 

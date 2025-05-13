@@ -10,50 +10,38 @@ a SMART on FHIR Authorization Server.
 - user account attributes for SMART on FHIR.
 - attribute mappers for SMART on FHIR.
 
-## Initializing Terraform
-
-```bash
-terraform init
-```
-
 ## Configuring Variables
 
-1. Edit the example configuration file ```configuration/example.tfvars``` , or use it to create a  new one.
+1. Edit the example configuration file ```environments/localhost/variables.tfvars``` , or use it to create a  new environment.
 2. Edit the secrets and other configurations in your new configuration file.
 3. Execute the plan.
 
 
-## Now Apply the configuration
+## exec_configuration.sh
+
+This script starts from a fresh realm deployed and running on localhost.
+It then removes any pre-exisiting state files for localhost workspace
+and applies all the configurations.  It is used by quick_start.sh to 
+setup the demo realm 'smart'.
+
+## Terraform Init
 
 ```bash
-terraform apply -tfvars configuration/example.tfvars
+terraform workspace new localhost
+terraform init -tfvars environments/localhost/variables.tfvars
 ```
 
-## Handy Shell scripts
-
-### Initialize Terraform
+## Terraform Apply
 
 ```bash
-terraform init -tfvars configuration/example.tfvars
+terraform workspace select localhost
+terraform apply -tfvars environments/localhost/variables.tfvars -auto-approve
 ```
 
 ### Terraform Plan
 
 ```bash
-sh terraform plan -tfvars configuration/example.tfvars
+terraform workspace select localhost
+terraform plan -tfvars environments/localhost/variables.tfvars -auto-approve
 ```
 
-
-
-# Or use the handy scripts at the top-level
-
-## Full first-time deployment (dev)
-```bash
-sh deploy.sh
-```
-
-## configure Keycloak with Terraform
-
-```bash
-sh configure.sh
-```

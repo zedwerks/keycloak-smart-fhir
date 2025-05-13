@@ -25,8 +25,7 @@
     <org.glassfish.jersey.version>4.0.0-M1</org.glassfish.jersey.version>
     <org.jakarta.ws.rs.version>4.0.0</org.jakarta.ws.rs.version>
     <org.jboss.logging.version>3.6.1.Final</org.jboss.logging.version>
-    <org.mockito-inline.version>5.2.0</org.mockito-inline.version>
-    <org.mockito.version>5.14.2</org.mockito.version>    
+    <org.mockito.version>5.17.0</org.mockito.version>    
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
@@ -47,12 +46,6 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>${org.mockito.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-inline</artifactId>
-      <version>${org.mockito-inline.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

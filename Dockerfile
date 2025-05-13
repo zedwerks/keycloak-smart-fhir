@@ -6,7 +6,7 @@
 
 # Build Stage
 #FROM maven:3.8.3-openjdk-11-slim AS builder
-FROM maven:3.9.4-eclipse-temurin-21-alpine AS builder
+FROM maven:3.9.9-eclipse-temurin-24-alpine AS builder
 
 # Set the working directory in the container
 WORKDIR /app
@@ -51,7 +51,9 @@ ENV KEYCLOAK_TERRAFORM_CLIENT_SECRET=terraform!secret
 WORKDIR /opt/keycloak/
 
 # Copy the script that sets the realm admin roles for the terraform client
-COPY --from=builder /app/keycloak/bin/*.sh ./bin/
+#COPY --from=builder /app/keycloak/bin/*.sh ./bin/
+COPY --from=builder /app/keycloak/bin/bootstrap.sh ./bin/bootstrap.sh
+COPY --from=builder /app/keycloak/bin/terraform-realm-admin.sh ./bin/terraform-realm-admin.sh
 
 # Copy the Keycloak Realm file (which in build phase, the realm name was resolved to the realm name)
 COPY --from=builder /app/keycloak/import/realm-template.json ./data/import/realm.json

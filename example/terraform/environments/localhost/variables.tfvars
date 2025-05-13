@@ -4,6 +4,8 @@
 // --------------------------------------------------
 keycloak_smart_configuration = {
   fhir_audiences               = "http://fhirserver.com##http://localhost:9000/fhir"
+  smart_v1_scopes              = true
+  smart_v2_scopes              = false
 }
 
 // --------------------------------------------------
@@ -13,7 +15,7 @@ keycloak_smart_configuration = {
 client_fhir_rs = {
   client_id     = "fhir-rs"
   audience      = "https://localhost:9000/fhir"
-  base_url      = "https://localhost:9000/"
+  base_url      = "https://localhost:9000"
 }
 
 // --------------------------------------------------

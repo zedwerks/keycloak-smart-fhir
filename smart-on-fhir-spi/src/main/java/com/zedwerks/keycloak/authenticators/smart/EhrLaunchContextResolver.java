@@ -68,7 +68,6 @@ import jakarta.ws.rs.core.Response;
  * or it MAY infer the launch/patient scope.
  * 
  * @see https://build.fhir.org/ig/HL7/smart-app-launch/scopes-and-launch-context.html#apps-that-launch-from-the-ehr
- * @see https://fhircast.org
  */
 
 public class EhrLaunchContextResolver implements Authenticator {
@@ -90,7 +89,7 @@ public class EhrLaunchContextResolver implements Authenticator {
     @Override
     public void authenticate(AuthenticationFlowContext context) {
 
-        logger.info("authenticate() **** SMART on FHIRcast Context Resolver ****");
+        logger.info("authenticate() **** SMART on FHIR Context Resolver ****");
 
         boolean hasLaunchScope = SmartLaunchHelper.hasLaunchScope(context);
         String launchContextId = SmartLaunchDetector.launchContextAuthNote(context); // the opaque
@@ -206,7 +205,7 @@ public class EhrLaunchContextResolver implements Authenticator {
         String contextJson = userSessionNote(context, newContextId);
 
         if (contextJson == null) {
-            logger.warn("*** SMART Launch Context JSON is missing. Unexpected during an EHR launch. Likely due to bad luanch parameter sent by SMART App");
+            logger.warn("*** SMART Launch Context JSON is missing. Unexpected during an EHR launch. Likely due to bad launch parameter sent by SMART App");
             return false;
         }
         logger.debugf("New Context JSON = %s", contextJson);

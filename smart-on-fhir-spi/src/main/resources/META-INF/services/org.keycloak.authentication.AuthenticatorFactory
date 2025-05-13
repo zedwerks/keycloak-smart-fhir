@@ -1,5 +1,4 @@
 com.zedwerks.keycloak.authenticators.smart.AudienceParameterValidatorFactory
 com.zedwerks.keycloak.authenticators.smart.SmartLaunchDetectorFactory
 com.zedwerks.keycloak.authenticators.smart.EhrLaunchContextResolverFactory
-com.zedwerks.keycloak.authenticators.smart.FhirCastContextResolverFactory
 com.zedwerks.keycloak.authenticators.smart.EhrLaunchConditionalFactory

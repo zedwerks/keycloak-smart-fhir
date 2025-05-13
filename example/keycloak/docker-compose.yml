@@ -1,8 +1,17 @@
 services:
   keycloak:
-    container_name: smart-keycloak  # If you change this, you must also change it in deploy.sh
+    container_name: keycloak-smart-fhir  # If you change this, you must also change it in deploy.sh
+    build:
+      #context: https://github.com/zedwerks/keycloak-smart-fhir.git
+      context: ../../.
+      dockerfile: Dockerfile
     environment:
-      - KC_HOSTNAME_STRICT_HTTPS=${KC_HOSTNAME_STRICT_HTTPS}
+      - KC_HTTP_ENABLED=true
+      - KC_HOSTNAME=localhost
+      - KEYCLOAK_HOSTNAME_URL=${KEYCLOAK_HOSTNAME_URL}
+      - KEYCLOAK_HOSTNAME_ADMIN_URL=${KEYCLOAK_HOSTNAME_ADMIN_URL}
+      - KC_HOSTNAME_STRICT=false
+      - KC_HOSTNAME_STRICT_HTTPS=false
       - KC_HOSTNAME_URL=${KEYCLOAK_HOSTNAME_URL}
       - KC_HOSTNAME_ADMIN_URL=${KEYCLOAK_HOSTNAME_ADMIN_URL}
       - KC_BOOTSTRAP_ADMIN_PASSWORD=${KC_BOOTSTRAP_ADMIN_PASSWORD}
@@ -13,16 +22,14 @@ services:
       - KEYCLOAK_TERRAFORM_CLIENT_ID=${KEYCLOAK_TERRAFORM_CLIENT_ID}
       - KEYCLOAK_TERRAFORM_CLIENT_SECRET=${KEYCLOAK_TERRAFORM_CLIENT_SECRET}
       - KEYCLOAK_TARGET_REALM_DISPLAY_NAME=${KEYCLOAK_TARGET_REALM_DISPLAY_NAME}
-    build:
-      #context: https://github.com/zedwerks/keycloak-smart-fhir.git#main
-      # above only when your project is in a different repo than this one.
-      context: ../
-      dockerfile: Dockerfile
+
     ports:
       - 8080:8080
     command:
       - start-dev
       - --log-level=INFO
+      - --hostname=localhost
+      - --hostname-strict=false
       - --import-realm
 
 
