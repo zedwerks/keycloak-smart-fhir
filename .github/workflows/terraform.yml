@@ -47,12 +47,6 @@ jobs:
             --upgrade \
             -var-file=environments/$ENVIRONMENT/terraform.tfvars
 
-      - name: "Terraform Imports"
-        working-directory: ./example/terraform
-        run: |
-          printenv | grep KEYCLOAK
-          bash ./scripts/tfimports.sh -var-file ./environments/$ENVIRONMENT/variables.tfvars
-
       - name: "Terraform Plan"
         working-directory: ./example/terraform
         run: |
