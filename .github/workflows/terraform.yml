@@ -44,7 +44,8 @@ jobs:
         working-directory: ./example/terraform
         run: |
           terraform init \
-            --upgrade \
+            -upgrade \
+            -input=false \
             -var-file=environments/$ENVIRONMENT/terraform.tfvars
 
       - name: "Terraform Apply"
