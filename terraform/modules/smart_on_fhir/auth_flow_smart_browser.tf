@@ -40,7 +40,6 @@ resource "keycloak_authentication_subflow" "smart_browser_flow_step2" {
   parent_flow_alias = keycloak_authentication_flow.smart_browser_flow.alias
   provider_id       = "basic-flow"
   requirement       = "ALTERNATIVE"
-  authenticator    = ""
   priority          = 10
   depends_on        = [keycloak_authentication_subflow.smart_browser_flow_step1]
 }
@@ -63,7 +62,6 @@ resource "keycloak_authentication_subflow" "smart_browser_flow_step3" {
   parent_flow_alias = keycloak_authentication_flow.smart_browser_flow.alias
   provider_id       = "basic-flow"
   requirement       = "ALTERNATIVE"
-  authenticator    = ""
   priority          = 10
   depends_on        = [keycloak_authentication_subflow.smart_browser_flow_step2]
 }
@@ -127,7 +125,6 @@ resource "keycloak_authentication_subflow" "smart_browser_flow_step5" {
   provider_id       = "basic-flow"
   requirement       = "ALTERNATIVE"
   priority          = 10
-  authenticator    = ""
   depends_on        = [keycloak_authentication_subflow.smart_browser_flow_step4]
 }
 
