@@ -7,7 +7,7 @@ variable "keycloak_smart_configuration" {
   default = {
     fhir_audiences = "http://localhost:9000/fhir"
     smart_v1_scopes = true
-    smart_v2_scopes = true
+    smart_v2_scopes = false
 
   }
   description = "SMART on FHIR Configurations"
