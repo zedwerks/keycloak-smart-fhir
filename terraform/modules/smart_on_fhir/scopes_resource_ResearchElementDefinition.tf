@@ -1,6 +1,6 @@
 // patient/ResearchElementDefinition --------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_researchelementdefinition_read_scope" {
-  count                  = var.fhir_resources_supported.ResearchElementDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchElementDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchElementDefinition.read"
   description            = "Read access to ResearchElementDefinition"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_researchelementdefinition_read_
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_researchelementdefinition_write_scope" {
-  count                  = var.fhir_resources_supported.ResearchElementDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchElementDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchElementDefinition.write"
   description            = "Write access to ResearchElementDefinition"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_researchelementdefinition_write
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_researchelementdefinition_full_scope" {
-  count                  = var.fhir_resources_supported.ResearchElementDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchElementDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchElementDefinition.*"
   description            = "Full access to ResearchElementDefinition"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_researchelementdefinition_full_
 }
 // system/ResearchElementDefinition --------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_researchelementdefinition_read_scope" {
-  count                  = var.fhir_resources_supported.ResearchElementDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchElementDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchElementDefinition.read"
   description            = "Read access to ResearchElementDefinition"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_researchelementdefinition_write_scope" {
-  count                  = var.fhir_resources_supported.ResearchElementDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchElementDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchElementDefinition.write"
   description            = "Write access to ResearchElementDefinition"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_researchelementdefinition_full_scope" {
-  count                  = var.fhir_resources_supported.ResearchElementDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchElementDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchElementDefinition.*"
   description            = "Full access to ResearchElementDefinition"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_researchelementdefinition_full_s
 }
 // user/ResearchElementDefinition --------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_researchelementdefinition_read_scope" {
-  count                  = var.fhir_resources_supported.ResearchElementDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchElementDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchElementDefinition.read"
   description            = "Read access to ResearchElementDefinition"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_researchelementdefinition_read_sco
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_researchelementdefinition_write_scope" {
-  count                  = var.fhir_resources_supported.ResearchElementDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchElementDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchElementDefinition.write"
   description            = "Write access to ResearchElementDefinition"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_researchelementdefinition_write_sc
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_researchelementdefinition_full_scope" {
-  count                  = var.fhir_resources_supported.ResearchElementDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchElementDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchElementDefinition.*"
   description            = "Full access to ResearchElementDefinition"

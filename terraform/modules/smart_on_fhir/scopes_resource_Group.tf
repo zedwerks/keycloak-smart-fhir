@@ -1,6 +1,6 @@
 // patient/Group ----------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_group_read_scope" {
-  count                  = var.fhir_resources_supported.Group ? 1 : 0
+  count                  = var.fhir_resources_supported.Group && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Group.read"
   description            = "Read access to Group"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_group_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_group_write_scope" {
-  count                  = var.fhir_resources_supported.Group ? 1 : 0
+  count                  = var.fhir_resources_supported.Group && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Group.write"
   description            = "Write access to Group"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_group_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_group_full_scope" {
-  count                  = var.fhir_resources_supported.Group ? 1 : 0
+  count                  = var.fhir_resources_supported.Group && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Group.*"
   description            = "Full access to Group"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_group_full_scope" {
 }
 // system/Group ----------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_group_read_scope" {
-  count                  = var.fhir_resources_supported.Group ? 1 : 0
+  count                  = var.fhir_resources_supported.Group && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Group.read"
   description            = "Read access to Group"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_group_write_scope" {
-  count                  = var.fhir_resources_supported.Group ? 1 : 0
+  count                  = var.fhir_resources_supported.Group && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Group.write"
   description            = "Write access to Group"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_group_full_scope" {
-  count                  = var.fhir_resources_supported.Group ? 1 : 0
+  count                  = var.fhir_resources_supported.Group && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Group.*"
   description            = "Full access to Group"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_group_full_scope" {
 }
 // user/Group ----------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_group_read_scope" {
-  count                  = var.fhir_resources_supported.Group ? 1 : 0
+  count                  = var.fhir_resources_supported.Group && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Group.read"
   description            = "Read access to Group"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_group_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_group_write_scope" {
-  count                  = var.fhir_resources_supported.Group ? 1 : 0
+  count                  = var.fhir_resources_supported.Group && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Group.write"
   description            = "Write access to Group"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_group_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_group_full_scope" {
-  count                  = var.fhir_resources_supported.Group ? 1 : 0
+  count                  = var.fhir_resources_supported.Group && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Group.*"
   description            = "Full access to Group"

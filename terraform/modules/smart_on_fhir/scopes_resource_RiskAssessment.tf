@@ -1,6 +1,6 @@
 // patient/RiskAssessment -----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_risk_assessment_read_scope" {
-  count                  = var.fhir_resources_supported.RiskAssessment ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskAssessment && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskAssessment.read"
   description            = "Read access to RiskAssessment"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_risk_assessment_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_risk_assessment_write_scope" {
-  count                  = var.fhir_resources_supported.RiskAssessment ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskAssessment && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskAssessment.write"
   description            = "Write access to RiskAssessment"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_risk_assessment_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_risk_assessment_full_scope" {
-  count                  = var.fhir_resources_supported.RiskAssessment ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskAssessment && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskAssessment.*"
   description            = "Full access to RiskAssessment"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_risk_assessment_full_scope" {
 }
 // system/RiskAssessment -----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_risk_assessment_read_scope" {
-  count                  = var.fhir_resources_supported.RiskAssessment ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskAssessment && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskAssessment.read"
   description            = "Read access to RiskAssessment"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_risk_assessment_write_scope" {
-  count                  = var.fhir_resources_supported.RiskAssessment ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskAssessment && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskAssessment.write"
   description            = "Write access to RiskAssessment"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_risk_assessment_full_scope" {
-  count                  = var.fhir_resources_supported.RiskAssessment ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskAssessment && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskAssessment.*"
   description            = "Full access to RiskAssessment"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_risk_assessment_full_scope" {
 }
 // user/RiskAssessment -----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_risk_assessment_read_scope" {
-  count                  = var.fhir_resources_supported.RiskAssessment ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskAssessment && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskAssessment.read"
   description            = "Read access to RiskAssessment"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_risk_assessment_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_risk_assessment_write_scope" {
-  count                  = var.fhir_resources_supported.RiskAssessment ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskAssessment && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskAssessment.write"
   description            = "Write access to RiskAssessment"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_risk_assessment_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_risk_assessment_full_scope" {
-  count                  = var.fhir_resources_supported.RiskAssessment ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskAssessment && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskAssessment.*"
   description            = "Full access to RiskAssessment"

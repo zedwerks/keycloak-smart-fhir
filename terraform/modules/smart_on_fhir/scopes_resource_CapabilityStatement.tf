@@ -1,6 +1,6 @@
 // CapabilityStatement -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_capability_statement_read_scope" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.read"
   description            = "Read access to CapabilityStatement"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_capability_statement_read_scope
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_capability_statement_write_scope" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.write"
   description            = "Write access to CapabilityStatement"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_capability_statement_write_scop
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_capability_statement_full_scope" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.*"
   description            = "Full access to CapabilityStatement"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_capability_statement_full_scope
 }
 // system/CapabilityStatement -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_capability_statement_read_scope" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.read"
   description            = "Read access to CapabilityStatement"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_capability_statement_write_scope" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.write"
   description            = "Write access to CapabilityStatement"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_capability_statement_full_scope" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.*"
   description            = "Full access to CapabilityStatement"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_capability_statement_full_scope"
 }
 // user/CapabilityStatement -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_capability_statement_read_scope" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.read"
   description            = "Read access to CapabilityStatement"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_capability_statement_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_capability_statement_write_scope" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.write"
   description            = "Write access to CapabilityStatement"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_capability_statement_write_scope" 
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_capability_statement_full_scope" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.*"
   description            = "Full access to CapabilityStatement"

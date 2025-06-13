@@ -1,6 +1,6 @@
 // patient/FamilyMemberHistory -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_family_member_history_read_scope" {
-  count                  = var.fhir_resources_supported.FamilyMemberHistory ? 1 : 0
+  count                  = var.fhir_resources_supported.FamilyMemberHistory && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/FamilyMemberHistory.read"
   description            = "Read access to FamilyMemberHistory"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_family_member_history_read_scop
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_family_member_history_write_scope" {
-  count                  = var.fhir_resources_supported.FamilyMemberHistory ? 1 : 0
+  count                  = var.fhir_resources_supported.FamilyMemberHistory && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/FamilyMemberHistory.write"
   description            = "Write access to FamilyMemberHistory"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_family_member_history_write_sco
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_family_member_history_full_scope" {
-  count                  = var.fhir_resources_supported.FamilyMemberHistory ? 1 : 0
+  count                  = var.fhir_resources_supported.FamilyMemberHistory && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/FamilyMemberHistory.*"
   description            = "Full access to FamilyMemberHistory"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_family_member_history_full_scop
 }
 // system/FamilyMemberHistory -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_family_member_history_read_scope" {
-  count                  = var.fhir_resources_supported.FamilyMemberHistory ? 1 : 0
+  count                  = var.fhir_resources_supported.FamilyMemberHistory && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/FamilyMemberHistory.read"
   description            = "Read access to FamilyMemberHistory"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_family_member_history_write_scope" {
-  count                  = var.fhir_resources_supported.FamilyMemberHistory ? 1 : 0
+  count                  = var.fhir_resources_supported.FamilyMemberHistory && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/FamilyMemberHistory.write"
   description            = "Write access to FamilyMemberHistory"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_family_member_history_full_scope" {
-  count                  = var.fhir_resources_supported.FamilyMemberHistory ? 1 : 0
+  count                  = var.fhir_resources_supported.FamilyMemberHistory && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/FamilyMemberHistory.*"
   description            = "Full access to FamilyMemberHistory"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_family_member_history_full_scope
 }
 // user/FamilyMemberHistory -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_family_member_history_read_scope" {
-  count                  = var.fhir_resources_supported.FamilyMemberHistory ? 1 : 0
+  count                  = var.fhir_resources_supported.FamilyMemberHistory && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/FamilyMemberHistory.read"
   description            = "Read access to FamilyMemberHistory"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_family_member_history_read_scope" 
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_family_member_history_write_scope" {
-  count                  = var.fhir_resources_supported.FamilyMemberHistory ? 1 : 0
+  count                  = var.fhir_resources_supported.FamilyMemberHistory && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/FamilyMemberHistory.write"
   description            = "Write access to FamilyMemberHistory"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_family_member_history_write_scope"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_family_member_history_full_scope" {
-  count                  = var.fhir_resources_supported.FamilyMemberHistory ? 1 : 0
+  count                  = var.fhir_resources_supported.FamilyMemberHistory && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/FamilyMemberHistory.*"
   description            = "Full access to FamilyMemberHistory"

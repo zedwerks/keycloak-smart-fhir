@@ -1,6 +1,6 @@
 // patient/SubstanceReferenceInformation --------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_substance_reference_information_read_scope" {
-  count                  = var.fhir_resources_supported.SubstanceReferenceInformation ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceReferenceInformation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/SubstanceReferenceInformation.read"
   description            = "Read access to SubstanceReferenceInformation"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_substance_reference_information
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_substance_reference_information_write_scope" {
-  count                  = var.fhir_resources_supported.SubstanceReferenceInformation ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceReferenceInformation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/SubstanceReferenceInformation.write"
   description            = "Write access to SubstanceReferenceInformation"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_substance_reference_information
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_substance_reference_information_full_scope" {
-  count                  = var.fhir_resources_supported.SubstanceReferenceInformation ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceReferenceInformation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/SubstanceReferenceInformation.*"
   description            = "Full access to SubstanceReferenceInformation"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_substance_reference_information
 }
 // system/SubstanceReferenceInformation --------------------------------------------------
 resource "keycloak_openid_client_scope" "system_substance_reference_information_read_scope" {
-  count                  = var.fhir_resources_supported.SubstanceReferenceInformation ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceReferenceInformation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/SubstanceReferenceInformation.read"
   description            = "Read access to SubstanceReferenceInformation"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_substance_reference_information_write_scope" {
-  count                  = var.fhir_resources_supported.SubstanceReferenceInformation ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceReferenceInformation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/SubstanceReferenceInformation.write"
   description            = "Write access to SubstanceReferenceInformation"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_substance_reference_information_full_scope" {
-  count                  = var.fhir_resources_supported.SubstanceReferenceInformation ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceReferenceInformation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/SubstanceReferenceInformation.*"
   description            = "Full access to SubstanceReferenceInformation"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_substance_reference_information_
 }
 // user/SubstanceReferenceInformation --------------------------------------------------
 resource "keycloak_openid_client_scope" "user_substance_reference_information_read_scope" {
-  count                  = var.fhir_resources_supported.SubstanceReferenceInformation ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceReferenceInformation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/SubstanceReferenceInformation.read"
   description            = "Read access to SubstanceReferenceInformation"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_substance_reference_information_re
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_substance_reference_information_write_scope" {
-  count                  = var.fhir_resources_supported.SubstanceReferenceInformation ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceReferenceInformation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/SubstanceReferenceInformation.write"
   description            = "Write access to SubstanceReferenceInformation"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_substance_reference_information_wr
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_substance_reference_information_full_scope" {
-  count                  = var.fhir_resources_supported.SubstanceReferenceInformation ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceReferenceInformation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/SubstanceReferenceInformation.*"
   description            = "Full access to SubstanceReferenceInformation"

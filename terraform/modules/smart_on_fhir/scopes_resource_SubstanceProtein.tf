@@ -1,6 +1,6 @@
 // patient/SubstanceProtein ---------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_substance_protein_read_scope" {
-  count                  = var.fhir_resources_supported.SubstanceProtein ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceProtein && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/SubstanceProtein.read"
   description            = "Read access to SubstanceProtein"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_substance_protein_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_substance_protein_write_scope" {
-  count                  = var.fhir_resources_supported.SubstanceProtein ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceProtein && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/SubstanceProtein.write"
   description            = "Write access to SubstanceProtein"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_substance_protein_write_scope" 
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_substance_protein_full_scope" {
-  count                  = var.fhir_resources_supported.SubstanceProtein ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceProtein && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/SubstanceProtein.*"
   description            = "Full access to SubstanceProtein"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_substance_protein_full_scope" {
 }
 // system/SubstanceProtein ---------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_substance_protein_read_scope" {
-  count                  = var.fhir_resources_supported.SubstanceProtein ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceProtein && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/SubstanceProtein.read"
   description            = "Read access to SubstanceProtein"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_substance_protein_write_scope" {
-  count                  = var.fhir_resources_supported.SubstanceProtein ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceProtein && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/SubstanceProtein.write"
   description            = "Write access to SubstanceProtein"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_substance_protein_full_scope" {
-  count                  = var.fhir_resources_supported.SubstanceProtein ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceProtein && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/SubstanceProtein.*"
   description            = "Full access to SubstanceProtein"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_substance_protein_full_scope" {
 }
 // user/SubstanceProtein ---------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_substance_protein_read_scope" {
-  count                  = var.fhir_resources_supported.SubstanceProtein ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceProtein && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/SubstanceProtein.read"
   description            = "Read access to SubstanceProtein"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_substance_protein_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_substance_protein_write_scope" {
-  count                  = var.fhir_resources_supported.SubstanceProtein ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceProtein && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/SubstanceProtein.write"
   description            = "Write access to SubstanceProtein"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_substance_protein_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_substance_protein_full_scope" {
-  count                  = var.fhir_resources_supported.SubstanceProtein ? 1 : 0
+  count                  = var.fhir_resources_supported.SubstanceProtein && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/SubstanceProtein.*"
   description            = "Full access to SubstanceProtein"

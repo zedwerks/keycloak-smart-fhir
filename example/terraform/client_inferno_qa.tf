@@ -48,7 +48,7 @@ resource "keycloak_openid_audience_protocol_mapper" "inferno_audience_mapper" {
   realm_id                 = data.keycloak_realm.realm.id
   client_id                = keycloak_openid_client.inferno.id
   name                     = "client-audience-mapper"
-  included_client_audience = keycloak_openid_client.inferno.client_id
+  included_custom_audience = keycloak_openid_client.inferno.client_id
   add_to_access_token      = true
   add_to_id_token          = true
   depends_on               = [keycloak_openid_client.inferno]

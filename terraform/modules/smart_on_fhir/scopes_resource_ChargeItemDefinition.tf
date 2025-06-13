@@ -1,6 +1,6 @@
 // patient/ChargeItemDefinition ------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_charge_item_definition_read_scope" {
-  count                  = var.fhir_resources_supported.ChargeItemDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ChargeItemDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ChargeItemDefinition.read"
   description            = "Read access to ChargeItemDefinition"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_charge_item_definition_read_sco
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_charge_item_definition_write_scope" {
-  count                  = var.fhir_resources_supported.ChargeItemDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ChargeItemDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ChargeItemDefinition.write"
   description            = "Write access to ChargeItemDefinition"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_charge_item_definition_write_sc
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_charge_item_definition_full_scope" {
-  count                  = var.fhir_resources_supported.ChargeItemDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ChargeItemDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ChargeItemDefinition.*"
   description            = "Full access to ChargeItemDefinition"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_charge_item_definition_full_sco
 }
 // system/ChargeItemDefinition ------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_charge_item_definition_read_scope" {
-  count                  = var.fhir_resources_supported.ChargeItemDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ChargeItemDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ChargeItemDefinition.read"
   description            = "Read access to ChargeItemDefinition"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_charge_item_definition_write_scope" {
-  count                  = var.fhir_resources_supported.ChargeItemDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ChargeItemDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ChargeItemDefinition.write"
   description            = "Write access to ChargeItemDefinition"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_charge_item_definition_full_scope" {
-  count                  = var.fhir_resources_supported.ChargeItemDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ChargeItemDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ChargeItemDefinition.*"
   description            = "Full access to ChargeItemDefinition"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_charge_item_definition_full_scop
 }
 // user/ChargeItemDefinition ------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_charge_item_definition_read_scope" {
-  count                  = var.fhir_resources_supported.ChargeItemDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ChargeItemDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ChargeItemDefinition.read"
   description            = "Read access to ChargeItemDefinition"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_charge_item_definition_read_scope"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_charge_item_definition_write_scope" {
-  count                  = var.fhir_resources_supported.ChargeItemDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ChargeItemDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ChargeItemDefinition.write"
   description            = "Write access to ChargeItemDefinition"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_charge_item_definition_write_scope
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_charge_item_definition_full_scope" {
-  count                  = var.fhir_resources_supported.ChargeItemDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.ChargeItemDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ChargeItemDefinition.*"
   description            = "Full access to ChargeItemDefinition"

@@ -1,6 +1,6 @@
 // patient/EnrollmentResponse --------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_enrollment_response_read_scope" {
-  count                  = var.fhir_resources_supported.EnrollmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.EnrollmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/EnrollmentResponse.read"
   description            = "Read access to EnrollmentResponse"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_enrollment_response_read_scope"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_enrollment_response_write_scope" {
-  count                  = var.fhir_resources_supported.EnrollmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.EnrollmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/EnrollmentResponse.write"
   description            = "Write access to EnrollmentResponse"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_enrollment_response_write_scope
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_enrollment_response_full_scope" {
-  count                  = var.fhir_resources_supported.EnrollmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.EnrollmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/EnrollmentResponse.*"
   description            = "Full access to EnrollmentResponse"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_enrollment_response_full_scope"
 }
 // system/EnrollmentResponse --------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_enrollment_response_read_scope" {
-  count                  = var.fhir_resources_supported.EnrollmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.EnrollmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/EnrollmentResponse.read"
   description            = "Read access to EnrollmentResponse"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_enrollment_response_write_scope" {
-  count                  = var.fhir_resources_supported.EnrollmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.EnrollmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/EnrollmentResponse.write"
   description            = "Write access to EnrollmentResponse"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_enrollment_response_full_scope" {
-  count                  = var.fhir_resources_supported.EnrollmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.EnrollmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/EnrollmentResponse.*"
   description            = "Full access to EnrollmentResponse"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_enrollment_response_full_scope" 
 }
 // user/EnrollmentResponse --------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_enrollment_response_read_scope" {
-  count                  = var.fhir_resources_supported.EnrollmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.EnrollmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/EnrollmentResponse.read"
   description            = "Read access to EnrollmentResponse"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_enrollment_response_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_enrollment_response_write_scope" {
-  count                  = var.fhir_resources_supported.EnrollmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.EnrollmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/EnrollmentResponse.write"
   description            = "Write access to EnrollmentResponse"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_enrollment_response_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_enrollment_response_full_scope" {
-  count                  = var.fhir_resources_supported.EnrollmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.EnrollmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/EnrollmentResponse.*"
   description            = "Full access to EnrollmentResponse"

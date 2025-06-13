@@ -1,6 +1,6 @@
 // patient/Evidence -----------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_evidence_read_scope" {
-  count                  = var.fhir_resources_supported.Evidence ? 1 : 0
+  count                  = var.fhir_resources_supported.Evidence && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Evidence.read"
   description            = "Read access to Evidence"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_evidence_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_evidence_write_scope" {
-  count                  = var.fhir_resources_supported.Evidence ? 1 : 0
+  count                  = var.fhir_resources_supported.Evidence && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Evidence.write"
   description            = "Write access to Evidence"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_evidence_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_evidence_full_scope" {
-  count                  = var.fhir_resources_supported.Evidence ? 1 : 0
+  count                  = var.fhir_resources_supported.Evidence && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Evidence.*"
   description            = "Full access to Evidence"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_evidence_full_scope" {
 }
 // system/Evidence -----------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_evidence_read_scope" {
-  count                  = var.fhir_resources_supported.Evidence ? 1 : 0
+  count                  = var.fhir_resources_supported.Evidence && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Evidence.read"
   description            = "Read access to Evidence"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_evidence_write_scope" {
-  count                  = var.fhir_resources_supported.Evidence ? 1 : 0
+  count                  = var.fhir_resources_supported.Evidence && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Evidence.write"
   description            = "Write access to Evidence"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_evidence_full_scope" {
-  count                  = var.fhir_resources_supported.Evidence ? 1 : 0
+  count                  = var.fhir_resources_supported.Evidence && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Evidence.*"
   description            = "Full access to Evidence"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_evidence_full_scope" {
 }
 // user/Evidence -----------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_evidence_read_scope" {
-  count                  = var.fhir_resources_supported.Evidence ? 1 : 0
+  count                  = var.fhir_resources_supported.Evidence && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Evidence.read"
   description            = "Read access to Evidence"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_evidence_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_evidence_write_scope" {
-  count                  = var.fhir_resources_supported.Evidence ? 1 : 0
+  count                  = var.fhir_resources_supported.Evidence && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Evidence.write"
   description            = "Write access to Evidence"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_evidence_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_evidence_full_scope" {
-  count                  = var.fhir_resources_supported.Evidence ? 1 : 0
+  count                  = var.fhir_resources_supported.Evidence && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Evidence.*"
   description            = "Full access to Evidence"

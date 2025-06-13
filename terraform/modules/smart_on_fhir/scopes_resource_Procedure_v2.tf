@@ -1,5 +1,5 @@
 resource keycloak_openid_client_scope "user_Procedure_c" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.c"
   description            = "Create access to Procedure resource for user."
@@ -8,7 +8,7 @@ resource keycloak_openid_client_scope "user_Procedure_c" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_r" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.r"
   description            = "Read access to Procedure resource for user."
@@ -17,7 +17,7 @@ resource keycloak_openid_client_scope "user_Procedure_r" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_u" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.u"
   description            = "Update access to Procedure resource for user."
@@ -26,7 +26,7 @@ resource keycloak_openid_client_scope "user_Procedure_u" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_d" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.d"
   description            = "Delete access to Procedure resource for user."
@@ -35,7 +35,7 @@ resource keycloak_openid_client_scope "user_Procedure_d" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_s" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.s"
   description            = "Search access to Procedure resource for user."
@@ -44,7 +44,7 @@ resource keycloak_openid_client_scope "user_Procedure_s" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_cr" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.cr"
   description            = "Create, Read access to Procedure resource for user."
@@ -53,7 +53,7 @@ resource keycloak_openid_client_scope "user_Procedure_cr" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_cu" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.cu"
   description            = "Create, Update access to Procedure resource for user."
@@ -62,7 +62,7 @@ resource keycloak_openid_client_scope "user_Procedure_cu" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_cd" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.cd"
   description            = "Create, Delete access to Procedure resource for user."
@@ -71,7 +71,7 @@ resource keycloak_openid_client_scope "user_Procedure_cd" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_cs" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.cs"
   description            = "Create, Search access to Procedure resource for user."
@@ -80,7 +80,7 @@ resource keycloak_openid_client_scope "user_Procedure_cs" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_ru" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.ru"
   description            = "Read, Update access to Procedure resource for user."
@@ -89,7 +89,7 @@ resource keycloak_openid_client_scope "user_Procedure_ru" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_rd" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.rd"
   description            = "Read, Delete access to Procedure resource for user."
@@ -98,7 +98,7 @@ resource keycloak_openid_client_scope "user_Procedure_rd" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_rs" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.rs"
   description            = "Read, Search access to Procedure resource for user."
@@ -107,7 +107,7 @@ resource keycloak_openid_client_scope "user_Procedure_rs" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_ud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.ud"
   description            = "Update, Delete access to Procedure resource for user."
@@ -116,7 +116,7 @@ resource keycloak_openid_client_scope "user_Procedure_ud" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_us" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.us"
   description            = "Update, Search access to Procedure resource for user."
@@ -125,7 +125,7 @@ resource keycloak_openid_client_scope "user_Procedure_us" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_ds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.ds"
   description            = "Delete, Search access to Procedure resource for user."
@@ -134,7 +134,7 @@ resource keycloak_openid_client_scope "user_Procedure_ds" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_cru" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.cru"
   description            = "Create, Read, Update access to Procedure resource for user."
@@ -143,7 +143,7 @@ resource keycloak_openid_client_scope "user_Procedure_cru" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_crd" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.crd"
   description            = "Create, Read, Delete access to Procedure resource for user."
@@ -152,7 +152,7 @@ resource keycloak_openid_client_scope "user_Procedure_crd" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_crs" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.crs"
   description            = "Create, Read, Search access to Procedure resource for user."
@@ -161,7 +161,7 @@ resource keycloak_openid_client_scope "user_Procedure_crs" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_cud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.cud"
   description            = "Create, Update, Delete access to Procedure resource for user."
@@ -170,7 +170,7 @@ resource keycloak_openid_client_scope "user_Procedure_cud" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_cus" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.cus"
   description            = "Create, Update, Search access to Procedure resource for user."
@@ -179,7 +179,7 @@ resource keycloak_openid_client_scope "user_Procedure_cus" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_cds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.cds"
   description            = "Create, Delete, Search access to Procedure resource for user."
@@ -188,7 +188,7 @@ resource keycloak_openid_client_scope "user_Procedure_cds" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_rud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.rud"
   description            = "Read, Update, Delete access to Procedure resource for user."
@@ -197,7 +197,7 @@ resource keycloak_openid_client_scope "user_Procedure_rud" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_rus" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.rus"
   description            = "Read, Update, Search access to Procedure resource for user."
@@ -206,7 +206,7 @@ resource keycloak_openid_client_scope "user_Procedure_rus" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_rds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.rds"
   description            = "Read, Delete, Search access to Procedure resource for user."
@@ -215,7 +215,7 @@ resource keycloak_openid_client_scope "user_Procedure_rds" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_uds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.uds"
   description            = "Update, Delete, Search access to Procedure resource for user."
@@ -224,7 +224,7 @@ resource keycloak_openid_client_scope "user_Procedure_uds" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_crud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.crud"
   description            = "Create, Read, Update, Delete access to Procedure resource for user."
@@ -233,7 +233,7 @@ resource keycloak_openid_client_scope "user_Procedure_crud" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_crus" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.crus"
   description            = "Create, Read, Update, Search access to Procedure resource for user."
@@ -242,7 +242,7 @@ resource keycloak_openid_client_scope "user_Procedure_crus" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_crds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.crds"
   description            = "Create, Read, Delete, Search access to Procedure resource for user."
@@ -251,7 +251,7 @@ resource keycloak_openid_client_scope "user_Procedure_crds" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_cuds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.cuds"
   description            = "Create, Update, Delete, Search access to Procedure resource for user."
@@ -260,7 +260,7 @@ resource keycloak_openid_client_scope "user_Procedure_cuds" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_ruds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.ruds"
   description            = "Read, Update, Delete, Search access to Procedure resource for user."
@@ -269,7 +269,7 @@ resource keycloak_openid_client_scope "user_Procedure_ruds" {
 }
 
 resource keycloak_openid_client_scope "user_Procedure_cruds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Procedure.cruds"
   description            = "Create, Read, Update, Delete, Search access to Procedure resource for user."
@@ -278,7 +278,7 @@ resource keycloak_openid_client_scope "user_Procedure_cruds" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_c" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.c"
   description            = "Create access to Procedure resource for patient."
@@ -287,7 +287,7 @@ resource keycloak_openid_client_scope "patient_Procedure_c" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_r" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.r"
   description            = "Read access to Procedure resource for patient."
@@ -296,7 +296,7 @@ resource keycloak_openid_client_scope "patient_Procedure_r" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_u" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.u"
   description            = "Update access to Procedure resource for patient."
@@ -305,7 +305,7 @@ resource keycloak_openid_client_scope "patient_Procedure_u" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_d" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.d"
   description            = "Delete access to Procedure resource for patient."
@@ -314,7 +314,7 @@ resource keycloak_openid_client_scope "patient_Procedure_d" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_s" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.s"
   description            = "Search access to Procedure resource for patient."
@@ -323,7 +323,7 @@ resource keycloak_openid_client_scope "patient_Procedure_s" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_cr" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.cr"
   description            = "Create, Read access to Procedure resource for patient."
@@ -332,7 +332,7 @@ resource keycloak_openid_client_scope "patient_Procedure_cr" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_cu" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.cu"
   description            = "Create, Update access to Procedure resource for patient."
@@ -341,7 +341,7 @@ resource keycloak_openid_client_scope "patient_Procedure_cu" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_cd" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.cd"
   description            = "Create, Delete access to Procedure resource for patient."
@@ -350,7 +350,7 @@ resource keycloak_openid_client_scope "patient_Procedure_cd" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_cs" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.cs"
   description            = "Create, Search access to Procedure resource for patient."
@@ -359,7 +359,7 @@ resource keycloak_openid_client_scope "patient_Procedure_cs" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_ru" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.ru"
   description            = "Read, Update access to Procedure resource for patient."
@@ -368,7 +368,7 @@ resource keycloak_openid_client_scope "patient_Procedure_ru" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_rd" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.rd"
   description            = "Read, Delete access to Procedure resource for patient."
@@ -377,7 +377,7 @@ resource keycloak_openid_client_scope "patient_Procedure_rd" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_rs" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.rs"
   description            = "Read, Search access to Procedure resource for patient."
@@ -386,7 +386,7 @@ resource keycloak_openid_client_scope "patient_Procedure_rs" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_ud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.ud"
   description            = "Update, Delete access to Procedure resource for patient."
@@ -395,7 +395,7 @@ resource keycloak_openid_client_scope "patient_Procedure_ud" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_us" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.us"
   description            = "Update, Search access to Procedure resource for patient."
@@ -404,7 +404,7 @@ resource keycloak_openid_client_scope "patient_Procedure_us" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_ds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.ds"
   description            = "Delete, Search access to Procedure resource for patient."
@@ -413,7 +413,7 @@ resource keycloak_openid_client_scope "patient_Procedure_ds" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_cru" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.cru"
   description            = "Create, Read, Update access to Procedure resource for patient."
@@ -422,7 +422,7 @@ resource keycloak_openid_client_scope "patient_Procedure_cru" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_crd" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.crd"
   description            = "Create, Read, Delete access to Procedure resource for patient."
@@ -431,7 +431,7 @@ resource keycloak_openid_client_scope "patient_Procedure_crd" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_crs" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.crs"
   description            = "Create, Read, Search access to Procedure resource for patient."
@@ -440,7 +440,7 @@ resource keycloak_openid_client_scope "patient_Procedure_crs" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_cud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.cud"
   description            = "Create, Update, Delete access to Procedure resource for patient."
@@ -449,7 +449,7 @@ resource keycloak_openid_client_scope "patient_Procedure_cud" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_cus" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.cus"
   description            = "Create, Update, Search access to Procedure resource for patient."
@@ -458,7 +458,7 @@ resource keycloak_openid_client_scope "patient_Procedure_cus" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_cds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.cds"
   description            = "Create, Delete, Search access to Procedure resource for patient."
@@ -467,7 +467,7 @@ resource keycloak_openid_client_scope "patient_Procedure_cds" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_rud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.rud"
   description            = "Read, Update, Delete access to Procedure resource for patient."
@@ -476,7 +476,7 @@ resource keycloak_openid_client_scope "patient_Procedure_rud" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_rus" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.rus"
   description            = "Read, Update, Search access to Procedure resource for patient."
@@ -485,7 +485,7 @@ resource keycloak_openid_client_scope "patient_Procedure_rus" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_rds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.rds"
   description            = "Read, Delete, Search access to Procedure resource for patient."
@@ -494,7 +494,7 @@ resource keycloak_openid_client_scope "patient_Procedure_rds" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_uds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.uds"
   description            = "Update, Delete, Search access to Procedure resource for patient."
@@ -503,7 +503,7 @@ resource keycloak_openid_client_scope "patient_Procedure_uds" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_crud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.crud"
   description            = "Create, Read, Update, Delete access to Procedure resource for patient."
@@ -512,7 +512,7 @@ resource keycloak_openid_client_scope "patient_Procedure_crud" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_crus" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.crus"
   description            = "Create, Read, Update, Search access to Procedure resource for patient."
@@ -521,7 +521,7 @@ resource keycloak_openid_client_scope "patient_Procedure_crus" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_crds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.crds"
   description            = "Create, Read, Delete, Search access to Procedure resource for patient."
@@ -530,7 +530,7 @@ resource keycloak_openid_client_scope "patient_Procedure_crds" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_cuds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.cuds"
   description            = "Create, Update, Delete, Search access to Procedure resource for patient."
@@ -539,7 +539,7 @@ resource keycloak_openid_client_scope "patient_Procedure_cuds" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_ruds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.ruds"
   description            = "Read, Update, Delete, Search access to Procedure resource for patient."
@@ -548,7 +548,7 @@ resource keycloak_openid_client_scope "patient_Procedure_ruds" {
 }
 
 resource keycloak_openid_client_scope "patient_Procedure_cruds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Procedure.cruds"
   description            = "Create, Read, Update, Delete, Search access to Procedure resource for patient."
@@ -557,7 +557,7 @@ resource keycloak_openid_client_scope "patient_Procedure_cruds" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_c" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.c"
   description            = "Create access to Procedure resource for system."
@@ -566,7 +566,7 @@ resource keycloak_openid_client_scope "system_Procedure_c" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_r" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.r"
   description            = "Read access to Procedure resource for system."
@@ -575,7 +575,7 @@ resource keycloak_openid_client_scope "system_Procedure_r" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_u" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.u"
   description            = "Update access to Procedure resource for system."
@@ -584,7 +584,7 @@ resource keycloak_openid_client_scope "system_Procedure_u" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_d" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.d"
   description            = "Delete access to Procedure resource for system."
@@ -593,7 +593,7 @@ resource keycloak_openid_client_scope "system_Procedure_d" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_s" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.s"
   description            = "Search access to Procedure resource for system."
@@ -602,7 +602,7 @@ resource keycloak_openid_client_scope "system_Procedure_s" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_cr" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.cr"
   description            = "Create, Read access to Procedure resource for system."
@@ -611,7 +611,7 @@ resource keycloak_openid_client_scope "system_Procedure_cr" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_cu" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.cu"
   description            = "Create, Update access to Procedure resource for system."
@@ -620,7 +620,7 @@ resource keycloak_openid_client_scope "system_Procedure_cu" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_cd" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.cd"
   description            = "Create, Delete access to Procedure resource for system."
@@ -629,7 +629,7 @@ resource keycloak_openid_client_scope "system_Procedure_cd" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_cs" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.cs"
   description            = "Create, Search access to Procedure resource for system."
@@ -638,7 +638,7 @@ resource keycloak_openid_client_scope "system_Procedure_cs" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_ru" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.ru"
   description            = "Read, Update access to Procedure resource for system."
@@ -647,7 +647,7 @@ resource keycloak_openid_client_scope "system_Procedure_ru" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_rd" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.rd"
   description            = "Read, Delete access to Procedure resource for system."
@@ -656,7 +656,7 @@ resource keycloak_openid_client_scope "system_Procedure_rd" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_rs" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.rs"
   description            = "Read, Search access to Procedure resource for system."
@@ -665,7 +665,7 @@ resource keycloak_openid_client_scope "system_Procedure_rs" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_ud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.ud"
   description            = "Update, Delete access to Procedure resource for system."
@@ -674,7 +674,7 @@ resource keycloak_openid_client_scope "system_Procedure_ud" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_us" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.us"
   description            = "Update, Search access to Procedure resource for system."
@@ -683,7 +683,7 @@ resource keycloak_openid_client_scope "system_Procedure_us" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_ds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.ds"
   description            = "Delete, Search access to Procedure resource for system."
@@ -692,7 +692,7 @@ resource keycloak_openid_client_scope "system_Procedure_ds" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_cru" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.cru"
   description            = "Create, Read, Update access to Procedure resource for system."
@@ -701,7 +701,7 @@ resource keycloak_openid_client_scope "system_Procedure_cru" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_crd" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.crd"
   description            = "Create, Read, Delete access to Procedure resource for system."
@@ -710,7 +710,7 @@ resource keycloak_openid_client_scope "system_Procedure_crd" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_crs" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.crs"
   description            = "Create, Read, Search access to Procedure resource for system."
@@ -719,7 +719,7 @@ resource keycloak_openid_client_scope "system_Procedure_crs" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_cud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.cud"
   description            = "Create, Update, Delete access to Procedure resource for system."
@@ -728,7 +728,7 @@ resource keycloak_openid_client_scope "system_Procedure_cud" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_cus" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.cus"
   description            = "Create, Update, Search access to Procedure resource for system."
@@ -737,7 +737,7 @@ resource keycloak_openid_client_scope "system_Procedure_cus" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_cds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.cds"
   description            = "Create, Delete, Search access to Procedure resource for system."
@@ -746,7 +746,7 @@ resource keycloak_openid_client_scope "system_Procedure_cds" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_rud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.rud"
   description            = "Read, Update, Delete access to Procedure resource for system."
@@ -755,7 +755,7 @@ resource keycloak_openid_client_scope "system_Procedure_rud" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_rus" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.rus"
   description            = "Read, Update, Search access to Procedure resource for system."
@@ -764,7 +764,7 @@ resource keycloak_openid_client_scope "system_Procedure_rus" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_rds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.rds"
   description            = "Read, Delete, Search access to Procedure resource for system."
@@ -773,7 +773,7 @@ resource keycloak_openid_client_scope "system_Procedure_rds" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_uds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.uds"
   description            = "Update, Delete, Search access to Procedure resource for system."
@@ -782,7 +782,7 @@ resource keycloak_openid_client_scope "system_Procedure_uds" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_crud" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.crud"
   description            = "Create, Read, Update, Delete access to Procedure resource for system."
@@ -791,7 +791,7 @@ resource keycloak_openid_client_scope "system_Procedure_crud" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_crus" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.crus"
   description            = "Create, Read, Update, Search access to Procedure resource for system."
@@ -800,7 +800,7 @@ resource keycloak_openid_client_scope "system_Procedure_crus" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_crds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.crds"
   description            = "Create, Read, Delete, Search access to Procedure resource for system."
@@ -809,7 +809,7 @@ resource keycloak_openid_client_scope "system_Procedure_crds" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_cuds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.cuds"
   description            = "Create, Update, Delete, Search access to Procedure resource for system."
@@ -818,7 +818,7 @@ resource keycloak_openid_client_scope "system_Procedure_cuds" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_ruds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.ruds"
   description            = "Read, Update, Delete, Search access to Procedure resource for system."
@@ -827,7 +827,7 @@ resource keycloak_openid_client_scope "system_Procedure_ruds" {
 }
 
 resource keycloak_openid_client_scope "system_Procedure_cruds" {
-  count                  = var.fhir_resources_supported.Procedure ? 1 : 0
+  count                  = var.fhir_resources_supported.Procedure && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Procedure.cruds"
   description            = "Create, Read, Update, Delete, Search access to Procedure resource for system."

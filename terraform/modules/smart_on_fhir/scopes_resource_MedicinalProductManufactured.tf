@@ -1,6 +1,6 @@
 // patient/MedicinalProductManufactured -----------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_medicinal_product_manufactured_read_scope" {
-  count                  = var.fhir_resources_supported.MedicinalProductManufactured ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductManufactured && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductManufactured.read"
   description            = "Read access to MedicinalProductManufactured"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_medicinal_product_manufactured_
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_medicinal_product_manufactured_write_scope" {
-  count                  = var.fhir_resources_supported.MedicinalProductManufactured ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductManufactured && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductManufactured.write"
   description            = "Write access to MedicinalProductManufactured"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_medicinal_product_manufactured_
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_medicinal_product_manufactured_full_scope" {
-  count                  = var.fhir_resources_supported.MedicinalProductManufactured ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductManufactured && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductManufactured.*"
   description            = "Full access to MedicinalProductManufactured"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_medicinal_product_manufactured_
 }
 // system/MedicinalProductManufactured -----------------------------------------------------
 resource "keycloak_openid_client_scope" "system_medicinal_product_manufactured_read_scope" {
-  count                  = var.fhir_resources_supported.MedicinalProductManufactured ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductManufactured && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductManufactured.read"
   description            = "Read access to MedicinalProductManufactured"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_medicinal_product_manufactured_write_scope" {
-  count                  = var.fhir_resources_supported.MedicinalProductManufactured ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductManufactured && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductManufactured.write"
   description            = "Write access to MedicinalProductManufactured"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_medicinal_product_manufactured_full_scope" {
-  count                  = var.fhir_resources_supported.MedicinalProductManufactured ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductManufactured && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductManufactured.*"
   description            = "Full access to MedicinalProductManufactured"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_medicinal_product_manufactured_f
 }
 // user/MedicinalProductManufactured -----------------------------------------------------
 resource "keycloak_openid_client_scope" "user_medicinal_product_manufactured_read_scope" {
-  count                  = var.fhir_resources_supported.MedicinalProductManufactured ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductManufactured && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductManufactured.read"
   description            = "Read access to MedicinalProductManufactured"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_medicinal_product_manufactured_rea
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_medicinal_product_manufactured_write_scope" {
-  count                  = var.fhir_resources_supported.MedicinalProductManufactured ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductManufactured && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductManufactured.write"
   description            = "Write access to MedicinalProductManufactured"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_medicinal_product_manufactured_wri
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_medical_product_manufactured_full_scope" {
-  count                  = var.fhir_resources_supported.MedicinalProductManufactured ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductManufactured && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductManufactured.*"
   description            = "Full access to MedicinalProductManufactured"

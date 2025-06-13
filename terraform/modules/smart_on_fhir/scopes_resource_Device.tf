@@ -1,6 +1,6 @@
 // patient/Device --------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_device_read_scope" {
-  count                  = var.fhir_resources_supported.Device ? 1 : 0
+  count                  = var.fhir_resources_supported.Device && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Device.read"
   description            = "Read access to Device"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_device_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_device_write_scope" {
-  count                  = var.fhir_resources_supported.Device ? 1 : 0
+  count                  = var.fhir_resources_supported.Device && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Device.write"
   description            = "Write access to Device"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_device_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_device_full_scope" {
-  count                  = var.fhir_resources_supported.Device ? 1 : 0
+  count                  = var.fhir_resources_supported.Device && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Device.*"
   description            = "Full access to Device"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_device_full_scope" {
 }
 // system/Device --------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_device_read_scope" {
-  count                  = var.fhir_resources_supported.Device ? 1 : 0
+  count                  = var.fhir_resources_supported.Device && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Device.read"
   description            = "Read access to Device"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_device_write_scope" {
-  count                  = var.fhir_resources_supported.Device ? 1 : 0
+  count                  = var.fhir_resources_supported.Device && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Device.write"
   description            = "Write access to Device"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_device_full_scope" {
-  count                  = var.fhir_resources_supported.Device ? 1 : 0
+  count                  = var.fhir_resources_supported.Device && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Device.*"
   description            = "Full access to Device"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_device_full_scope" {
 }
 // user/Device --------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_device_read_scope" {
-  count                  = var.fhir_resources_supported.Device ? 1 : 0
+  count                  = var.fhir_resources_supported.Device && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Device.read"
   description            = "Read access to Device"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_device_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_device_write_scope" {
-  count                  = var.fhir_resources_supported.Device ? 1 : 0
+  count                  = var.fhir_resources_supported.Device && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Device.write"
   description            = "Write access to Device"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_device_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_device_full_scope" {
-  count                  = var.fhir_resources_supported.Device ? 1 : 0
+  count                  = var.fhir_resources_supported.Device && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Device.*"
   description            = "Full access to Device"

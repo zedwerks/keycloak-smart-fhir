@@ -1,5 +1,5 @@
 resource keycloak_openid_client_scope "user_ResearchSubject_c" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.c"
   description            = "Create access to ResearchSubject resource for user."
@@ -8,7 +8,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_c" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_r" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.r"
   description            = "Read access to ResearchSubject resource for user."
@@ -17,7 +17,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_r" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_u" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.u"
   description            = "Update access to ResearchSubject resource for user."
@@ -26,7 +26,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_u" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_d" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.d"
   description            = "Delete access to ResearchSubject resource for user."
@@ -35,7 +35,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_d" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_s" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.s"
   description            = "Search access to ResearchSubject resource for user."
@@ -44,7 +44,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_s" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_cr" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.cr"
   description            = "Create, Read access to ResearchSubject resource for user."
@@ -53,7 +53,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_cr" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_cu" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.cu"
   description            = "Create, Update access to ResearchSubject resource for user."
@@ -62,7 +62,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_cu" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_cd" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.cd"
   description            = "Create, Delete access to ResearchSubject resource for user."
@@ -71,7 +71,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_cd" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_cs" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.cs"
   description            = "Create, Search access to ResearchSubject resource for user."
@@ -80,7 +80,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_cs" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_ru" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.ru"
   description            = "Read, Update access to ResearchSubject resource for user."
@@ -89,7 +89,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_ru" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_rd" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.rd"
   description            = "Read, Delete access to ResearchSubject resource for user."
@@ -98,7 +98,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_rd" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_rs" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.rs"
   description            = "Read, Search access to ResearchSubject resource for user."
@@ -107,7 +107,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_rs" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_ud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.ud"
   description            = "Update, Delete access to ResearchSubject resource for user."
@@ -116,7 +116,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_ud" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_us" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.us"
   description            = "Update, Search access to ResearchSubject resource for user."
@@ -125,7 +125,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_us" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_ds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.ds"
   description            = "Delete, Search access to ResearchSubject resource for user."
@@ -134,7 +134,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_ds" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_cru" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.cru"
   description            = "Create, Read, Update access to ResearchSubject resource for user."
@@ -143,7 +143,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_cru" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_crd" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.crd"
   description            = "Create, Read, Delete access to ResearchSubject resource for user."
@@ -152,7 +152,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_crd" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_crs" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.crs"
   description            = "Create, Read, Search access to ResearchSubject resource for user."
@@ -161,7 +161,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_crs" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_cud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.cud"
   description            = "Create, Update, Delete access to ResearchSubject resource for user."
@@ -170,7 +170,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_cud" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_cus" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.cus"
   description            = "Create, Update, Search access to ResearchSubject resource for user."
@@ -179,7 +179,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_cus" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_cds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.cds"
   description            = "Create, Delete, Search access to ResearchSubject resource for user."
@@ -188,7 +188,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_cds" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_rud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.rud"
   description            = "Read, Update, Delete access to ResearchSubject resource for user."
@@ -197,7 +197,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_rud" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_rus" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.rus"
   description            = "Read, Update, Search access to ResearchSubject resource for user."
@@ -206,7 +206,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_rus" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_rds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.rds"
   description            = "Read, Delete, Search access to ResearchSubject resource for user."
@@ -215,7 +215,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_rds" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_uds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.uds"
   description            = "Update, Delete, Search access to ResearchSubject resource for user."
@@ -224,7 +224,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_uds" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_crud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.crud"
   description            = "Create, Read, Update, Delete access to ResearchSubject resource for user."
@@ -233,7 +233,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_crud" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_crus" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.crus"
   description            = "Create, Read, Update, Search access to ResearchSubject resource for user."
@@ -242,7 +242,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_crus" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_crds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.crds"
   description            = "Create, Read, Delete, Search access to ResearchSubject resource for user."
@@ -251,7 +251,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_crds" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_cuds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.cuds"
   description            = "Create, Update, Delete, Search access to ResearchSubject resource for user."
@@ -260,7 +260,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_cuds" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_ruds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.ruds"
   description            = "Read, Update, Delete, Search access to ResearchSubject resource for user."
@@ -269,7 +269,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_ruds" {
 }
 
 resource keycloak_openid_client_scope "user_ResearchSubject_cruds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ResearchSubject.cruds"
   description            = "Create, Read, Update, Delete, Search access to ResearchSubject resource for user."
@@ -278,7 +278,7 @@ resource keycloak_openid_client_scope "user_ResearchSubject_cruds" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_c" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.c"
   description            = "Create access to ResearchSubject resource for patient."
@@ -287,7 +287,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_c" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_r" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.r"
   description            = "Read access to ResearchSubject resource for patient."
@@ -296,7 +296,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_r" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_u" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.u"
   description            = "Update access to ResearchSubject resource for patient."
@@ -305,7 +305,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_u" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_d" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.d"
   description            = "Delete access to ResearchSubject resource for patient."
@@ -314,7 +314,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_d" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_s" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.s"
   description            = "Search access to ResearchSubject resource for patient."
@@ -323,7 +323,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_s" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_cr" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.cr"
   description            = "Create, Read access to ResearchSubject resource for patient."
@@ -332,7 +332,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_cr" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_cu" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.cu"
   description            = "Create, Update access to ResearchSubject resource for patient."
@@ -341,7 +341,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_cu" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_cd" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.cd"
   description            = "Create, Delete access to ResearchSubject resource for patient."
@@ -350,7 +350,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_cd" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_cs" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.cs"
   description            = "Create, Search access to ResearchSubject resource for patient."
@@ -359,7 +359,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_cs" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_ru" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.ru"
   description            = "Read, Update access to ResearchSubject resource for patient."
@@ -368,7 +368,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_ru" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_rd" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.rd"
   description            = "Read, Delete access to ResearchSubject resource for patient."
@@ -377,7 +377,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_rd" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_rs" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.rs"
   description            = "Read, Search access to ResearchSubject resource for patient."
@@ -386,7 +386,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_rs" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_ud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.ud"
   description            = "Update, Delete access to ResearchSubject resource for patient."
@@ -395,7 +395,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_ud" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_us" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.us"
   description            = "Update, Search access to ResearchSubject resource for patient."
@@ -404,7 +404,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_us" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_ds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.ds"
   description            = "Delete, Search access to ResearchSubject resource for patient."
@@ -413,7 +413,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_ds" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_cru" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.cru"
   description            = "Create, Read, Update access to ResearchSubject resource for patient."
@@ -422,7 +422,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_cru" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_crd" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.crd"
   description            = "Create, Read, Delete access to ResearchSubject resource for patient."
@@ -431,7 +431,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_crd" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_crs" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.crs"
   description            = "Create, Read, Search access to ResearchSubject resource for patient."
@@ -440,7 +440,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_crs" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_cud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.cud"
   description            = "Create, Update, Delete access to ResearchSubject resource for patient."
@@ -449,7 +449,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_cud" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_cus" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.cus"
   description            = "Create, Update, Search access to ResearchSubject resource for patient."
@@ -458,7 +458,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_cus" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_cds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.cds"
   description            = "Create, Delete, Search access to ResearchSubject resource for patient."
@@ -467,7 +467,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_cds" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_rud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.rud"
   description            = "Read, Update, Delete access to ResearchSubject resource for patient."
@@ -476,7 +476,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_rud" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_rus" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.rus"
   description            = "Read, Update, Search access to ResearchSubject resource for patient."
@@ -485,7 +485,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_rus" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_rds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.rds"
   description            = "Read, Delete, Search access to ResearchSubject resource for patient."
@@ -494,7 +494,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_rds" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_uds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.uds"
   description            = "Update, Delete, Search access to ResearchSubject resource for patient."
@@ -503,7 +503,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_uds" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_crud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.crud"
   description            = "Create, Read, Update, Delete access to ResearchSubject resource for patient."
@@ -512,7 +512,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_crud" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_crus" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.crus"
   description            = "Create, Read, Update, Search access to ResearchSubject resource for patient."
@@ -521,7 +521,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_crus" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_crds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.crds"
   description            = "Create, Read, Delete, Search access to ResearchSubject resource for patient."
@@ -530,7 +530,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_crds" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_cuds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.cuds"
   description            = "Create, Update, Delete, Search access to ResearchSubject resource for patient."
@@ -539,7 +539,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_cuds" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_ruds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.ruds"
   description            = "Read, Update, Delete, Search access to ResearchSubject resource for patient."
@@ -548,7 +548,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_ruds" {
 }
 
 resource keycloak_openid_client_scope "patient_ResearchSubject_cruds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ResearchSubject.cruds"
   description            = "Create, Read, Update, Delete, Search access to ResearchSubject resource for patient."
@@ -557,7 +557,7 @@ resource keycloak_openid_client_scope "patient_ResearchSubject_cruds" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_c" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.c"
   description            = "Create access to ResearchSubject resource for system."
@@ -566,7 +566,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_c" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_r" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.r"
   description            = "Read access to ResearchSubject resource for system."
@@ -575,7 +575,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_r" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_u" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.u"
   description            = "Update access to ResearchSubject resource for system."
@@ -584,7 +584,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_u" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_d" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.d"
   description            = "Delete access to ResearchSubject resource for system."
@@ -593,7 +593,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_d" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_s" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.s"
   description            = "Search access to ResearchSubject resource for system."
@@ -602,7 +602,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_s" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_cr" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.cr"
   description            = "Create, Read access to ResearchSubject resource for system."
@@ -611,7 +611,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_cr" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_cu" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.cu"
   description            = "Create, Update access to ResearchSubject resource for system."
@@ -620,7 +620,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_cu" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_cd" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.cd"
   description            = "Create, Delete access to ResearchSubject resource for system."
@@ -629,7 +629,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_cd" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_cs" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.cs"
   description            = "Create, Search access to ResearchSubject resource for system."
@@ -638,7 +638,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_cs" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_ru" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.ru"
   description            = "Read, Update access to ResearchSubject resource for system."
@@ -647,7 +647,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_ru" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_rd" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.rd"
   description            = "Read, Delete access to ResearchSubject resource for system."
@@ -656,7 +656,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_rd" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_rs" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.rs"
   description            = "Read, Search access to ResearchSubject resource for system."
@@ -665,7 +665,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_rs" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_ud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.ud"
   description            = "Update, Delete access to ResearchSubject resource for system."
@@ -674,7 +674,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_ud" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_us" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.us"
   description            = "Update, Search access to ResearchSubject resource for system."
@@ -683,7 +683,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_us" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_ds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.ds"
   description            = "Delete, Search access to ResearchSubject resource for system."
@@ -692,7 +692,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_ds" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_cru" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.cru"
   description            = "Create, Read, Update access to ResearchSubject resource for system."
@@ -701,7 +701,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_cru" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_crd" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.crd"
   description            = "Create, Read, Delete access to ResearchSubject resource for system."
@@ -710,7 +710,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_crd" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_crs" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.crs"
   description            = "Create, Read, Search access to ResearchSubject resource for system."
@@ -719,7 +719,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_crs" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_cud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.cud"
   description            = "Create, Update, Delete access to ResearchSubject resource for system."
@@ -728,7 +728,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_cud" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_cus" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.cus"
   description            = "Create, Update, Search access to ResearchSubject resource for system."
@@ -737,7 +737,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_cus" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_cds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.cds"
   description            = "Create, Delete, Search access to ResearchSubject resource for system."
@@ -746,7 +746,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_cds" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_rud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.rud"
   description            = "Read, Update, Delete access to ResearchSubject resource for system."
@@ -755,7 +755,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_rud" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_rus" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.rus"
   description            = "Read, Update, Search access to ResearchSubject resource for system."
@@ -764,7 +764,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_rus" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_rds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.rds"
   description            = "Read, Delete, Search access to ResearchSubject resource for system."
@@ -773,7 +773,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_rds" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_uds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.uds"
   description            = "Update, Delete, Search access to ResearchSubject resource for system."
@@ -782,7 +782,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_uds" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_crud" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.crud"
   description            = "Create, Read, Update, Delete access to ResearchSubject resource for system."
@@ -791,7 +791,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_crud" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_crus" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.crus"
   description            = "Create, Read, Update, Search access to ResearchSubject resource for system."
@@ -800,7 +800,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_crus" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_crds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.crds"
   description            = "Create, Read, Delete, Search access to ResearchSubject resource for system."
@@ -809,7 +809,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_crds" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_cuds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.cuds"
   description            = "Create, Update, Delete, Search access to ResearchSubject resource for system."
@@ -818,7 +818,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_cuds" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_ruds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.ruds"
   description            = "Read, Update, Delete, Search access to ResearchSubject resource for system."
@@ -827,7 +827,7 @@ resource keycloak_openid_client_scope "system_ResearchSubject_ruds" {
 }
 
 resource keycloak_openid_client_scope "system_ResearchSubject_cruds" {
-  count                  = var.fhir_resources_supported.ResearchSubject ? 1 : 0
+  count                  = var.fhir_resources_supported.ResearchSubject && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ResearchSubject.cruds"
   description            = "Create, Read, Update, Delete, Search access to ResearchSubject resource for system."

@@ -1,5 +1,5 @@
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_c" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.c"
   description            = "Create access to MedicinalProductContraindication resource for user."
@@ -8,7 +8,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_c" 
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_r" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.r"
   description            = "Read access to MedicinalProductContraindication resource for user."
@@ -17,7 +17,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_r" 
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_u" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.u"
   description            = "Update access to MedicinalProductContraindication resource for user."
@@ -26,7 +26,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_u" 
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_d" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.d"
   description            = "Delete access to MedicinalProductContraindication resource for user."
@@ -35,7 +35,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_d" 
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_s" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.s"
   description            = "Search access to MedicinalProductContraindication resource for user."
@@ -44,7 +44,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_s" 
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cr" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.cr"
   description            = "Create, Read access to MedicinalProductContraindication resource for user."
@@ -53,7 +53,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cr"
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cu" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.cu"
   description            = "Create, Update access to MedicinalProductContraindication resource for user."
@@ -62,7 +62,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cu"
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cd" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.cd"
   description            = "Create, Delete access to MedicinalProductContraindication resource for user."
@@ -71,7 +71,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cd"
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cs" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.cs"
   description            = "Create, Search access to MedicinalProductContraindication resource for user."
@@ -80,7 +80,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cs"
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_ru" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.ru"
   description            = "Read, Update access to MedicinalProductContraindication resource for user."
@@ -89,7 +89,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_ru"
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_rd" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.rd"
   description            = "Read, Delete access to MedicinalProductContraindication resource for user."
@@ -98,7 +98,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_rd"
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_rs" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.rs"
   description            = "Read, Search access to MedicinalProductContraindication resource for user."
@@ -107,7 +107,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_rs"
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_ud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.ud"
   description            = "Update, Delete access to MedicinalProductContraindication resource for user."
@@ -116,7 +116,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_ud"
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_us" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.us"
   description            = "Update, Search access to MedicinalProductContraindication resource for user."
@@ -125,7 +125,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_us"
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_ds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.ds"
   description            = "Delete, Search access to MedicinalProductContraindication resource for user."
@@ -134,7 +134,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_ds"
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cru" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.cru"
   description            = "Create, Read, Update access to MedicinalProductContraindication resource for user."
@@ -143,7 +143,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cru
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_crd" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.crd"
   description            = "Create, Read, Delete access to MedicinalProductContraindication resource for user."
@@ -152,7 +152,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_crd
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_crs" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.crs"
   description            = "Create, Read, Search access to MedicinalProductContraindication resource for user."
@@ -161,7 +161,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_crs
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.cud"
   description            = "Create, Update, Delete access to MedicinalProductContraindication resource for user."
@@ -170,7 +170,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cud
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cus" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.cus"
   description            = "Create, Update, Search access to MedicinalProductContraindication resource for user."
@@ -179,7 +179,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cus
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.cds"
   description            = "Create, Delete, Search access to MedicinalProductContraindication resource for user."
@@ -188,7 +188,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cds
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_rud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.rud"
   description            = "Read, Update, Delete access to MedicinalProductContraindication resource for user."
@@ -197,7 +197,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_rud
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_rus" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.rus"
   description            = "Read, Update, Search access to MedicinalProductContraindication resource for user."
@@ -206,7 +206,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_rus
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_rds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.rds"
   description            = "Read, Delete, Search access to MedicinalProductContraindication resource for user."
@@ -215,7 +215,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_rds
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_uds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.uds"
   description            = "Update, Delete, Search access to MedicinalProductContraindication resource for user."
@@ -224,7 +224,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_uds
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_crud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.crud"
   description            = "Create, Read, Update, Delete access to MedicinalProductContraindication resource for user."
@@ -233,7 +233,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cru
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_crus" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.crus"
   description            = "Create, Read, Update, Search access to MedicinalProductContraindication resource for user."
@@ -242,7 +242,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cru
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_crds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.crds"
   description            = "Create, Read, Delete, Search access to MedicinalProductContraindication resource for user."
@@ -251,7 +251,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_crd
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cuds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.cuds"
   description            = "Create, Update, Delete, Search access to MedicinalProductContraindication resource for user."
@@ -260,7 +260,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cud
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_ruds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.ruds"
   description            = "Read, Update, Delete, Search access to MedicinalProductContraindication resource for user."
@@ -269,7 +269,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_rud
 }
 
 resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cruds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicinalProductContraindication.cruds"
   description            = "Create, Read, Update, Delete, Search access to MedicinalProductContraindication resource for user."
@@ -278,7 +278,7 @@ resource keycloak_openid_client_scope "user_MedicinalProductContraindication_cru
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_c" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.c"
   description            = "Create access to MedicinalProductContraindication resource for patient."
@@ -287,7 +287,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_r" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.r"
   description            = "Read access to MedicinalProductContraindication resource for patient."
@@ -296,7 +296,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_u" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.u"
   description            = "Update access to MedicinalProductContraindication resource for patient."
@@ -305,7 +305,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_d" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.d"
   description            = "Delete access to MedicinalProductContraindication resource for patient."
@@ -314,7 +314,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_s" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.s"
   description            = "Search access to MedicinalProductContraindication resource for patient."
@@ -323,7 +323,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_cr" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.cr"
   description            = "Create, Read access to MedicinalProductContraindication resource for patient."
@@ -332,7 +332,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_cu" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.cu"
   description            = "Create, Update access to MedicinalProductContraindication resource for patient."
@@ -341,7 +341,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_cd" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.cd"
   description            = "Create, Delete access to MedicinalProductContraindication resource for patient."
@@ -350,7 +350,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_cs" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.cs"
   description            = "Create, Search access to MedicinalProductContraindication resource for patient."
@@ -359,7 +359,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_ru" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.ru"
   description            = "Read, Update access to MedicinalProductContraindication resource for patient."
@@ -368,7 +368,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_rd" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.rd"
   description            = "Read, Delete access to MedicinalProductContraindication resource for patient."
@@ -377,7 +377,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_rs" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.rs"
   description            = "Read, Search access to MedicinalProductContraindication resource for patient."
@@ -386,7 +386,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_ud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.ud"
   description            = "Update, Delete access to MedicinalProductContraindication resource for patient."
@@ -395,7 +395,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_us" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.us"
   description            = "Update, Search access to MedicinalProductContraindication resource for patient."
@@ -404,7 +404,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_ds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.ds"
   description            = "Delete, Search access to MedicinalProductContraindication resource for patient."
@@ -413,7 +413,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_cru" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.cru"
   description            = "Create, Read, Update access to MedicinalProductContraindication resource for patient."
@@ -422,7 +422,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_crd" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.crd"
   description            = "Create, Read, Delete access to MedicinalProductContraindication resource for patient."
@@ -431,7 +431,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_crs" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.crs"
   description            = "Create, Read, Search access to MedicinalProductContraindication resource for patient."
@@ -440,7 +440,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_cud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.cud"
   description            = "Create, Update, Delete access to MedicinalProductContraindication resource for patient."
@@ -449,7 +449,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_cus" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.cus"
   description            = "Create, Update, Search access to MedicinalProductContraindication resource for patient."
@@ -458,7 +458,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_cds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.cds"
   description            = "Create, Delete, Search access to MedicinalProductContraindication resource for patient."
@@ -467,7 +467,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_rud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.rud"
   description            = "Read, Update, Delete access to MedicinalProductContraindication resource for patient."
@@ -476,7 +476,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_rus" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.rus"
   description            = "Read, Update, Search access to MedicinalProductContraindication resource for patient."
@@ -485,7 +485,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_rds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.rds"
   description            = "Read, Delete, Search access to MedicinalProductContraindication resource for patient."
@@ -494,7 +494,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_uds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.uds"
   description            = "Update, Delete, Search access to MedicinalProductContraindication resource for patient."
@@ -503,7 +503,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_crud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.crud"
   description            = "Create, Read, Update, Delete access to MedicinalProductContraindication resource for patient."
@@ -512,7 +512,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_crus" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.crus"
   description            = "Create, Read, Update, Search access to MedicinalProductContraindication resource for patient."
@@ -521,7 +521,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_crds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.crds"
   description            = "Create, Read, Delete, Search access to MedicinalProductContraindication resource for patient."
@@ -530,7 +530,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_cuds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.cuds"
   description            = "Create, Update, Delete, Search access to MedicinalProductContraindication resource for patient."
@@ -539,7 +539,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_ruds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.ruds"
   description            = "Read, Update, Delete, Search access to MedicinalProductContraindication resource for patient."
@@ -548,7 +548,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_cruds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicinalProductContraindication.cruds"
   description            = "Create, Read, Update, Delete, Search access to MedicinalProductContraindication resource for patient."
@@ -557,7 +557,7 @@ resource keycloak_openid_client_scope "patient_MedicinalProductContraindication_
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.c"
   description            = "Create access to MedicinalProductContraindication resource for system."
@@ -566,7 +566,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_r" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.r"
   description            = "Read access to MedicinalProductContraindication resource for system."
@@ -575,7 +575,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_r
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_u" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.u"
   description            = "Update access to MedicinalProductContraindication resource for system."
@@ -584,7 +584,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_u
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_d" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.d"
   description            = "Delete access to MedicinalProductContraindication resource for system."
@@ -593,7 +593,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_d
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_s" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.s"
   description            = "Search access to MedicinalProductContraindication resource for system."
@@ -602,7 +602,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_s
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_cr" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.cr"
   description            = "Create, Read access to MedicinalProductContraindication resource for system."
@@ -611,7 +611,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_cu" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.cu"
   description            = "Create, Update access to MedicinalProductContraindication resource for system."
@@ -620,7 +620,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_cd" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.cd"
   description            = "Create, Delete access to MedicinalProductContraindication resource for system."
@@ -629,7 +629,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_cs" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.cs"
   description            = "Create, Search access to MedicinalProductContraindication resource for system."
@@ -638,7 +638,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_ru" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.ru"
   description            = "Read, Update access to MedicinalProductContraindication resource for system."
@@ -647,7 +647,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_r
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_rd" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.rd"
   description            = "Read, Delete access to MedicinalProductContraindication resource for system."
@@ -656,7 +656,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_r
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_rs" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.rs"
   description            = "Read, Search access to MedicinalProductContraindication resource for system."
@@ -665,7 +665,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_r
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_ud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.ud"
   description            = "Update, Delete access to MedicinalProductContraindication resource for system."
@@ -674,7 +674,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_u
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_us" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.us"
   description            = "Update, Search access to MedicinalProductContraindication resource for system."
@@ -683,7 +683,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_u
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_ds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.ds"
   description            = "Delete, Search access to MedicinalProductContraindication resource for system."
@@ -692,7 +692,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_d
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_cru" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.cru"
   description            = "Create, Read, Update access to MedicinalProductContraindication resource for system."
@@ -701,7 +701,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_crd" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.crd"
   description            = "Create, Read, Delete access to MedicinalProductContraindication resource for system."
@@ -710,7 +710,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_crs" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.crs"
   description            = "Create, Read, Search access to MedicinalProductContraindication resource for system."
@@ -719,7 +719,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_cud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.cud"
   description            = "Create, Update, Delete access to MedicinalProductContraindication resource for system."
@@ -728,7 +728,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_cus" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.cus"
   description            = "Create, Update, Search access to MedicinalProductContraindication resource for system."
@@ -737,7 +737,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_cds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.cds"
   description            = "Create, Delete, Search access to MedicinalProductContraindication resource for system."
@@ -746,7 +746,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_rud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.rud"
   description            = "Read, Update, Delete access to MedicinalProductContraindication resource for system."
@@ -755,7 +755,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_r
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_rus" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.rus"
   description            = "Read, Update, Search access to MedicinalProductContraindication resource for system."
@@ -764,7 +764,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_r
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_rds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.rds"
   description            = "Read, Delete, Search access to MedicinalProductContraindication resource for system."
@@ -773,7 +773,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_r
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_uds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.uds"
   description            = "Update, Delete, Search access to MedicinalProductContraindication resource for system."
@@ -782,7 +782,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_u
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_crud" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.crud"
   description            = "Create, Read, Update, Delete access to MedicinalProductContraindication resource for system."
@@ -791,7 +791,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_crus" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.crus"
   description            = "Create, Read, Update, Search access to MedicinalProductContraindication resource for system."
@@ -800,7 +800,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_crds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.crds"
   description            = "Create, Read, Delete, Search access to MedicinalProductContraindication resource for system."
@@ -809,7 +809,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_cuds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.cuds"
   description            = "Create, Update, Delete, Search access to MedicinalProductContraindication resource for system."
@@ -818,7 +818,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_c
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_ruds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.ruds"
   description            = "Read, Update, Delete, Search access to MedicinalProductContraindication resource for system."
@@ -827,7 +827,7 @@ resource keycloak_openid_client_scope "system_MedicinalProductContraindication_r
 }
 
 resource keycloak_openid_client_scope "system_MedicinalProductContraindication_cruds" {
-  count                  = var.fhir_resources_supported.MedicinalProductContraindication ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicinalProductContraindication && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicinalProductContraindication.cruds"
   description            = "Create, Read, Update, Delete, Search access to MedicinalProductContraindication resource for system."

@@ -1,6 +1,6 @@
 // patient/DetectedIssue -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_detected_issue_read_scope" {
-  count                  = var.fhir_resources_supported.DetectedIssue ? 1 : 0
+  count                  = var.fhir_resources_supported.DetectedIssue && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/DetectedIssue.read"
   description            = "Read access to DetectedIssue"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_detected_issue_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_detected_issue_write_scope" {
-  count                  = var.fhir_resources_supported.DetectedIssue ? 1 : 0
+  count                  = var.fhir_resources_supported.DetectedIssue && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/DetectedIssue.write"
   description            = "Write access to DetectedIssue"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_detected_issue_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_detected_issue_full_scope" {
-  count                  = var.fhir_resources_supported.DetectedIssue ? 1 : 0
+  count                  = var.fhir_resources_supported.DetectedIssue && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/DetectedIssue.*"
   description            = "Full access to DetectedIssue"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_detected_issue_full_scope" {
 }
 // system/DetectedIssue -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_detected_issue_read_scope" {
-  count                  = var.fhir_resources_supported.DetectedIssue ? 1 : 0
+  count                  = var.fhir_resources_supported.DetectedIssue && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/DetectedIssue.read"
   description            = "Read access to DetectedIssue"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_detected_issue_write_scope" {
-  count                  = var.fhir_resources_supported.DetectedIssue ? 1 : 0
+  count                  = var.fhir_resources_supported.DetectedIssue && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/DetectedIssue.write"
   description            = "Write access to DetectedIssue"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_detected_issue_full_scope" {
-  count                  = var.fhir_resources_supported.DetectedIssue ? 1 : 0
+  count                  = var.fhir_resources_supported.DetectedIssue && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/DetectedIssue.*"
   description            = "Full access to DetectedIssue"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_detected_issue_full_scope" {
 }
 // user/DetectedIssue -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_detected_issue_read_scope" {
-  count                  = var.fhir_resources_supported.DetectedIssue ? 1 : 0
+  count                  = var.fhir_resources_supported.DetectedIssue && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/DetectedIssue.read"
   description            = "Read access to DetectedIssue"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_detected_issue_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_detected_issue_write_scope" {
-  count                  = var.fhir_resources_supported.DetectedIssue ? 1 : 0
+  count                  = var.fhir_resources_supported.DetectedIssue && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/DetectedIssue.write"
   description            = "Write access to DetectedIssue"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_detected_issue_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_detected_issue_full_scope" {
-  count                  = var.fhir_resources_supported.DetectedIssue ? 1 : 0
+  count                  = var.fhir_resources_supported.DetectedIssue && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/DetectedIssue.*"
   description            = "Full access to DetectedIssue"

@@ -1,6 +1,6 @@
 // patient/PaymentNotice ------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_payment_notice_read_scope" {
-  count                 = var.fhir_resources_supported.PaymentNotice ? 1 : 0
+  count                 = var.fhir_resources_supported.PaymentNotice && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/PaymentNotice.read"
   description            = "Read access to PaymentNotice"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_payment_notice_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_payment_notice_write_scope" {
-  count                 = var.fhir_resources_supported.PaymentNotice ? 1 : 0
+  count                 = var.fhir_resources_supported.PaymentNotice && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/PaymentNotice.write"
   description            = "Write access to PaymentNotice"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_payment_notice_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_payment_notice_full_scope" {
-  count                = var.fhir_resources_supported.PaymentNotice ? 1 : 0
+  count                = var.fhir_resources_supported.PaymentNotice && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/PaymentNotice.*"
   description            = "Full access to PaymentNotice"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_payment_notice_full_scope" {
 }
 // system/PaymentNotice ------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_payment_notice_read_scope" {
-  count                 = var.fhir_resources_supported.PaymentNotice ? 1 : 0
+  count                 = var.fhir_resources_supported.PaymentNotice && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/PaymentNotice.read"
   description            = "Read access to PaymentNotice"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_payment_notice_write_scope" {
-  count                 = var.fhir_resources_supported.PaymentNotice ? 1 : 0
+  count                 = var.fhir_resources_supported.PaymentNotice && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/PaymentNotice.write"
   description            = "Write access to PaymentNotice"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_payment_notice_full_scope" {
-  count                 = var.fhir_resources_supported.PaymentNotice ? 1 : 0
+  count                 = var.fhir_resources_supported.PaymentNotice && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/PaymentNotice.*"
   description            = "Full access to PaymentNotice"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_payment_notice_full_scope" {
 }
 // user/PaymentNotice ------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_payment_notice_read_scope" {
-  count                 = var.fhir_resources_supported.PaymentNotice ? 1 : 0
+  count                 = var.fhir_resources_supported.PaymentNotice && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/PaymentNotice.read"
   description            = "Read access to PaymentNotice"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_payment_notice_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_payment_notice_write_scope" {
-  count                 = var.fhir_resources_supported.PaymentNotice ? 1 : 0
+  count                 = var.fhir_resources_supported.PaymentNotice && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/PaymentNotice.write"
   description            = "Write access to PaymentNotice"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_payment_notice_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_payment_notice_full_scope" {
-  count                 = var.fhir_resources_supported.PaymentNotice ? 1 : 0
+  count                 = var.fhir_resources_supported.PaymentNotice && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/PaymentNotice.*"
   description            = "Full access to PaymentNotice"

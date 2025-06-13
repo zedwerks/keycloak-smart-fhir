@@ -1,5 +1,5 @@
 resource keycloak_openid_client_scope "user_MolecularSequence_c" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.c"
   description            = "Create access to MolecularSequence resource for user."
@@ -8,7 +8,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_c" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_r" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.r"
   description            = "Read access to MolecularSequence resource for user."
@@ -17,7 +17,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_r" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_u" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.u"
   description            = "Update access to MolecularSequence resource for user."
@@ -26,7 +26,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_u" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_d" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.d"
   description            = "Delete access to MolecularSequence resource for user."
@@ -35,7 +35,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_d" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_s" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.s"
   description            = "Search access to MolecularSequence resource for user."
@@ -44,7 +44,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_s" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_cr" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.cr"
   description            = "Create, Read access to MolecularSequence resource for user."
@@ -53,7 +53,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_cr" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_cu" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.cu"
   description            = "Create, Update access to MolecularSequence resource for user."
@@ -62,7 +62,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_cu" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_cd" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.cd"
   description            = "Create, Delete access to MolecularSequence resource for user."
@@ -71,7 +71,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_cd" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_cs" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.cs"
   description            = "Create, Search access to MolecularSequence resource for user."
@@ -80,7 +80,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_cs" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_ru" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.ru"
   description            = "Read, Update access to MolecularSequence resource for user."
@@ -89,7 +89,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_ru" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_rd" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.rd"
   description            = "Read, Delete access to MolecularSequence resource for user."
@@ -98,7 +98,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_rd" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_rs" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.rs"
   description            = "Read, Search access to MolecularSequence resource for user."
@@ -107,7 +107,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_rs" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_ud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.ud"
   description            = "Update, Delete access to MolecularSequence resource for user."
@@ -116,7 +116,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_ud" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_us" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.us"
   description            = "Update, Search access to MolecularSequence resource for user."
@@ -125,7 +125,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_us" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_ds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.ds"
   description            = "Delete, Search access to MolecularSequence resource for user."
@@ -134,7 +134,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_ds" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_cru" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.cru"
   description            = "Create, Read, Update access to MolecularSequence resource for user."
@@ -143,7 +143,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_cru" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_crd" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.crd"
   description            = "Create, Read, Delete access to MolecularSequence resource for user."
@@ -152,7 +152,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_crd" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_crs" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.crs"
   description            = "Create, Read, Search access to MolecularSequence resource for user."
@@ -161,7 +161,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_crs" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_cud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.cud"
   description            = "Create, Update, Delete access to MolecularSequence resource for user."
@@ -170,7 +170,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_cud" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_cus" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.cus"
   description            = "Create, Update, Search access to MolecularSequence resource for user."
@@ -179,7 +179,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_cus" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_cds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.cds"
   description            = "Create, Delete, Search access to MolecularSequence resource for user."
@@ -188,7 +188,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_cds" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_rud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.rud"
   description            = "Read, Update, Delete access to MolecularSequence resource for user."
@@ -197,7 +197,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_rud" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_rus" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.rus"
   description            = "Read, Update, Search access to MolecularSequence resource for user."
@@ -206,7 +206,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_rus" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_rds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.rds"
   description            = "Read, Delete, Search access to MolecularSequence resource for user."
@@ -215,7 +215,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_rds" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_uds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.uds"
   description            = "Update, Delete, Search access to MolecularSequence resource for user."
@@ -224,7 +224,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_uds" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_crud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.crud"
   description            = "Create, Read, Update, Delete access to MolecularSequence resource for user."
@@ -233,7 +233,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_crud" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_crus" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.crus"
   description            = "Create, Read, Update, Search access to MolecularSequence resource for user."
@@ -242,7 +242,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_crus" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_crds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.crds"
   description            = "Create, Read, Delete, Search access to MolecularSequence resource for user."
@@ -251,7 +251,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_crds" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_cuds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.cuds"
   description            = "Create, Update, Delete, Search access to MolecularSequence resource for user."
@@ -260,7 +260,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_cuds" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_ruds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.ruds"
   description            = "Read, Update, Delete, Search access to MolecularSequence resource for user."
@@ -269,7 +269,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_ruds" {
 }
 
 resource keycloak_openid_client_scope "user_MolecularSequence_cruds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MolecularSequence.cruds"
   description            = "Create, Read, Update, Delete, Search access to MolecularSequence resource for user."
@@ -278,7 +278,7 @@ resource keycloak_openid_client_scope "user_MolecularSequence_cruds" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_c" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.c"
   description            = "Create access to MolecularSequence resource for patient."
@@ -287,7 +287,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_c" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_r" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.r"
   description            = "Read access to MolecularSequence resource for patient."
@@ -296,7 +296,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_r" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_u" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.u"
   description            = "Update access to MolecularSequence resource for patient."
@@ -305,7 +305,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_u" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_d" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.d"
   description            = "Delete access to MolecularSequence resource for patient."
@@ -314,7 +314,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_d" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_s" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.s"
   description            = "Search access to MolecularSequence resource for patient."
@@ -323,7 +323,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_s" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_cr" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.cr"
   description            = "Create, Read access to MolecularSequence resource for patient."
@@ -332,7 +332,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_cr" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_cu" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.cu"
   description            = "Create, Update access to MolecularSequence resource for patient."
@@ -341,7 +341,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_cu" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_cd" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.cd"
   description            = "Create, Delete access to MolecularSequence resource for patient."
@@ -350,7 +350,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_cd" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_cs" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.cs"
   description            = "Create, Search access to MolecularSequence resource for patient."
@@ -359,7 +359,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_cs" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_ru" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.ru"
   description            = "Read, Update access to MolecularSequence resource for patient."
@@ -368,7 +368,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_ru" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_rd" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.rd"
   description            = "Read, Delete access to MolecularSequence resource for patient."
@@ -377,7 +377,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_rd" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_rs" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.rs"
   description            = "Read, Search access to MolecularSequence resource for patient."
@@ -386,7 +386,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_rs" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_ud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.ud"
   description            = "Update, Delete access to MolecularSequence resource for patient."
@@ -395,7 +395,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_ud" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_us" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.us"
   description            = "Update, Search access to MolecularSequence resource for patient."
@@ -404,7 +404,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_us" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_ds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.ds"
   description            = "Delete, Search access to MolecularSequence resource for patient."
@@ -413,7 +413,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_ds" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_cru" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.cru"
   description            = "Create, Read, Update access to MolecularSequence resource for patient."
@@ -422,7 +422,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_cru" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_crd" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.crd"
   description            = "Create, Read, Delete access to MolecularSequence resource for patient."
@@ -431,7 +431,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_crd" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_crs" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.crs"
   description            = "Create, Read, Search access to MolecularSequence resource for patient."
@@ -440,7 +440,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_crs" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_cud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.cud"
   description            = "Create, Update, Delete access to MolecularSequence resource for patient."
@@ -449,7 +449,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_cud" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_cus" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.cus"
   description            = "Create, Update, Search access to MolecularSequence resource for patient."
@@ -458,7 +458,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_cus" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_cds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.cds"
   description            = "Create, Delete, Search access to MolecularSequence resource for patient."
@@ -467,7 +467,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_cds" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_rud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.rud"
   description            = "Read, Update, Delete access to MolecularSequence resource for patient."
@@ -476,7 +476,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_rud" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_rus" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.rus"
   description            = "Read, Update, Search access to MolecularSequence resource for patient."
@@ -485,7 +485,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_rus" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_rds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.rds"
   description            = "Read, Delete, Search access to MolecularSequence resource for patient."
@@ -494,7 +494,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_rds" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_uds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.uds"
   description            = "Update, Delete, Search access to MolecularSequence resource for patient."
@@ -503,7 +503,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_uds" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_crud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.crud"
   description            = "Create, Read, Update, Delete access to MolecularSequence resource for patient."
@@ -512,7 +512,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_crud" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_crus" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.crus"
   description            = "Create, Read, Update, Search access to MolecularSequence resource for patient."
@@ -521,7 +521,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_crus" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_crds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.crds"
   description            = "Create, Read, Delete, Search access to MolecularSequence resource for patient."
@@ -530,7 +530,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_crds" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_cuds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.cuds"
   description            = "Create, Update, Delete, Search access to MolecularSequence resource for patient."
@@ -539,7 +539,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_cuds" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_ruds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.ruds"
   description            = "Read, Update, Delete, Search access to MolecularSequence resource for patient."
@@ -548,7 +548,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_ruds" {
 }
 
 resource keycloak_openid_client_scope "patient_MolecularSequence_cruds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MolecularSequence.cruds"
   description            = "Create, Read, Update, Delete, Search access to MolecularSequence resource for patient."
@@ -557,7 +557,7 @@ resource keycloak_openid_client_scope "patient_MolecularSequence_cruds" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_c" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.c"
   description            = "Create access to MolecularSequence resource for system."
@@ -566,7 +566,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_c" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_r" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.r"
   description            = "Read access to MolecularSequence resource for system."
@@ -575,7 +575,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_r" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_u" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.u"
   description            = "Update access to MolecularSequence resource for system."
@@ -584,7 +584,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_u" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_d" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.d"
   description            = "Delete access to MolecularSequence resource for system."
@@ -593,7 +593,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_d" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_s" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.s"
   description            = "Search access to MolecularSequence resource for system."
@@ -602,7 +602,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_s" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_cr" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.cr"
   description            = "Create, Read access to MolecularSequence resource for system."
@@ -611,7 +611,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_cr" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_cu" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.cu"
   description            = "Create, Update access to MolecularSequence resource for system."
@@ -620,7 +620,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_cu" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_cd" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.cd"
   description            = "Create, Delete access to MolecularSequence resource for system."
@@ -629,7 +629,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_cd" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_cs" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.cs"
   description            = "Create, Search access to MolecularSequence resource for system."
@@ -638,7 +638,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_cs" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_ru" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.ru"
   description            = "Read, Update access to MolecularSequence resource for system."
@@ -647,7 +647,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_ru" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_rd" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.rd"
   description            = "Read, Delete access to MolecularSequence resource for system."
@@ -656,7 +656,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_rd" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_rs" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.rs"
   description            = "Read, Search access to MolecularSequence resource for system."
@@ -665,7 +665,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_rs" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_ud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.ud"
   description            = "Update, Delete access to MolecularSequence resource for system."
@@ -674,7 +674,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_ud" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_us" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.us"
   description            = "Update, Search access to MolecularSequence resource for system."
@@ -683,7 +683,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_us" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_ds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.ds"
   description            = "Delete, Search access to MolecularSequence resource for system."
@@ -692,7 +692,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_ds" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_cru" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.cru"
   description            = "Create, Read, Update access to MolecularSequence resource for system."
@@ -701,7 +701,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_cru" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_crd" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.crd"
   description            = "Create, Read, Delete access to MolecularSequence resource for system."
@@ -710,7 +710,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_crd" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_crs" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.crs"
   description            = "Create, Read, Search access to MolecularSequence resource for system."
@@ -719,7 +719,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_crs" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_cud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.cud"
   description            = "Create, Update, Delete access to MolecularSequence resource for system."
@@ -728,7 +728,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_cud" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_cus" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.cus"
   description            = "Create, Update, Search access to MolecularSequence resource for system."
@@ -737,7 +737,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_cus" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_cds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.cds"
   description            = "Create, Delete, Search access to MolecularSequence resource for system."
@@ -746,7 +746,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_cds" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_rud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.rud"
   description            = "Read, Update, Delete access to MolecularSequence resource for system."
@@ -755,7 +755,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_rud" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_rus" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.rus"
   description            = "Read, Update, Search access to MolecularSequence resource for system."
@@ -764,7 +764,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_rus" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_rds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.rds"
   description            = "Read, Delete, Search access to MolecularSequence resource for system."
@@ -773,7 +773,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_rds" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_uds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.uds"
   description            = "Update, Delete, Search access to MolecularSequence resource for system."
@@ -782,7 +782,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_uds" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_crud" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.crud"
   description            = "Create, Read, Update, Delete access to MolecularSequence resource for system."
@@ -791,7 +791,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_crud" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_crus" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.crus"
   description            = "Create, Read, Update, Search access to MolecularSequence resource for system."
@@ -800,7 +800,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_crus" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_crds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.crds"
   description            = "Create, Read, Delete, Search access to MolecularSequence resource for system."
@@ -809,7 +809,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_crds" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_cuds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.cuds"
   description            = "Create, Update, Delete, Search access to MolecularSequence resource for system."
@@ -818,7 +818,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_cuds" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_ruds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.ruds"
   description            = "Read, Update, Delete, Search access to MolecularSequence resource for system."
@@ -827,7 +827,7 @@ resource keycloak_openid_client_scope "system_MolecularSequence_ruds" {
 }
 
 resource keycloak_openid_client_scope "system_MolecularSequence_cruds" {
-  count                  = var.fhir_resources_supported.MolecularSequence ? 1 : 0
+  count                  = var.fhir_resources_supported.MolecularSequence && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MolecularSequence.cruds"
   description            = "Create, Read, Update, Delete, Search access to MolecularSequence resource for system."

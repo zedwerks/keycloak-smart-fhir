@@ -1,5 +1,5 @@
 resource keycloak_openid_client_scope "user_Immunization_c" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.c"
   description            = "Create access to Immunization resource for user."
@@ -8,7 +8,7 @@ resource keycloak_openid_client_scope "user_Immunization_c" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_r" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.r"
   description            = "Read access to Immunization resource for user."
@@ -17,7 +17,7 @@ resource keycloak_openid_client_scope "user_Immunization_r" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_u" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.u"
   description            = "Update access to Immunization resource for user."
@@ -26,7 +26,7 @@ resource keycloak_openid_client_scope "user_Immunization_u" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_d" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.d"
   description            = "Delete access to Immunization resource for user."
@@ -35,7 +35,7 @@ resource keycloak_openid_client_scope "user_Immunization_d" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_s" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.s"
   description            = "Search access to Immunization resource for user."
@@ -44,7 +44,7 @@ resource keycloak_openid_client_scope "user_Immunization_s" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_cr" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.cr"
   description            = "Create, Read access to Immunization resource for user."
@@ -53,7 +53,7 @@ resource keycloak_openid_client_scope "user_Immunization_cr" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_cu" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.cu"
   description            = "Create, Update access to Immunization resource for user."
@@ -62,7 +62,7 @@ resource keycloak_openid_client_scope "user_Immunization_cu" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_cd" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.cd"
   description            = "Create, Delete access to Immunization resource for user."
@@ -71,7 +71,7 @@ resource keycloak_openid_client_scope "user_Immunization_cd" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_cs" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.cs"
   description            = "Create, Search access to Immunization resource for user."
@@ -80,7 +80,7 @@ resource keycloak_openid_client_scope "user_Immunization_cs" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_ru" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.ru"
   description            = "Read, Update access to Immunization resource for user."
@@ -89,7 +89,7 @@ resource keycloak_openid_client_scope "user_Immunization_ru" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_rd" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.rd"
   description            = "Read, Delete access to Immunization resource for user."
@@ -98,7 +98,7 @@ resource keycloak_openid_client_scope "user_Immunization_rd" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_rs" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.rs"
   description            = "Read, Search access to Immunization resource for user."
@@ -107,7 +107,7 @@ resource keycloak_openid_client_scope "user_Immunization_rs" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_ud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.ud"
   description            = "Update, Delete access to Immunization resource for user."
@@ -116,7 +116,7 @@ resource keycloak_openid_client_scope "user_Immunization_ud" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_us" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.us"
   description            = "Update, Search access to Immunization resource for user."
@@ -125,7 +125,7 @@ resource keycloak_openid_client_scope "user_Immunization_us" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_ds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.ds"
   description            = "Delete, Search access to Immunization resource for user."
@@ -134,7 +134,7 @@ resource keycloak_openid_client_scope "user_Immunization_ds" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_cru" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.cru"
   description            = "Create, Read, Update access to Immunization resource for user."
@@ -143,7 +143,7 @@ resource keycloak_openid_client_scope "user_Immunization_cru" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_crd" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.crd"
   description            = "Create, Read, Delete access to Immunization resource for user."
@@ -152,7 +152,7 @@ resource keycloak_openid_client_scope "user_Immunization_crd" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_crs" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.crs"
   description            = "Create, Read, Search access to Immunization resource for user."
@@ -161,7 +161,7 @@ resource keycloak_openid_client_scope "user_Immunization_crs" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_cud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.cud"
   description            = "Create, Update, Delete access to Immunization resource for user."
@@ -170,7 +170,7 @@ resource keycloak_openid_client_scope "user_Immunization_cud" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_cus" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.cus"
   description            = "Create, Update, Search access to Immunization resource for user."
@@ -179,7 +179,7 @@ resource keycloak_openid_client_scope "user_Immunization_cus" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_cds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.cds"
   description            = "Create, Delete, Search access to Immunization resource for user."
@@ -188,7 +188,7 @@ resource keycloak_openid_client_scope "user_Immunization_cds" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_rud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.rud"
   description            = "Read, Update, Delete access to Immunization resource for user."
@@ -197,7 +197,7 @@ resource keycloak_openid_client_scope "user_Immunization_rud" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_rus" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.rus"
   description            = "Read, Update, Search access to Immunization resource for user."
@@ -206,7 +206,7 @@ resource keycloak_openid_client_scope "user_Immunization_rus" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_rds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.rds"
   description            = "Read, Delete, Search access to Immunization resource for user."
@@ -215,7 +215,7 @@ resource keycloak_openid_client_scope "user_Immunization_rds" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_uds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.uds"
   description            = "Update, Delete, Search access to Immunization resource for user."
@@ -224,7 +224,7 @@ resource keycloak_openid_client_scope "user_Immunization_uds" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_crud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.crud"
   description            = "Create, Read, Update, Delete access to Immunization resource for user."
@@ -233,7 +233,7 @@ resource keycloak_openid_client_scope "user_Immunization_crud" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_crus" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.crus"
   description            = "Create, Read, Update, Search access to Immunization resource for user."
@@ -242,7 +242,7 @@ resource keycloak_openid_client_scope "user_Immunization_crus" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_crds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.crds"
   description            = "Create, Read, Delete, Search access to Immunization resource for user."
@@ -251,7 +251,7 @@ resource keycloak_openid_client_scope "user_Immunization_crds" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_cuds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.cuds"
   description            = "Create, Update, Delete, Search access to Immunization resource for user."
@@ -260,7 +260,7 @@ resource keycloak_openid_client_scope "user_Immunization_cuds" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_ruds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.ruds"
   description            = "Read, Update, Delete, Search access to Immunization resource for user."
@@ -269,7 +269,7 @@ resource keycloak_openid_client_scope "user_Immunization_ruds" {
 }
 
 resource keycloak_openid_client_scope "user_Immunization_cruds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.cruds"
   description            = "Create, Read, Update, Delete, Search access to Immunization resource for user."
@@ -278,7 +278,7 @@ resource keycloak_openid_client_scope "user_Immunization_cruds" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_c" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.c"
   description            = "Create access to Immunization resource for patient."
@@ -287,7 +287,7 @@ resource keycloak_openid_client_scope "patient_Immunization_c" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_r" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.r"
   description            = "Read access to Immunization resource for patient."
@@ -296,7 +296,7 @@ resource keycloak_openid_client_scope "patient_Immunization_r" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_u" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.u"
   description            = "Update access to Immunization resource for patient."
@@ -305,7 +305,7 @@ resource keycloak_openid_client_scope "patient_Immunization_u" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_d" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.d"
   description            = "Delete access to Immunization resource for patient."
@@ -314,7 +314,7 @@ resource keycloak_openid_client_scope "patient_Immunization_d" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_s" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.s"
   description            = "Search access to Immunization resource for patient."
@@ -323,7 +323,7 @@ resource keycloak_openid_client_scope "patient_Immunization_s" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_cr" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.cr"
   description            = "Create, Read access to Immunization resource for patient."
@@ -332,7 +332,7 @@ resource keycloak_openid_client_scope "patient_Immunization_cr" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_cu" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.cu"
   description            = "Create, Update access to Immunization resource for patient."
@@ -341,7 +341,7 @@ resource keycloak_openid_client_scope "patient_Immunization_cu" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_cd" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.cd"
   description            = "Create, Delete access to Immunization resource for patient."
@@ -350,7 +350,7 @@ resource keycloak_openid_client_scope "patient_Immunization_cd" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_cs" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.cs"
   description            = "Create, Search access to Immunization resource for patient."
@@ -359,7 +359,7 @@ resource keycloak_openid_client_scope "patient_Immunization_cs" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_ru" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.ru"
   description            = "Read, Update access to Immunization resource for patient."
@@ -368,7 +368,7 @@ resource keycloak_openid_client_scope "patient_Immunization_ru" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_rd" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.rd"
   description            = "Read, Delete access to Immunization resource for patient."
@@ -377,7 +377,7 @@ resource keycloak_openid_client_scope "patient_Immunization_rd" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_rs" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.rs"
   description            = "Read, Search access to Immunization resource for patient."
@@ -386,7 +386,7 @@ resource keycloak_openid_client_scope "patient_Immunization_rs" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_ud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.ud"
   description            = "Update, Delete access to Immunization resource for patient."
@@ -395,7 +395,7 @@ resource keycloak_openid_client_scope "patient_Immunization_ud" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_us" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.us"
   description            = "Update, Search access to Immunization resource for patient."
@@ -404,7 +404,7 @@ resource keycloak_openid_client_scope "patient_Immunization_us" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_ds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.ds"
   description            = "Delete, Search access to Immunization resource for patient."
@@ -413,7 +413,7 @@ resource keycloak_openid_client_scope "patient_Immunization_ds" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_cru" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.cru"
   description            = "Create, Read, Update access to Immunization resource for patient."
@@ -422,7 +422,7 @@ resource keycloak_openid_client_scope "patient_Immunization_cru" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_crd" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.crd"
   description            = "Create, Read, Delete access to Immunization resource for patient."
@@ -431,7 +431,7 @@ resource keycloak_openid_client_scope "patient_Immunization_crd" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_crs" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.crs"
   description            = "Create, Read, Search access to Immunization resource for patient."
@@ -440,7 +440,7 @@ resource keycloak_openid_client_scope "patient_Immunization_crs" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_cud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.cud"
   description            = "Create, Update, Delete access to Immunization resource for patient."
@@ -449,7 +449,7 @@ resource keycloak_openid_client_scope "patient_Immunization_cud" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_cus" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.cus"
   description            = "Create, Update, Search access to Immunization resource for patient."
@@ -458,7 +458,7 @@ resource keycloak_openid_client_scope "patient_Immunization_cus" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_cds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.cds"
   description            = "Create, Delete, Search access to Immunization resource for patient."
@@ -467,7 +467,7 @@ resource keycloak_openid_client_scope "patient_Immunization_cds" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_rud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.rud"
   description            = "Read, Update, Delete access to Immunization resource for patient."
@@ -476,7 +476,7 @@ resource keycloak_openid_client_scope "patient_Immunization_rud" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_rus" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.rus"
   description            = "Read, Update, Search access to Immunization resource for patient."
@@ -485,7 +485,7 @@ resource keycloak_openid_client_scope "patient_Immunization_rus" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_rds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.rds"
   description            = "Read, Delete, Search access to Immunization resource for patient."
@@ -494,7 +494,7 @@ resource keycloak_openid_client_scope "patient_Immunization_rds" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_uds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.uds"
   description            = "Update, Delete, Search access to Immunization resource for patient."
@@ -503,7 +503,7 @@ resource keycloak_openid_client_scope "patient_Immunization_uds" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_crud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.crud"
   description            = "Create, Read, Update, Delete access to Immunization resource for patient."
@@ -512,7 +512,7 @@ resource keycloak_openid_client_scope "patient_Immunization_crud" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_crus" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.crus"
   description            = "Create, Read, Update, Search access to Immunization resource for patient."
@@ -521,7 +521,7 @@ resource keycloak_openid_client_scope "patient_Immunization_crus" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_crds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.crds"
   description            = "Create, Read, Delete, Search access to Immunization resource for patient."
@@ -530,7 +530,7 @@ resource keycloak_openid_client_scope "patient_Immunization_crds" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_cuds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.cuds"
   description            = "Create, Update, Delete, Search access to Immunization resource for patient."
@@ -539,7 +539,7 @@ resource keycloak_openid_client_scope "patient_Immunization_cuds" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_ruds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.ruds"
   description            = "Read, Update, Delete, Search access to Immunization resource for patient."
@@ -548,7 +548,7 @@ resource keycloak_openid_client_scope "patient_Immunization_ruds" {
 }
 
 resource keycloak_openid_client_scope "patient_Immunization_cruds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.cruds"
   description            = "Create, Read, Update, Delete, Search access to Immunization resource for patient."
@@ -557,7 +557,7 @@ resource keycloak_openid_client_scope "patient_Immunization_cruds" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_c" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.c"
   description            = "Create access to Immunization resource for system."
@@ -566,7 +566,7 @@ resource keycloak_openid_client_scope "system_Immunization_c" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_r" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.r"
   description            = "Read access to Immunization resource for system."
@@ -575,7 +575,7 @@ resource keycloak_openid_client_scope "system_Immunization_r" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_u" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.u"
   description            = "Update access to Immunization resource for system."
@@ -584,7 +584,7 @@ resource keycloak_openid_client_scope "system_Immunization_u" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_d" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.d"
   description            = "Delete access to Immunization resource for system."
@@ -593,7 +593,7 @@ resource keycloak_openid_client_scope "system_Immunization_d" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_s" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.s"
   description            = "Search access to Immunization resource for system."
@@ -602,7 +602,7 @@ resource keycloak_openid_client_scope "system_Immunization_s" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_cr" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.cr"
   description            = "Create, Read access to Immunization resource for system."
@@ -611,7 +611,7 @@ resource keycloak_openid_client_scope "system_Immunization_cr" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_cu" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.cu"
   description            = "Create, Update access to Immunization resource for system."
@@ -620,7 +620,7 @@ resource keycloak_openid_client_scope "system_Immunization_cu" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_cd" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.cd"
   description            = "Create, Delete access to Immunization resource for system."
@@ -629,7 +629,7 @@ resource keycloak_openid_client_scope "system_Immunization_cd" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_cs" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.cs"
   description            = "Create, Search access to Immunization resource for system."
@@ -638,7 +638,7 @@ resource keycloak_openid_client_scope "system_Immunization_cs" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_ru" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.ru"
   description            = "Read, Update access to Immunization resource for system."
@@ -647,7 +647,7 @@ resource keycloak_openid_client_scope "system_Immunization_ru" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_rd" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.rd"
   description            = "Read, Delete access to Immunization resource for system."
@@ -656,7 +656,7 @@ resource keycloak_openid_client_scope "system_Immunization_rd" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_rs" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.rs"
   description            = "Read, Search access to Immunization resource for system."
@@ -665,7 +665,7 @@ resource keycloak_openid_client_scope "system_Immunization_rs" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_ud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.ud"
   description            = "Update, Delete access to Immunization resource for system."
@@ -674,7 +674,7 @@ resource keycloak_openid_client_scope "system_Immunization_ud" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_us" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.us"
   description            = "Update, Search access to Immunization resource for system."
@@ -683,7 +683,7 @@ resource keycloak_openid_client_scope "system_Immunization_us" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_ds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.ds"
   description            = "Delete, Search access to Immunization resource for system."
@@ -692,7 +692,7 @@ resource keycloak_openid_client_scope "system_Immunization_ds" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_cru" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.cru"
   description            = "Create, Read, Update access to Immunization resource for system."
@@ -701,7 +701,7 @@ resource keycloak_openid_client_scope "system_Immunization_cru" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_crd" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.crd"
   description            = "Create, Read, Delete access to Immunization resource for system."
@@ -710,7 +710,7 @@ resource keycloak_openid_client_scope "system_Immunization_crd" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_crs" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.crs"
   description            = "Create, Read, Search access to Immunization resource for system."
@@ -719,7 +719,7 @@ resource keycloak_openid_client_scope "system_Immunization_crs" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_cud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.cud"
   description            = "Create, Update, Delete access to Immunization resource for system."
@@ -728,7 +728,7 @@ resource keycloak_openid_client_scope "system_Immunization_cud" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_cus" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.cus"
   description            = "Create, Update, Search access to Immunization resource for system."
@@ -737,7 +737,7 @@ resource keycloak_openid_client_scope "system_Immunization_cus" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_cds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.cds"
   description            = "Create, Delete, Search access to Immunization resource for system."
@@ -746,7 +746,7 @@ resource keycloak_openid_client_scope "system_Immunization_cds" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_rud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.rud"
   description            = "Read, Update, Delete access to Immunization resource for system."
@@ -755,7 +755,7 @@ resource keycloak_openid_client_scope "system_Immunization_rud" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_rus" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.rus"
   description            = "Read, Update, Search access to Immunization resource for system."
@@ -764,7 +764,7 @@ resource keycloak_openid_client_scope "system_Immunization_rus" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_rds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.rds"
   description            = "Read, Delete, Search access to Immunization resource for system."
@@ -773,7 +773,7 @@ resource keycloak_openid_client_scope "system_Immunization_rds" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_uds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.uds"
   description            = "Update, Delete, Search access to Immunization resource for system."
@@ -782,7 +782,7 @@ resource keycloak_openid_client_scope "system_Immunization_uds" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_crud" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.crud"
   description            = "Create, Read, Update, Delete access to Immunization resource for system."
@@ -791,7 +791,7 @@ resource keycloak_openid_client_scope "system_Immunization_crud" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_crus" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.crus"
   description            = "Create, Read, Update, Search access to Immunization resource for system."
@@ -800,7 +800,7 @@ resource keycloak_openid_client_scope "system_Immunization_crus" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_crds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.crds"
   description            = "Create, Read, Delete, Search access to Immunization resource for system."
@@ -809,7 +809,7 @@ resource keycloak_openid_client_scope "system_Immunization_crds" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_cuds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.cuds"
   description            = "Create, Update, Delete, Search access to Immunization resource for system."
@@ -818,7 +818,7 @@ resource keycloak_openid_client_scope "system_Immunization_cuds" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_ruds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.ruds"
   description            = "Read, Update, Delete, Search access to Immunization resource for system."
@@ -827,7 +827,7 @@ resource keycloak_openid_client_scope "system_Immunization_ruds" {
 }
 
 resource keycloak_openid_client_scope "system_Immunization_cruds" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.cruds"
   description            = "Create, Read, Update, Delete, Search access to Immunization resource for system."

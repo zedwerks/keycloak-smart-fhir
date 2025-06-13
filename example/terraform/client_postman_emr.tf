@@ -29,11 +29,7 @@ resource "keycloak_openid_client_optional_scopes" "postman_emr_optional_scopes" 
     "Context.read",
     "user/Patient.read",
     "user/Patient.write",
-    "user/Patient.*",
-    "user/*.*",
-    "patient/Patient.read",
-    "patient/Patient.write",
-  "patient/Patient.*"]
+    "user/Patient.*"]
   depends_on = [keycloak_openid_client.postman_emr]
 }
 
@@ -41,7 +37,7 @@ resource "keycloak_openid_audience_protocol_mapper" "postman_emr_audience_mapper
   realm_id                 = data.keycloak_realm.realm.id
   client_id                = keycloak_openid_client.postman_emr.id
   name                     = "client-audience-mapper"
-  included_client_audience = keycloak_openid_client.postman_emr.client_id
+  included_custom_audience = keycloak_openid_client.postman_emr.client_id
   add_to_access_token      = true
   add_to_id_token          = true
   depends_on               = [keycloak_openid_client.postman_emr]

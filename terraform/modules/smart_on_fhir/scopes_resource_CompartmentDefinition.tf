@@ -1,6 +1,6 @@
 // patient/CompartmentDefinition -----------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_compartment_definition_read_scope" {
-  count                  = var.fhir_resources_supported.CompartmentDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.CompartmentDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CompartmentDefinition.read"
   description            = "Read access to CompartmentDefinition"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_compartment_definition_read_sco
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_compartment_definition_write_scope" {
-  count                  = var.fhir_resources_supported.CompartmentDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.CompartmentDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CompartmentDefinition.write"
   description            = "Write access to CompartmentDefinition"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_compartment_definition_write_sc
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_compartment_definition_full_scope" {
-  count                  = var.fhir_resources_supported.CompartmentDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.CompartmentDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CompartmentDefinition.*"
   description            = "Full access to CompartmentDefinition"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_compartment_definition_full_sco
 }
 // system/CompartmentDefinition -----------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_compartment_definition_read_scope" {
-  count                  = var.fhir_resources_supported.CompartmentDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.CompartmentDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CompartmentDefinition.read"
   description            = "Read access to CompartmentDefinition"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_compartment_definition_write_scope" {
-  count                  = var.fhir_resources_supported.CompartmentDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.CompartmentDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CompartmentDefinition.write"
   description            = "Write access to CompartmentDefinition"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_compartment_definition_full_scope" {
-  count                  = var.fhir_resources_supported.CompartmentDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.CompartmentDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CompartmentDefinition.*"
   description            = "Full access to CompartmentDefinition"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_compartment_definition_full_scop
 }
 // user/CompartmentDefinition -----------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_compartment_definition_read_scope" {
-  count                  = var.fhir_resources_supported.CompartmentDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.CompartmentDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CompartmentDefinition.read"
   description            = "Read access to CompartmentDefinition"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_compartment_definition_read_scope"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_compartment_definition_write_scope" {
-  count                  = var.fhir_resources_supported.CompartmentDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.CompartmentDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CompartmentDefinition.write"
   description            = "Write access to CompartmentDefinition"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_compartment_definition_write_scope
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_compartment_definition_full_scope" {
-  count                  = var.fhir_resources_supported.CompartmentDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.CompartmentDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CompartmentDefinition.*"
   description            = "Full access to CompartmentDefinition"

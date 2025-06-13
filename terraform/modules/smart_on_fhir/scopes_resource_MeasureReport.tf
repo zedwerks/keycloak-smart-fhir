@@ -1,6 +1,6 @@
 // patient/MeasureReport -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_measure_report_read_scope" {
-  count                  = var.fhir_resources_supported.MeasureReport ? 1 : 0
+  count                  = var.fhir_resources_supported.MeasureReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MeasureReport.read"
   description            = "Read access to MeasureReport"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_measure_report_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_measure_report_write_scope" {
-  count                  = var.fhir_resources_supported.MeasureReport ? 1 : 0
+  count                  = var.fhir_resources_supported.MeasureReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MeasureReport.write"
   description            = "Write access to MeasureReport"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_measure_report_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_measure_report_full_scope" {
-  count                  = var.fhir_resources_supported.MeasureReport ? 1 : 0
+  count                  = var.fhir_resources_supported.MeasureReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MeasureReport.*"
   description            = "Full access to MeasureReport"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_measure_report_full_scope" {
 }
 // system/MeasureReport -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_measure_report_read_scope" {
-  count                  = var.fhir_resources_supported.MeasureReport ? 1 : 0
+  count                  = var.fhir_resources_supported.MeasureReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MeasureReport.read"
   description            = "Read access to MeasureReport"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_measure_report_write_scope" {
-  count                  = var.fhir_resources_supported.MeasureReport ? 1 : 0
+  count                  = var.fhir_resources_supported.MeasureReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MeasureReport.write"
   description            = "Write access to MeasureReport"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_measure_report_full_scope" {
-  count                  = var.fhir_resources_supported.MeasureReport ? 1 : 0
+  count                  = var.fhir_resources_supported.MeasureReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MeasureReport.*"
   description            = "Full access to MeasureReport"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_measure_report_full_scope" {
 }
 // user/MeasureReport -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_measure_report_read_scope" {
-  count                  = var.fhir_resources_supported.MeasureReport ? 1 : 0
+  count                  = var.fhir_resources_supported.MeasureReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MeasureReport.read"
   description            = "Read access to MeasureReport"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_measure_report_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_measure_report_write_scope" {
-  count                  = var.fhir_resources_supported.MeasureReport ? 1 : 0
+  count                  = var.fhir_resources_supported.MeasureReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MeasureReport.write"
   description            = "Write access to MeasureReport"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_measure_report_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_measure_report_full_scope" {
-  count                  = var.fhir_resources_supported.MeasureReport ? 1 : 0
+  count                  = var.fhir_resources_supported.MeasureReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MeasureReport.*"
   description            = "Full access to MeasureReport"

@@ -1,6 +1,6 @@
 // patient/Composition ---------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_composition_read_scope" {
-  count                  = var.fhir_resources_supported.Composition ? 1 : 0
+  count                  = var.fhir_resources_supported.Composition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Composition.read"
   description            = "Read access to Composition"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_composition_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_composition_write_scope" {
-  count                  = var.fhir_resources_supported.Composition ? 1 : 0
+  count                  = var.fhir_resources_supported.Composition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Composition.write"
   description            = "Write access to Composition"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_composition_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_composition_full_scope" {
-  count                  = var.fhir_resources_supported.Composition ? 1 : 0
+  count                  = var.fhir_resources_supported.Composition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Composition.*"
   description            = "Full access to Composition"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_composition_full_scope" {
 }
 // system/Composition ---------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_composition_read_scope" {
-  count                  = var.fhir_resources_supported.Composition ? 1 : 0
+  count                  = var.fhir_resources_supported.Composition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Composition.read"
   description            = "Read access to Composition"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_composition_write_scope" {
-  count                  = var.fhir_resources_supported.Composition ? 1 : 0
+  count                  = var.fhir_resources_supported.Composition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Composition.write"
   description            = "Write access to Composition"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_composition_full_scope" {
-  count                  = var.fhir_resources_supported.Composition ? 1 : 0
+  count                  = var.fhir_resources_supported.Composition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Composition.*"
   description            = "Full access to Composition"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_composition_full_scope" {
 }
 // user/Composition ---------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_composition_read_scope" {
-  count                  = var.fhir_resources_supported.Composition ? 1 : 0
+  count                  = var.fhir_resources_supported.Composition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Composition.read"
   description            = "Read access to Composition"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_composition_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_composition_write_scope" {
-  count                  = var.fhir_resources_supported.Composition ? 1 : 0
+  count                  = var.fhir_resources_supported.Composition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Composition.write"
   description            = "Write access to Composition"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_composition_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_composition_full_scope" {
-  count                  = var.fhir_resources_supported.Composition ? 1 : 0
+  count                  = var.fhir_resources_supported.Composition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Composition.*"
   description            = "Full access to Composition"

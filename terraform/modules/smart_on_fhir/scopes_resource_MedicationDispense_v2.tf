@@ -1,5 +1,5 @@
 resource keycloak_openid_client_scope "user_MedicationDispense_c" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.c"
   description            = "Create access to MedicationDispense resource for user."
@@ -8,7 +8,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_c" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_r" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.r"
   description            = "Read access to MedicationDispense resource for user."
@@ -17,7 +17,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_r" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_u" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.u"
   description            = "Update access to MedicationDispense resource for user."
@@ -26,7 +26,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_u" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_d" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.d"
   description            = "Delete access to MedicationDispense resource for user."
@@ -35,7 +35,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_d" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_s" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.s"
   description            = "Search access to MedicationDispense resource for user."
@@ -44,7 +44,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_s" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_cr" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.cr"
   description            = "Create, Read access to MedicationDispense resource for user."
@@ -53,7 +53,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_cr" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_cu" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.cu"
   description            = "Create, Update access to MedicationDispense resource for user."
@@ -62,7 +62,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_cu" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_cd" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.cd"
   description            = "Create, Delete access to MedicationDispense resource for user."
@@ -71,7 +71,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_cd" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_cs" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.cs"
   description            = "Create, Search access to MedicationDispense resource for user."
@@ -80,7 +80,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_cs" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_ru" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.ru"
   description            = "Read, Update access to MedicationDispense resource for user."
@@ -89,7 +89,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_ru" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_rd" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.rd"
   description            = "Read, Delete access to MedicationDispense resource for user."
@@ -98,7 +98,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_rd" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_rs" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.rs"
   description            = "Read, Search access to MedicationDispense resource for user."
@@ -107,7 +107,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_rs" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_ud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.ud"
   description            = "Update, Delete access to MedicationDispense resource for user."
@@ -116,7 +116,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_ud" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_us" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.us"
   description            = "Update, Search access to MedicationDispense resource for user."
@@ -125,7 +125,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_us" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_ds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.ds"
   description            = "Delete, Search access to MedicationDispense resource for user."
@@ -134,7 +134,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_ds" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_cru" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.cru"
   description            = "Create, Read, Update access to MedicationDispense resource for user."
@@ -143,7 +143,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_cru" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_crd" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.crd"
   description            = "Create, Read, Delete access to MedicationDispense resource for user."
@@ -152,7 +152,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_crd" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_crs" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.crs"
   description            = "Create, Read, Search access to MedicationDispense resource for user."
@@ -161,7 +161,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_crs" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_cud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.cud"
   description            = "Create, Update, Delete access to MedicationDispense resource for user."
@@ -170,7 +170,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_cud" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_cus" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.cus"
   description            = "Create, Update, Search access to MedicationDispense resource for user."
@@ -179,7 +179,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_cus" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_cds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.cds"
   description            = "Create, Delete, Search access to MedicationDispense resource for user."
@@ -188,7 +188,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_cds" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_rud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.rud"
   description            = "Read, Update, Delete access to MedicationDispense resource for user."
@@ -197,7 +197,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_rud" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_rus" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.rus"
   description            = "Read, Update, Search access to MedicationDispense resource for user."
@@ -206,7 +206,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_rus" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_rds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.rds"
   description            = "Read, Delete, Search access to MedicationDispense resource for user."
@@ -215,7 +215,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_rds" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_uds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.uds"
   description            = "Update, Delete, Search access to MedicationDispense resource for user."
@@ -224,7 +224,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_uds" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_crud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.crud"
   description            = "Create, Read, Update, Delete access to MedicationDispense resource for user."
@@ -233,7 +233,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_crud" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_crus" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.crus"
   description            = "Create, Read, Update, Search access to MedicationDispense resource for user."
@@ -242,7 +242,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_crus" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_crds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.crds"
   description            = "Create, Read, Delete, Search access to MedicationDispense resource for user."
@@ -251,7 +251,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_crds" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_cuds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.cuds"
   description            = "Create, Update, Delete, Search access to MedicationDispense resource for user."
@@ -260,7 +260,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_cuds" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_ruds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.ruds"
   description            = "Read, Update, Delete, Search access to MedicationDispense resource for user."
@@ -269,7 +269,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_ruds" {
 }
 
 resource keycloak_openid_client_scope "user_MedicationDispense_cruds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.cruds"
   description            = "Create, Read, Update, Delete, Search access to MedicationDispense resource for user."
@@ -278,7 +278,7 @@ resource keycloak_openid_client_scope "user_MedicationDispense_cruds" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_c" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.c"
   description            = "Create access to MedicationDispense resource for patient."
@@ -287,7 +287,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_c" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_r" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.r"
   description            = "Read access to MedicationDispense resource for patient."
@@ -296,7 +296,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_r" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_u" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.u"
   description            = "Update access to MedicationDispense resource for patient."
@@ -305,7 +305,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_u" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_d" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.d"
   description            = "Delete access to MedicationDispense resource for patient."
@@ -314,7 +314,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_d" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_s" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.s"
   description            = "Search access to MedicationDispense resource for patient."
@@ -323,7 +323,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_s" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_cr" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.cr"
   description            = "Create, Read access to MedicationDispense resource for patient."
@@ -332,7 +332,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_cr" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_cu" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.cu"
   description            = "Create, Update access to MedicationDispense resource for patient."
@@ -341,7 +341,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_cu" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_cd" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.cd"
   description            = "Create, Delete access to MedicationDispense resource for patient."
@@ -350,7 +350,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_cd" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_cs" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.cs"
   description            = "Create, Search access to MedicationDispense resource for patient."
@@ -359,7 +359,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_cs" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_ru" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.ru"
   description            = "Read, Update access to MedicationDispense resource for patient."
@@ -368,7 +368,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_ru" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_rd" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.rd"
   description            = "Read, Delete access to MedicationDispense resource for patient."
@@ -377,7 +377,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_rd" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_rs" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.rs"
   description            = "Read, Search access to MedicationDispense resource for patient."
@@ -386,7 +386,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_rs" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_ud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.ud"
   description            = "Update, Delete access to MedicationDispense resource for patient."
@@ -395,7 +395,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_ud" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_us" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.us"
   description            = "Update, Search access to MedicationDispense resource for patient."
@@ -404,7 +404,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_us" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_ds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.ds"
   description            = "Delete, Search access to MedicationDispense resource for patient."
@@ -413,7 +413,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_ds" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_cru" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.cru"
   description            = "Create, Read, Update access to MedicationDispense resource for patient."
@@ -422,7 +422,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_cru" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_crd" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.crd"
   description            = "Create, Read, Delete access to MedicationDispense resource for patient."
@@ -431,7 +431,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_crd" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_crs" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.crs"
   description            = "Create, Read, Search access to MedicationDispense resource for patient."
@@ -440,7 +440,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_crs" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_cud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.cud"
   description            = "Create, Update, Delete access to MedicationDispense resource for patient."
@@ -449,7 +449,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_cud" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_cus" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.cus"
   description            = "Create, Update, Search access to MedicationDispense resource for patient."
@@ -458,7 +458,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_cus" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_cds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.cds"
   description            = "Create, Delete, Search access to MedicationDispense resource for patient."
@@ -467,7 +467,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_cds" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_rud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.rud"
   description            = "Read, Update, Delete access to MedicationDispense resource for patient."
@@ -476,7 +476,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_rud" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_rus" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.rus"
   description            = "Read, Update, Search access to MedicationDispense resource for patient."
@@ -485,7 +485,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_rus" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_rds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.rds"
   description            = "Read, Delete, Search access to MedicationDispense resource for patient."
@@ -494,7 +494,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_rds" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_uds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.uds"
   description            = "Update, Delete, Search access to MedicationDispense resource for patient."
@@ -503,7 +503,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_uds" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_crud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.crud"
   description            = "Create, Read, Update, Delete access to MedicationDispense resource for patient."
@@ -512,7 +512,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_crud" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_crus" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.crus"
   description            = "Create, Read, Update, Search access to MedicationDispense resource for patient."
@@ -521,7 +521,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_crus" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_crds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.crds"
   description            = "Create, Read, Delete, Search access to MedicationDispense resource for patient."
@@ -530,7 +530,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_crds" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_cuds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.cuds"
   description            = "Create, Update, Delete, Search access to MedicationDispense resource for patient."
@@ -539,7 +539,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_cuds" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_ruds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.ruds"
   description            = "Read, Update, Delete, Search access to MedicationDispense resource for patient."
@@ -548,7 +548,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_ruds" {
 }
 
 resource keycloak_openid_client_scope "patient_MedicationDispense_cruds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.cruds"
   description            = "Create, Read, Update, Delete, Search access to MedicationDispense resource for patient."
@@ -557,7 +557,7 @@ resource keycloak_openid_client_scope "patient_MedicationDispense_cruds" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_c" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.c"
   description            = "Create access to MedicationDispense resource for system."
@@ -566,7 +566,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_c" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_r" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.r"
   description            = "Read access to MedicationDispense resource for system."
@@ -575,7 +575,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_r" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_u" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.u"
   description            = "Update access to MedicationDispense resource for system."
@@ -584,7 +584,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_u" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_d" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.d"
   description            = "Delete access to MedicationDispense resource for system."
@@ -593,7 +593,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_d" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_s" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.s"
   description            = "Search access to MedicationDispense resource for system."
@@ -602,7 +602,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_s" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_cr" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.cr"
   description            = "Create, Read access to MedicationDispense resource for system."
@@ -611,7 +611,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_cr" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_cu" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.cu"
   description            = "Create, Update access to MedicationDispense resource for system."
@@ -620,7 +620,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_cu" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_cd" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.cd"
   description            = "Create, Delete access to MedicationDispense resource for system."
@@ -629,7 +629,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_cd" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_cs" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.cs"
   description            = "Create, Search access to MedicationDispense resource for system."
@@ -638,7 +638,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_cs" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_ru" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.ru"
   description            = "Read, Update access to MedicationDispense resource for system."
@@ -647,7 +647,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_ru" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_rd" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.rd"
   description            = "Read, Delete access to MedicationDispense resource for system."
@@ -656,7 +656,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_rd" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_rs" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.rs"
   description            = "Read, Search access to MedicationDispense resource for system."
@@ -665,7 +665,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_rs" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_ud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.ud"
   description            = "Update, Delete access to MedicationDispense resource for system."
@@ -674,7 +674,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_ud" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_us" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.us"
   description            = "Update, Search access to MedicationDispense resource for system."
@@ -683,7 +683,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_us" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_ds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.ds"
   description            = "Delete, Search access to MedicationDispense resource for system."
@@ -692,7 +692,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_ds" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_cru" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.cru"
   description            = "Create, Read, Update access to MedicationDispense resource for system."
@@ -701,7 +701,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_cru" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_crd" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.crd"
   description            = "Create, Read, Delete access to MedicationDispense resource for system."
@@ -710,7 +710,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_crd" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_crs" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.crs"
   description            = "Create, Read, Search access to MedicationDispense resource for system."
@@ -719,7 +719,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_crs" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_cud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.cud"
   description            = "Create, Update, Delete access to MedicationDispense resource for system."
@@ -728,7 +728,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_cud" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_cus" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.cus"
   description            = "Create, Update, Search access to MedicationDispense resource for system."
@@ -737,7 +737,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_cus" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_cds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.cds"
   description            = "Create, Delete, Search access to MedicationDispense resource for system."
@@ -746,7 +746,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_cds" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_rud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.rud"
   description            = "Read, Update, Delete access to MedicationDispense resource for system."
@@ -755,7 +755,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_rud" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_rus" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.rus"
   description            = "Read, Update, Search access to MedicationDispense resource for system."
@@ -764,7 +764,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_rus" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_rds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.rds"
   description            = "Read, Delete, Search access to MedicationDispense resource for system."
@@ -773,7 +773,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_rds" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_uds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.uds"
   description            = "Update, Delete, Search access to MedicationDispense resource for system."
@@ -782,7 +782,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_uds" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_crud" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.crud"
   description            = "Create, Read, Update, Delete access to MedicationDispense resource for system."
@@ -791,7 +791,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_crud" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_crus" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.crus"
   description            = "Create, Read, Update, Search access to MedicationDispense resource for system."
@@ -800,7 +800,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_crus" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_crds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.crds"
   description            = "Create, Read, Delete, Search access to MedicationDispense resource for system."
@@ -809,7 +809,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_crds" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_cuds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.cuds"
   description            = "Create, Update, Delete, Search access to MedicationDispense resource for system."
@@ -818,7 +818,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_cuds" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_ruds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.ruds"
   description            = "Read, Update, Delete, Search access to MedicationDispense resource for system."
@@ -827,7 +827,7 @@ resource keycloak_openid_client_scope "system_MedicationDispense_ruds" {
 }
 
 resource keycloak_openid_client_scope "system_MedicationDispense_cruds" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.cruds"
   description            = "Create, Read, Update, Delete, Search access to MedicationDispense resource for system."

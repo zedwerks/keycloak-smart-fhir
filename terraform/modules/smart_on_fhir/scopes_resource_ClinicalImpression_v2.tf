@@ -1,5 +1,5 @@
 resource keycloak_openid_client_scope "user_ClinicalImpression_c" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.c"
   description            = "Create access to ClinicalImpression resource for user."
@@ -8,7 +8,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_c" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_r" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.r"
   description            = "Read access to ClinicalImpression resource for user."
@@ -17,7 +17,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_r" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_u" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.u"
   description            = "Update access to ClinicalImpression resource for user."
@@ -26,7 +26,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_u" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_d" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.d"
   description            = "Delete access to ClinicalImpression resource for user."
@@ -35,7 +35,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_d" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_s" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.s"
   description            = "Search access to ClinicalImpression resource for user."
@@ -44,7 +44,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_s" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_cr" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.cr"
   description            = "Create, Read access to ClinicalImpression resource for user."
@@ -53,7 +53,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_cr" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_cu" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.cu"
   description            = "Create, Update access to ClinicalImpression resource for user."
@@ -62,7 +62,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_cu" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_cd" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.cd"
   description            = "Create, Delete access to ClinicalImpression resource for user."
@@ -71,7 +71,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_cd" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_cs" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.cs"
   description            = "Create, Search access to ClinicalImpression resource for user."
@@ -80,7 +80,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_cs" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_ru" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.ru"
   description            = "Read, Update access to ClinicalImpression resource for user."
@@ -89,7 +89,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_ru" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_rd" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.rd"
   description            = "Read, Delete access to ClinicalImpression resource for user."
@@ -98,7 +98,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_rd" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_rs" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.rs"
   description            = "Read, Search access to ClinicalImpression resource for user."
@@ -107,7 +107,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_rs" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_ud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.ud"
   description            = "Update, Delete access to ClinicalImpression resource for user."
@@ -116,7 +116,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_ud" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_us" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.us"
   description            = "Update, Search access to ClinicalImpression resource for user."
@@ -125,7 +125,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_us" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_ds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.ds"
   description            = "Delete, Search access to ClinicalImpression resource for user."
@@ -134,7 +134,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_ds" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_cru" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.cru"
   description            = "Create, Read, Update access to ClinicalImpression resource for user."
@@ -143,7 +143,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_cru" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_crd" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.crd"
   description            = "Create, Read, Delete access to ClinicalImpression resource for user."
@@ -152,7 +152,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_crd" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_crs" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.crs"
   description            = "Create, Read, Search access to ClinicalImpression resource for user."
@@ -161,7 +161,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_crs" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_cud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.cud"
   description            = "Create, Update, Delete access to ClinicalImpression resource for user."
@@ -170,7 +170,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_cud" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_cus" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.cus"
   description            = "Create, Update, Search access to ClinicalImpression resource for user."
@@ -179,7 +179,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_cus" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_cds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.cds"
   description            = "Create, Delete, Search access to ClinicalImpression resource for user."
@@ -188,7 +188,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_cds" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_rud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.rud"
   description            = "Read, Update, Delete access to ClinicalImpression resource for user."
@@ -197,7 +197,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_rud" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_rus" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.rus"
   description            = "Read, Update, Search access to ClinicalImpression resource for user."
@@ -206,7 +206,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_rus" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_rds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.rds"
   description            = "Read, Delete, Search access to ClinicalImpression resource for user."
@@ -215,7 +215,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_rds" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_uds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.uds"
   description            = "Update, Delete, Search access to ClinicalImpression resource for user."
@@ -224,7 +224,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_uds" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_crud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.crud"
   description            = "Create, Read, Update, Delete access to ClinicalImpression resource for user."
@@ -233,7 +233,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_crud" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_crus" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.crus"
   description            = "Create, Read, Update, Search access to ClinicalImpression resource for user."
@@ -242,7 +242,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_crus" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_crds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.crds"
   description            = "Create, Read, Delete, Search access to ClinicalImpression resource for user."
@@ -251,7 +251,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_crds" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_cuds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.cuds"
   description            = "Create, Update, Delete, Search access to ClinicalImpression resource for user."
@@ -260,7 +260,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_cuds" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_ruds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.ruds"
   description            = "Read, Update, Delete, Search access to ClinicalImpression resource for user."
@@ -269,7 +269,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_ruds" {
 }
 
 resource keycloak_openid_client_scope "user_ClinicalImpression_cruds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ClinicalImpression.cruds"
   description            = "Create, Read, Update, Delete, Search access to ClinicalImpression resource for user."
@@ -278,7 +278,7 @@ resource keycloak_openid_client_scope "user_ClinicalImpression_cruds" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_c" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.c"
   description            = "Create access to ClinicalImpression resource for patient."
@@ -287,7 +287,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_c" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_r" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.r"
   description            = "Read access to ClinicalImpression resource for patient."
@@ -296,7 +296,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_r" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_u" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.u"
   description            = "Update access to ClinicalImpression resource for patient."
@@ -305,7 +305,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_u" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_d" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.d"
   description            = "Delete access to ClinicalImpression resource for patient."
@@ -314,7 +314,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_d" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_s" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.s"
   description            = "Search access to ClinicalImpression resource for patient."
@@ -323,7 +323,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_s" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_cr" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.cr"
   description            = "Create, Read access to ClinicalImpression resource for patient."
@@ -332,7 +332,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_cr" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_cu" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.cu"
   description            = "Create, Update access to ClinicalImpression resource for patient."
@@ -341,7 +341,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_cu" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_cd" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.cd"
   description            = "Create, Delete access to ClinicalImpression resource for patient."
@@ -350,7 +350,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_cd" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_cs" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.cs"
   description            = "Create, Search access to ClinicalImpression resource for patient."
@@ -359,7 +359,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_cs" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_ru" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.ru"
   description            = "Read, Update access to ClinicalImpression resource for patient."
@@ -368,7 +368,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_ru" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_rd" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.rd"
   description            = "Read, Delete access to ClinicalImpression resource for patient."
@@ -377,7 +377,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_rd" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_rs" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.rs"
   description            = "Read, Search access to ClinicalImpression resource for patient."
@@ -386,7 +386,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_rs" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_ud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.ud"
   description            = "Update, Delete access to ClinicalImpression resource for patient."
@@ -395,7 +395,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_ud" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_us" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.us"
   description            = "Update, Search access to ClinicalImpression resource for patient."
@@ -404,7 +404,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_us" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_ds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.ds"
   description            = "Delete, Search access to ClinicalImpression resource for patient."
@@ -413,7 +413,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_ds" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_cru" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.cru"
   description            = "Create, Read, Update access to ClinicalImpression resource for patient."
@@ -422,7 +422,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_cru" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_crd" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.crd"
   description            = "Create, Read, Delete access to ClinicalImpression resource for patient."
@@ -431,7 +431,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_crd" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_crs" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.crs"
   description            = "Create, Read, Search access to ClinicalImpression resource for patient."
@@ -440,7 +440,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_crs" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_cud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.cud"
   description            = "Create, Update, Delete access to ClinicalImpression resource for patient."
@@ -449,7 +449,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_cud" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_cus" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.cus"
   description            = "Create, Update, Search access to ClinicalImpression resource for patient."
@@ -458,7 +458,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_cus" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_cds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.cds"
   description            = "Create, Delete, Search access to ClinicalImpression resource for patient."
@@ -467,7 +467,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_cds" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_rud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.rud"
   description            = "Read, Update, Delete access to ClinicalImpression resource for patient."
@@ -476,7 +476,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_rud" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_rus" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.rus"
   description            = "Read, Update, Search access to ClinicalImpression resource for patient."
@@ -485,7 +485,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_rus" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_rds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.rds"
   description            = "Read, Delete, Search access to ClinicalImpression resource for patient."
@@ -494,7 +494,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_rds" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_uds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.uds"
   description            = "Update, Delete, Search access to ClinicalImpression resource for patient."
@@ -503,7 +503,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_uds" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_crud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.crud"
   description            = "Create, Read, Update, Delete access to ClinicalImpression resource for patient."
@@ -512,7 +512,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_crud" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_crus" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.crus"
   description            = "Create, Read, Update, Search access to ClinicalImpression resource for patient."
@@ -521,7 +521,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_crus" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_crds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.crds"
   description            = "Create, Read, Delete, Search access to ClinicalImpression resource for patient."
@@ -530,7 +530,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_crds" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_cuds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.cuds"
   description            = "Create, Update, Delete, Search access to ClinicalImpression resource for patient."
@@ -539,7 +539,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_cuds" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_ruds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.ruds"
   description            = "Read, Update, Delete, Search access to ClinicalImpression resource for patient."
@@ -548,7 +548,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_ruds" {
 }
 
 resource keycloak_openid_client_scope "patient_ClinicalImpression_cruds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ClinicalImpression.cruds"
   description            = "Create, Read, Update, Delete, Search access to ClinicalImpression resource for patient."
@@ -557,7 +557,7 @@ resource keycloak_openid_client_scope "patient_ClinicalImpression_cruds" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_c" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.c"
   description            = "Create access to ClinicalImpression resource for system."
@@ -566,7 +566,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_c" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_r" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.r"
   description            = "Read access to ClinicalImpression resource for system."
@@ -575,7 +575,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_r" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_u" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.u"
   description            = "Update access to ClinicalImpression resource for system."
@@ -584,7 +584,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_u" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_d" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.d"
   description            = "Delete access to ClinicalImpression resource for system."
@@ -593,7 +593,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_d" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_s" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.s"
   description            = "Search access to ClinicalImpression resource for system."
@@ -602,7 +602,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_s" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_cr" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.cr"
   description            = "Create, Read access to ClinicalImpression resource for system."
@@ -611,7 +611,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_cr" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_cu" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.cu"
   description            = "Create, Update access to ClinicalImpression resource for system."
@@ -620,7 +620,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_cu" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_cd" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.cd"
   description            = "Create, Delete access to ClinicalImpression resource for system."
@@ -629,7 +629,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_cd" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_cs" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.cs"
   description            = "Create, Search access to ClinicalImpression resource for system."
@@ -638,7 +638,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_cs" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_ru" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.ru"
   description            = "Read, Update access to ClinicalImpression resource for system."
@@ -647,7 +647,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_ru" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_rd" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.rd"
   description            = "Read, Delete access to ClinicalImpression resource for system."
@@ -656,7 +656,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_rd" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_rs" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.rs"
   description            = "Read, Search access to ClinicalImpression resource for system."
@@ -665,7 +665,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_rs" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_ud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.ud"
   description            = "Update, Delete access to ClinicalImpression resource for system."
@@ -674,7 +674,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_ud" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_us" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.us"
   description            = "Update, Search access to ClinicalImpression resource for system."
@@ -683,7 +683,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_us" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_ds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.ds"
   description            = "Delete, Search access to ClinicalImpression resource for system."
@@ -692,7 +692,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_ds" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_cru" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.cru"
   description            = "Create, Read, Update access to ClinicalImpression resource for system."
@@ -701,7 +701,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_cru" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_crd" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.crd"
   description            = "Create, Read, Delete access to ClinicalImpression resource for system."
@@ -710,7 +710,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_crd" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_crs" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.crs"
   description            = "Create, Read, Search access to ClinicalImpression resource for system."
@@ -719,7 +719,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_crs" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_cud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.cud"
   description            = "Create, Update, Delete access to ClinicalImpression resource for system."
@@ -728,7 +728,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_cud" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_cus" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.cus"
   description            = "Create, Update, Search access to ClinicalImpression resource for system."
@@ -737,7 +737,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_cus" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_cds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.cds"
   description            = "Create, Delete, Search access to ClinicalImpression resource for system."
@@ -746,7 +746,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_cds" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_rud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.rud"
   description            = "Read, Update, Delete access to ClinicalImpression resource for system."
@@ -755,7 +755,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_rud" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_rus" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.rus"
   description            = "Read, Update, Search access to ClinicalImpression resource for system."
@@ -764,7 +764,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_rus" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_rds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.rds"
   description            = "Read, Delete, Search access to ClinicalImpression resource for system."
@@ -773,7 +773,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_rds" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_uds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.uds"
   description            = "Update, Delete, Search access to ClinicalImpression resource for system."
@@ -782,7 +782,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_uds" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_crud" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.crud"
   description            = "Create, Read, Update, Delete access to ClinicalImpression resource for system."
@@ -791,7 +791,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_crud" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_crus" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.crus"
   description            = "Create, Read, Update, Search access to ClinicalImpression resource for system."
@@ -800,7 +800,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_crus" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_crds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.crds"
   description            = "Create, Read, Delete, Search access to ClinicalImpression resource for system."
@@ -809,7 +809,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_crds" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_cuds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.cuds"
   description            = "Create, Update, Delete, Search access to ClinicalImpression resource for system."
@@ -818,7 +818,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_cuds" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_ruds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.ruds"
   description            = "Read, Update, Delete, Search access to ClinicalImpression resource for system."
@@ -827,7 +827,7 @@ resource keycloak_openid_client_scope "system_ClinicalImpression_ruds" {
 }
 
 resource keycloak_openid_client_scope "system_ClinicalImpression_cruds" {
-  count                  = var.fhir_resources_supported.ClinicalImpression ? 1 : 0
+  count                  = var.fhir_resources_supported.ClinicalImpression && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ClinicalImpression.cruds"
   description            = "Create, Read, Update, Delete, Search access to ClinicalImpression resource for system."

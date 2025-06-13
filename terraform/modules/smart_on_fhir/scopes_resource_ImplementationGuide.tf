@@ -1,6 +1,6 @@
 // patient/ImplementationGuide -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_implementation_guide_read_scope" {
-  count                  = var.fhir_resources_supported.ImplementationGuide ? 1 : 0
+  count                  = var.fhir_resources_supported.ImplementationGuide && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ImplementationGuide.read"
   description            = "Read access to ImplementationGuide"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_implementation_guide_read_scope
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_implementation_guide_write_scope" {
-  count                  = var.fhir_resources_supported.ImplementationGuide ? 1 : 0
+  count                  = var.fhir_resources_supported.ImplementationGuide && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ImplementationGuide.write"
   description            = "Write access to ImplementationGuide"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_implementation_guide_write_scop
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_implementation_guide_full_scope" {
-  count                  = var.fhir_resources_supported.ImplementationGuide ? 1 : 0
+  count                  = var.fhir_resources_supported.ImplementationGuide && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ImplementationGuide.*"
   description            = "Full access to ImplementationGuide"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_implementation_guide_full_scope
 }
 // system/ImplementationGuide -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_implementation_guide_read_scope" {
-  count                  = var.fhir_resources_supported.ImplementationGuide ? 1 : 0
+  count                  = var.fhir_resources_supported.ImplementationGuide && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ImplementationGuide.read"
   description            = "Read access to ImplementationGuide"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_implementation_guide_write_scope" {
-  count                  = var.fhir_resources_supported.ImplementationGuide ? 1 : 0
+  count                  = var.fhir_resources_supported.ImplementationGuide && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ImplementationGuide.write"
   description            = "Write access to ImplementationGuide"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_implementation_guide_full_scope" {
-  count                  = var.fhir_resources_supported.ImplementationGuide ? 1 : 0
+  count                  = var.fhir_resources_supported.ImplementationGuide && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ImplementationGuide.*"
   description            = "Full access to ImplementationGuide"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_implementation_guide_full_scope"
 }
 // user/ImplementationGuide -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_implementation_guide_read_scope" {
-  count                  = var.fhir_resources_supported.ImplementationGuide ? 1 : 0
+  count                  = var.fhir_resources_supported.ImplementationGuide && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ImplementationGuide.read"
   description            = "Read access to ImplementationGuide"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_implementation_guide_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_implementation_guide_write_scope" {
-  count                  = var.fhir_resources_supported.ImplementationGuide ? 1 : 0
+  count                  = var.fhir_resources_supported.ImplementationGuide && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ImplementationGuide.write"
   description            = "Write access to ImplementationGuide"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_implementation_guide_write_scope" 
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_implementation_guide_full_scope" {
-  count                  = var.fhir_resources_supported.ImplementationGuide ? 1 : 0
+  count                  = var.fhir_resources_supported.ImplementationGuide && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ImplementationGuide.*"
   description            = "Full access to ImplementationGuide"

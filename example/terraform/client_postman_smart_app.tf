@@ -43,11 +43,11 @@ resource "keycloak_openid_client_optional_scopes" "postman_smart_app_optional_sc
   depends_on = [keycloak_openid_client.postman_smart_app]
 }
 
-resource "keycloak_openid_audience_protocol_mapper" "ppostman_smart_app_audience_mapper" {
+resource "keycloak_openid_audience_protocol_mapper" "postman_smart_app_audience_mapper" {
   realm_id                 = data.keycloak_realm.realm.id
   client_id                = keycloak_openid_client.postman_smart_app.id
-  name                     = "client-audience-mapper"
-  included_client_audience = keycloak_openid_client.postman_smart_app.client_id
+  name                     = "audience-mapper"
+  included_custom_audience = keycloak_openid_client.postman_smart_app.client_id // included_client_audience is broken.
   add_to_access_token      = true
   add_to_id_token          = true
   depends_on               = [keycloak_openid_client.postman_smart_app]

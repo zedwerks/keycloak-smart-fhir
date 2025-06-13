@@ -1,6 +1,6 @@
 // patient/Provenance --------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_provenance_read_scope" {
-  count                  = var.fhir_resources_supported.Provenance ? 1 : 0
+  count                  = var.fhir_resources_supported.Provenance && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Provenance.read"
   description            = "Read access to Provenance"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_provenance_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_provenance_write_scope" {
-  count                  = var.fhir_resources_supported.Provenance ? 1 : 0
+  count                  = var.fhir_resources_supported.Provenance && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Provenance.write"
   description            = "Write access to Provenance"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_provenance_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_provenance_full_scope" {
-  count                  = var.fhir_resources_supported.Provenance ? 1 : 0
+  count                  = var.fhir_resources_supported.Provenance && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Provenance.*"
   description            = "Full access to Provenance"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_provenance_full_scope" {
 }
 // system/Provenance --------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_provenance_read_scope" {
-  count                  = var.fhir_resources_supported.Provenance ? 1 : 0
+  count                  = var.fhir_resources_supported.Provenance && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Provenance.read"
   description            = "Read access to Provenance"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_provenance_write_scope" {
-  count                  = var.fhir_resources_supported.Provenance ? 1 : 0
+  count                  = var.fhir_resources_supported.Provenance && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Provenance.write"
   description            = "Write access to Provenance"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_provenance_full_scope" {
-  count                  = var.fhir_resources_supported.Provenance ? 1 : 0
+  count                  = var.fhir_resources_supported.Provenance && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Provenance.*"
   description            = "Full access to Provenance"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_provenance_full_scope" {
 }
 // user/Provenance --------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_provenance_read_scope" {
-  count                  = var.fhir_resources_supported.Provenance ? 1 : 0
+  count                  = var.fhir_resources_supported.Provenance && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Provenance.read"
   description            = "Read access to Provenance"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_provenance_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_provenance_write_scope" {
-  count                  = var.fhir_resources_supported.Provenance ? 1 : 0
+  count                  = var.fhir_resources_supported.Provenance && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Provenance.write"
   description            = "Write access to Provenance"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_provenance_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_provenance_full_scope" {
-  count                  = var.fhir_resources_supported.Provenance ? 1 : 0
+  count                  = var.fhir_resources_supported.Provenance && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Provenance.*"
   description            = "Full access to Provenance"
