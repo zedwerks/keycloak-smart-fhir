@@ -26,6 +26,5 @@ module "smart_on_fhir" {
   keycloak_terraform_client_secret = var.keycloak_terraform_client_secret
   keycloak_base_url                = var.keycloak_base_url
   keycloak_smart_configuration     = var.keycloak_smart_configuration
-  
 }
 

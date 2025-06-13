@@ -13,6 +13,8 @@ resource "keycloak_openid_client" "inferno" {
   authentication_flow_binding_overrides {
     browser_id = module.smart_on_fhir.smart_browser_flow_id
   }
+  depends_on = [module.smart_on_fhir]
+
 }
 
 
@@ -39,7 +41,7 @@ resource "keycloak_openid_client_optional_scopes" "inferno_optional_scopes" {
     "user/*.read",
     "patient/Patient.read",
     "patient/Patient.write",
-  "patient/Patient.*",
+    "patient/Patient.*",
   "patient/*.read"]
   depends_on = [keycloak_openid_client.inferno]
 }

@@ -11,9 +11,11 @@ resource "keycloak_openid_client" "postman_smart_app" {
   base_url                   = "https://oauth.pstmn.io"
   pkce_code_challenge_method = "S256"
 
-  authentication_flow_binding_overrides {                           # Must be set to this to bind to the SMART on FHIR authenication flow.
+  authentication_flow_binding_overrides { # Must be set to this to bind to the SMART on FHIR authenication flow.
     browser_id = module.smart_on_fhir.smart_browser_flow_id
   }
+  depends_on = [module.smart_on_fhir]
+
 }
 
 
@@ -57,15 +59,15 @@ resource "keycloak_openid_audience_protocol_mapper" "postman_smart_app_audience_
 // It is used to provide a tenant identifier for the Postman SMART app to use in its requests.
 // An example of its use is with Ocean MD.
 resource "keycloak_openid_hardcoded_claim_protocol_mapper" "hardcoded_claim_mapper" {
-  realm_id  = keycloak_openid_client.postman_smart_app.realm_id
-  client_id = keycloak_openid_client.postman_smart_app.id
-  name      = "hardcoded-claim-mapper"
-  claim_name  = "tenant"
-  claim_value = "unique-tenant-id"
-  claim_value_type  = "String"
+  realm_id            = keycloak_openid_client.postman_smart_app.realm_id
+  client_id           = keycloak_openid_client.postman_smart_app.id
+  name                = "hardcoded-claim-mapper"
+  claim_name          = "tenant"
+  claim_value         = "unique-tenant-id"
+  claim_value_type    = "String"
   add_to_access_token = true
   add_to_id_token     = false
-  add_to_userinfo      = false
-  depends_on = [keycloak_openid_client.postman_smart_app]
+  add_to_userinfo     = false
+  depends_on          = [keycloak_openid_client.postman_smart_app]
 }
 

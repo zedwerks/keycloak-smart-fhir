@@ -30,6 +30,8 @@ resource "keycloak_openid_client" "client_fhir_rs" {
   web_origins                  = []
   service_accounts_enabled     = true
   full_scope_allowed           = false
+  depends_on                   = [module.smart_on_fhir]
+
   #  authorization {
   #    policy_enforcement_mode          = "ENFORCING"
   #    allow_remote_resource_management = true
