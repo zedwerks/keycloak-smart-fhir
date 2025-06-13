@@ -10,7 +10,7 @@ else
     terraform version
 fi
 
-until curl -sf http://localhost:8080/realms/master/.well-known/openid-configuration; do
+until curl -sf http://localhost:8080/realms/master/.well-known/openid-configuration &> /dev/null; do
   echo "Waiting for Keycloak..."
   sleep 2
 done

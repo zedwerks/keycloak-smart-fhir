@@ -25,8 +25,8 @@ resource "keycloak_openid_client_optional_scopes" "postman_emr_optional_scopes" 
   realm_id  = data.keycloak_realm.realm.id
   client_id = keycloak_openid_client.postman_emr.id
   optional_scopes = [
-    "Context.write",
     "Context.read",
+    "Context.write",
     "user/Patient.read",
     "user/Patient.write",
     "user/Patient.*"]
