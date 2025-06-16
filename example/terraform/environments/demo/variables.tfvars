@@ -4,6 +4,8 @@
 // --------------------------------------------------
 keycloak_smart_configuration = {
   fhir_audiences               = "http://fhirserver.com##https://localhost:9000/fhir"
+  smart_v1_scopes              = true
+  smart_v2_scopes              = true
 }
 
 // --------------------------------------------------
@@ -25,6 +27,7 @@ fhir_resources_supported = {
   Patient             = true
   Encounter           = true
   Practitioner        = true
+  PractitionerRoles   = true
   MedicationStatement = true
 }
 
