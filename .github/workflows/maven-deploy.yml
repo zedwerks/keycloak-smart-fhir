@@ -26,7 +26,6 @@ jobs:
           server-id: github  # Must match <server><id> in pom.xml
           #settings-path: ${{ github.workspace }}/smart-on-fhir-spi
           settings-path: ~/.m2  # use Maven's default
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Maven settings.xml
         run: |
