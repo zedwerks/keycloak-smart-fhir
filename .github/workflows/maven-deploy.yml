@@ -21,16 +21,18 @@ jobs:
       - name: Set Up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'  # Eclipse Temurin JDK
+          distribution: 'temurin'
           java-version: '17'
-          server-id: github  # Matches settings.xml <server> ID
-          settings-path: ${{ github.workspace }}/smart-on-fhir-spi
+          server-id: github  # Must match <server><id> in pom.xml
+          #settings-path: ${{ github.workspace }}/smart-on-fhir-spi
+          settings-path: ~/.m2  # use Maven's default
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Configure Maven
-        working-directory: ${{ github.workspace }}/smart-on-fhir-spi
-        run: |
-          mkdir -p ~/.m2
-          echo "<settings><servers><server><id>github</id><username>${GITHUB_ACTOR}</username><password>${{ secrets.GITHUB_TOKEN }}</password></server></servers></settings>" > ~/.m2/settings.xml
+     # - name: Configure Maven
+     #   working-directory: ${{ github.workspace }}/smart-on-fhir-spi
+     ###   run: |
+      #    mkdir -p ~/.m2
+       #   echo "<settings><servers><server><id>github</id><username>${GITHUB_ACTOR}</username><password>${{ secrets.GITHUB_TOKEN }}</password></server></servers></settings>" > ~/.m2/settings.xml
 
       - name: Build and Deploy to GitHub Packages
         working-directory: ${{ github.workspace }}/smart-on-fhir-spi
