@@ -27,7 +27,7 @@ fhir_resources_supported = {
   Patient             = true
   Encounter           = true
   Practitioner        = true
-  PractitionerRoles   = true
+  PractitionerRole    = true
   MedicationStatement = true
 }
 
