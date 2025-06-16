@@ -1,5 +1,5 @@
 resource keycloak_openid_client_scope "user_Library_c" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.c"
   description            = "Create access to Library resource for user."
@@ -8,7 +8,7 @@ resource keycloak_openid_client_scope "user_Library_c" {
 }
 
 resource keycloak_openid_client_scope "user_Library_r" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.r"
   description            = "Read access to Library resource for user."
@@ -17,7 +17,7 @@ resource keycloak_openid_client_scope "user_Library_r" {
 }
 
 resource keycloak_openid_client_scope "user_Library_u" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.u"
   description            = "Update access to Library resource for user."
@@ -26,7 +26,7 @@ resource keycloak_openid_client_scope "user_Library_u" {
 }
 
 resource keycloak_openid_client_scope "user_Library_d" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.d"
   description            = "Delete access to Library resource for user."
@@ -35,7 +35,7 @@ resource keycloak_openid_client_scope "user_Library_d" {
 }
 
 resource keycloak_openid_client_scope "user_Library_s" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.s"
   description            = "Search access to Library resource for user."
@@ -44,7 +44,7 @@ resource keycloak_openid_client_scope "user_Library_s" {
 }
 
 resource keycloak_openid_client_scope "user_Library_cr" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.cr"
   description            = "Create, Read access to Library resource for user."
@@ -53,7 +53,7 @@ resource keycloak_openid_client_scope "user_Library_cr" {
 }
 
 resource keycloak_openid_client_scope "user_Library_cu" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.cu"
   description            = "Create, Update access to Library resource for user."
@@ -62,7 +62,7 @@ resource keycloak_openid_client_scope "user_Library_cu" {
 }
 
 resource keycloak_openid_client_scope "user_Library_cd" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.cd"
   description            = "Create, Delete access to Library resource for user."
@@ -71,7 +71,7 @@ resource keycloak_openid_client_scope "user_Library_cd" {
 }
 
 resource keycloak_openid_client_scope "user_Library_cs" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.cs"
   description            = "Create, Search access to Library resource for user."
@@ -80,7 +80,7 @@ resource keycloak_openid_client_scope "user_Library_cs" {
 }
 
 resource keycloak_openid_client_scope "user_Library_ru" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.ru"
   description            = "Read, Update access to Library resource for user."
@@ -89,7 +89,7 @@ resource keycloak_openid_client_scope "user_Library_ru" {
 }
 
 resource keycloak_openid_client_scope "user_Library_rd" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.rd"
   description            = "Read, Delete access to Library resource for user."
@@ -98,7 +98,7 @@ resource keycloak_openid_client_scope "user_Library_rd" {
 }
 
 resource keycloak_openid_client_scope "user_Library_rs" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.rs"
   description            = "Read, Search access to Library resource for user."
@@ -107,7 +107,7 @@ resource keycloak_openid_client_scope "user_Library_rs" {
 }
 
 resource keycloak_openid_client_scope "user_Library_ud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.ud"
   description            = "Update, Delete access to Library resource for user."
@@ -116,7 +116,7 @@ resource keycloak_openid_client_scope "user_Library_ud" {
 }
 
 resource keycloak_openid_client_scope "user_Library_us" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.us"
   description            = "Update, Search access to Library resource for user."
@@ -125,7 +125,7 @@ resource keycloak_openid_client_scope "user_Library_us" {
 }
 
 resource keycloak_openid_client_scope "user_Library_ds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.ds"
   description            = "Delete, Search access to Library resource for user."
@@ -134,7 +134,7 @@ resource keycloak_openid_client_scope "user_Library_ds" {
 }
 
 resource keycloak_openid_client_scope "user_Library_cru" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.cru"
   description            = "Create, Read, Update access to Library resource for user."
@@ -143,7 +143,7 @@ resource keycloak_openid_client_scope "user_Library_cru" {
 }
 
 resource keycloak_openid_client_scope "user_Library_crd" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.crd"
   description            = "Create, Read, Delete access to Library resource for user."
@@ -152,7 +152,7 @@ resource keycloak_openid_client_scope "user_Library_crd" {
 }
 
 resource keycloak_openid_client_scope "user_Library_crs" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.crs"
   description            = "Create, Read, Search access to Library resource for user."
@@ -161,7 +161,7 @@ resource keycloak_openid_client_scope "user_Library_crs" {
 }
 
 resource keycloak_openid_client_scope "user_Library_cud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.cud"
   description            = "Create, Update, Delete access to Library resource for user."
@@ -170,7 +170,7 @@ resource keycloak_openid_client_scope "user_Library_cud" {
 }
 
 resource keycloak_openid_client_scope "user_Library_cus" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.cus"
   description            = "Create, Update, Search access to Library resource for user."
@@ -179,7 +179,7 @@ resource keycloak_openid_client_scope "user_Library_cus" {
 }
 
 resource keycloak_openid_client_scope "user_Library_cds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.cds"
   description            = "Create, Delete, Search access to Library resource for user."
@@ -188,7 +188,7 @@ resource keycloak_openid_client_scope "user_Library_cds" {
 }
 
 resource keycloak_openid_client_scope "user_Library_rud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.rud"
   description            = "Read, Update, Delete access to Library resource for user."
@@ -197,7 +197,7 @@ resource keycloak_openid_client_scope "user_Library_rud" {
 }
 
 resource keycloak_openid_client_scope "user_Library_rus" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.rus"
   description            = "Read, Update, Search access to Library resource for user."
@@ -206,7 +206,7 @@ resource keycloak_openid_client_scope "user_Library_rus" {
 }
 
 resource keycloak_openid_client_scope "user_Library_rds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.rds"
   description            = "Read, Delete, Search access to Library resource for user."
@@ -215,7 +215,7 @@ resource keycloak_openid_client_scope "user_Library_rds" {
 }
 
 resource keycloak_openid_client_scope "user_Library_uds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.uds"
   description            = "Update, Delete, Search access to Library resource for user."
@@ -224,7 +224,7 @@ resource keycloak_openid_client_scope "user_Library_uds" {
 }
 
 resource keycloak_openid_client_scope "user_Library_crud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.crud"
   description            = "Create, Read, Update, Delete access to Library resource for user."
@@ -233,7 +233,7 @@ resource keycloak_openid_client_scope "user_Library_crud" {
 }
 
 resource keycloak_openid_client_scope "user_Library_crus" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.crus"
   description            = "Create, Read, Update, Search access to Library resource for user."
@@ -242,7 +242,7 @@ resource keycloak_openid_client_scope "user_Library_crus" {
 }
 
 resource keycloak_openid_client_scope "user_Library_crds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.crds"
   description            = "Create, Read, Delete, Search access to Library resource for user."
@@ -251,7 +251,7 @@ resource keycloak_openid_client_scope "user_Library_crds" {
 }
 
 resource keycloak_openid_client_scope "user_Library_cuds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.cuds"
   description            = "Create, Update, Delete, Search access to Library resource for user."
@@ -260,7 +260,7 @@ resource keycloak_openid_client_scope "user_Library_cuds" {
 }
 
 resource keycloak_openid_client_scope "user_Library_ruds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.ruds"
   description            = "Read, Update, Delete, Search access to Library resource for user."
@@ -269,7 +269,7 @@ resource keycloak_openid_client_scope "user_Library_ruds" {
 }
 
 resource keycloak_openid_client_scope "user_Library_cruds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Library.cruds"
   description            = "Create, Read, Update, Delete, Search access to Library resource for user."
@@ -278,7 +278,7 @@ resource keycloak_openid_client_scope "user_Library_cruds" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_c" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.c"
   description            = "Create access to Library resource for patient."
@@ -287,7 +287,7 @@ resource keycloak_openid_client_scope "patient_Library_c" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_r" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.r"
   description            = "Read access to Library resource for patient."
@@ -296,7 +296,7 @@ resource keycloak_openid_client_scope "patient_Library_r" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_u" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.u"
   description            = "Update access to Library resource for patient."
@@ -305,7 +305,7 @@ resource keycloak_openid_client_scope "patient_Library_u" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_d" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.d"
   description            = "Delete access to Library resource for patient."
@@ -314,7 +314,7 @@ resource keycloak_openid_client_scope "patient_Library_d" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_s" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.s"
   description            = "Search access to Library resource for patient."
@@ -323,7 +323,7 @@ resource keycloak_openid_client_scope "patient_Library_s" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_cr" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.cr"
   description            = "Create, Read access to Library resource for patient."
@@ -332,7 +332,7 @@ resource keycloak_openid_client_scope "patient_Library_cr" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_cu" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.cu"
   description            = "Create, Update access to Library resource for patient."
@@ -341,7 +341,7 @@ resource keycloak_openid_client_scope "patient_Library_cu" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_cd" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.cd"
   description            = "Create, Delete access to Library resource for patient."
@@ -350,7 +350,7 @@ resource keycloak_openid_client_scope "patient_Library_cd" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_cs" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.cs"
   description            = "Create, Search access to Library resource for patient."
@@ -359,7 +359,7 @@ resource keycloak_openid_client_scope "patient_Library_cs" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_ru" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.ru"
   description            = "Read, Update access to Library resource for patient."
@@ -368,7 +368,7 @@ resource keycloak_openid_client_scope "patient_Library_ru" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_rd" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.rd"
   description            = "Read, Delete access to Library resource for patient."
@@ -377,7 +377,7 @@ resource keycloak_openid_client_scope "patient_Library_rd" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_rs" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.rs"
   description            = "Read, Search access to Library resource for patient."
@@ -386,7 +386,7 @@ resource keycloak_openid_client_scope "patient_Library_rs" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_ud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.ud"
   description            = "Update, Delete access to Library resource for patient."
@@ -395,7 +395,7 @@ resource keycloak_openid_client_scope "patient_Library_ud" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_us" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.us"
   description            = "Update, Search access to Library resource for patient."
@@ -404,7 +404,7 @@ resource keycloak_openid_client_scope "patient_Library_us" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_ds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.ds"
   description            = "Delete, Search access to Library resource for patient."
@@ -413,7 +413,7 @@ resource keycloak_openid_client_scope "patient_Library_ds" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_cru" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.cru"
   description            = "Create, Read, Update access to Library resource for patient."
@@ -422,7 +422,7 @@ resource keycloak_openid_client_scope "patient_Library_cru" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_crd" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.crd"
   description            = "Create, Read, Delete access to Library resource for patient."
@@ -431,7 +431,7 @@ resource keycloak_openid_client_scope "patient_Library_crd" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_crs" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.crs"
   description            = "Create, Read, Search access to Library resource for patient."
@@ -440,7 +440,7 @@ resource keycloak_openid_client_scope "patient_Library_crs" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_cud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.cud"
   description            = "Create, Update, Delete access to Library resource for patient."
@@ -449,7 +449,7 @@ resource keycloak_openid_client_scope "patient_Library_cud" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_cus" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.cus"
   description            = "Create, Update, Search access to Library resource for patient."
@@ -458,7 +458,7 @@ resource keycloak_openid_client_scope "patient_Library_cus" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_cds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.cds"
   description            = "Create, Delete, Search access to Library resource for patient."
@@ -467,7 +467,7 @@ resource keycloak_openid_client_scope "patient_Library_cds" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_rud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.rud"
   description            = "Read, Update, Delete access to Library resource for patient."
@@ -476,7 +476,7 @@ resource keycloak_openid_client_scope "patient_Library_rud" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_rus" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.rus"
   description            = "Read, Update, Search access to Library resource for patient."
@@ -485,7 +485,7 @@ resource keycloak_openid_client_scope "patient_Library_rus" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_rds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.rds"
   description            = "Read, Delete, Search access to Library resource for patient."
@@ -494,7 +494,7 @@ resource keycloak_openid_client_scope "patient_Library_rds" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_uds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.uds"
   description            = "Update, Delete, Search access to Library resource for patient."
@@ -503,7 +503,7 @@ resource keycloak_openid_client_scope "patient_Library_uds" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_crud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.crud"
   description            = "Create, Read, Update, Delete access to Library resource for patient."
@@ -512,7 +512,7 @@ resource keycloak_openid_client_scope "patient_Library_crud" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_crus" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.crus"
   description            = "Create, Read, Update, Search access to Library resource for patient."
@@ -521,7 +521,7 @@ resource keycloak_openid_client_scope "patient_Library_crus" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_crds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.crds"
   description            = "Create, Read, Delete, Search access to Library resource for patient."
@@ -530,7 +530,7 @@ resource keycloak_openid_client_scope "patient_Library_crds" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_cuds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.cuds"
   description            = "Create, Update, Delete, Search access to Library resource for patient."
@@ -539,7 +539,7 @@ resource keycloak_openid_client_scope "patient_Library_cuds" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_ruds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.ruds"
   description            = "Read, Update, Delete, Search access to Library resource for patient."
@@ -548,7 +548,7 @@ resource keycloak_openid_client_scope "patient_Library_ruds" {
 }
 
 resource keycloak_openid_client_scope "patient_Library_cruds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Library.cruds"
   description            = "Create, Read, Update, Delete, Search access to Library resource for patient."
@@ -557,7 +557,7 @@ resource keycloak_openid_client_scope "patient_Library_cruds" {
 }
 
 resource keycloak_openid_client_scope "system_Library_c" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.c"
   description            = "Create access to Library resource for system."
@@ -566,7 +566,7 @@ resource keycloak_openid_client_scope "system_Library_c" {
 }
 
 resource keycloak_openid_client_scope "system_Library_r" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.r"
   description            = "Read access to Library resource for system."
@@ -575,7 +575,7 @@ resource keycloak_openid_client_scope "system_Library_r" {
 }
 
 resource keycloak_openid_client_scope "system_Library_u" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.u"
   description            = "Update access to Library resource for system."
@@ -584,7 +584,7 @@ resource keycloak_openid_client_scope "system_Library_u" {
 }
 
 resource keycloak_openid_client_scope "system_Library_d" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.d"
   description            = "Delete access to Library resource for system."
@@ -593,7 +593,7 @@ resource keycloak_openid_client_scope "system_Library_d" {
 }
 
 resource keycloak_openid_client_scope "system_Library_s" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.s"
   description            = "Search access to Library resource for system."
@@ -602,7 +602,7 @@ resource keycloak_openid_client_scope "system_Library_s" {
 }
 
 resource keycloak_openid_client_scope "system_Library_cr" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.cr"
   description            = "Create, Read access to Library resource for system."
@@ -611,7 +611,7 @@ resource keycloak_openid_client_scope "system_Library_cr" {
 }
 
 resource keycloak_openid_client_scope "system_Library_cu" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.cu"
   description            = "Create, Update access to Library resource for system."
@@ -620,7 +620,7 @@ resource keycloak_openid_client_scope "system_Library_cu" {
 }
 
 resource keycloak_openid_client_scope "system_Library_cd" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.cd"
   description            = "Create, Delete access to Library resource for system."
@@ -629,7 +629,7 @@ resource keycloak_openid_client_scope "system_Library_cd" {
 }
 
 resource keycloak_openid_client_scope "system_Library_cs" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.cs"
   description            = "Create, Search access to Library resource for system."
@@ -638,7 +638,7 @@ resource keycloak_openid_client_scope "system_Library_cs" {
 }
 
 resource keycloak_openid_client_scope "system_Library_ru" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.ru"
   description            = "Read, Update access to Library resource for system."
@@ -647,7 +647,7 @@ resource keycloak_openid_client_scope "system_Library_ru" {
 }
 
 resource keycloak_openid_client_scope "system_Library_rd" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.rd"
   description            = "Read, Delete access to Library resource for system."
@@ -656,7 +656,7 @@ resource keycloak_openid_client_scope "system_Library_rd" {
 }
 
 resource keycloak_openid_client_scope "system_Library_rs" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.rs"
   description            = "Read, Search access to Library resource for system."
@@ -665,7 +665,7 @@ resource keycloak_openid_client_scope "system_Library_rs" {
 }
 
 resource keycloak_openid_client_scope "system_Library_ud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.ud"
   description            = "Update, Delete access to Library resource for system."
@@ -674,7 +674,7 @@ resource keycloak_openid_client_scope "system_Library_ud" {
 }
 
 resource keycloak_openid_client_scope "system_Library_us" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.us"
   description            = "Update, Search access to Library resource for system."
@@ -683,7 +683,7 @@ resource keycloak_openid_client_scope "system_Library_us" {
 }
 
 resource keycloak_openid_client_scope "system_Library_ds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.ds"
   description            = "Delete, Search access to Library resource for system."
@@ -692,7 +692,7 @@ resource keycloak_openid_client_scope "system_Library_ds" {
 }
 
 resource keycloak_openid_client_scope "system_Library_cru" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.cru"
   description            = "Create, Read, Update access to Library resource for system."
@@ -701,7 +701,7 @@ resource keycloak_openid_client_scope "system_Library_cru" {
 }
 
 resource keycloak_openid_client_scope "system_Library_crd" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.crd"
   description            = "Create, Read, Delete access to Library resource for system."
@@ -710,7 +710,7 @@ resource keycloak_openid_client_scope "system_Library_crd" {
 }
 
 resource keycloak_openid_client_scope "system_Library_crs" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.crs"
   description            = "Create, Read, Search access to Library resource for system."
@@ -719,7 +719,7 @@ resource keycloak_openid_client_scope "system_Library_crs" {
 }
 
 resource keycloak_openid_client_scope "system_Library_cud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.cud"
   description            = "Create, Update, Delete access to Library resource for system."
@@ -728,7 +728,7 @@ resource keycloak_openid_client_scope "system_Library_cud" {
 }
 
 resource keycloak_openid_client_scope "system_Library_cus" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.cus"
   description            = "Create, Update, Search access to Library resource for system."
@@ -737,7 +737,7 @@ resource keycloak_openid_client_scope "system_Library_cus" {
 }
 
 resource keycloak_openid_client_scope "system_Library_cds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.cds"
   description            = "Create, Delete, Search access to Library resource for system."
@@ -746,7 +746,7 @@ resource keycloak_openid_client_scope "system_Library_cds" {
 }
 
 resource keycloak_openid_client_scope "system_Library_rud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.rud"
   description            = "Read, Update, Delete access to Library resource for system."
@@ -755,7 +755,7 @@ resource keycloak_openid_client_scope "system_Library_rud" {
 }
 
 resource keycloak_openid_client_scope "system_Library_rus" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.rus"
   description            = "Read, Update, Search access to Library resource for system."
@@ -764,7 +764,7 @@ resource keycloak_openid_client_scope "system_Library_rus" {
 }
 
 resource keycloak_openid_client_scope "system_Library_rds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.rds"
   description            = "Read, Delete, Search access to Library resource for system."
@@ -773,7 +773,7 @@ resource keycloak_openid_client_scope "system_Library_rds" {
 }
 
 resource keycloak_openid_client_scope "system_Library_uds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.uds"
   description            = "Update, Delete, Search access to Library resource for system."
@@ -782,7 +782,7 @@ resource keycloak_openid_client_scope "system_Library_uds" {
 }
 
 resource keycloak_openid_client_scope "system_Library_crud" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.crud"
   description            = "Create, Read, Update, Delete access to Library resource for system."
@@ -791,7 +791,7 @@ resource keycloak_openid_client_scope "system_Library_crud" {
 }
 
 resource keycloak_openid_client_scope "system_Library_crus" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.crus"
   description            = "Create, Read, Update, Search access to Library resource for system."
@@ -800,7 +800,7 @@ resource keycloak_openid_client_scope "system_Library_crus" {
 }
 
 resource keycloak_openid_client_scope "system_Library_crds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.crds"
   description            = "Create, Read, Delete, Search access to Library resource for system."
@@ -809,7 +809,7 @@ resource keycloak_openid_client_scope "system_Library_crds" {
 }
 
 resource keycloak_openid_client_scope "system_Library_cuds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.cuds"
   description            = "Create, Update, Delete, Search access to Library resource for system."
@@ -818,7 +818,7 @@ resource keycloak_openid_client_scope "system_Library_cuds" {
 }
 
 resource keycloak_openid_client_scope "system_Library_ruds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.ruds"
   description            = "Read, Update, Delete, Search access to Library resource for system."
@@ -827,7 +827,7 @@ resource keycloak_openid_client_scope "system_Library_ruds" {
 }
 
 resource keycloak_openid_client_scope "system_Library_cruds" {
-  count                  = var.fhir_resources_supported.Library ? 1 : 0
+  count                  = var.fhir_resources_supported.Library && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Library.cruds"
   description            = "Create, Read, Update, Delete, Search access to Library resource for system."

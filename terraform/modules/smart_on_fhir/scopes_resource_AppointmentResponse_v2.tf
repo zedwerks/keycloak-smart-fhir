@@ -1,5 +1,5 @@
 resource keycloak_openid_client_scope "user_AppointmentResponse_c" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.c"
   description            = "Create access to AppointmentResponse resource for user."
@@ -8,7 +8,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_c" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_r" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.r"
   description            = "Read access to AppointmentResponse resource for user."
@@ -17,7 +17,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_r" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_u" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.u"
   description            = "Update access to AppointmentResponse resource for user."
@@ -26,7 +26,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_u" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_d" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.d"
   description            = "Delete access to AppointmentResponse resource for user."
@@ -35,7 +35,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_d" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_s" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.s"
   description            = "Search access to AppointmentResponse resource for user."
@@ -44,7 +44,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_s" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_cr" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.cr"
   description            = "Create, Read access to AppointmentResponse resource for user."
@@ -53,7 +53,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_cr" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_cu" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.cu"
   description            = "Create, Update access to AppointmentResponse resource for user."
@@ -62,7 +62,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_cu" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_cd" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.cd"
   description            = "Create, Delete access to AppointmentResponse resource for user."
@@ -71,7 +71,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_cd" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_cs" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.cs"
   description            = "Create, Search access to AppointmentResponse resource for user."
@@ -80,7 +80,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_cs" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_ru" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.ru"
   description            = "Read, Update access to AppointmentResponse resource for user."
@@ -89,7 +89,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_ru" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_rd" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.rd"
   description            = "Read, Delete access to AppointmentResponse resource for user."
@@ -98,7 +98,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_rd" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_rs" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.rs"
   description            = "Read, Search access to AppointmentResponse resource for user."
@@ -107,7 +107,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_rs" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_ud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.ud"
   description            = "Update, Delete access to AppointmentResponse resource for user."
@@ -116,7 +116,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_ud" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_us" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.us"
   description            = "Update, Search access to AppointmentResponse resource for user."
@@ -125,7 +125,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_us" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_ds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.ds"
   description            = "Delete, Search access to AppointmentResponse resource for user."
@@ -134,7 +134,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_ds" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_cru" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.cru"
   description            = "Create, Read, Update access to AppointmentResponse resource for user."
@@ -143,7 +143,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_cru" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_crd" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.crd"
   description            = "Create, Read, Delete access to AppointmentResponse resource for user."
@@ -152,7 +152,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_crd" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_crs" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.crs"
   description            = "Create, Read, Search access to AppointmentResponse resource for user."
@@ -161,7 +161,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_crs" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_cud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.cud"
   description            = "Create, Update, Delete access to AppointmentResponse resource for user."
@@ -170,7 +170,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_cud" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_cus" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.cus"
   description            = "Create, Update, Search access to AppointmentResponse resource for user."
@@ -179,7 +179,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_cus" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_cds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.cds"
   description            = "Create, Delete, Search access to AppointmentResponse resource for user."
@@ -188,7 +188,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_cds" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_rud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.rud"
   description            = "Read, Update, Delete access to AppointmentResponse resource for user."
@@ -197,7 +197,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_rud" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_rus" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.rus"
   description            = "Read, Update, Search access to AppointmentResponse resource for user."
@@ -206,7 +206,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_rus" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_rds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.rds"
   description            = "Read, Delete, Search access to AppointmentResponse resource for user."
@@ -215,7 +215,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_rds" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_uds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.uds"
   description            = "Update, Delete, Search access to AppointmentResponse resource for user."
@@ -224,7 +224,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_uds" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_crud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.crud"
   description            = "Create, Read, Update, Delete access to AppointmentResponse resource for user."
@@ -233,7 +233,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_crud" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_crus" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.crus"
   description            = "Create, Read, Update, Search access to AppointmentResponse resource for user."
@@ -242,7 +242,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_crus" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_crds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.crds"
   description            = "Create, Read, Delete, Search access to AppointmentResponse resource for user."
@@ -251,7 +251,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_crds" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_cuds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.cuds"
   description            = "Create, Update, Delete, Search access to AppointmentResponse resource for user."
@@ -260,7 +260,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_cuds" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_ruds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.ruds"
   description            = "Read, Update, Delete, Search access to AppointmentResponse resource for user."
@@ -269,7 +269,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_ruds" {
 }
 
 resource keycloak_openid_client_scope "user_AppointmentResponse_cruds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.cruds"
   description            = "Create, Read, Update, Delete, Search access to AppointmentResponse resource for user."
@@ -278,7 +278,7 @@ resource keycloak_openid_client_scope "user_AppointmentResponse_cruds" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_c" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.c"
   description            = "Create access to AppointmentResponse resource for patient."
@@ -287,7 +287,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_c" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_r" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.r"
   description            = "Read access to AppointmentResponse resource for patient."
@@ -296,7 +296,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_r" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_u" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.u"
   description            = "Update access to AppointmentResponse resource for patient."
@@ -305,7 +305,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_u" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_d" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.d"
   description            = "Delete access to AppointmentResponse resource for patient."
@@ -314,7 +314,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_d" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_s" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.s"
   description            = "Search access to AppointmentResponse resource for patient."
@@ -323,7 +323,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_s" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_cr" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.cr"
   description            = "Create, Read access to AppointmentResponse resource for patient."
@@ -332,7 +332,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_cr" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_cu" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.cu"
   description            = "Create, Update access to AppointmentResponse resource for patient."
@@ -341,7 +341,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_cu" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_cd" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.cd"
   description            = "Create, Delete access to AppointmentResponse resource for patient."
@@ -350,7 +350,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_cd" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_cs" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.cs"
   description            = "Create, Search access to AppointmentResponse resource for patient."
@@ -359,7 +359,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_cs" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_ru" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.ru"
   description            = "Read, Update access to AppointmentResponse resource for patient."
@@ -368,7 +368,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_ru" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_rd" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.rd"
   description            = "Read, Delete access to AppointmentResponse resource for patient."
@@ -377,7 +377,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_rd" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_rs" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.rs"
   description            = "Read, Search access to AppointmentResponse resource for patient."
@@ -386,7 +386,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_rs" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_ud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.ud"
   description            = "Update, Delete access to AppointmentResponse resource for patient."
@@ -395,7 +395,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_ud" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_us" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.us"
   description            = "Update, Search access to AppointmentResponse resource for patient."
@@ -404,7 +404,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_us" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_ds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.ds"
   description            = "Delete, Search access to AppointmentResponse resource for patient."
@@ -413,7 +413,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_ds" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_cru" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.cru"
   description            = "Create, Read, Update access to AppointmentResponse resource for patient."
@@ -422,7 +422,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_cru" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_crd" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.crd"
   description            = "Create, Read, Delete access to AppointmentResponse resource for patient."
@@ -431,7 +431,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_crd" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_crs" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.crs"
   description            = "Create, Read, Search access to AppointmentResponse resource for patient."
@@ -440,7 +440,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_crs" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_cud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.cud"
   description            = "Create, Update, Delete access to AppointmentResponse resource for patient."
@@ -449,7 +449,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_cud" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_cus" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.cus"
   description            = "Create, Update, Search access to AppointmentResponse resource for patient."
@@ -458,7 +458,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_cus" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_cds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.cds"
   description            = "Create, Delete, Search access to AppointmentResponse resource for patient."
@@ -467,7 +467,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_cds" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_rud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.rud"
   description            = "Read, Update, Delete access to AppointmentResponse resource for patient."
@@ -476,7 +476,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_rud" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_rus" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.rus"
   description            = "Read, Update, Search access to AppointmentResponse resource for patient."
@@ -485,7 +485,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_rus" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_rds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.rds"
   description            = "Read, Delete, Search access to AppointmentResponse resource for patient."
@@ -494,7 +494,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_rds" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_uds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.uds"
   description            = "Update, Delete, Search access to AppointmentResponse resource for patient."
@@ -503,7 +503,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_uds" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_crud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.crud"
   description            = "Create, Read, Update, Delete access to AppointmentResponse resource for patient."
@@ -512,7 +512,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_crud" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_crus" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.crus"
   description            = "Create, Read, Update, Search access to AppointmentResponse resource for patient."
@@ -521,7 +521,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_crus" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_crds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.crds"
   description            = "Create, Read, Delete, Search access to AppointmentResponse resource for patient."
@@ -530,7 +530,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_crds" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_cuds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.cuds"
   description            = "Create, Update, Delete, Search access to AppointmentResponse resource for patient."
@@ -539,7 +539,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_cuds" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_ruds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.ruds"
   description            = "Read, Update, Delete, Search access to AppointmentResponse resource for patient."
@@ -548,7 +548,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_ruds" {
 }
 
 resource keycloak_openid_client_scope "patient_AppointmentResponse_cruds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.cruds"
   description            = "Create, Read, Update, Delete, Search access to AppointmentResponse resource for patient."
@@ -557,7 +557,7 @@ resource keycloak_openid_client_scope "patient_AppointmentResponse_cruds" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_c" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.c"
   description            = "Create access to AppointmentResponse resource for system."
@@ -566,7 +566,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_c" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_r" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.r"
   description            = "Read access to AppointmentResponse resource for system."
@@ -575,7 +575,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_r" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_u" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.u"
   description            = "Update access to AppointmentResponse resource for system."
@@ -584,7 +584,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_u" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_d" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.d"
   description            = "Delete access to AppointmentResponse resource for system."
@@ -593,7 +593,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_d" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_s" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.s"
   description            = "Search access to AppointmentResponse resource for system."
@@ -602,7 +602,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_s" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_cr" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.cr"
   description            = "Create, Read access to AppointmentResponse resource for system."
@@ -611,7 +611,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_cr" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_cu" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.cu"
   description            = "Create, Update access to AppointmentResponse resource for system."
@@ -620,7 +620,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_cu" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_cd" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.cd"
   description            = "Create, Delete access to AppointmentResponse resource for system."
@@ -629,7 +629,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_cd" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_cs" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.cs"
   description            = "Create, Search access to AppointmentResponse resource for system."
@@ -638,7 +638,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_cs" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_ru" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.ru"
   description            = "Read, Update access to AppointmentResponse resource for system."
@@ -647,7 +647,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_ru" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_rd" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.rd"
   description            = "Read, Delete access to AppointmentResponse resource for system."
@@ -656,7 +656,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_rd" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_rs" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.rs"
   description            = "Read, Search access to AppointmentResponse resource for system."
@@ -665,7 +665,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_rs" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_ud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.ud"
   description            = "Update, Delete access to AppointmentResponse resource for system."
@@ -674,7 +674,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_ud" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_us" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.us"
   description            = "Update, Search access to AppointmentResponse resource for system."
@@ -683,7 +683,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_us" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_ds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.ds"
   description            = "Delete, Search access to AppointmentResponse resource for system."
@@ -692,7 +692,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_ds" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_cru" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.cru"
   description            = "Create, Read, Update access to AppointmentResponse resource for system."
@@ -701,7 +701,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_cru" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_crd" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.crd"
   description            = "Create, Read, Delete access to AppointmentResponse resource for system."
@@ -710,7 +710,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_crd" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_crs" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.crs"
   description            = "Create, Read, Search access to AppointmentResponse resource for system."
@@ -719,7 +719,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_crs" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_cud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.cud"
   description            = "Create, Update, Delete access to AppointmentResponse resource for system."
@@ -728,7 +728,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_cud" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_cus" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.cus"
   description            = "Create, Update, Search access to AppointmentResponse resource for system."
@@ -737,7 +737,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_cus" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_cds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.cds"
   description            = "Create, Delete, Search access to AppointmentResponse resource for system."
@@ -746,7 +746,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_cds" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_rud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.rud"
   description            = "Read, Update, Delete access to AppointmentResponse resource for system."
@@ -755,7 +755,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_rud" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_rus" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.rus"
   description            = "Read, Update, Search access to AppointmentResponse resource for system."
@@ -764,7 +764,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_rus" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_rds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.rds"
   description            = "Read, Delete, Search access to AppointmentResponse resource for system."
@@ -773,7 +773,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_rds" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_uds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.uds"
   description            = "Update, Delete, Search access to AppointmentResponse resource for system."
@@ -782,7 +782,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_uds" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_crud" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.crud"
   description            = "Create, Read, Update, Delete access to AppointmentResponse resource for system."
@@ -791,7 +791,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_crud" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_crus" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.crus"
   description            = "Create, Read, Update, Search access to AppointmentResponse resource for system."
@@ -800,7 +800,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_crus" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_crds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.crds"
   description            = "Create, Read, Delete, Search access to AppointmentResponse resource for system."
@@ -809,7 +809,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_crds" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_cuds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.cuds"
   description            = "Create, Update, Delete, Search access to AppointmentResponse resource for system."
@@ -818,7 +818,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_cuds" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_ruds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.ruds"
   description            = "Read, Update, Delete, Search access to AppointmentResponse resource for system."
@@ -827,7 +827,7 @@ resource keycloak_openid_client_scope "system_AppointmentResponse_ruds" {
 }
 
 resource keycloak_openid_client_scope "system_AppointmentResponse_cruds" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.cruds"
   description            = "Create, Read, Update, Delete, Search access to AppointmentResponse resource for system."

@@ -1,6 +1,6 @@
 // patient/CodeSystem ----------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_code_system_read_scope" {
-  count                  = var.fhir_resources_supported.CodeSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.CodeSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CodeSystem.read"
   description            = "Read access to CodeSystem"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_code_system_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_code_system_write_scope" {
-  count                  = var.fhir_resources_supported.CodeSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.CodeSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CodeSystem.write"
   description            = "Write access to CodeSystem"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_code_system_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_code_system_full_scope" {
-  count                  = var.fhir_resources_supported.CodeSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.CodeSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CodeSystem.*"
   description            = "Full access to CodeSystem"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_code_system_full_scope" {
 }
 // system/CodeSystem ----------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_code_system_read_scope" {
-  count                  = var.fhir_resources_supported.CodeSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.CodeSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CodeSystem.read"
   description            = "Read access to CodeSystem"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_code_system_write_scope" {
-  count                  = var.fhir_resources_supported.CodeSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.CodeSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CodeSystem.write"
   description            = "Write access to CodeSystem"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_code_system_full_scope" {
-  count                  = var.fhir_resources_supported.CodeSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.CodeSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CodeSystem.*"
   description            = "Full access to CodeSystem"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_code_system_full_scope" {
 }
 // user/CodeSystem ----------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_code_system_read_scope" {
-  count                  = var.fhir_resources_supported.CodeSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.CodeSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CodeSystem.read"
   description            = "Read access to CodeSystem"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_code_system_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_code_system_write_scope" {
-  count                  = var.fhir_resources_supported.CodeSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.CodeSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CodeSystem.write"
   description            = "Write access to CodeSystem"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_code_system_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_code_system_full_scope" {
-  count                  = var.fhir_resources_supported.CodeSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.CodeSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CodeSystem.*"
   description            = "Full access to CodeSystem"

@@ -1,6 +1,6 @@
 // patient/ValueSet -----------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_value_set_read_scope" {
-  count                  = var.fhir_resources_supported.ValueSet ? 1 : 0
+  count                  = var.fhir_resources_supported.ValueSet && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ValueSet.read"
   description            = "Read access to ValueSet"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_value_set_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_value_set_write_scope" {
-  count                  = var.fhir_resources_supported.ValueSet ? 1 : 0
+  count                  = var.fhir_resources_supported.ValueSet && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ValueSet.write"
   description            = "Write access to ValueSet"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_value_set_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_value_set_full_scope" {
-  count                  = var.fhir_resources_supported.ValueSet ? 1 : 0
+  count                  = var.fhir_resources_supported.ValueSet && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ValueSet.*"
   description            = "Full access to ValueSet"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_value_set_full_scope" {
 }
 // system/ValueSet -----------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_value_set_read_scope" {
-  count                  = var.fhir_resources_supported.ValueSet ? 1 : 0
+  count                  = var.fhir_resources_supported.ValueSet && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ValueSet.read"
   description            = "Read access to ValueSet"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_value_set_write_scope" {
-  count                  = var.fhir_resources_supported.ValueSet ? 1 : 0
+  count                  = var.fhir_resources_supported.ValueSet && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ValueSet.write"
   description            = "Write access to ValueSet"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_value_set_full_scope" {
-  count                  = var.fhir_resources_supported.ValueSet ? 1 : 0
+  count                  = var.fhir_resources_supported.ValueSet && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ValueSet.*"
   description            = "Full access to ValueSet"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_value_set_full_scope" {
 }
 // user/ValueSet -----------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_value_set_read_scope" {
-  count                  = var.fhir_resources_supported.ValueSet ? 1 : 0
+  count                  = var.fhir_resources_supported.ValueSet && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ValueSet.read"
   description            = "Read access to ValueSet"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_value_set_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_value_set_write_scope" {
-  count                  = var.fhir_resources_supported.ValueSet ? 1 : 0
+  count                  = var.fhir_resources_supported.ValueSet && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ValueSet.write"
   description            = "Write access to ValueSet"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_value_set_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_value_set_full_scope" {
-  count                  = var.fhir_resources_supported.ValueSet ? 1 : 0
+  count                  = var.fhir_resources_supported.ValueSet && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ValueSet.*"
   description            = "Full access to ValueSet"

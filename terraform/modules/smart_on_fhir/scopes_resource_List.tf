@@ -1,6 +1,6 @@
 // patient/List ----------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_list_read_scope" {
-  count                  = var.fhir_resources_supported.List ? 1 : 0
+  count                  = var.fhir_resources_supported.List && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/List.read"
   description            = "Read access to List"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_list_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_list_write_scope" {
-  count                  = var.fhir_resources_supported.List ? 1 : 0
+  count                  = var.fhir_resources_supported.List && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/List.write"
   description            = "Write access to List"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_list_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_list_full_scope" {
-  count                  = var.fhir_resources_supported.List ? 1 : 0
+  count                  = var.fhir_resources_supported.List && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/List.*"
   description            = "Full access to List"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_list_full_scope" {
 }
 // system/List ----------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_list_read_scope" {
-  count                 = var.fhir_resources_supported.List ? 1 : 0
+  count                 = var.fhir_resources_supported.List && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/List.read"
   description            = "Read access to List"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_list_write_scope" {
-  count                 = var.fhir_resources_supported.List ? 1 : 0
+  count                 = var.fhir_resources_supported.List && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/List.write"
   description            = "Write access to List"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_list_full_scope" {
-  count                 = var.fhir_resources_supported.List ? 1 : 0
+  count                 = var.fhir_resources_supported.List && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/List.*"
   description            = "Full access to List"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_list_full_scope" {
 }
 // user/List ----------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_list_read_scope" {
-  count                  = var.fhir_resources_supported.List ? 1 : 0
+  count                  = var.fhir_resources_supported.List && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/List.read"
   description            = "Read access to List"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_list_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_list_write_scope" {
-  count                  = var.fhir_resources_supported.List ? 1 : 0
+  count                  = var.fhir_resources_supported.List && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/List.write"
   description            = "Write access to List"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_list_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_list_full_scope" {
-  count                  = var.fhir_resources_supported.List ? 1 : 0
+  count                  = var.fhir_resources_supported.List && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/List.*"
   description            = "Full access to List"

@@ -1,6 +1,6 @@
 // patient/TestReport ---------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_test_report_read_scope" {
-  count                  = var.fhir_resources_supported.TestReport ? 1 : 0
+  count                  = var.fhir_resources_supported.TestReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/TestReport.read"
   description            = "Read access to TestReport"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_test_report_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_test_report_write_scope" {
-  count                  = var.fhir_resources_supported.TestReport ? 1 : 0
+  count                  = var.fhir_resources_supported.TestReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/TestReport.write"
   description            = "Write access to TestReport"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_test_report_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_test_report_full_scope" {
-  count                  = var.fhir_resources_supported.TestReport ? 1 : 0
+  count                  = var.fhir_resources_supported.TestReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/TestReport.*"
   description            = "Full access to TestReport"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_test_report_full_scope" {
 }
 // system/TestReport ---------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_test_report_read_scope" {
-  count                  = var.fhir_resources_supported.TestReport ? 1 : 0
+  count                  = var.fhir_resources_supported.TestReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/TestReport.read"
   description            = "Read access to TestReport"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_test_report_write_scope" {
-  count                  = var.fhir_resources_supported.TestReport ? 1 : 0
+  count                  = var.fhir_resources_supported.TestReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/TestReport.write"
   description            = "Write access to TestReport"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_test_report_full_scope" {
-  count                  = var.fhir_resources_supported.TestReport ? 1 : 0
+  count                  = var.fhir_resources_supported.TestReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/TestReport.*"
   description            = "Full access to TestReport"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_test_report_full_scope" {
 }
 // user/TestReport ---------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_test_report_read_scope" {
-  count                  = var.fhir_resources_supported.TestReport ? 1 : 0
+  count                  = var.fhir_resources_supported.TestReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/TestReport.read"
   description            = "Read access to TestReport"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_test_report_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_test_report_write_scope" {
-  count                  = var.fhir_resources_supported.TestReport ? 1 : 0
+  count                  = var.fhir_resources_supported.TestReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/TestReport.write"
   description            = "Write access to TestReport"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_test_report_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_test_report_full_scope" {
-  count                  = var.fhir_resources_supported.TestReport ? 1 : 0
+  count                  = var.fhir_resources_supported.TestReport && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/TestReport.*"
   description            = "Full access to TestReport"

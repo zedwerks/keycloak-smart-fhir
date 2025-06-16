@@ -1,6 +1,6 @@
 // patient/Coverage ------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_coverage_read_scope" {
-  count                  = var.fhir_resources_supported.Coverage ? 1 : 0
+  count                  = var.fhir_resources_supported.Coverage && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Coverage.read"
   description            = "Read access to Coverage"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_coverage_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_coverage_write_scope" {
-  count                  = var.fhir_resources_supported.Coverage ? 1 : 0
+  count                  = var.fhir_resources_supported.Coverage && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Coverage.write"
   description            = "Write access to Coverage"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_coverage_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_coverage_full_scope" {
-  count                  = var.fhir_resources_supported.Coverage ? 1 : 0
+  count                  = var.fhir_resources_supported.Coverage && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Coverage.*"
   description            = "Full access to Coverage"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_coverage_full_scope" {
 }
 // system/Coverage ------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_coverage_read_scope" {
-  count                  = var.fhir_resources_supported.Coverage ? 1 : 0
+  count                  = var.fhir_resources_supported.Coverage && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Coverage.read"
   description            = "Read access to Coverage"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_coverage_write_scope" {
-  count                  = var.fhir_resources_supported.Coverage ? 1 : 0
+  count                  = var.fhir_resources_supported.Coverage && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Coverage.write"
   description            = "Write access to Coverage"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_coverage_full_scope" {
-  count                  = var.fhir_resources_supported.Coverage ? 1 : 0
+  count                  = var.fhir_resources_supported.Coverage && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Coverage.*"
   description            = "Full access to Coverage"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_coverage_full_scope" {
 }
 // user/Coverage ------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_coverage_read_scope" {
-  count                  = var.fhir_resources_supported.Coverage ? 1 : 0
+  count                  = var.fhir_resources_supported.Coverage && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Coverage.read"
   description            = "Read access to Coverage"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_coverage_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_coverage_write_scope" {
-  count                  = var.fhir_resources_supported.Coverage ? 1 : 0
+  count                  = var.fhir_resources_supported.Coverage && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Coverage.write"
   description            = "Write access to Coverage"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_coverage_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_coverage_full_scope" {
-  count                  = var.fhir_resources_supported.Coverage ? 1 : 0
+  count                  = var.fhir_resources_supported.Coverage && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Coverage.*"
   description            = "Full access to Coverage"

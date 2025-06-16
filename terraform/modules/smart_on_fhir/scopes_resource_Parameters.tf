@@ -1,6 +1,6 @@
 // patient/Parameters ---------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_parameters_read_scope" {
-  count                  = var.fhir_resources_supported.Parameters ? 1 : 0
+  count                  = var.fhir_resources_supported.Parameters && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Parameters.read"
   description            = "Read access to Parameters"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_parameters_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_parameters_write_scope" {
-  count                  = var.fhir_resources_supported.Parameters ? 1 : 0
+  count                  = var.fhir_resources_supported.Parameters && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Parameters.write"
   description            = "Write access to Parameters"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_parameters_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_parameters_full_scope" {
-  count                  = var.fhir_resources_supported.Parameters ? 1 : 0
+  count                  = var.fhir_resources_supported.Parameters && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Parameters.*"
   description            = "Full access to Parameters"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_parameters_full_scope" {
 }
 // system/Parameters ---------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_parameters_read_scope" {
-  count                  = var.fhir_resources_supported.Parameters ? 1 : 0
+  count                  = var.fhir_resources_supported.Parameters && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Parameters.read"
   description            = "Read access to Parameters"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_parameters_write_scope" {
-  count                  = var.fhir_resources_supported.Parameters ? 1 : 0
+  count                  = var.fhir_resources_supported.Parameters && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Parameters.write"
   description            = "Write access to Parameters"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_parameters_full_scope" {
-  count                  = var.fhir_resources_supported.Parameters ? 1 : 0
+  count                  = var.fhir_resources_supported.Parameters && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Parameters.*"
   description            = "Full access to Parameters"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_parameters_full_scope" {
 }
 // user/Parameters ---------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_parameters_read_scope" {
-  count                  = var.fhir_resources_supported.Parameters ? 1 : 0
+  count                  = var.fhir_resources_supported.Parameters && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Parameters.read"
   description            = "Read access to Parameters"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_parameters_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_parameters_write_scope" {
-  count                  = var.fhir_resources_supported.Parameters ? 1 : 0
+  count                  = var.fhir_resources_supported.Parameters && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Parameters.write"
   description            = "Write access to Parameters"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_parameters_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_parameters_full_scope" {
-  count                  = var.fhir_resources_supported.Parameters ? 1 : 0
+  count                  = var.fhir_resources_supported.Parameters && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Parameters.*"
   description            = "Full access to Parameters"

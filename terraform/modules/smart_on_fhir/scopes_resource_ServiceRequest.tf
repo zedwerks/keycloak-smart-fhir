@@ -1,6 +1,6 @@
 // patient/ServiceRequest -----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_service_request_read_scope" {
-  count                  = var.fhir_resources_supported.ServiceRequest ? 1 : 0
+  count                  = var.fhir_resources_supported.ServiceRequest && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ServiceRequest.read"
   description            = "Read access to ServiceRequest"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_service_request_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_service_request_write_scope" {
-  count                  = var.fhir_resources_supported.ServiceRequest ? 1 : 0
+  count                  = var.fhir_resources_supported.ServiceRequest && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ServiceRequest.write"
   description            = "Write access to ServiceRequest"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_service_request_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_service_request_full_scope" {
-  count                  = var.fhir_resources_supported.ServiceRequest ? 1 : 0
+  count                  = var.fhir_resources_supported.ServiceRequest && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ServiceRequest.*"
   description            = "Full access to ServiceRequest"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_service_request_full_scope" {
 }
 // system/ServiceRequest -----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_service_request_read_scope" {
-  count                  = var.fhir_resources_supported.ServiceRequest ? 1 : 0
+  count                  = var.fhir_resources_supported.ServiceRequest && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ServiceRequest.read"
   description            = "Read access to ServiceRequest"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_service_request_write_scope" {
-  count                  = var.fhir_resources_supported.ServiceRequest ? 1 : 0
+  count                  = var.fhir_resources_supported.ServiceRequest && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ServiceRequest.write"
   description            = "Write access to ServiceRequest"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_service_request_full_scope" {
-  count                  = var.fhir_resources_supported.ServiceRequest ? 1 : 0
+  count                  = var.fhir_resources_supported.ServiceRequest && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ServiceRequest.*"
   description            = "Full access to ServiceRequest"
@@ -48,7 +48,7 @@ resource "keycloak_openid_client_scope" "system_service_request_full_scope" {
 
 // user/ServiceRequest -----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_service_request_read_scope" {
-  count                  = var.fhir_resources_supported.ServiceRequest ? 1 : 0
+  count                  = var.fhir_resources_supported.ServiceRequest && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ServiceRequest.read"
   description            = "Read access to ServiceRequest"
@@ -56,7 +56,7 @@ resource "keycloak_openid_client_scope" "user_service_request_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_service_request_write_scope" {
-  count                  = var.fhir_resources_supported.ServiceRequest ? 1 : 0
+  count                  = var.fhir_resources_supported.ServiceRequest && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ServiceRequest.write"
   description            = "Write access to ServiceRequest"
@@ -64,7 +64,7 @@ resource "keycloak_openid_client_scope" "user_service_request_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_service_request_full_scope" {
-  count                  = var.fhir_resources_supported.ServiceRequest ? 1 : 0
+  count                  = var.fhir_resources_supported.ServiceRequest && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ServiceRequest.*"
   description            = "Full access to ServiceRequest"

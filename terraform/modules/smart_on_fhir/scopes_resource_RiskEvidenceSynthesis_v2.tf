@@ -1,5 +1,5 @@
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_c" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.c"
   description            = "Create access to RiskEvidenceSynthesis resource for user."
@@ -8,7 +8,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_c" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_r" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.r"
   description            = "Read access to RiskEvidenceSynthesis resource for user."
@@ -17,7 +17,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_r" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_u" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.u"
   description            = "Update access to RiskEvidenceSynthesis resource for user."
@@ -26,7 +26,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_u" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_d" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.d"
   description            = "Delete access to RiskEvidenceSynthesis resource for user."
@@ -35,7 +35,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_d" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_s" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.s"
   description            = "Search access to RiskEvidenceSynthesis resource for user."
@@ -44,7 +44,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_s" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cr" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.cr"
   description            = "Create, Read access to RiskEvidenceSynthesis resource for user."
@@ -53,7 +53,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cr" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cu" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.cu"
   description            = "Create, Update access to RiskEvidenceSynthesis resource for user."
@@ -62,7 +62,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cu" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cd" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.cd"
   description            = "Create, Delete access to RiskEvidenceSynthesis resource for user."
@@ -71,7 +71,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cd" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cs" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.cs"
   description            = "Create, Search access to RiskEvidenceSynthesis resource for user."
@@ -80,7 +80,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cs" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_ru" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.ru"
   description            = "Read, Update access to RiskEvidenceSynthesis resource for user."
@@ -89,7 +89,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_ru" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_rd" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.rd"
   description            = "Read, Delete access to RiskEvidenceSynthesis resource for user."
@@ -98,7 +98,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_rd" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_rs" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.rs"
   description            = "Read, Search access to RiskEvidenceSynthesis resource for user."
@@ -107,7 +107,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_rs" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_ud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.ud"
   description            = "Update, Delete access to RiskEvidenceSynthesis resource for user."
@@ -116,7 +116,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_ud" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_us" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.us"
   description            = "Update, Search access to RiskEvidenceSynthesis resource for user."
@@ -125,7 +125,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_us" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_ds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.ds"
   description            = "Delete, Search access to RiskEvidenceSynthesis resource for user."
@@ -134,7 +134,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_ds" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cru" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.cru"
   description            = "Create, Read, Update access to RiskEvidenceSynthesis resource for user."
@@ -143,7 +143,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cru" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_crd" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.crd"
   description            = "Create, Read, Delete access to RiskEvidenceSynthesis resource for user."
@@ -152,7 +152,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_crd" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_crs" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.crs"
   description            = "Create, Read, Search access to RiskEvidenceSynthesis resource for user."
@@ -161,7 +161,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_crs" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.cud"
   description            = "Create, Update, Delete access to RiskEvidenceSynthesis resource for user."
@@ -170,7 +170,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cud" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cus" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.cus"
   description            = "Create, Update, Search access to RiskEvidenceSynthesis resource for user."
@@ -179,7 +179,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cus" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.cds"
   description            = "Create, Delete, Search access to RiskEvidenceSynthesis resource for user."
@@ -188,7 +188,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cds" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_rud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.rud"
   description            = "Read, Update, Delete access to RiskEvidenceSynthesis resource for user."
@@ -197,7 +197,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_rud" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_rus" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.rus"
   description            = "Read, Update, Search access to RiskEvidenceSynthesis resource for user."
@@ -206,7 +206,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_rus" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_rds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.rds"
   description            = "Read, Delete, Search access to RiskEvidenceSynthesis resource for user."
@@ -215,7 +215,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_rds" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_uds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.uds"
   description            = "Update, Delete, Search access to RiskEvidenceSynthesis resource for user."
@@ -224,7 +224,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_uds" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_crud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.crud"
   description            = "Create, Read, Update, Delete access to RiskEvidenceSynthesis resource for user."
@@ -233,7 +233,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_crud" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_crus" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.crus"
   description            = "Create, Read, Update, Search access to RiskEvidenceSynthesis resource for user."
@@ -242,7 +242,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_crus" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_crds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.crds"
   description            = "Create, Read, Delete, Search access to RiskEvidenceSynthesis resource for user."
@@ -251,7 +251,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_crds" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cuds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.cuds"
   description            = "Create, Update, Delete, Search access to RiskEvidenceSynthesis resource for user."
@@ -260,7 +260,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cuds" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_ruds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.ruds"
   description            = "Read, Update, Delete, Search access to RiskEvidenceSynthesis resource for user."
@@ -269,7 +269,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_ruds" {
 }
 
 resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cruds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/RiskEvidenceSynthesis.cruds"
   description            = "Create, Read, Update, Delete, Search access to RiskEvidenceSynthesis resource for user."
@@ -278,7 +278,7 @@ resource keycloak_openid_client_scope "user_RiskEvidenceSynthesis_cruds" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_c" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.c"
   description            = "Create access to RiskEvidenceSynthesis resource for patient."
@@ -287,7 +287,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_c" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_r" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.r"
   description            = "Read access to RiskEvidenceSynthesis resource for patient."
@@ -296,7 +296,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_r" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_u" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.u"
   description            = "Update access to RiskEvidenceSynthesis resource for patient."
@@ -305,7 +305,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_u" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_d" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.d"
   description            = "Delete access to RiskEvidenceSynthesis resource for patient."
@@ -314,7 +314,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_d" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_s" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.s"
   description            = "Search access to RiskEvidenceSynthesis resource for patient."
@@ -323,7 +323,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_s" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cr" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.cr"
   description            = "Create, Read access to RiskEvidenceSynthesis resource for patient."
@@ -332,7 +332,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cr" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cu" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.cu"
   description            = "Create, Update access to RiskEvidenceSynthesis resource for patient."
@@ -341,7 +341,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cu" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cd" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.cd"
   description            = "Create, Delete access to RiskEvidenceSynthesis resource for patient."
@@ -350,7 +350,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cd" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cs" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.cs"
   description            = "Create, Search access to RiskEvidenceSynthesis resource for patient."
@@ -359,7 +359,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cs" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_ru" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.ru"
   description            = "Read, Update access to RiskEvidenceSynthesis resource for patient."
@@ -368,7 +368,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_ru" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_rd" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.rd"
   description            = "Read, Delete access to RiskEvidenceSynthesis resource for patient."
@@ -377,7 +377,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_rd" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_rs" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.rs"
   description            = "Read, Search access to RiskEvidenceSynthesis resource for patient."
@@ -386,7 +386,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_rs" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_ud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.ud"
   description            = "Update, Delete access to RiskEvidenceSynthesis resource for patient."
@@ -395,7 +395,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_ud" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_us" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.us"
   description            = "Update, Search access to RiskEvidenceSynthesis resource for patient."
@@ -404,7 +404,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_us" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_ds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.ds"
   description            = "Delete, Search access to RiskEvidenceSynthesis resource for patient."
@@ -413,7 +413,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_ds" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cru" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.cru"
   description            = "Create, Read, Update access to RiskEvidenceSynthesis resource for patient."
@@ -422,7 +422,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cru" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_crd" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.crd"
   description            = "Create, Read, Delete access to RiskEvidenceSynthesis resource for patient."
@@ -431,7 +431,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_crd" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_crs" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.crs"
   description            = "Create, Read, Search access to RiskEvidenceSynthesis resource for patient."
@@ -440,7 +440,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_crs" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.cud"
   description            = "Create, Update, Delete access to RiskEvidenceSynthesis resource for patient."
@@ -449,7 +449,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cud" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cus" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.cus"
   description            = "Create, Update, Search access to RiskEvidenceSynthesis resource for patient."
@@ -458,7 +458,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cus" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.cds"
   description            = "Create, Delete, Search access to RiskEvidenceSynthesis resource for patient."
@@ -467,7 +467,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cds" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_rud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.rud"
   description            = "Read, Update, Delete access to RiskEvidenceSynthesis resource for patient."
@@ -476,7 +476,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_rud" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_rus" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.rus"
   description            = "Read, Update, Search access to RiskEvidenceSynthesis resource for patient."
@@ -485,7 +485,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_rus" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_rds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.rds"
   description            = "Read, Delete, Search access to RiskEvidenceSynthesis resource for patient."
@@ -494,7 +494,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_rds" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_uds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.uds"
   description            = "Update, Delete, Search access to RiskEvidenceSynthesis resource for patient."
@@ -503,7 +503,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_uds" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_crud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.crud"
   description            = "Create, Read, Update, Delete access to RiskEvidenceSynthesis resource for patient."
@@ -512,7 +512,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_crud" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_crus" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.crus"
   description            = "Create, Read, Update, Search access to RiskEvidenceSynthesis resource for patient."
@@ -521,7 +521,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_crus" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_crds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.crds"
   description            = "Create, Read, Delete, Search access to RiskEvidenceSynthesis resource for patient."
@@ -530,7 +530,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_crds" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cuds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.cuds"
   description            = "Create, Update, Delete, Search access to RiskEvidenceSynthesis resource for patient."
@@ -539,7 +539,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cuds" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_ruds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.ruds"
   description            = "Read, Update, Delete, Search access to RiskEvidenceSynthesis resource for patient."
@@ -548,7 +548,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_ruds" {
 }
 
 resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cruds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/RiskEvidenceSynthesis.cruds"
   description            = "Create, Read, Update, Delete, Search access to RiskEvidenceSynthesis resource for patient."
@@ -557,7 +557,7 @@ resource keycloak_openid_client_scope "patient_RiskEvidenceSynthesis_cruds" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_c" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.c"
   description            = "Create access to RiskEvidenceSynthesis resource for system."
@@ -566,7 +566,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_c" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_r" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.r"
   description            = "Read access to RiskEvidenceSynthesis resource for system."
@@ -575,7 +575,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_r" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_u" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.u"
   description            = "Update access to RiskEvidenceSynthesis resource for system."
@@ -584,7 +584,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_u" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_d" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.d"
   description            = "Delete access to RiskEvidenceSynthesis resource for system."
@@ -593,7 +593,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_d" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_s" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.s"
   description            = "Search access to RiskEvidenceSynthesis resource for system."
@@ -602,7 +602,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_s" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cr" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.cr"
   description            = "Create, Read access to RiskEvidenceSynthesis resource for system."
@@ -611,7 +611,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cr" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cu" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.cu"
   description            = "Create, Update access to RiskEvidenceSynthesis resource for system."
@@ -620,7 +620,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cu" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cd" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.cd"
   description            = "Create, Delete access to RiskEvidenceSynthesis resource for system."
@@ -629,7 +629,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cd" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cs" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.cs"
   description            = "Create, Search access to RiskEvidenceSynthesis resource for system."
@@ -638,7 +638,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cs" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_ru" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.ru"
   description            = "Read, Update access to RiskEvidenceSynthesis resource for system."
@@ -647,7 +647,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_ru" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_rd" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.rd"
   description            = "Read, Delete access to RiskEvidenceSynthesis resource for system."
@@ -656,7 +656,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_rd" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_rs" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.rs"
   description            = "Read, Search access to RiskEvidenceSynthesis resource for system."
@@ -665,7 +665,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_rs" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_ud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.ud"
   description            = "Update, Delete access to RiskEvidenceSynthesis resource for system."
@@ -674,7 +674,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_ud" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_us" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.us"
   description            = "Update, Search access to RiskEvidenceSynthesis resource for system."
@@ -683,7 +683,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_us" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_ds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.ds"
   description            = "Delete, Search access to RiskEvidenceSynthesis resource for system."
@@ -692,7 +692,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_ds" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cru" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.cru"
   description            = "Create, Read, Update access to RiskEvidenceSynthesis resource for system."
@@ -701,7 +701,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cru" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_crd" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.crd"
   description            = "Create, Read, Delete access to RiskEvidenceSynthesis resource for system."
@@ -710,7 +710,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_crd" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_crs" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.crs"
   description            = "Create, Read, Search access to RiskEvidenceSynthesis resource for system."
@@ -719,7 +719,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_crs" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.cud"
   description            = "Create, Update, Delete access to RiskEvidenceSynthesis resource for system."
@@ -728,7 +728,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cud" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cus" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.cus"
   description            = "Create, Update, Search access to RiskEvidenceSynthesis resource for system."
@@ -737,7 +737,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cus" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.cds"
   description            = "Create, Delete, Search access to RiskEvidenceSynthesis resource for system."
@@ -746,7 +746,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cds" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_rud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.rud"
   description            = "Read, Update, Delete access to RiskEvidenceSynthesis resource for system."
@@ -755,7 +755,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_rud" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_rus" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.rus"
   description            = "Read, Update, Search access to RiskEvidenceSynthesis resource for system."
@@ -764,7 +764,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_rus" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_rds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.rds"
   description            = "Read, Delete, Search access to RiskEvidenceSynthesis resource for system."
@@ -773,7 +773,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_rds" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_uds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.uds"
   description            = "Update, Delete, Search access to RiskEvidenceSynthesis resource for system."
@@ -782,7 +782,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_uds" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_crud" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.crud"
   description            = "Create, Read, Update, Delete access to RiskEvidenceSynthesis resource for system."
@@ -791,7 +791,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_crud" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_crus" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.crus"
   description            = "Create, Read, Update, Search access to RiskEvidenceSynthesis resource for system."
@@ -800,7 +800,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_crus" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_crds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.crds"
   description            = "Create, Read, Delete, Search access to RiskEvidenceSynthesis resource for system."
@@ -809,7 +809,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_crds" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cuds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.cuds"
   description            = "Create, Update, Delete, Search access to RiskEvidenceSynthesis resource for system."
@@ -818,7 +818,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cuds" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_ruds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.ruds"
   description            = "Read, Update, Delete, Search access to RiskEvidenceSynthesis resource for system."
@@ -827,7 +827,7 @@ resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_ruds" {
 }
 
 resource keycloak_openid_client_scope "system_RiskEvidenceSynthesis_cruds" {
-  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.RiskEvidenceSynthesis && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/RiskEvidenceSynthesis.cruds"
   description            = "Create, Read, Update, Delete, Search access to RiskEvidenceSynthesis resource for system."

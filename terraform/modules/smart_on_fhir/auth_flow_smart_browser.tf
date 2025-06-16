@@ -17,7 +17,7 @@ resource "keycloak_authentication_subflow" "smart_browser_flow_step1" {
 resource "keycloak_authentication_execution" "smart_browser_flow_s1e1" {
   realm_id          = data.keycloak_realm.realm.id
   parent_flow_alias = keycloak_authentication_subflow.smart_browser_flow_step1.alias
-  authenticator     = "smart-audience-validator"
+  authenticator     = "smart-audience-validator"  // this is from the custom SPI. check Server Info to make sue it is loaded.
   requirement       = "REQUIRED"
   priority          = 10
   depends_on        = [keycloak_authentication_subflow.smart_browser_flow_step1]
@@ -48,7 +48,7 @@ resource "keycloak_authentication_subflow" "smart_browser_flow_step2" {
 resource "keycloak_authentication_execution" "smart_browser_flow_s2e1" {
   realm_id          = data.keycloak_realm.realm.id
   parent_flow_alias = keycloak_authentication_subflow.smart_browser_flow_step2.alias
-  authenticator     = "smart-launch-detector"
+  authenticator     = "smart-launch-detector" // this is from the custom SPI. check Server Info to make sure it is loaded.
   requirement       = "REQUIRED"
   priority          = 10
   depends_on        = [keycloak_authentication_subflow.smart_browser_flow_step2]
@@ -77,7 +77,7 @@ resource "keycloak_authentication_execution" "smart_browser_flow_s3e1" {
 resource "keycloak_authentication_execution" "smart_browser_flow_s3e2" {
   realm_id          = data.keycloak_realm.realm.id
   parent_flow_alias = keycloak_authentication_subflow.smart_browser_flow_step3.alias
-  authenticator     = "smart-launch-context-resolver"
+  authenticator     = "smart-launch-context-resolver" // this is from the custom SPI. check Server Info to make sure it is loaded.
   requirement       = "REQUIRED"
   priority          = 20
   depends_on        = [keycloak_authentication_execution.smart_browser_flow_s3e1]
@@ -109,7 +109,7 @@ resource "keycloak_authentication_execution" "smart_browser_flow_s4e1" {
 resource "keycloak_authentication_execution" "smart_browser_flow_s4e2" {
   realm_id          = data.keycloak_realm.realm.id
   parent_flow_alias = keycloak_authentication_subflow.smart_browser_flow_step4.alias
-  authenticator     = "smart-launch-context-resolver"
+  authenticator     = "smart-launch-context-resolver" // this is from the custom SPI. check Server Info to make sure it is loaded.
   requirement       = "REQUIRED"
   priority          = 20
   depends_on        = [keycloak_authentication_execution.smart_browser_flow_s4e1]
@@ -140,7 +140,7 @@ resource "keycloak_authentication_execution" "smart_browser_flow_s5e1" {
 resource "keycloak_authentication_execution" "smart_browser_flow_s5e2" {
   realm_id          = data.keycloak_realm.realm.id
   parent_flow_alias = keycloak_authentication_subflow.smart_browser_flow_step5.alias
-  authenticator     = "smart-launch-context-resolver"
+  authenticator     = "smart-launch-context-resolver" // this is from the custom SPI. check Server Info to make sure it is loaded.
   requirement       = "REQUIRED"
   priority          = 20
   depends_on        = [keycloak_authentication_execution.smart_browser_flow_s5e1]

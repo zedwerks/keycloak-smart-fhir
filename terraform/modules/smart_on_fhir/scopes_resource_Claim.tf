@@ -1,6 +1,6 @@
 // patient/Claim ---------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_claim_read_scope" {
-  count                  = var.fhir_resources_supported.Claim ? 1 : 0
+  count                  = var.fhir_resources_supported.Claim && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Claim.read"
   description            = "Read access to Claim"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_claim_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_claim_write_scope" {
-  count                  = var.fhir_resources_supported.Claim ? 1 : 0
+  count                  = var.fhir_resources_supported.Claim && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Claim.write"
   description            = "Write access to Claim"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_claim_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_claim_full_scope" {
-  count                  = var.fhir_resources_supported.Claim ? 1 : 0
+  count                  = var.fhir_resources_supported.Claim && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Claim.*"
   description            = "Full access to Claim"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_claim_full_scope" {
 }
 // system/Claim ---------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_claim_read_scope" {
-  count                  = var.fhir_resources_supported.Claim ? 1 : 0
+  count                  = var.fhir_resources_supported.Claim && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Claim.read"
   description            = "Read access to Claim"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_claim_write_scope" {
-  count                  = var.fhir_resources_supported.Claim ? 1 : 0
+  count                  = var.fhir_resources_supported.Claim && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Claim.write"
   description            = "Write access to Claim"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_claim_full_scope" {
-  count                  = var.fhir_resources_supported.Claim ? 1 : 0
+  count                  = var.fhir_resources_supported.Claim && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Claim.*"
   description            = "Full access to Claim"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_claim_full_scope" {
 }
 // user/Claim ---------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_claim_read_scope" {
-  count                  = var.fhir_resources_supported.Claim ? 1 : 0
+  count                  = var.fhir_resources_supported.Claim && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Claim.read"
   description            = "Read access to Claim"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_claim_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_claim_write_scope" {
-  count                  = var.fhir_resources_supported.Claim ? 1 : 0
+  count                  = var.fhir_resources_supported.Claim && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Claim.write"
   description            = "Write access to Claim"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_claim_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_claim_full_scope" {
-  count                  = var.fhir_resources_supported.Claim ? 1 : 0
+  count                  = var.fhir_resources_supported.Claim && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Claim.*"
   description            = "Full access to Claim"

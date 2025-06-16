@@ -1,6 +1,6 @@
 // patient/AppointmentResponse -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_appointment_response_read_scope" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.read"
   description            = "Read access to AppointmentResponse"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_appointment_response_read_scope
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_appointment_response_write_scope" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.write"
   description            = "Write access to AppointmentResponse"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_appointment_response_write_scop
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_appointment_response_full_scope" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/AppointmentResponse.*"
   description            = "Full access to AppointmentResponse"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_appointment_response_full_scope
 }
 // system/AppointmentResponse -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_appointment_response_read_scope" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.read"
   description            = "Read access to AppointmentResponse"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_appointment_response_write_scope" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.write"
   description            = "Write access to AppointmentResponse"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_appointment_response_full_scope" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/AppointmentResponse.*"
   description            = "Full access to AppointmentResponse"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_appointment_response_full_scope"
 }
 // user/AppointmentResponse -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_appointment_response_read_scope" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.read"
   description            = "Read access to AppointmentResponse"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_appointment_response_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_appointment_response_write_scope" {
-  count                  = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                  = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.write"
   description            = "Write access to AppointmentResponse"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_appointment_response_write_scope" 
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_appointment_response_full_scope" {
-  count                 = var.fhir_resources_supported.AppointmentResponse ? 1 : 0
+  count                 = var.fhir_resources_supported.AppointmentResponse && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/AppointmentResponse.*"
   description            = "Full access to AppointmentResponse"

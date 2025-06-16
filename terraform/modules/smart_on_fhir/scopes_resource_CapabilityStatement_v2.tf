@@ -1,5 +1,5 @@
 resource keycloak_openid_client_scope "user_CapabilityStatement_c" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.c"
   description            = "Create access to CapabilityStatement resource for user."
@@ -8,7 +8,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_c" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_r" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.r"
   description            = "Read access to CapabilityStatement resource for user."
@@ -17,7 +17,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_r" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_u" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.u"
   description            = "Update access to CapabilityStatement resource for user."
@@ -26,7 +26,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_u" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_d" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.d"
   description            = "Delete access to CapabilityStatement resource for user."
@@ -35,7 +35,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_d" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_s" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.s"
   description            = "Search access to CapabilityStatement resource for user."
@@ -44,7 +44,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_s" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_cr" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.cr"
   description            = "Create, Read access to CapabilityStatement resource for user."
@@ -53,7 +53,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_cr" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_cu" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.cu"
   description            = "Create, Update access to CapabilityStatement resource for user."
@@ -62,7 +62,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_cu" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_cd" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.cd"
   description            = "Create, Delete access to CapabilityStatement resource for user."
@@ -71,7 +71,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_cd" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_cs" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.cs"
   description            = "Create, Search access to CapabilityStatement resource for user."
@@ -80,7 +80,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_cs" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_ru" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.ru"
   description            = "Read, Update access to CapabilityStatement resource for user."
@@ -89,7 +89,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_ru" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_rd" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.rd"
   description            = "Read, Delete access to CapabilityStatement resource for user."
@@ -98,7 +98,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_rd" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_rs" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.rs"
   description            = "Read, Search access to CapabilityStatement resource for user."
@@ -107,7 +107,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_rs" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_ud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.ud"
   description            = "Update, Delete access to CapabilityStatement resource for user."
@@ -116,7 +116,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_ud" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_us" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.us"
   description            = "Update, Search access to CapabilityStatement resource for user."
@@ -125,7 +125,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_us" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_ds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.ds"
   description            = "Delete, Search access to CapabilityStatement resource for user."
@@ -134,7 +134,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_ds" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_cru" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.cru"
   description            = "Create, Read, Update access to CapabilityStatement resource for user."
@@ -143,7 +143,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_cru" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_crd" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.crd"
   description            = "Create, Read, Delete access to CapabilityStatement resource for user."
@@ -152,7 +152,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_crd" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_crs" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.crs"
   description            = "Create, Read, Search access to CapabilityStatement resource for user."
@@ -161,7 +161,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_crs" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_cud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.cud"
   description            = "Create, Update, Delete access to CapabilityStatement resource for user."
@@ -170,7 +170,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_cud" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_cus" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.cus"
   description            = "Create, Update, Search access to CapabilityStatement resource for user."
@@ -179,7 +179,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_cus" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_cds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.cds"
   description            = "Create, Delete, Search access to CapabilityStatement resource for user."
@@ -188,7 +188,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_cds" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_rud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.rud"
   description            = "Read, Update, Delete access to CapabilityStatement resource for user."
@@ -197,7 +197,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_rud" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_rus" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.rus"
   description            = "Read, Update, Search access to CapabilityStatement resource for user."
@@ -206,7 +206,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_rus" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_rds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.rds"
   description            = "Read, Delete, Search access to CapabilityStatement resource for user."
@@ -215,7 +215,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_rds" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_uds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.uds"
   description            = "Update, Delete, Search access to CapabilityStatement resource for user."
@@ -224,7 +224,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_uds" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_crud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.crud"
   description            = "Create, Read, Update, Delete access to CapabilityStatement resource for user."
@@ -233,7 +233,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_crud" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_crus" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.crus"
   description            = "Create, Read, Update, Search access to CapabilityStatement resource for user."
@@ -242,7 +242,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_crus" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_crds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.crds"
   description            = "Create, Read, Delete, Search access to CapabilityStatement resource for user."
@@ -251,7 +251,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_crds" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_cuds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.cuds"
   description            = "Create, Update, Delete, Search access to CapabilityStatement resource for user."
@@ -260,7 +260,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_cuds" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_ruds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.ruds"
   description            = "Read, Update, Delete, Search access to CapabilityStatement resource for user."
@@ -269,7 +269,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_ruds" {
 }
 
 resource keycloak_openid_client_scope "user_CapabilityStatement_cruds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/CapabilityStatement.cruds"
   description            = "Create, Read, Update, Delete, Search access to CapabilityStatement resource for user."
@@ -278,7 +278,7 @@ resource keycloak_openid_client_scope "user_CapabilityStatement_cruds" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_c" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.c"
   description            = "Create access to CapabilityStatement resource for patient."
@@ -287,7 +287,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_c" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_r" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.r"
   description            = "Read access to CapabilityStatement resource for patient."
@@ -296,7 +296,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_r" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_u" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.u"
   description            = "Update access to CapabilityStatement resource for patient."
@@ -305,7 +305,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_u" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_d" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.d"
   description            = "Delete access to CapabilityStatement resource for patient."
@@ -314,7 +314,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_d" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_s" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.s"
   description            = "Search access to CapabilityStatement resource for patient."
@@ -323,7 +323,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_s" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_cr" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.cr"
   description            = "Create, Read access to CapabilityStatement resource for patient."
@@ -332,7 +332,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_cr" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_cu" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.cu"
   description            = "Create, Update access to CapabilityStatement resource for patient."
@@ -341,7 +341,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_cu" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_cd" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.cd"
   description            = "Create, Delete access to CapabilityStatement resource for patient."
@@ -350,7 +350,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_cd" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_cs" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.cs"
   description            = "Create, Search access to CapabilityStatement resource for patient."
@@ -359,7 +359,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_cs" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_ru" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.ru"
   description            = "Read, Update access to CapabilityStatement resource for patient."
@@ -368,7 +368,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_ru" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_rd" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.rd"
   description            = "Read, Delete access to CapabilityStatement resource for patient."
@@ -377,7 +377,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_rd" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_rs" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.rs"
   description            = "Read, Search access to CapabilityStatement resource for patient."
@@ -386,7 +386,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_rs" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_ud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.ud"
   description            = "Update, Delete access to CapabilityStatement resource for patient."
@@ -395,7 +395,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_ud" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_us" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.us"
   description            = "Update, Search access to CapabilityStatement resource for patient."
@@ -404,7 +404,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_us" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_ds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.ds"
   description            = "Delete, Search access to CapabilityStatement resource for patient."
@@ -413,7 +413,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_ds" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_cru" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.cru"
   description            = "Create, Read, Update access to CapabilityStatement resource for patient."
@@ -422,7 +422,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_cru" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_crd" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.crd"
   description            = "Create, Read, Delete access to CapabilityStatement resource for patient."
@@ -431,7 +431,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_crd" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_crs" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.crs"
   description            = "Create, Read, Search access to CapabilityStatement resource for patient."
@@ -440,7 +440,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_crs" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_cud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.cud"
   description            = "Create, Update, Delete access to CapabilityStatement resource for patient."
@@ -449,7 +449,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_cud" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_cus" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.cus"
   description            = "Create, Update, Search access to CapabilityStatement resource for patient."
@@ -458,7 +458,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_cus" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_cds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.cds"
   description            = "Create, Delete, Search access to CapabilityStatement resource for patient."
@@ -467,7 +467,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_cds" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_rud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.rud"
   description            = "Read, Update, Delete access to CapabilityStatement resource for patient."
@@ -476,7 +476,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_rud" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_rus" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.rus"
   description            = "Read, Update, Search access to CapabilityStatement resource for patient."
@@ -485,7 +485,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_rus" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_rds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.rds"
   description            = "Read, Delete, Search access to CapabilityStatement resource for patient."
@@ -494,7 +494,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_rds" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_uds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.uds"
   description            = "Update, Delete, Search access to CapabilityStatement resource for patient."
@@ -503,7 +503,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_uds" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_crud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.crud"
   description            = "Create, Read, Update, Delete access to CapabilityStatement resource for patient."
@@ -512,7 +512,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_crud" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_crus" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.crus"
   description            = "Create, Read, Update, Search access to CapabilityStatement resource for patient."
@@ -521,7 +521,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_crus" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_crds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.crds"
   description            = "Create, Read, Delete, Search access to CapabilityStatement resource for patient."
@@ -530,7 +530,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_crds" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_cuds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.cuds"
   description            = "Create, Update, Delete, Search access to CapabilityStatement resource for patient."
@@ -539,7 +539,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_cuds" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_ruds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.ruds"
   description            = "Read, Update, Delete, Search access to CapabilityStatement resource for patient."
@@ -548,7 +548,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_ruds" {
 }
 
 resource keycloak_openid_client_scope "patient_CapabilityStatement_cruds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/CapabilityStatement.cruds"
   description            = "Create, Read, Update, Delete, Search access to CapabilityStatement resource for patient."
@@ -557,7 +557,7 @@ resource keycloak_openid_client_scope "patient_CapabilityStatement_cruds" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_c" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.c"
   description            = "Create access to CapabilityStatement resource for system."
@@ -566,7 +566,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_c" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_r" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.r"
   description            = "Read access to CapabilityStatement resource for system."
@@ -575,7 +575,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_r" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_u" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.u"
   description            = "Update access to CapabilityStatement resource for system."
@@ -584,7 +584,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_u" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_d" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.d"
   description            = "Delete access to CapabilityStatement resource for system."
@@ -593,7 +593,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_d" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_s" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.s"
   description            = "Search access to CapabilityStatement resource for system."
@@ -602,7 +602,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_s" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_cr" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.cr"
   description            = "Create, Read access to CapabilityStatement resource for system."
@@ -611,7 +611,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_cr" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_cu" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.cu"
   description            = "Create, Update access to CapabilityStatement resource for system."
@@ -620,7 +620,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_cu" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_cd" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.cd"
   description            = "Create, Delete access to CapabilityStatement resource for system."
@@ -629,7 +629,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_cd" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_cs" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.cs"
   description            = "Create, Search access to CapabilityStatement resource for system."
@@ -638,7 +638,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_cs" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_ru" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.ru"
   description            = "Read, Update access to CapabilityStatement resource for system."
@@ -647,7 +647,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_ru" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_rd" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.rd"
   description            = "Read, Delete access to CapabilityStatement resource for system."
@@ -656,7 +656,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_rd" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_rs" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.rs"
   description            = "Read, Search access to CapabilityStatement resource for system."
@@ -665,7 +665,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_rs" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_ud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.ud"
   description            = "Update, Delete access to CapabilityStatement resource for system."
@@ -674,7 +674,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_ud" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_us" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.us"
   description            = "Update, Search access to CapabilityStatement resource for system."
@@ -683,7 +683,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_us" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_ds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.ds"
   description            = "Delete, Search access to CapabilityStatement resource for system."
@@ -692,7 +692,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_ds" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_cru" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.cru"
   description            = "Create, Read, Update access to CapabilityStatement resource for system."
@@ -701,7 +701,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_cru" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_crd" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.crd"
   description            = "Create, Read, Delete access to CapabilityStatement resource for system."
@@ -710,7 +710,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_crd" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_crs" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.crs"
   description            = "Create, Read, Search access to CapabilityStatement resource for system."
@@ -719,7 +719,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_crs" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_cud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.cud"
   description            = "Create, Update, Delete access to CapabilityStatement resource for system."
@@ -728,7 +728,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_cud" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_cus" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.cus"
   description            = "Create, Update, Search access to CapabilityStatement resource for system."
@@ -737,7 +737,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_cus" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_cds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.cds"
   description            = "Create, Delete, Search access to CapabilityStatement resource for system."
@@ -746,7 +746,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_cds" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_rud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.rud"
   description            = "Read, Update, Delete access to CapabilityStatement resource for system."
@@ -755,7 +755,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_rud" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_rus" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.rus"
   description            = "Read, Update, Search access to CapabilityStatement resource for system."
@@ -764,7 +764,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_rus" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_rds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.rds"
   description            = "Read, Delete, Search access to CapabilityStatement resource for system."
@@ -773,7 +773,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_rds" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_uds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.uds"
   description            = "Update, Delete, Search access to CapabilityStatement resource for system."
@@ -782,7 +782,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_uds" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_crud" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.crud"
   description            = "Create, Read, Update, Delete access to CapabilityStatement resource for system."
@@ -791,7 +791,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_crud" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_crus" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.crus"
   description            = "Create, Read, Update, Search access to CapabilityStatement resource for system."
@@ -800,7 +800,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_crus" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_crds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.crds"
   description            = "Create, Read, Delete, Search access to CapabilityStatement resource for system."
@@ -809,7 +809,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_crds" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_cuds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.cuds"
   description            = "Create, Update, Delete, Search access to CapabilityStatement resource for system."
@@ -818,7 +818,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_cuds" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_ruds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.ruds"
   description            = "Read, Update, Delete, Search access to CapabilityStatement resource for system."
@@ -827,7 +827,7 @@ resource keycloak_openid_client_scope "system_CapabilityStatement_ruds" {
 }
 
 resource keycloak_openid_client_scope "system_CapabilityStatement_cruds" {
-  count                  = var.fhir_resources_supported.CapabilityStatement ? 1 : 0
+  count                  = var.fhir_resources_supported.CapabilityStatement && var.keycloak_smart_configuration.smart_v2_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/CapabilityStatement.cruds"
   description            = "Create, Read, Update, Delete, Search access to CapabilityStatement resource for system."

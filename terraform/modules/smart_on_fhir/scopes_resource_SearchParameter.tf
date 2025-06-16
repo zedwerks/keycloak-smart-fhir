@@ -1,6 +1,6 @@
 // patient/SearchParameter ----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_search_parameter_read_scope" {
-  count                  = var.fhir_resources_supported.SearchParameter ? 1 : 0
+  count                  = var.fhir_resources_supported.SearchParameter && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/SearchParameter.read"
   description            = "Read access to SearchParameter"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_search_parameter_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_search_parameter_write_scope" {
-  count                  = var.fhir_resources_supported.SearchParameter ? 1 : 0
+  count                  = var.fhir_resources_supported.SearchParameter && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/SearchParameter.write"
   description            = "Write access to SearchParameter"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_search_parameter_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_search_parameter_full_scope" {
-  count                  = var.fhir_resources_supported.SearchParameter ? 1 : 0
+  count                  = var.fhir_resources_supported.SearchParameter && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/SearchParameter.*"
   description            = "Full access to SearchParameter"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_search_parameter_full_scope" {
 }
 // system/SearchParameter ----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_search_parameter_read_scope" {
-  count                  = var.fhir_resources_supported.SearchParameter ? 1 : 0
+  count                  = var.fhir_resources_supported.SearchParameter && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/SearchParameter.read"
   description            = "Read access to SearchParameter"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_search_parameter_write_scope" {
-  count                  = var.fhir_resources_supported.SearchParameter ? 1 : 0
+  count                  = var.fhir_resources_supported.SearchParameter && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/SearchParameter.write"
   description            = "Write access to SearchParameter"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_search_parameter_full_scope" {
-  count                  = var.fhir_resources_supported.SearchParameter ? 1 : 0
+  count                  = var.fhir_resources_supported.SearchParameter && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/SearchParameter.*"
   description            = "Full access to SearchParameter"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_search_parameter_full_scope" {
 }
 // user/SearchParameter ----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_search_parameter_read_scope" {
-  count                  = var.fhir_resources_supported.SearchParameter ? 1 : 0
+  count                  = var.fhir_resources_supported.SearchParameter && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/SearchParameter.read"
   description            = "Read access to SearchParameter"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_search_parameter_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_search_parameter_write_scope" {
-  count                  = var.fhir_resources_supported.SearchParameter ? 1 : 0
+  count                  = var.fhir_resources_supported.SearchParameter && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/SearchParameter.write"
   description            = "Write access to SearchParameter"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_search_parameter_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_search_parameter_full_scope" {
-  count                  = var.fhir_resources_supported.SearchParameter ? 1 : 0
+  count                  = var.fhir_resources_supported.SearchParameter && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/SearchParameter.*"
   description            = "Full access to SearchParameter"

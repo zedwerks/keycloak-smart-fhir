@@ -1,6 +1,6 @@
 // patient/MedicationDispense --------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_medication_dispense_read_scope" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.read"
   description            = "Read access to MedicationDispense"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_medication_dispense_read_scope"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_medication_dispense_write_scope" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.write"
   description            = "Write access to MedicationDispense"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_medication_dispense_write_scope
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_medication_dispense_full_scope" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MedicationDispense.*"
   description            = "Full access to MedicationDispense"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_medication_dispense_full_scope"
 }
 // system/MedicationDispense --------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_medication_dispense_read_scope" {
-  count                 = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                 = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.read"
   description            = "Read access to MedicationDispense"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_medication_dispense_write_scope" {
-  count                 = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                 = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.write"
   description            = "Write access to MedicationDispense"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_medication_dispense_full_scope" {
-  count                 = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                 = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MedicationDispense.*"
   description            = "Full access to MedicationDispense"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_medication_dispense_full_scope" 
 }
 // user/MedicationDispense --------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_medication_dispense_read_scope" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.read"
   description            = "Read access to MedicationDispense"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_medication_dispense_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_medication_dispense_write_scope" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.write"
   description            = "Write access to MedicationDispense"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_medication_dispense_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_medication_dispense_full_scope" {
-  count                  = var.fhir_resources_supported.MedicationDispense ? 1 : 0
+  count                  = var.fhir_resources_supported.MedicationDispense && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MedicationDispense.*"
   description            = "Full access to MedicationDispense"

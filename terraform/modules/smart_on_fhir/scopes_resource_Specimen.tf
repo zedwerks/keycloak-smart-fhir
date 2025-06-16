@@ -1,6 +1,6 @@
 // patient/Specimen ------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_specimen_read_scope" {
-  count                  = var.fhir_resources_supported.Specimen ? 1 : 0
+  count                  = var.fhir_resources_supported.Specimen && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Specimen.read"
   description            = "Read access to Specimen"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_specimen_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_specimen_write_scope" {
-  count                  = var.fhir_resources_supported.Specimen ? 1 : 0
+  count                  = var.fhir_resources_supported.Specimen && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Specimen.write"
   description            = "Write access to Specimen"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_specimen_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_specimen_full_scope" {
-  count                  = var.fhir_resources_supported.Specimen ? 1 : 0
+  count                  = var.fhir_resources_supported.Specimen && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Specimen.*"
   description            = "Full access to Specimen"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_specimen_full_scope" {
 }
 // system/Specimen ------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_specimen_read_scope" {
-  count                  = var.fhir_resources_supported.Specimen ? 1 : 0
+  count                  = var.fhir_resources_supported.Specimen && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Specimen.read"
   description            = "Read access to Specimen"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_specimen_write_scope" {
-  count                  = var.fhir_resources_supported.Specimen ? 1 : 0
+  count                  = var.fhir_resources_supported.Specimen && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Specimen.write"
   description            = "Write access to Specimen"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_specimen_full_scope" {
-  count                  = var.fhir_resources_supported.Specimen ? 1 : 0
+  count                  = var.fhir_resources_supported.Specimen && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Specimen.*"
   description            = "Full access to Specimen"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_specimen_full_scope" {
 }
 // user/Specimen ------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_specimen_read_scope" {
-  count                  = var.fhir_resources_supported.Specimen ? 1 : 0
+  count                  = var.fhir_resources_supported.Specimen && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Specimen.read"
   description            = "Read access to Specimen"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_specimen_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_specimen_write_scope" {
-  count                  = var.fhir_resources_supported.Specimen ? 1 : 0
+  count                  = var.fhir_resources_supported.Specimen && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Specimen.write"
   description            = "Write access to Specimen"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_specimen_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_specimen_full_scope" {
-  count                  = var.fhir_resources_supported.Specimen ? 1 : 0
+  count                  = var.fhir_resources_supported.Specimen && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Specimen.*"
   description            = "Full access to Specimen"

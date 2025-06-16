@@ -1,6 +1,6 @@
 // patient/Contract ------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_contract_read_scope" {
-  count                  = var.fhir_resources_supported.Contract ? 1 : 0
+  count                  = var.fhir_resources_supported.Contract && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Contract.read"
   description            = "Read access to Contract"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_contract_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_contract_write_scope" {
-  count                  = var.fhir_resources_supported.Contract ? 1 : 0
+  count                  = var.fhir_resources_supported.Contract && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Contract.write"
   description            = "Write access to Contract"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_contract_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_contract_full_scope" {
-  count                  = var.fhir_resources_supported.Contract ? 1 : 0
+  count                  = var.fhir_resources_supported.Contract && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Contract.*"
   description            = "Full access to Contract"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_contract_full_scope" {
 }
 // system/Contract ------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_contract_read_scope" {
-  count                  = var.fhir_resources_supported.Contract ? 1 : 0
+  count                  = var.fhir_resources_supported.Contract && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Contract.read"
   description            = "Read access to Contract"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_contract_write_scope" {
-  count                  = var.fhir_resources_supported.Contract ? 1 : 0
+  count                  = var.fhir_resources_supported.Contract && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Contract.write"
   description            = "Write access to Contract"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_contract_full_scope" {
-  count                  = var.fhir_resources_supported.Contract ? 1 : 0
+  count                  = var.fhir_resources_supported.Contract && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Contract.*"
   description            = "Full access to Contract"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_contract_full_scope" {
 }
 // user/Contract ------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_contract_read_scope" {
-  count                  = var.fhir_resources_supported.Contract ? 1 : 0
+  count                  = var.fhir_resources_supported.Contract && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Contract.read"
   description            = "Read access to Contract"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_contract_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_contract_write_scope" {
-  count                  = var.fhir_resources_supported.Contract ? 1 : 0
+  count                  = var.fhir_resources_supported.Contract && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Contract.write"
   description            = "Write access to Contract"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_contract_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_contract_full_scope" {
-  count                  = var.fhir_resources_supported.Contract ? 1 : 0
+  count                  = var.fhir_resources_supported.Contract && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Contract.*"
   description            = "Full access to Contract"

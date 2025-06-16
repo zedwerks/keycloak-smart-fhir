@@ -1,6 +1,6 @@
 // patient/TerminologyCapabilities --------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_terminology_capabilities_read_scope" {
-  count                  = var.fhir_resources_supported.TerminologyCapabilities ? 1 : 0
+  count                  = var.fhir_resources_supported.TerminologyCapabilities && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/TerminologyCapabilities.read"
   description            = "Read access to TerminologyCapabilities"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_terminology_capabilities_read_s
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_terminology_capabilities_write_scope" {
-  count                  = var.fhir_resources_supported.TerminologyCapabilities ? 1 : 0
+  count                  = var.fhir_resources_supported.TerminologyCapabilities && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/TerminologyCapabilities.write"
   description            = "Write access to TerminologyCapabilities"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_terminology_capabilities_write_
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_terminology_capabilities_full_scope" {
-  count                  = var.fhir_resources_supported.TerminologyCapabilities ? 1 : 0
+  count                  = var.fhir_resources_supported.TerminologyCapabilities && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/TerminologyCapabilities.*"
   description            = "Full access to TerminologyCapabilities"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_terminology_capabilities_full_s
 }
 // system/TerminologyCapabilities --------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_terminology_capabilities_read_scope" {
-  count                  = var.fhir_resources_supported.TerminologyCapabilities ? 1 : 0
+  count                  = var.fhir_resources_supported.TerminologyCapabilities && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/TerminologyCapabilities.read"
   description            = "Read access to TerminologyCapabilities"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_terminology_capabilities_write_scope" {
-  count                  = var.fhir_resources_supported.TerminologyCapabilities ? 1 : 0
+  count                  = var.fhir_resources_supported.TerminologyCapabilities && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/TerminologyCapabilities.write"
   description            = "Write access to TerminologyCapabilities"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_terminology_capabilities_full_scope" {
-  count                  = var.fhir_resources_supported.TerminologyCapabilities ? 1 : 0
+  count                  = var.fhir_resources_supported.TerminologyCapabilities && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/TerminologyCapabilities.*"
   description            = "Full access to TerminologyCapabilities"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_terminology_capabilities_full_sc
 }
 // user/TerminologyCapabilities --------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_terminology_capabilities_read_scope" {
-  count                  = var.fhir_resources_supported.TerminologyCapabilities ? 1 : 0
+  count                  = var.fhir_resources_supported.TerminologyCapabilities && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/TerminologyCapabilities.read"
   description            = "Read access to TerminologyCapabilities"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_terminology_capabilities_read_scop
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_terminology_capabilities_write_scope" {
-  count                  = var.fhir_resources_supported.TerminologyCapabilities ? 1 : 0
+  count                  = var.fhir_resources_supported.TerminologyCapabilities && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/TerminologyCapabilities.write"
   description            = "Write access to TerminologyCapabilities"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_terminology_capabilities_write_sco
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_terminology_capabilities_full_scope" {
-  count                  = var.fhir_resources_supported.TerminologyCapabilities ? 1 : 0
+  count                  = var.fhir_resources_supported.TerminologyCapabilities && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/TerminologyCapabilities.*"
   description            = "Full access to TerminologyCapabilities"

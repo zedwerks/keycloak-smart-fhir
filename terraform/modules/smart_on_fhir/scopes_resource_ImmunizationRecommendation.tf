@@ -1,6 +1,6 @@
 // patient/ImmunizationRecommendation ------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_immunization_recommendation_read_scope" {
-  count                  = var.fhir_resources_supported.ImmunizationRecommendation ? 1 : 0
+  count                  = var.fhir_resources_supported.ImmunizationRecommendation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ImmunizationRecommendation.read"
   description            = "Read access to ImmunizationRecommendation"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_immunization_recommendation_rea
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_immunization_recommendation_write_scope" {
-  count                  = var.fhir_resources_supported.ImmunizationRecommendation ? 1 : 0
+  count                  = var.fhir_resources_supported.ImmunizationRecommendation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ImmunizationRecommendation.write"
   description            = "Write access to ImmunizationRecommendation"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_immunization_recommendation_wri
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_immunization_recommendation_full_scope" {
-  count                  = var.fhir_resources_supported.ImmunizationRecommendation ? 1 : 0
+  count                  = var.fhir_resources_supported.ImmunizationRecommendation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/ImmunizationRecommendation.*"
   description            = "Full access to ImmunizationRecommendation"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_immunization_recommendation_ful
 }
 // system/ImmunizationRecommendation ------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_immunization_recommendation_read_scope" {
-  count                  = var.fhir_resources_supported.ImmunizationRecommendation ? 1 : 0
+  count                  = var.fhir_resources_supported.ImmunizationRecommendation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ImmunizationRecommendation.read"
   description            = "Read access to ImmunizationRecommendation"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_immunization_recommendation_write_scope" {
-  count                  = var.fhir_resources_supported.ImmunizationRecommendation ? 1 : 0
+  count                  = var.fhir_resources_supported.ImmunizationRecommendation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ImmunizationRecommendation.write"
   description            = "Write access to ImmunizationRecommendation"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_immunization_recommendation_full_scope" {
-  count                  = var.fhir_resources_supported.ImmunizationRecommendation ? 1 : 0
+  count                  = var.fhir_resources_supported.ImmunizationRecommendation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/ImmunizationRecommendation.*"
   description            = "Full access to ImmunizationRecommendation"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_immunization_recommendation_full
 }
 // user/ImmunizationRecommendation ------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_immunization_recommendation_read_scope" {
-  count                  = var.fhir_resources_supported.ImmunizationRecommendation ? 1 : 0
+  count                  = var.fhir_resources_supported.ImmunizationRecommendation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ImmunizationRecommendation.read"
   description            = "Read access to ImmunizationRecommendation"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_immunization_recommendation_read_s
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_immunization_recommendation_write_scope" {
-  count                  = var.fhir_resources_supported.ImmunizationRecommendation ? 1 : 0
+  count                  = var.fhir_resources_supported.ImmunizationRecommendation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ImmunizationRecommendation.write"
   description            = "Write access to ImmunizationRecommendation"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_immunization_recommendation_write_
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_immunization_recommendation_full_scope" {
-  count                  = var.fhir_resources_supported.ImmunizationRecommendation ? 1 : 0
+  count                  = var.fhir_resources_supported.ImmunizationRecommendation && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/ImmunizationRecommendation.*"
   description            = "Full access to ImmunizationRecommendation"

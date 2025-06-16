@@ -1,6 +1,6 @@
 // patient/StructureMap -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_structure_map_read_scope" {
-  count                  = var.fhir_resources_supported.StructureMap ? 1 : 0
+  count                  = var.fhir_resources_supported.StructureMap && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/StructureMap.read"
   description            = "Read access to StructureMap"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_structure_map_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_structure_map_write_scope" {
-  count                  = var.fhir_resources_supported.StructureMap ? 1 : 0
+  count                  = var.fhir_resources_supported.StructureMap && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/StructureMap.write"
   description            = "Write access to StructureMap"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_structure_map_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_structure_map_full_scope" {
-  count                  = var.fhir_resources_supported.StructureMap ? 1 : 0
+  count                  = var.fhir_resources_supported.StructureMap && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/StructureMap.*"
   description            = "Full access to StructureMap"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_structure_map_full_scope" {
 }
 // system/StructureMap -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_structure_map_read_scope" {
-  count                  = var.fhir_resources_supported.StructureMap ? 1 : 0
+  count                  = var.fhir_resources_supported.StructureMap && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/StructureMap.read"
   description            = "Read access to StructureMap"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_structure_map_write_scope" {
-  count                  = var.fhir_resources_supported.StructureMap ? 1 : 0
+  count                  = var.fhir_resources_supported.StructureMap && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/StructureMap.write"
   description            = "Write access to StructureMap"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_structure_map_full_scope" {
-  count                  = var.fhir_resources_supported.StructureMap ? 1 : 0
+  count                  = var.fhir_resources_supported.StructureMap && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/StructureMap.*"
   description            = "Full access to StructureMap"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_structure_map_full_scope" {
 }
 // user/StructureMap -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_structure_map_read_scope" {
-  count                  = var.fhir_resources_supported.StructureMap ? 1 : 0
+  count                  = var.fhir_resources_supported.StructureMap && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/StructureMap.read"
   description            = "Read access to StructureMap"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_structure_map_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_structure_map_write_scope" {
-  count                  = var.fhir_resources_supported.StructureMap ? 1 : 0
+  count                  = var.fhir_resources_supported.StructureMap && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/StructureMap.write"
   description            = "Write access to StructureMap"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_structure_map_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_structure_map_full_scope" {
-  count                  = var.fhir_resources_supported.StructureMap ? 1 : 0
+  count                  = var.fhir_resources_supported.StructureMap && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/StructureMap.*"
   description            = "Full access to StructureMap"

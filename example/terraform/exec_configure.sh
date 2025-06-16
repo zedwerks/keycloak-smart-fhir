@@ -45,13 +45,7 @@ if [ $? -ne 0 ]; then
     echo "Terraform init failed. Exiting..."
     exit 1
 fi
-#echo "Running terraform imports..."
-#echo "This allows us to adjust realm settings, and adjust presence of standard claims in the tokens, introspection, profile."
-#sh $workdir/scripts/tfimports.sh -chdir $workdir -var-file "$tfvars_file"
-#if [ $? -ne 0 ]; then
-#    echo "tfimports.sh failed. Exiting..."
-#    exit 1
-#fi
+
 
 echo 'Running terraform plan...'
 terraform -chdir=$workdir plan -var-file="$tfvars_file" -out=${state_dir}/localhost.tfplan -compact-warnings

@@ -1,6 +1,6 @@
 // patient/BodyStructure -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_body_structure_read_scope" {
-  count                  = var.fhir_resources_supported.BodyStructure ? 1 : 0
+  count                  = var.fhir_resources_supported.BodyStructure && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/BodyStructure.read"
   description            = "Read access to BodyStructure"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_body_structure_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_body_structure_write_scope" {
-  count                  = var.fhir_resources_supported.BodyStructure ? 1 : 0
+  count                  = var.fhir_resources_supported.BodyStructure && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/BodyStructure.write"
   description            = "Write access to BodyStructure"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_body_structure_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_body_structure_full_scope" {
-  count                  = var.fhir_resources_supported.BodyStructure ? 1 : 0
+  count                  = var.fhir_resources_supported.BodyStructure && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/BodyStructure.*"
   description            = "Full access to BodyStructure"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_body_structure_full_scope" {
 }
 // system/BodyStructure -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_body_structure_read_scope" {
-  count                  = var.fhir_resources_supported.BodyStructure ? 1 : 0
+  count                  = var.fhir_resources_supported.BodyStructure && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/BodyStructure.read"
   description            = "Read access to BodyStructure"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_body_structure_write_scope" {
-  count                  = var.fhir_resources_supported.BodyStructure ? 1 : 0
+  count                  = var.fhir_resources_supported.BodyStructure && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/BodyStructure.write"
   description            = "Write access to BodyStructure"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_body_structure_full_scope" {
-  count                  = var.fhir_resources_supported.BodyStructure ? 1 : 0
+  count                  = var.fhir_resources_supported.BodyStructure && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/BodyStructure.*"
   description            = "Full access to BodyStructure"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_body_structure_full_scope" {
 }
 // user/BodyStructure -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_body_structure_read_scope" {
-  count                  = var.fhir_resources_supported.BodyStructure ? 1 : 0
+  count                  = var.fhir_resources_supported.BodyStructure && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/BodyStructure.read"
   description            = "Read access to BodyStructure"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_body_structure_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_body_structure_write_scope" {
-  count                  = var.fhir_resources_supported.BodyStructure ? 1 : 0
+  count                  = var.fhir_resources_supported.BodyStructure && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/BodyStructure.write"
   description            = "Write access to BodyStructure"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_body_structure_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_body_structure_full_scope" {
-  count                  = var.fhir_resources_supported.BodyStructure ? 1 : 0
+  count                  = var.fhir_resources_supported.BodyStructure && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/BodyStructure.*"
   description            = "Full access to BodyStructure"

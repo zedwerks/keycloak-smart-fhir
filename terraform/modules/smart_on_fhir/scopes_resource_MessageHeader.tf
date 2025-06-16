@@ -1,6 +1,6 @@
 // patient/MessageHeader ------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_message_header_read_scope" {
-  count                  = var.fhir_resources_supported.MessageHeader ? 1 : 0
+  count                  = var.fhir_resources_supported.MessageHeader && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MessageHeader.read"
   description            = "Read access to MessageHeader"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_message_header_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_message_header_write_scope" {
-  count                  = var.fhir_resources_supported.MessageHeader ? 1 : 0
+  count                  = var.fhir_resources_supported.MessageHeader && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MessageHeader.write"
   description            = "Write access to MessageHeader"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_message_header_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_message_header_full_scope" {
-  count                  = var.fhir_resources_supported.MessageHeader ? 1 : 0
+  count                  = var.fhir_resources_supported.MessageHeader && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/MessageHeader.*"
   description            = "Full access to MessageHeader"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_message_header_full_scope" {
 }
 // system/MessageHeader ------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_message_header_read_scope" {
-  count                  = var.fhir_resources_supported.MessageHeader ? 1 : 0
+  count                  = var.fhir_resources_supported.MessageHeader && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MessageHeader.read"
   description            = "Read access to MessageHeader"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_message_header_write_scope" {
-  count                  = var.fhir_resources_supported.MessageHeader ? 1 : 0
+  count                  = var.fhir_resources_supported.MessageHeader && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MessageHeader.write"
   description            = "Write access to MessageHeader"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_message_header_full_scope" {
-  count                  = var.fhir_resources_supported.MessageHeader ? 1 : 0
+  count                  = var.fhir_resources_supported.MessageHeader && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/MessageHeader.*"
   description            = "Full access to MessageHeader"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_message_header_full_scope" {
 }
 // user/MessageHeader ------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_message_header_read_scope" {
-  count                  = var.fhir_resources_supported.MessageHeader ? 1 : 0
+  count                  = var.fhir_resources_supported.MessageHeader && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MessageHeader.read"
   description            = "Read access to MessageHeader"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_message_header_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_message_header_write_scope" {
-  count                  = var.fhir_resources_supported.MessageHeader ? 1 : 0
+  count                  = var.fhir_resources_supported.MessageHeader && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MessageHeader.write"
   description            = "Write access to MessageHeader"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_message_header_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_message_header_full_scope" {
-  count                  = var.fhir_resources_supported.MessageHeader ? 1 : 0
+  count                  = var.fhir_resources_supported.MessageHeader && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/MessageHeader.*"
   description            = "Full access to MessageHeader"

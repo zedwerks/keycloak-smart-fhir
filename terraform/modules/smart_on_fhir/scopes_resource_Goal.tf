@@ -1,6 +1,6 @@
 // patient/Goal ----------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_goal_read_scope" {
-  count                  = var.fhir_resources_supported.Goal ? 1 : 0
+  count                  = var.fhir_resources_supported.Goal && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Goal.read"
   description            = "Read access to Goal"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_goal_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_goal_write_scope" {
-  count                  = var.fhir_resources_supported.Goal ? 1 : 0
+  count                  = var.fhir_resources_supported.Goal && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Goal.write"
   description            = "Write access to Goal"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_goal_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_goal_full_scope" {
-  count                  = var.fhir_resources_supported.Goal ? 1 : 0
+  count                  = var.fhir_resources_supported.Goal && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Goal.*"
   description            = "Full access to Goal"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_goal_full_scope" {
 }
 // system/Goal ----------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_goal_read_scope" {
-  count                  = var.fhir_resources_supported.Goal ? 1 : 0
+  count                  = var.fhir_resources_supported.Goal && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Goal.read"
   description            = "Read access to Goal"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_goal_write_scope" {
-  count                  = var.fhir_resources_supported.Goal ? 1 : 0
+  count                  = var.fhir_resources_supported.Goal && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Goal.write"
   description            = "Write access to Goal"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_goal_full_scope" {
-  count                  = var.fhir_resources_supported.Goal ? 1 : 0
+  count                  = var.fhir_resources_supported.Goal && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Goal.*"
   description            = "Full access to Goal"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_goal_full_scope" {
 }
 // user/Goal ----------------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_goal_read_scope" {
-  count                  = var.fhir_resources_supported.Goal ? 1 : 0
+  count                  = var.fhir_resources_supported.Goal && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Goal.read"
   description            = "Read access to Goal"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_goal_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_goal_write_scope" {
-  count                  = var.fhir_resources_supported.Goal ? 1 : 0
+  count                  = var.fhir_resources_supported.Goal && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Goal.write"
   description            = "Write access to Goal"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_goal_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_goal_full_scope" {
-  count                  = var.fhir_resources_supported.Goal ? 1 : 0
+  count                  = var.fhir_resources_supported.Goal && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Goal.*"
   description            = "Full access to Goal"

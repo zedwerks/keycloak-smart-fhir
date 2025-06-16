@@ -1,6 +1,6 @@
 // patient/VisionPrescription -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_vision_prescription_read_scope" {
-  count                  = var.fhir_resources_supported.VisionPrescription ? 1 : 0
+  count                  = var.fhir_resources_supported.VisionPrescription && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/VisionPrescription.read"
   description            = "Read access to VisionPrescription"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_vision_prescription_read_scope"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_vision_prescription_write_scope" {
-  count                  = var.fhir_resources_supported.VisionPrescription ? 1 : 0
+  count                  = var.fhir_resources_supported.VisionPrescription && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/VisionPrescription.write"
   description            = "Write access to VisionPrescription"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_vision_prescription_write_scope
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_vision_prescription_full_scope" {
-  count                  = var.fhir_resources_supported.VisionPrescription ? 1 : 0
+  count                  = var.fhir_resources_supported.VisionPrescription && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/VisionPrescription.*"
   description            = "Full access to VisionPrescription"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_vision_prescription_full_scope"
 }
 // system/VisionPrescription -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_vision_prescription_read_scope" {
-  count                  = var.fhir_resources_supported.VisionPrescription ? 1 : 0
+  count                  = var.fhir_resources_supported.VisionPrescription && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/VisionPrescription.read"
   description            = "Read access to VisionPrescription"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_vision_prescription_write_scope" {
-  count                  = var.fhir_resources_supported.VisionPrescription ? 1 : 0
+  count                  = var.fhir_resources_supported.VisionPrescription && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/VisionPrescription.write"
   description            = "Write access to VisionPrescription"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_vision_prescription_full_scope" {
-  count                  = var.fhir_resources_supported.VisionPrescription ? 1 : 0
+  count                  = var.fhir_resources_supported.VisionPrescription && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/VisionPrescription.*"
   description            = "Full access to VisionPrescription"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_vision_prescription_full_scope" 
 }
 // user/VisionPrescription -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_vision_prescription_read_scope" {
-  count                  = var.fhir_resources_supported.VisionPrescription ? 1 : 0
+  count                  = var.fhir_resources_supported.VisionPrescription && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/VisionPrescription.read"
   description            = "Read access to VisionPrescription"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_vision_prescription_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_vision_prescription_write_scope" {
-  count                  = var.fhir_resources_supported.VisionPrescription ? 1 : 0
+  count                  = var.fhir_resources_supported.VisionPrescription && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/VisionPrescription.write"
   description            = "Write access to VisionPrescription"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_vision_prescription_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_vision_prescription_full_scope" {
-  count                  = var.fhir_resources_supported.VisionPrescription ? 1 : 0
+  count                  = var.fhir_resources_supported.VisionPrescription && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/VisionPrescription.*"
   description            = "Full access to VisionPrescription"

@@ -1,6 +1,6 @@
 // patient/Immunization --------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_immunization_read_scope" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.read"
   description            = "Read access to Immunization"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_immunization_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_immunization_write_scope" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.write"
   description            = "Write access to Immunization"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_immunization_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_immunization_full_scope" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/Immunization.*"
   description            = "Full access to Immunization"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_immunization_full_scope" {
 }
 // system/Immunization --------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_immunization_read_scope" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.read"
   description            = "Read access to Immunization"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_immunization_write_scope" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.write"
   description            = "Write access to Immunization"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_immunization_full_scope" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/Immunization.*"
   description            = "Full access to Immunization"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_immunization_full_scope" {
 }
 // user/Immunization --------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_immunization_read_scope" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.read"
   description            = "Read access to Immunization"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_immunization_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_immunization_write_scope" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.write"
   description            = "Write access to Immunization"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_immunization_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_immunization_full_scope" {
-  count                  = var.fhir_resources_supported.Immunization ? 1 : 0
+  count                  = var.fhir_resources_supported.Immunization && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/Immunization.*"
   description            = "Full access to Immunization"

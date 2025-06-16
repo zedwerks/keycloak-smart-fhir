@@ -1,6 +1,6 @@
 // patient/EffectEvidenceSynthesis -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_effect_evidence_synthesis_read_scope" {
-  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/EffectEvidenceSynthesis.read"
   description            = "Read access to EffectEvidenceSynthesis"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_effect_evidence_synthesis_read_
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_effect_evidence_synthesis_write_scope" {
-  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/EffectEvidenceSynthesis.write"
   description            = "Write access to EffectEvidenceSynthesis"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_effect_evidence_synthesis_write
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_effect_evidence_synthesis_full_scope" {
-  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/EffectEvidenceSynthesis.*"
   description            = "Full access to EffectEvidenceSynthesis"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_effect_evidence_synthesis_full_
 }
 // system/EffectEvidenceSynthesis -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_effect_evidence_synthesis_read_scope" {
-  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/EffectEvidenceSynthesis.read"
   description            = "Read access to EffectEvidenceSynthesis"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_effect_evidence_synthesis_write_scope" {
-  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/EffectEvidenceSynthesis.write"
   description            = "Write access to EffectEvidenceSynthesis"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_effect_evidence_synthesis_full_scope" {
-  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/EffectEvidenceSynthesis.*"
   description            = "Full access to EffectEvidenceSynthesis"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_effect_evidence_synthesis_full_s
 }
 // user/EffectEvidenceSynthesis -------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_effect_evidence_synthesis_read_scope" {
-  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/EffectEvidenceSynthesis.read"
   description            = "Read access to EffectEvidenceSynthesis"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_effect_evidence_synthesis_read_sco
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_effect_evidence_synthesis_write_scope" {
-  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/EffectEvidenceSynthesis.write"
   description            = "Write access to EffectEvidenceSynthesis"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_effect_evidence_synthesis_write_sc
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_effect_evidence_synthesis_full_scope" {
-  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis ? 1 : 0
+  count                  = var.fhir_resources_supported.EffectEvidenceSynthesis && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/EffectEvidenceSynthesis.*"
   description            = "Full access to EffectEvidenceSynthesis"

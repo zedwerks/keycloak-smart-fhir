@@ -1,6 +1,6 @@
 // patient/GraphDefinition -----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_graph_definition_read_scope" {
-  count                  = var.fhir_resources_supported.GraphDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.GraphDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/GraphDefinition.read"
   description            = "Read access to GraphDefinition"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_graph_definition_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_graph_definition_write_scope" {
-  count                  = var.fhir_resources_supported.GraphDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.GraphDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/GraphDefinition.write"
   description            = "Write access to GraphDefinition"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_graph_definition_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_graph_definition_full_scope" {
-  count                  = var.fhir_resources_supported.GraphDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.GraphDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/GraphDefinition.*"
   description            = "Full access to GraphDefinition"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_graph_definition_full_scope" {
 }
 // system/GraphDefinition -----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_graph_definition_read_scope" {
-  count                  = var.fhir_resources_supported.GraphDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.GraphDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/GraphDefinition.read"
   description            = "Read access to GraphDefinition"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_graph_definition_write_scope" {
-  count                  = var.fhir_resources_supported.GraphDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.GraphDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/GraphDefinition.write"
   description            = "Write access to GraphDefinition"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_graph_definition_full_scope" {
-  count                  = var.fhir_resources_supported.GraphDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.GraphDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/GraphDefinition.*"
   description            = "Full access to GraphDefinition"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_graph_definition_full_scope" {
 }
 // user/GraphDefinition -----------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_graph_definition_read_scope" {
-  count                  = var.fhir_resources_supported.GraphDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.GraphDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/GraphDefinition.read"
   description            = "Read access to GraphDefinition"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_graph_definition_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_graph_definition_write_scope" {
-  count                  = var.fhir_resources_supported.GraphDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.GraphDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/GraphDefinition.write"
   description            = "Write access to GraphDefinition"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_graph_definition_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_graph_definition_full_scope" {
-  count                  = var.fhir_resources_supported.GraphDefinition ? 1 : 0
+  count                  = var.fhir_resources_supported.GraphDefinition && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/GraphDefinition.*"
   description            = "Full access to GraphDefinition"

@@ -1,6 +1,6 @@
 // patient/NamingSystem -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "patient_naming_system_read_scope" {
-  count                  = var.fhir_resources_supported.NamingSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.NamingSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/NamingSystem.read"
   description            = "Read access to NamingSystem"
@@ -8,7 +8,7 @@ resource "keycloak_openid_client_scope" "patient_naming_system_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_naming_system_write_scope" {
-  count                  = var.fhir_resources_supported.NamingSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.NamingSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/NamingSystem.write"
   description            = "Write access to NamingSystem"
@@ -16,7 +16,7 @@ resource "keycloak_openid_client_scope" "patient_naming_system_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "patient_naming_system_full_scope" {
-  count                  = var.fhir_resources_supported.NamingSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.NamingSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "patient/NamingSystem.*"
   description            = "Full access to NamingSystem"
@@ -25,21 +25,21 @@ resource "keycloak_openid_client_scope" "patient_naming_system_full_scope" {
 }
 // system/NamingSystem -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "system_naming_system_read_scope" {
-  count                  = var.fhir_resources_supported.NamingSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.NamingSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/NamingSystem.read"
   description            = "Read access to NamingSystem"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_naming_system_write_scope" {
-  count                  = var.fhir_resources_supported.NamingSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.NamingSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/NamingSystem.write"
   description            = "Write access to NamingSystem"
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "system_naming_system_full_scope" {
-  count                  = var.fhir_resources_supported.NamingSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.NamingSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "system/NamingSystem.*"
   description            = "Full access to NamingSystem"
@@ -47,7 +47,7 @@ resource "keycloak_openid_client_scope" "system_naming_system_full_scope" {
 }
 // user/NamingSystem -------------------------------------------------------------------
 resource "keycloak_openid_client_scope" "user_naming_system_read_scope" {
-  count                  = var.fhir_resources_supported.NamingSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.NamingSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/NamingSystem.read"
   description            = "Read access to NamingSystem"
@@ -55,7 +55,7 @@ resource "keycloak_openid_client_scope" "user_naming_system_read_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_naming_system_write_scope" {
-  count                  = var.fhir_resources_supported.NamingSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.NamingSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/NamingSystem.write"
   description            = "Write access to NamingSystem"
@@ -63,7 +63,7 @@ resource "keycloak_openid_client_scope" "user_naming_system_write_scope" {
   include_in_token_scope = true
 }
 resource "keycloak_openid_client_scope" "user_naming_system_full_scope" {
-  count                  = var.fhir_resources_supported.NamingSystem ? 1 : 0
+  count                  = var.fhir_resources_supported.NamingSystem && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
   realm_id               = data.keycloak_realm.realm.id
   name                   = "user/NamingSystem.*"
   description            = "Full access to NamingSystem"
