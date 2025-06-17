@@ -50,6 +50,7 @@ jobs:
           echo "Building smart-on-fhir-spi with version $VERSION"
           mvn install -DskipTests
           cp ~/.m2/repository/com/zedwerks/keycloak-smart-on-fhir/$VERSION/*.pom smart-on-fhir-spi/target/*.pom
+          ls -l smart-on-fhir-spi/target/*.pom
 
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
