@@ -55,4 +55,4 @@ jobs:
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
         run: |
-          mvn deploy -X -DskipTests
+          mvn deploy -X -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/zedwerks

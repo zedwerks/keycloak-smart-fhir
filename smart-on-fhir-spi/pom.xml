@@ -11,7 +11,7 @@
     <groupId>com.zedwerks</groupId>
     <artifactId>keycloak-smart-on-fhir</artifactId>
     <packaging>jar</packaging>
-    <version>1.2.4</version>
+    <version>1.2.4-SNAPSHOT</version>
     <name>keycloak-smart-on-fhir</name>
     <properties>
         <gpg.skip>true</gpg.skip>
@@ -137,7 +137,6 @@
                 <configuration>
                     <skipUpload>false</skipUpload>
                     <retryFailedDeploymentCount>1</retryFailedDeploymentCount>
-                    <altDeploymentRepository>github::https://maven.pkg.github.com/zedwerks</altDeploymentRepository>
                 </configuration>
                 <version>3.1.2</version>
             </plugin>
@@ -163,7 +162,7 @@
                         <filter>
                             <artifact>*:*</artifact>
                             <excludes>
-                                <exlcude>module-info.class</exlcude>
+                                <exclude>module-info.class</exclude>
                                 <exclude>META-INF/*.SF</exclude>
                                 <exclude>META-INF/*.DSA</exclude>
                                 <exclude>META-INF/*.RSA</exclude>
