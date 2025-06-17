@@ -42,11 +42,15 @@ jobs:
           </settings>
           EOF
     
-      - name: Show effective XML
+      - name: Check POM and JAR in target
         working-directory: smart-on-fhir-spi
-        run: mvn help:effective-pom
+        run: ls -l target/
+
+      - name: Install locally before deploy
+        working-directory: smart-on-fhir-spi
+        run: mvn install -DskipTests
 
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
         run: |
-          mvn clean deploy -X -DskipTests
+          mvn deploy -X -DskipTests
