@@ -46,6 +46,7 @@ jobs:
         working-directory: smart-on-fhir-spi
         run: |
           mvn clean install -DskipTests
+          ls -l ~/.m2/repository/com/zedwerks/*.pom
           cp ~/.m2/repository/com/zedwerks/*.pom smart-on-fhir-spi/target/*.pom
           ls -l smart-on-fhir-spi/target/*.pom
 
