@@ -5,7 +5,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/zedwerks/keycloak-smart-on-fhir</url>
+            <url>https://maven.pkg.github.com/zedwerks</url>
         </repository>
     </distributionManagement>
     <groupId>com.zedwerks</groupId>
