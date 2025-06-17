@@ -137,7 +137,7 @@
                 <configuration>
                     <skipUpload>false</skipUpload>
                     <retryFailedDeploymentCount>1</retryFailedDeploymentCount>
-                    <altDeploymentRepository>github::default::https://maven.pkg.github.com/zedwerks</altDeploymentRepository>
+                    <altDeploymentRepository>github::https://maven.pkg.github.com/zedwerks</altDeploymentRepository>
                 </configuration>
                 <version>3.1.2</version>
             </plugin>
