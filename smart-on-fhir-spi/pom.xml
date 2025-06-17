@@ -7,11 +7,11 @@
             <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/zedwerks</url>
         </repository>
-        <snapshotRepository>
+        <!-- <snapshotRepository>
             <id>github-snapshot</id>
             <name>GitHub Packages (Snapshots)</name>
             <url>https://maven.pkg.github.com/zedwerks</url>
-        </snapshotRepository>
+        </snapshotRepository> -->
     </distributionManagement>
     <groupId>com.zedwerks</groupId>
     <artifactId>keycloak-smart-on-fhir</artifactId>
