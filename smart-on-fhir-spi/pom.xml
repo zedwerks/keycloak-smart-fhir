@@ -9,7 +9,7 @@
     </repository>
   </distributionManagement>
   <groupId>com.zedwerks</groupId>
-  <artifactId>com.zedwerks.keycloak-smart-on-fhir</artifactId>
+  <artifactId>keycloak-smart-on-fhir</artifactId>
   <packaging>jar</packaging>
   <!--<version>1.2-SNAPSHOT</version>-->
   <version>1.2.1</version>
