@@ -49,5 +49,4 @@ jobs:
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
         run: |
-          mvn clean package
-          mvn deploy -X -DskipTests
+          mvn clean deploy -X -DskipTests
