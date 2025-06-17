@@ -42,7 +42,7 @@ jobs:
           </settings>
           EOF
 
-      
+
       - name: Verify Setup
         run: mvn --version
 
@@ -53,6 +53,6 @@ jobs:
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
         run: |
-          mvn deploy -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/zedwerks
+          mvn deploy -DskipTests 
         env:
           GH_PACKAGES_PAT: ${{ secrets.GH_PACKAGES_PAT }}
