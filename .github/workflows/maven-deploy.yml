@@ -28,7 +28,6 @@ jobs:
 
       - name: Set up Maven settings.xml
         run: |
-          mvn --version
           echo "Setting up Maven settings.xml"
           mkdir -p ~/.m2
           cat > ~/.m2/settings.xml <<EOF
@@ -43,10 +42,17 @@ jobs:
           </settings>
           EOF
 
+      
+      - name: Verify Setup
+        run: mvn --version
+
+      - name: Build and Install
+        working-directory: smart-on-fhir-spi
+        run: mvn clean install -DskipTests
+
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
         run: |
-          mvn clean install -DskipTests
           mvn deploy -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/zedwerks
         env:
           GH_PACKAGES_PAT: ${{ secrets.GH_PACKAGES_PAT }}
