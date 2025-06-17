@@ -43,13 +43,11 @@ jobs:
           EOF
     
       - name: Show effective XML
+        working-directory: smart-on-fhir-spi
         run: mvn help:effective-pom
 
-      - name: Diagnose deploy URL
-        run: mvn -X deploy | grep "Deploying to" || true
-
       - name: Build and Deploy to GitHub Packages
-        working-directory: ${{ github.workspace }}/smart-on-fhir-spi
+        working-directory: smart-on-fhir-spi
         run: |
           mvn clean package
           mvn deploy -Dskiptests
