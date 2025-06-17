@@ -1,9 +1,9 @@
-name: Maven Deploy to GitHub Packages
+name: NEW Maven Deploy to GitHub Packages
 
 on:
   push:
     tags:
-      - 'v*'  # Triggers only on version tags like v1.0.0
+      - 'v*'
   workflow_dispatch:
 
 jobs:
@@ -12,19 +12,17 @@ jobs:
 
     permissions:
       contents: read
-      packages: write  # Required to publish to GitHub Packages
+      packages: write
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set Up JDK
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-          server-id: github  # Must match <server><id> in pom.xml
-          settings-path: smart-on-fhir-spi
 
       - name: Set up Maven settings.xml
         run: |
@@ -41,17 +39,7 @@ jobs:
           </settings>
           EOF
 
-      - name: Run Maven Install
-        working-directory: smart-on-fhir-spi
-        run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          echo "Version is: $VERSION"
-          echo "Building smart-on-fhir-spi with version $VERSION"
-          mvn install -DskipTests
-          cp ~/.m2/repository/com/zedwerks/keycloak-smart-on-fhir/$VERSION/*.pom ./target/*.pom
-          ls -l ./target/*.pom
-
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
         run: |
-          mvn deploy -X -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/zedwerks
+          mvn deploy -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/zedwerks
