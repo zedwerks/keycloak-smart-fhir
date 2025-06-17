@@ -53,6 +53,16 @@ jobs:
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
         run: |
-          mvn deploy -DskipTests 
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "Version is: $VERSION"
+          mvn deploy:deploy-file \
+            -DgroupId=com.zedwerks \
+            -DartifactId=keycloak-smart-on-fhir \
+            -Dversion=$VERSION \
+            -Dpackaging=jar \
+            -Dfile=target/keycloak-smart-on-fhir-$VERSION.jar \
+            -DpomFile=pom.xml \
+            -DrepositoryId=github \
+            -Durl=https://maven.pkg.github.com/zedwerks
         env:
           GH_PACKAGES_PAT: ${{ secrets.GH_PACKAGES_PAT }}
