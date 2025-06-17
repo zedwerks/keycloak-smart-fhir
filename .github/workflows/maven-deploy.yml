@@ -42,6 +42,13 @@ jobs:
           </settings>
           EOF
 
+      - name: Run Maven Install
+        working-directory: smart-on-fhir-spi
+        run: |
+          mvn clean install -DskipTests
+          cp ~/.m2/repository/com/zedwerks/*.pom smart-on-fhir-spi/target/*.pom
+          ls -l smart-on-fhir-spi/target/*.pom
+
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
         run: |
