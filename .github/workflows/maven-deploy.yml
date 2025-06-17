@@ -27,10 +27,11 @@ jobs:
           distribution: "temurin"
           java-version: "17"
           cache: "maven"
-          maven-version: "3.8.8"
 
       - name: Set up Maven settings.xml
         run: |
+          mvn --version
+          echo "Setting up Maven settings.xml"
           mkdir -p ~/.m2
           cat > ~/.m2/settings.xml <<EOF
           <settings>
