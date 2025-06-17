@@ -45,12 +45,12 @@ jobs:
       - name: Run Maven Install
         working-directory: smart-on-fhir-spi
         run: |
-          mvn help:evaluate -Dexpression=project.version -q -DforceStdout >> version.txt
-          echo "Version: $(cat version.txt)"
-          echo "Building smart-on-fhir-spi with version $(cat version.txt)"
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "Version is: $VERSION"
+          echo "Building smart-on-fhir-spi with version $VERSION"
           mvn install -DskipTests
           ls -l ~/.m2/repository/com/zedwerks/*.pom
-          cp ~/.m2/repository/com/zedwerks/keycloak-smar-on-fhir/$(cat version.txt)/*.pom smart-on-fhir-spi/target/*.pom
+          cp ~/.m2/repository/com/zedwerks/keycloak-smar-on-fhir/$VERSION/*.pom smart-on-fhir-spi/target/*.pom
           ls -l smart-on-fhir-spi/target/*.pom
 
       - name: Build and Deploy to GitHub Packages
