@@ -18,9 +18,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Setup Maven Action
         uses: s4u/setup-maven-action@v1.7.0
         with:
@@ -49,4 +46,7 @@ jobs:
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
         run: |
+          mvn clean install -DskipTests
           mvn deploy -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/zedwerks
+        env:
+          GH_PACKAGES_PAT: ${{ secrets.GH_PACKAGES_PAT }}
