@@ -50,4 +50,4 @@ jobs:
         working-directory: smart-on-fhir-spi
         run: |
           mvn clean package
-          mvn deploy -Dskiptests
+          mvn deploy -X -DskipTests
