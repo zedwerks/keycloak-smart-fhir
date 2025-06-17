@@ -8,7 +8,7 @@
             <url>https://maven.pkg.github.com/zedwerks</url>
         </repository>
         <snapshotRepository>
-            <id>github</id>
+            <id>github-snapshot</id>
             <name>GitHub Packages (Snapshots)</name>
             <url>https://maven.pkg.github.com/zedwerks</url>
         </snapshotRepository>
