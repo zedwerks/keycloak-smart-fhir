@@ -63,7 +63,7 @@ RUN chown keycloak:root -R ./data/import/
 USER keycloak
 
 # Copy the SMART on FHIR SPI Jar to the providers folder
-COPY --from=builder /app/smart-on-fhir-spi/target/deploy/*.jar ./providers/
+COPY --from=builder /app/smart-on-fhir-spi/target/*.jar ./providers/
 
 # Copy the theme files
 COPY --from=builder /app/theme/target/*.jar ./providers/
