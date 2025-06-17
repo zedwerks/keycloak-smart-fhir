@@ -42,10 +42,6 @@ jobs:
           </settings>
           EOF
 
-      - name: Install locally before deploy
-        working-directory: smart-on-fhir-spi
-        run: mvn install -DskipTests
-
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
         run: |
