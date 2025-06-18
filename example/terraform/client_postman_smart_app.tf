@@ -61,9 +61,9 @@ resource "keycloak_openid_audience_protocol_mapper" "postman_smart_app_audience_
 resource "keycloak_openid_hardcoded_claim_protocol_mapper" "hardcoded_claim_mapper" {
   realm_id            = keycloak_openid_client.postman_smart_app.realm_id
   client_id           = keycloak_openid_client.postman_smart_app.id
-  name                = "hardcoded-claim-mapper"
-  claim_name          = "tenant"
-  claim_value         = "unique-tenant-id"
+  name                = "hardcoded-apikey-claim-mapper"
+  claim_name          = "apikey"
+  claim_value         = "unique-apikey-id"
   claim_value_type    = "String"
   add_to_access_token = true
   add_to_id_token     = false
@@ -71,3 +71,20 @@ resource "keycloak_openid_hardcoded_claim_protocol_mapper" "hardcoded_claim_mapp
   depends_on          = [keycloak_openid_client.postman_smart_app]
 }
 
+resource "keycloak_generic_protocol_mapper" "hardcoded_tenant_mapper" {
+  name            = "hardcoded-tenant-claim-mapper"
+  realm_id        = keycloak_openid_client.postman_smart_app.realm_id
+  client_id       = keycloak_openid_client.postman_smart_app.id
+  protocol        = "openid-connect"
+  protocol_mapper = "oidc-hardcoded-claim-mapper"
+
+  config = {
+    "claim.name"                 = "tenant"
+    "claim.value"                = "any-tenant-value"
+    "jsonType.label"             = "String"
+    "id.token.claim"             = "true"
+    "access.token.claim"         = "true"
+    "userinfo.token.claim"       = "true"
+    "access.tokenResponse.claim" = "true"
+  }
+}
