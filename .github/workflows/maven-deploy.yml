@@ -1,9 +1,9 @@
-name: Maven Deploy to GitHub Packages
+name: NEW Maven Deploy to GitHub Packages
 
 on:
   push:
     tags:
-      - 'v*'  # Triggers only on version tags like v1.0.0
+      - "v*"
   workflow_dispatch:
 
 jobs:
@@ -12,23 +12,23 @@ jobs:
 
     permissions:
       contents: read
-      packages: write  # Required to publish to GitHub Packages
+      packages: write
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set Up JDK
-        uses: actions/setup-java@v3
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.7.0
         with:
-          distribution: 'temurin'
-          java-version: '17'
-          server-id: github  # Must match <server><id> in pom.xml
-          #settings-path: ${{ github.workspace }}/smart-on-fhir-spi
-          settings-path: ~/.m2  # use Maven's default
+          checkout-fetch-depth: 0
+          java-version: 17
+          java-distribution: temurin
+          maven-version: 3.8.8
 
       - name: Set up Maven settings.xml
         run: |
+          echo "Setting up Maven settings.xml"
           mkdir -p ~/.m2
           cat > ~/.m2/settings.xml <<EOF
           <settings>
@@ -42,14 +42,27 @@ jobs:
           </settings>
           EOF
 
-      - name: Run Maven Install
+
+      - name: Verify Setup
+        run: mvn --version
+
+      - name: Build and Install
         working-directory: smart-on-fhir-spi
-        run: |
-          mvn clean install -DskipTests
-          cp ~/.m2/repository/com/zedwerks/*.pom smart-on-fhir-spi/target/*.pom
-          ls -l smart-on-fhir-spi/target/*.pom
+        run: mvn clean install -DskipTests
 
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
         run: |
-          mvn deploy -X -DskipTests
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "Version is: $VERSION"
+          mvn deploy:deploy-file \
+            -DgroupId=com.zedwerks \
+            -DartifactId=keycloak-smart-on-fhir \
+            -Dversion=$VERSION \
+            -Dpackaging=jar \
+            -Dfile=target/keycloak-smart-on-fhir-$VERSION.jar \
+            -DpomFile=pom.xml \
+            -DrepositoryId=github \
+            -Durl=https://maven.pkg.github.com/zedwerks
+        env:
+          GH_PACKAGES_PAT: ${{ secrets.GH_PACKAGES_PAT }}
