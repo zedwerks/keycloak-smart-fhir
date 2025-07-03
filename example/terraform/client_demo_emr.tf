@@ -7,6 +7,7 @@ resource "keycloak_openid_client" "demo_emr" {
   standard_flow_enabled = true
   valid_redirect_uris = ["https://demo-emr.zedwerks.com/callback",
     "http://localhost:8081/callback",
+    "http://localhost:8081",
   "https://oauth.pstmn.io/v1/callback", "https://oauth.pstmn.io/v1/browser-callback"]
   web_origins                = ["https://demo-emr.zedwerks.com/"]
   root_url                   = "https://demo-emr.zedwerks.com/"
