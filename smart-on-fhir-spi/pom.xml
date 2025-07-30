@@ -16,7 +16,7 @@
     <properties>
         <gpg.skip>true</gpg.skip>
         <java.version>11</java.version>
-        <keycloak.version>26.2.2</keycloak.version>
+        <keycloak.version>26.3.2</keycloak.version>
         <commons-io.version>2.17.0</commons-io.version>
         <junit.version>4.13.2</junit.version>
         <org.junit.jupiter.version>5.11.3</org.junit.jupiter.version>
