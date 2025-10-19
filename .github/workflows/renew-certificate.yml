@@ -47,6 +47,12 @@ jobs:
           environment="${{ github.event.inputs.target_environment || 'demo' }}" 
           echo "Deploying to ${environment} environment"
 
+      - name: Cleanup old Certbot lock 
+        run: |
+          echo "Cleaning stale Certbot locks..."
+          sudo rm -f /var/lib/letsencrypt/.certbot.lock || true
+          sudo rm -f /var/lib/letsencrypt/lock || true
+
       - name: Install Certbot on Droplet
         uses: appleboy/ssh-action@v1.1.0
         with:
