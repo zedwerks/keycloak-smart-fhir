@@ -1,0 +1,33 @@
+{
+  "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJfeVpVSDI4ZHVORkdXdHlFMG5GN0ZocWtDTkY1LW4xbEhiQ1F0LV9qLThZIn0.eyJleHAiOjE3NjExNjk1NTEsImlhdCI6MTc2MTE2OTI1MSwianRpIjoib25ydGFjOjI3ZTI2NDE3LWQ0NzItYzU5ZS03MWNkLTQzZmUyZDVmYmI5ZSIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvc21hcnQiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo5MDAwL2ZoaXIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJwb3N0bWFuLXNtYXJ0LWFwcCIsInNpZCI6IjI4ZTczZWViLTM2NjAtNDNkOC1hZDRiLTU3YjIzYjFjMzVjOSIsImFjciI6IjAiLCJzY29wZSI6ImVtYWlsIHByb2ZpbGUgbGF1bmNoIHBhdGllbnQvUGF0aWVudC5yZWFkIG9wZW5pZCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwYXRpZW50IjoiMTIzNDUiLCJuYW1lIjoiQWxpY2UgU21pdGgiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhbGljZSIsImVuY291bnRlciI6IjIyOTI5OTM5NSIsImdpdmVuX25hbWUiOiJBbGljZSIsImZhbWlseV9uYW1lIjoiU21pdGgiLCJ0ZW5hbnQiOiJ1bmlxdWUtdGVuYW50LWlkIiwiZW1haWwiOiJhbGljZUBkb2N0b3JzLmNhIn0.XwTlXguBDfhteK3yCEBcNxQMlTStoPcezjzUKyMLyK8wXUvVosp5ZvU0u9ZJE9irypk_zVwQDZD7SNw76rdehmq_1tgOBIpPwTL3JxxaXyyS45jzltVPIe9O0-hf9wN_swHN_ia3M4JYJ1-ZK5n8YSFYWEtM7xfBGxTe9z6uc1pYnMD4O_L5AI0u3p6fysb6U0kK3RnlYByMFOiViwPni4Ov8vtj6JlZR3Lyn03IyCruCk60eyZchecDYiBRBx4rShdx5BT9hsw8l633uSM9mabdyn_CwC76KFrVI11C8ukPnanCLEfJpYF4XMpTDMx2QWmJe1Esd1MPvbWyZ3MadA",
+  "expires_in": 300,
+  "refresh_expires_in": 1800,
+  "refresh_token": "eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0MjljZDRhMi0xNDMwLTQzZmUtYWZmNC0xNjBmYzJmNWUxZTMifQ.eyJleHAiOjE3NjExNzEwNTEsImlhdCI6MTc2MTE2OTI1MSwianRpIjoiMDUwZTAxMWItZDM2NS0wNWI0LWFjMGMtMzgwZTUzNmM2ODE4IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9zbWFydCIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvc21hcnQiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoicG9zdG1hbi1zbWFydC1hcHAiLCJzaWQiOiIyOGU3M2VlYi0zNjYwLTQzZDgtYWQ0Yi01N2IyM2IxYzM1YzkiLCJzY29wZSI6ImFjciBlbWFpbCBwcm9maWxlIGxhdW5jaCBwYXRpZW50L1BhdGllbnQucmVhZCBvcGVuaWQifQ.YtdzcoksEAMUqgPixNwKlRtFDDIpmWWx7FfE6Z4wmfp48_xgGleqwrvqlwNXcEtbiuRfZfKjtL9gkTQqo2DXng",
+  "token_type": "Bearer",
+  "id_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJfeVpVSDI4ZHVORkdXdHlFMG5GN0ZocWtDTkY1LW4xbEhiQ1F0LV9qLThZIn0.eyJleHAiOjE3NjExNjk1NTEsImlhdCI6MTc2MTE2OTI1MSwianRpIjoiMjI3NzE2ZmEtMWFiZi0xZGZiLWU4MmItYmQwZDhiMWE1YWM1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9zbWFydCIsImF1ZCI6InBvc3RtYW4tc21hcnQtYXBwIiwic3ViIjoiNDQ1NDc1YmMtMDhkMy00Njg2LThhZmUtNzFiMWNkZTdmODg4IiwidHlwIjoiSUQiLCJhenAiOiJwb3N0bWFuLXNtYXJ0LWFwcCIsInNpZCI6IjI4ZTczZWViLTM2NjAtNDNkOC1hZDRiLTU3YjIzYjFjMzVjOSIsImF0X2hhc2giOiIycmQtNDRNSVVteDZMREVFTXBSVENRIiwiYWNyIjoiMCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWxpY2UgU21pdGgiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhbGljZSIsImdpdmVuX25hbWUiOiJBbGljZSIsImZhbWlseV9uYW1lIjoiU21pdGgiLCJlbWFpbCI6ImFsaWNlQGRvY3RvcnMuY2EifQ.M-XkE3EE4E3PhuunUFMb2cH1cTmK-27HyeM_ZP7QyfDu7b3cEmTarxPpICJjxUMwEjrJwo-H8q66IzFwTd46Rbr9zPvqEblhD0AzIKgsXwZIMBslej_BePHQa8T_FpBHaHc8_EJNq7jFCfPIaNKPEZyguZkPT-bnGRWteJ1gOCzGQSRKK21H9YvCk13dwDKjXbOtCmX-YUQhaxMK7XRurFAy7BrqSizw6u4vvFXjjXZ02C6OX9LN-H4KIUyeHVcN6nHBGdyfuZKfb4E0eQC_6eYtreDcNPSCId4OHEg-54AGTzqsC4Rkp1deiKVeerISM7pYE26123G6uwVEewgWAw",
+  "not-before-policy": 0,
+  "session_state": "28e73eeb-3660-43d8-ad4b-57b23b1c35c9",
+  "scope": "email profile launch patient/Patient.read openid",
+  "patient": "12345",
+  "need_patient_banner": "false",
+  "fhirContext": [
+    { "reference": "DiagnosticReport/12345" },
+    { "reference": "Observation/123456" },
+    { "reference": "Encounter/234567" },
+    { "reference": "Appointment/345678" },
+    {
+      "reference": "List/1234",
+      "role": "https://example.org/med-list-at-home"
+    },
+    {
+      "role": "https://example.org/role/questionnaire-to-display",
+      "type": "Questionnaire",
+      "canonical": "https://example.org/Questionnaire/123/|v2023-05-03"
+    }
+  ],
+  "smart_style_url": "https://ehr.com/styles/smart.json",
+  "encounter": "229299395",
+  "ocean-api-key": "some-api-key-goes-here",
+  "intent": "reconcile-medications",
+  "tenant": "2ddd6c3a-8e9a-44c6-a305-52111ad302a2"
+}

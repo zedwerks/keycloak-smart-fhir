@@ -27,7 +27,7 @@ provider "registry.terraform.io/digitalocean/digitalocean" {
 
 provider "registry.terraform.io/keycloak/keycloak" {
   version     = "5.5.0"
-  constraints = ">= 5.0.0"
+  constraints = ">= 5.4.0"
   hashes = [
     "h1:m/LrRonkMUGs5QJG8mw6PQ5xzqfEYnnO50ERVGElN6A=",
     "zh:2c645fe37ad8a4e0285a6e6e11997df4128de378fab947bb199711c4845d0088",
