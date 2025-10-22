@@ -2,7 +2,7 @@ terraform {
   required_providers {
     keycloak = {
       source  = "keycloak/keycloak"
-      version = ">= 5.0.0"
+      version = ">= 5.4.0"
     }
     digitalocean = {
       source  = "digitalocean/digitalocean"
@@ -16,6 +16,7 @@ provider "keycloak" {
   client_secret = var.keycloak_terraform_client_secret
   url           = var.keycloak_base_url
   realm         = var.keycloak_realm
+  initial_login = true
 }
 
 module "smart_on_fhir" {

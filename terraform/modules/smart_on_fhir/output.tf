@@ -10,3 +10,9 @@ output "openid_scope" {
   description = "The ID of the openid scope"
   depends_on = [ keycloak_openid_client_scope.openid_scope ]
 }
+
+output "ehr_launch_context_scope_id" {
+  value = keycloak_openid_client_scope.ehr_launch_context_scope.id
+  description = "The ID of the EHR launch context scope"
+  depends_on = [ keycloak_openid_client_scope.ehr_launch_context_scope ]
+}
