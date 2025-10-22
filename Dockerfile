@@ -6,7 +6,7 @@
 
 # Build Stage
 #FROM maven:3.8.3-openjdk-11-slim AS builder
-FROM maven:3.9.9-eclipse-temurin-24-alpine AS builder
+FROM maven:3.9.11-sapmachine-25 AS builder
 
 # Set the working directory in the container
 WORKDIR /app
@@ -30,7 +30,10 @@ RUN chmod +x keycloak/bin/*.sh
 
 ## =================================================================================================
 # Package Stage - add to an official Keycloak image
-FROM quay.io/keycloak/keycloak:26.2.2 
+# As of 22-Oct-25, Keycloak 26.4.x broke terraform by removing server version in json response to server-info\
+
+FROM quay.io/keycloak/keycloak:26.3.5  
+
 
 # need the Keycloak Port ENV var set so we can use it in entrypoint to 
 # apply realm admin rights to the terraform client. 
