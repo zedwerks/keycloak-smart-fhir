@@ -1,0 +1,71 @@
+meta {
+  name: Set Context
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{keycloak_url_base}}/realms/smart/smart-on-fhir/context
+  body: json
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: {{$oauth2.credentials.access_token}}
+}
+
+body:json {
+  {
+    "resourceType" : "LaunchContext",
+    "patient": "12345",
+    "encounter": "229299395",
+    "additionalParameters": {
+      "fhirContext": [
+        { "reference": "DiagnosticReport/12345" },
+        { "reference": "Observation/123456" },
+        { "reference": "Encounter/234567" },
+        { "reference": "Appointment/345678" },
+        {
+          "reference": "List/1234",
+          "role": "https://example.org/med-list-at-home"
+        },
+        {
+          "role": "https://example.org/role/questionnaire-to-display",
+          "type": "Questionnaire",
+          "canonical": "https://example.org/Questionnaire/123/|v2023-05-03"
+        }
+      ],
+      "intent": "reconcile-medications",
+      "need_patient_banner": "false",
+      "smart_style_url": "https://ehr.com/styles/smart.json",
+      "tenant": "2ddd6c3a-8e9a-44c6-a305-52111ad302a2",
+      "custom_claim": "anthing goes here",
+      "ocean-api-key": "some-api-key-goes-here"
+    }
+  }
+  
+  
+}
+
+script:post-response {
+  // Parse the JSON response
+  var jsonData = res.getBody();
+  
+  // Extract the userId
+  var contextId = jsonData.context_id;
+  
+  // Set the userId as a collection variable
+  bru.setVar("context_id", contextId);
+  
+  // Log the userId to the Postman console for verification
+  console.log("context_id: " + contextId);
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

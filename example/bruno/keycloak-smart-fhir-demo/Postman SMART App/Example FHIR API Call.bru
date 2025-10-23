@@ -1,0 +1,20 @@
+meta {
+  name: Example FHIR API Call
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://111ce016-7858-49f2-bc89-2a9c35f322c1.mock.pstmn.io
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{$oauth2.credentials.access_token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "keycloak-smart-fhir-demo",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

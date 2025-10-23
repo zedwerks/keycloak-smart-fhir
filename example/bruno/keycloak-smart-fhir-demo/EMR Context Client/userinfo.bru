@@ -1,0 +1,20 @@
+meta {
+  name: userinfo
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{keycloak_url_base}}/realms/smart/protocol/openid-connect/userinfo
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{$oauth2.credentials.access_token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

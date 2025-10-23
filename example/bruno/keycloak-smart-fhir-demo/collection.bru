@@ -1,0 +1,20 @@
+meta {
+  name: keycloak-smart-fhir-demo
+}
+
+auth {
+  mode: none
+}
+
+vars:pre-request {
+  context_id: 
+}
+
+docs {
+  Example SMART on FHIR Launch flow.  
+    
+  1\. Authenticate as an EMR user and "Set Context"
+  
+  2\. Mimic Auth Challenge for SMART app, which now has context launch token to pass to Auth Server.  
+  3\. Examine the resulting json response, my viewing the Postman console, and then view the access token in jwt.io
+}
