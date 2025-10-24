@@ -19,37 +19,35 @@
  */
 package com.zedwerks.keycloak.endpoints;
 
-import org.jboss.logging.Logger;
+import java.util.Map;
+import java.util.UUID;
 
+import org.jboss.logging.Logger;
 import org.keycloak.events.EventBuilder;
+import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
-import org.keycloak.models.RealmModel;
-import org.keycloak.models.UserSessionProvider;
 import org.keycloak.models.UserSessionModel;
 import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.representations.AccessToken;
-import org.keycloak.services.managers.AuthenticationManager;
+import org.keycloak.services.cors.Cors;
 import org.keycloak.services.resource.RealmResourceProvider;
 
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.HeaderParam;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zedwerks.keycloak.authenticators.smart.SmartLaunchHelper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.Map;
-import java.util.UUID;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.HeaderParam;
+import jakarta.ws.rs.OPTIONS;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 /**
  * Basic Context API endpoint. The EMR/EHR system will call this endpoint to set
@@ -70,18 +68,37 @@ public class SmartContextEndpoint implements RealmResourceProvider {
 
     private KeycloakSession session = null;
     private TokenManager tokenManager = null;
-    private EventBuilder event = null;
     private UserSessionModel userSession = null;
+    private EventBuilder event = null;
+
+    private ClientModel client;
+
+    private final HttpHeaders headers;
 
     public SmartContextEndpoint(KeycloakSession session, TokenManager tokenManager, EventBuilder event) {
         this.session = session;
         this.tokenManager = tokenManager;
         this.event = event;
+        this.headers = session.getContext().getRequestHeaders();
+    }
 
+    private void processAccessToken(AccessToken token) {
+        if (token == null) {
+            logger.error("Access token is null");
+            throw new IllegalArgumentException("Access token is null");
+        }
+        String clientId = token.getIssuedFor();
+        logger.debug("Client ID: " + clientId);
+        String userId = token.getSubject();
+        logger.debug("User ID: " + userId);
+        String sessionId = token.getSessionId();
+        logger.debug("Session ID: " + sessionId);
+
+        userSession = this.session.sessions().getUserSession(this.session.getContext().getRealm(), sessionId);
     }
 
     /**
-     * Set the [patient] context for the user session. This consumes a JSON
+     * Set the [patient] launch context for the user session. This consumes a JSON
      * context request, saves the object identifier for the context, and returns
      * a 200 OK response with the context identifier in the response body.
      *
@@ -112,27 +129,20 @@ public class SmartContextEndpoint implements RealmResourceProvider {
             logger.debug("Token: " + tokenString);
 
             AccessToken token = this.session.tokens().decode(tokenString, AccessToken.class);
-
-            String userId = token.getSubject();
-            logger.debug("User ID: " + userId);
-            String sessionId = token.getSessionId();
-            logger.debug("Session ID: " + sessionId);
-            UserSessionProvider userSessionProvider = this.session.sessions();
-            RealmModel realm = this.session.getContext().getRealm();
-            logger.debug("Realm: " + realm.getName());
-            userSession = userSessionProvider.getUserSession(realm, sessionId);
+            processAccessToken(token);
 
             if (userSession == null) {
                 logger.error("User session not found");
                 return Response.status(Response.Status.BAD_REQUEST).entity("User session not found").build();
             }
         } catch (Exception e) {
-            logger.error("Invalid token: " + e.getMessage());
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid token").build();
+            String errorMessage = "Error processing access token: " + e.getMessage();
+            logger.error(errorMessage);
+            return Response.status(Response.Status.UNAUTHORIZED).entity(errorMessage).build();
         }
 
         ContextResponse contextResponse = new ContextResponse();
-        contextResponse.contextId = UUID.randomUUID().toString();;
+        contextResponse.contextId = UUID.randomUUID().toString();
 
         // Convert JSON Map to a String
         String jsonString = "Error: Failed to convert context JSON to string";
@@ -140,15 +150,39 @@ public class SmartContextEndpoint implements RealmResourceProvider {
             jsonString = new ObjectMapper().writeValueAsString(jsonBody);
         } catch (JsonProcessingException e) {
             logger.error("Error converting JSON to string: " + e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonString).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonString).build();
         }
 
         // Store JSON in user session notes with the new GUID as the key
         // The context will be retrieved by the Keycloak Authenticator
         // and will return the resource identifiers as part of the auth response.
-        userSession.setNote(contextResponse.contextId, jsonString); 
+        userSession.setNote(contextResponse.contextId, jsonString);
+
+        // Set<String> allowedOrigins = client.getWebOrigins();
+
         logger.infof("*** SMART: Saved EHR-Launch Context[%s]. Ready for app launch.", contextResponse.contextId);
-        return Response.ok().entity(contextResponse).build();
+
+        Response.ResponseBuilder builder = Response.ok().entity(contextResponse);
+        return Cors.builder()
+                .auth()
+                .allowedOrigins(session, client)
+                .allowedMethods("POST", "OPTIONS")
+                .exposedHeaders(Cors.ACCESS_CONTROL_ALLOW_METHODS)
+                .add(builder);
+    }
+
+    @OPTIONS
+    @Path("{any:.*}")
+    public Response preflight() {
+
+        logger.info("preflight() **** OPTIONS: SMART on FHIR Context ****");
+        return Cors.builder()
+                .auth()
+                .preflight()
+                .allowedOrigins(session, client)
+                .allowedMethods("POST", "OPTIONS")
+                .exposedHeaders(Cors.ACCESS_CONTROL_ALLOW_METHODS)
+                .add(Response.ok());
     }
 
     @Override
