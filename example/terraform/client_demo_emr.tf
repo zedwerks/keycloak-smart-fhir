@@ -8,8 +8,10 @@ resource "keycloak_openid_client" "demo_emr" {
   valid_redirect_uris = ["https://emr.zedwerks.com/auth/callback",
     "http://localhost:8081/auth/callback",
     "http://localhost:8081",
+    "http://localhost:8082/auth/callback",
+
   "https://oauth.pstmn.io/v1/callback", "https://oauth.pstmn.io/v1/browser-callback"]
-  web_origins                = ["https://emr.zedwerks.com/"]
+  web_origins                = ["https://emr.zedwerks.com/", "http://localhost:8081", "http://localhost:8082"]
   root_url                   = "https://emr.zedwerks.com/"
   base_url                   = "https://emr.zedwerks.com/"
   pkce_code_challenge_method = "S256"

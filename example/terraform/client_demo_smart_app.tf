@@ -5,7 +5,7 @@ resource "keycloak_openid_client" "demo_smart_app" {
   enabled                    = true
   access_type                = "PUBLIC"
   standard_flow_enabled      = true
-  valid_redirect_uris        = ["https://demo-smart-app.zedwerks.com", "http://localhost:8082", "https://oauth.pstmn.io/v1/callback", "https://oauth.pstmn.io/v1/browser-callback"]
+  valid_redirect_uris        = ["https://demo-smart-app.zedwerks.com", "http://localhost:9001", "https://oauth.pstmn.io/v1/callback", "https://oauth.pstmn.io/v1/browser-callback"]
   web_origins                = ["https://demo-smart-app.zedwerks.com"]
   root_url                   = "https://demo-smart-app.zedwerks.com"
   base_url                   = "https://demo-smart-app.zedwerks.com"
