@@ -1,0 +1,5 @@
+@startuml
+skinparam classAttributeIconSize 0
+class ContextModel {}
+Parameters <|-- ContextModel
+@enduml

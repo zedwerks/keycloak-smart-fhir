@@ -1,0 +1,24 @@
+@startuml
+skinparam classAttributeIconSize 0
+class EhrLaunchContextResolver {}
+Authenticator <|.. EhrLaunchContextResolver
+class AudienceParameterValidatorFactory {}
+AuthenticatorFactory <|.. AudienceParameterValidatorFactory
+class StandaloneLaunchSelector {}
+Authenticator <|.. StandaloneLaunchSelector
+class AudienceParameterValidator {}
+Authenticator <|.. AudienceParameterValidator
+class EhrLaunchConditional {}
+ConditionalAuthenticator <|.. EhrLaunchConditional
+class EhrLaunchConditionalFactory {}
+ConditionalAuthenticatorFactory <|.. EhrLaunchConditionalFactory
+class SmartLaunchDetector {}
+Authenticator <|.. SmartLaunchDetector
+class SmartLaunchHelper {}
+class SmartLaunchDetectorFactory {}
+AuthenticatorFactory <|.. SmartLaunchDetectorFactory
+class EhrLaunchContextResolverFactory {}
+AuthenticatorFactory <|.. EhrLaunchContextResolverFactory
+class StandaloneLaunchSelectorFactory {}
+AuthenticatorFactory <|.. StandaloneLaunchSelectorFactory
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+skinparam classAttributeIconSize 0
+class ContextResource {}
+IContextResource <|.. ContextResource
+class ContextPayload {}
+IContext <|.. ContextPayload
+interface IContextServiceFactory {}
+interface IContext {}
+interface IContextService {}
+class ContextService {}
+IContext <|-- ContextService
+IContextService <|.. ContextService
+interface IContextResource {}
+@enduml

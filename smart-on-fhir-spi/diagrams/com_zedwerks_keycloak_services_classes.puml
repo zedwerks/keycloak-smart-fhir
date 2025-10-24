@@ -1,0 +1,7 @@
+@startuml
+skinparam classAttributeIconSize 0
+class SmartContextRealmResourceProviderFactory {}
+RealmResourceProviderFactory <|.. SmartContextRealmResourceProviderFactory
+class SmartContextRealmResourceProvider {}
+RealmResourceProvider <|.. SmartContextRealmResourceProvider
+@enduml

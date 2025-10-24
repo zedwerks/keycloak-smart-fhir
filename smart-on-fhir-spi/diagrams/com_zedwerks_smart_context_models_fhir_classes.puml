@@ -1,0 +1,6 @@
+@startuml
+skinparam classAttributeIconSize 0
+class Parameter {}
+class Part {}
+class Parameters {}
+@enduml

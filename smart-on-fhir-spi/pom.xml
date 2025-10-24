@@ -133,6 +133,18 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.12.0</version> <!-- check for latest -->
+                <configuration>
+                    <!-- optional settings -->
+                    <source>17</source> <!-- or 21, etc. -->
+                    <encoding>UTF-8</encoding>
+                    <doclint>none</doclint> <!-- suppress strict warnings -->
+                    <show>protected</show>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>3.1.2</version>
             </plugin>
