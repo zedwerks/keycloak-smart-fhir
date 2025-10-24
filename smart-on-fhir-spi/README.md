@@ -6,6 +6,11 @@ Service Provider Interface (SPI) java module to Keycloak.
 
 ```mvn clean package```
 
+
+## skip tests
+
+```mvn -B -DskipTests clean package```
+
 ### check pom.xml for package updates.
 
 ```mvn versions:display-dependency-updates```
