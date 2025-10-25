@@ -111,7 +111,7 @@ public class SmartContextEndpoint implements RealmResourceProvider {
     public Response postSmartContext(@HeaderParam("Authorization") String authorizationHeader,
             Map<String, Object> jsonBody) {
 
-        AccessToken token = null;
+        AccessToken token;
 
         logger.info("postSmartContext() **** POST: SMART on FHIR Context ****");
 
@@ -167,7 +167,6 @@ public class SmartContextEndpoint implements RealmResourceProvider {
         Response.ResponseBuilder builder = Response.ok().entity(contextResponse);
         return Cors.builder()
                 .auth()
-                .allowedOrigins(session, client)
                 .allowedOrigins(token)
                 .allowedMethods("POST", "OPTIONS")
                 .preflight()
@@ -179,14 +178,19 @@ public class SmartContextEndpoint implements RealmResourceProvider {
     @Path("/context")
     public Response preflight() {
 
+        String origin = this.headers.getHeaderString("Origin");
+        if (origin == null) {
+            logger.warn("Preflight request without Origin header");
+            return Response.status(Response.Status.BAD_REQUEST).entity("Missing Origin header").build();
+        }
+
         logger.info("preflight() **** OPTIONS: SMART on FHIR Context ****");
-        return Cors.builder()
-                .auth()
-                .preflight()
-                .allowedOrigins(session, client)
-                .allowedMethods("POST", "OPTIONS")
-                .exposedHeaders(Cors.ACCESS_CONTROL_ALLOW_METHODS)
-                .add(Response.ok());
+        return Response.noContent()
+                .header("Access-Control-Allow-Origin", origin)
+                .header("Access-Control-Allow-Methods", "POST, OPTIONS")
+                .header("Access-Control-Allow-Headers", "Authorization, Content-Type")
+                .header("Access-Control-Max-Age", "3600")
+                .build();
     }
 
     @Override
