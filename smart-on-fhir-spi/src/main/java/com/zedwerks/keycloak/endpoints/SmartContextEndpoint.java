@@ -172,7 +172,7 @@ public class SmartContextEndpoint implements RealmResourceProvider {
     }
 
     @OPTIONS
-    @Path("{any:.*}")
+    @Path("/context")
     public Response preflight() {
 
         logger.info("preflight() **** OPTIONS: SMART on FHIR Context ****");
