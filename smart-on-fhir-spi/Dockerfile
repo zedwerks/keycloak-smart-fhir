@@ -1,5 +1,5 @@
 # Use an official OpenJDK runtime as a base image
-FROM maven:3.9.9-eclipse-temurin-24-alpine AS builder
+FROM maven:3.9.11-sapmachine-25 AS builder
 
 # Set the working directory in the container
 WORKDIR /app

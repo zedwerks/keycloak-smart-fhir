@@ -9,7 +9,7 @@ variable "client_fhir_rs" {
   default = {
     enabled   = true
     client_id = "fhir-rs"
-    audience  = "https://localhost:9000/fhir"
+    audience  = "https://localhost:9000/"
     base_url  = "https://localhost:9000/"
   }
   description = "FHIR Resource Server OIDC Client"
