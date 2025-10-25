@@ -38,7 +38,7 @@ resource "keycloak_openid_client_default_scopes" "demo_emr_default_scopes" {
 resource "keycloak_openid_client_optional_scopes" "demo_emr_optional_scopes" {
   realm_id        = data.keycloak_realm.realm.id
   client_id       = keycloak_openid_client.demo_emr.id
-  optional_scopes = ["Context.read", "Context.write", "user/Patient.read", "user/Patient.write"]
+  optional_scopes = ["Context.read", "Context.write", "user/*.read", "user/Patient.write"]
   depends_on      = [keycloak_openid_client.demo_emr, keycloak_openid_client_default_scopes.demo_emr_default_scopes]
 }
 
