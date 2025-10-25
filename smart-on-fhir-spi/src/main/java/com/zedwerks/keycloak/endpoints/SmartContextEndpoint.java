@@ -111,6 +111,8 @@ public class SmartContextEndpoint implements RealmResourceProvider {
     public Response postSmartContext(@HeaderParam("Authorization") String authorizationHeader,
             Map<String, Object> jsonBody) {
 
+        AccessToken token = null;
+
         logger.info("postSmartContext() **** POST: SMART on FHIR Context ****");
 
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
@@ -128,7 +130,7 @@ public class SmartContextEndpoint implements RealmResourceProvider {
 
             logger.debug("Token: " + tokenString);
 
-            AccessToken token = this.session.tokens().decode(tokenString, AccessToken.class);
+            token = this.session.tokens().decode(tokenString, AccessToken.class);
             processAccessToken(token);
 
             if (userSession == null) {
@@ -166,13 +168,15 @@ public class SmartContextEndpoint implements RealmResourceProvider {
         return Cors.builder()
                 .auth()
                 .allowedOrigins(session, client)
+                .allowedOrigins(token)
                 .allowedMethods("POST", "OPTIONS")
+                .preflight()
                 .exposedHeaders(Cors.ACCESS_CONTROL_ALLOW_METHODS)
                 .add(builder);
     }
 
     @OPTIONS
-    @Path("{any:.*}")
+    @Path("/context")
     public Response preflight() {
 
         logger.info("preflight() **** OPTIONS: SMART on FHIR Context ****");

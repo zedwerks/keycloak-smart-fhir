@@ -1,12 +1,15 @@
 resource "keycloak_openid_client" "demo_smart_app" {
-  realm_id                   = var.keycloak_realm
-  client_id                  = "demo-smart-app"
-  name                       = "Postman SMART Client"
-  enabled                    = true
-  access_type                = "PUBLIC"
-  standard_flow_enabled      = true
-  valid_redirect_uris        = ["https://demo-smart-app.zedwerks.com", "http://localhost:9001", "https://oauth.pstmn.io/v1/callback", "https://oauth.pstmn.io/v1/browser-callback"]
-  web_origins                = ["https://demo-smart-app.zedwerks.com"]
+  realm_id              = var.keycloak_realm
+  client_id             = "demo-smart-app"
+  name                  = "Postman SMART Client"
+  enabled               = true
+  access_type           = "PUBLIC"
+  standard_flow_enabled = true
+  valid_redirect_uris = ["https://demo-smart-app.zedwerks.com",
+                "http://localhost:3000", "http://localhost:3000/oauth-callback",
+                "https://oauth.pstmn.io/v1/callback", 
+                "https://oauth.pstmn.io/v1/browser-callback"]
+  web_origins                = ["https://demo-smart-app.zedwerks.com", "http://localhost:3000", "https://oauth.pstmn.io"]
   root_url                   = "https://demo-smart-app.zedwerks.com"
   base_url                   = "https://demo-smart-app.zedwerks.com"
   pkce_code_challenge_method = "S256"
@@ -52,21 +55,5 @@ resource "keycloak_openid_audience_protocol_mapper" "demo_smart_app_audience_map
   add_to_access_token      = true
   add_to_id_token          = true
   depends_on               = [keycloak_openid_client.demo_smart_app]
-}
-
-/// This mapper adds a hardcoded claim to the access token, id token, and userinfo endpoint.
-// It is used to provide a tenant identifier for the Postman SMART app to use in its requests.
-// An example of its use is with Ocean MD.
-resource "keycloak_openid_hardcoded_claim_protocol_mapper" "demo_smart_app_hardcoded_claim_mapper" {
-  realm_id            = keycloak_openid_client.demo_smart_app.realm_id
-  client_id           = keycloak_openid_client.demo_smart_app.id
-  name                = "hardcoded-claim-mapper"
-  claim_name          = "tenant"
-  claim_value         = "unique-tenant-id"
-  claim_value_type    = "String"
-  add_to_access_token = true
-  add_to_id_token     = false
-  add_to_userinfo     = false
-  depends_on          = [keycloak_openid_client.demo_smart_app]
 }
 
