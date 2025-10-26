@@ -153,8 +153,6 @@ jobs:
           KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${{ secrets.KEYCLOAK_TERRAFORM_CLIENT_SECRET }}
           DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
           DOCKER_REGISTRY: ${{ env.REGISTRY }}
-          KC_HTTP_CORS: true
-          KC_PROXY: 'edge'
         with:
           host: ${{ env.DROPLET_IP }}
           username: root
