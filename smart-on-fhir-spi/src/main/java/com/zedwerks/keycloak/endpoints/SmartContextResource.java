@@ -23,14 +23,10 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.jboss.logging.Logger;
-import org.keycloak.events.EventBuilder;
-import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.UserSessionModel;
-import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.representations.AccessToken;
 import org.keycloak.services.cors.Cors;
-import org.keycloak.services.resource.RealmResourceProvider;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -42,7 +38,6 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.OPTIONS;
 import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
@@ -62,23 +57,17 @@ import jakarta.ws.rs.core.Response.Status;
  *
  * @author <a href="mailto:brad@zedwerks.com">Brad Head</a>
  */
-public class SmartContextEndpoint implements RealmResourceProvider {
+public class SmartContextResource {
 
-    protected static final Logger logger = Logger.getLogger(SmartContextEndpoint.class);
+    protected static final Logger logger = Logger.getLogger(SmartContextResource.class);
 
     private KeycloakSession session = null;
-    private TokenManager tokenManager = null;
     private UserSessionModel userSession = null;
-    private EventBuilder event = null;
-
-    private ClientModel client;
 
     private final HttpHeaders headers;
 
-    public SmartContextEndpoint(KeycloakSession session, TokenManager tokenManager, EventBuilder event) {
+    public SmartContextResource(KeycloakSession session) {
         this.session = session;
-        this.tokenManager = tokenManager;
-        this.event = event;
         this.headers = session.getContext().getRequestHeaders();
     }
 
@@ -105,7 +94,6 @@ public class SmartContextEndpoint implements RealmResourceProvider {
      * @return Response
      */
     @POST
-    @Path("/context")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postSmartContext(@HeaderParam("Authorization") String authorizationHeader,
@@ -175,7 +163,6 @@ public class SmartContextEndpoint implements RealmResourceProvider {
     }
 
     @OPTIONS
-    @Path("/context")
     public Response preflight() {
 
         String origin = this.headers.getHeaderString("Origin");
@@ -190,17 +177,8 @@ public class SmartContextEndpoint implements RealmResourceProvider {
                 .header("Access-Control-Allow-Methods", "POST, OPTIONS")
                 .header("Access-Control-Allow-Headers", "Authorization, Content-Type")
                 .header("Access-Control-Max-Age", "3600")
+                .header("X-Authhor", "Zed Werks Inc.")
                 .build();
-    }
-
-    @Override
-    public void close() {
-        // Do nothing
-    }
-
-    @Override
-    public Object getResource() {
-        return this;
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

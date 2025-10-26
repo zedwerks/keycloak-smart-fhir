@@ -22,32 +22,22 @@
 
 package com.zedwerks.keycloak.services;
 
-import org.keycloak.events.EventBuilder;
 import org.keycloak.models.KeycloakSession;
-import org.keycloak.models.RealmModel;
-import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.services.resource.RealmResourceProvider;
 
-import com.zedwerks.keycloak.endpoints.SmartContextEndpoint;
-
+import com.zedwerks.keycloak.endpoints.SmartResource;
 
 public class SmartContextRealmResourceProvider implements RealmResourceProvider {
 
     private final KeycloakSession session;
-    private final RealmModel realm;
-    private final TokenManager tokenManager;
 
     public SmartContextRealmResourceProvider(KeycloakSession session) {
         this.session = session;
-        this.realm = session.getContext().getRealm();
-        this.tokenManager = new TokenManager();
     }
 
     @Override
     public Object getResource() {
-
-        EventBuilder event = new EventBuilder(this.realm, this.session);
-        return new SmartContextEndpoint(this.session, this.tokenManager, event);
+        return new SmartResource(this.session);
     }
 
     @Override
