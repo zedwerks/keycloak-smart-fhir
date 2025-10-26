@@ -158,30 +158,28 @@ jobs:
           host: ${{ env.DROPLET_IP }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          envs: DIGITALOCEAN_ACCESS_TOKEN, DOMAIN_NAME, DOCKER_IMAGE, DOCKER_REGISTRY, CONTAINER_NAME, KEYCLOAK_ADMIN_PASSWORD, KEYCLOAK_HOSTNAME_URL, KEYCLOAK_TARGET_REALM, KEYCLOAK_TERRAFORM_CLIENT_ID, KEYCLOAK_TERRAFORM_CLIENT_SECRET
-          script: | 
-            echo "DOCKER_IMAGE: $DOCKER_IMAGE"
-            echo "DOCKER_REGISTRY: $DOCKER_REGISTRY"
-            echo "CONTAINER_NAME: $CONTAINER_NAME"
-            echo "KEYCLOAK_HOSTNAME_URL: $KEYCLOAK_HOSTNAME_URL"
-            echo "KEYCLOAK_TARGET_REALM: $KEYCLOAK_TARGET_REALM"
-            echo "DOMAIN_NAME: $DOMAIN_NAME"
-            echo "$DIGITALOCEAN_ACCESS_TOKEN"
+          envs: DOMAIN_NAME, DOCKER_IMAGE, DOCKER_REGISTRY, DIGITALOCEAN_ACCESS_TOKEN, CONTAINER_NAME, KEYCLOAK_ADMIN_PASSWORD, KEYCLOAK_HOSTNAME_URL, KEYCLOAK_TARGET_REALM, KEYCLOAK_TERRAFORM_CLIENT_ID, KEYCLOAK_TERRAFORM_CLIENT_SECRET
+          script: |
+            echo "======================================================"
+            echo "Deploying Keycloak to $DOMAIN_NAME"
+            echo "Image: $DOCKER_IMAGE"
+            echo "======================================================"
 
-            # Remove all older images not in use, etc.
-            echo y | docker system prune -a
-
-            # Login to the registry
-            docker login $DOCKER_REGISTRY -u doctl --password-stdin
-
-            # Pull the latest Docker image
+            # Clean up stale Docker credentials
+            rm -f /root/.docker/config.json || true
+      
+            # Log into DigitalOcean Container Registry using fresh token
+            echo "$DIGITALOCEAN_ACCESS_TOKEN" | docker login registry.digitalocean.com -u doctl --password-stdin
+      
+            # Pull latest image
+            echo "Pulling image..."
             docker pull $DOCKER_IMAGE
-
-            # Stop and remove any existing Keycloak containers
+      
+            # Stop and remove any existing container
             docker stop $CONTAINER_NAME || true
             docker rm $CONTAINER_NAME || true
 
-            # Run Keycloak with HTTPS configured
+            # Start new container with HTTPS certs
             echo "Starting Keycloak with HTTPS..."
             docker run -d --name $CONTAINER_NAME \
               -p 80:8080 \
@@ -207,7 +205,7 @@ jobs:
                   --https-key-store-file=/etc/x509/https/privkey.pem \
                   --https-key-store-password=password \
                   --import-realm \
-                  --hostname=kc.zedwerks.com
+                  --hostname=$DOMAIN_NAME
 
       - name: Wait for Keycloak to start
         uses: appleboy/ssh-action@v1.1.0
