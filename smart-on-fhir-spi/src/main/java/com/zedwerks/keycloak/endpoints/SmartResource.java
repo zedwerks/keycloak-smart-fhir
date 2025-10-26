@@ -21,10 +21,14 @@ package com.zedwerks.keycloak.endpoints;
 
 import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
+import org.keycloak.services.cors.Cors;
 
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.OPTIONS;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.Response;
 
 /**
  * Basic SMART API endpoint. The EMR/EHR system will call this endpoint to set
@@ -48,6 +52,20 @@ public class SmartResource {
 
     public SmartResource(KeycloakSession session) {
         this.session = session;
+    }
+
+    @OPTIONS
+    @Path("{path:.*}")
+    public Response preflightRoot(@Context HttpHeaders headers) {
+
+        Response.ResponseBuilder builder = Response.ok();
+        return Cors.builder()
+                .auth()
+                .allowedMethods("GET", "POST", "OPTIONS")
+                .preflight()
+                .exposedHeaders(Cors.ACCESS_CONTROL_ALLOW_METHODS)
+                .exposedHeaders("Authorization", "Content-Type", "Location")
+                .add(builder);
     }
 
     @GET

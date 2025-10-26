@@ -38,7 +38,9 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.OPTIONS;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -57,6 +59,7 @@ import jakarta.ws.rs.core.Response.Status;
  *
  * @author <a href="mailto:brad@zedwerks.com">Brad Head</a>
  */
+@Path("/context")
 public class SmartContextResource {
 
     protected static final Logger logger = Logger.getLogger(SmartContextResource.class);
@@ -64,11 +67,8 @@ public class SmartContextResource {
     private KeycloakSession session = null;
     private UserSessionModel userSession = null;
 
-    private final HttpHeaders headers;
-
     public SmartContextResource(KeycloakSession session) {
         this.session = session;
-        this.headers = session.getContext().getRequestHeaders();
     }
 
     private void processAccessToken(AccessToken token) {
@@ -159,13 +159,15 @@ public class SmartContextResource {
                 .allowedMethods("POST", "OPTIONS")
                 .preflight()
                 .exposedHeaders(Cors.ACCESS_CONTROL_ALLOW_METHODS)
+                .exposedHeaders("Authorization", "Content-Type", "Location")
                 .add(builder);
     }
 
     @OPTIONS
-    public Response preflight() {
+    @Path("{path:.*}")
+    public Response preflight(@Context HttpHeaders headers) {
 
-        String origin = this.headers.getHeaderString("Origin");
+        String origin = headers.getHeaderString("Origin");
         if (origin == null) {
             logger.warn("Preflight request without Origin header");
             return Response.status(Response.Status.BAD_REQUEST).entity("Missing Origin header").build();
@@ -175,9 +177,10 @@ public class SmartContextResource {
         return Response.noContent()
                 .header("Access-Control-Allow-Origin", origin)
                 .header("Access-Control-Allow-Methods", "POST, OPTIONS")
-                .header("Access-Control-Allow-Headers", "Authorization, Content-Type")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers", "Origin, Accept, Authorization, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
                 .header("Access-Control-Max-Age", "3600")
-                .header("X-Authhor", "Zed Werks Inc.")
+                .header("X-Author", "Zed Werks Inc.")
                 .build();
     }
 
