@@ -200,6 +200,8 @@ jobs:
               -e KEYCLOAK_TERRAFORM_CLIENT_ID=$KEYCLOAK_TERRAFORM_CLIENT_ID \
               -e KEYCLOAK_TERRAFORM_CLIENT_SECRET=$KEYCLOAK_TERRAFORM_CLIENT_SECRET \
               -e KC_HTTPS_REDIRECT_ENABLED=true \
+              -e KC_HTTP_CORS=true \
+              -e KC_PROXY=edge
               $DOCKER_IMAGE start-dev \
                   --https-key-store-file=/etc/x509/https/privkey.pem \
                   --https-key-store-password=password \
