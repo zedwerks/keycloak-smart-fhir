@@ -14,8 +14,8 @@ keycloak_smart_configuration = {
 
 client_fhir_rs = {
   client_id = "fhir-rs"
-  audience  = "https://localhost:9000/fhir"
-  base_url  = "https://localhost:9000/"
+  audience  = "https://localhost:9000"
+  base_url  = "https://localhost:9000"
 }
 
 // --------------------------------------------------
@@ -26,6 +26,7 @@ fhir_resources_supported = {
   Bundle              = true
   Patient             = true
   Encounter           = true
+  Immunization        = true
   Practitioner        = true
   PractitionerRole    = true
   MedicationStatement = true

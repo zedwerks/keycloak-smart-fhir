@@ -40,7 +40,7 @@ resource "keycloak_openid_client_optional_scopes" "demo_smart_app_optional_scope
     "user/Patient.read",
     "user/Patient.write",
     "user/Patient.*",
-    "user/*.*",
+    "user/*.read",
     "patient/Patient.read",
     "patient/Patient.write",
   "patient/Patient.*"]
