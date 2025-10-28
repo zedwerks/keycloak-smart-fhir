@@ -29,7 +29,7 @@ cp target/*.jar $KEYCLOAK_HOME/standalone/deployments
 
 ## Release
 
-- Supports Kecyloak 26.3.5 (26.4.x breaks terraform) For support for previous editions, see tags and or release packages. 
+- Supports Keycloak 26.3.5 (26.4.x breaks terraform) For support for previous editions, see tags and or release packages. 
 
 ## Keycloak Auth Flow Configuration
 
