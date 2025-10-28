@@ -45,7 +45,7 @@ resource "keycloak_openid_client" "client_fhir_rs" {
 resource "keycloak_openid_client_default_scopes" "client_fhir_rs_default_scopes" {
   realm_id       = keycloak_openid_client.client_fhir_rs.realm_id
   client_id      = keycloak_openid_client.client_fhir_rs.id
-  default_scopes = ["openid"]
+  default_scopes = ["openid", "basic"]
 }
 
 resource "keycloak_openid_client_optional_scopes" "client_fhir_rs_optional_scopes" {

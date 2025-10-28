@@ -31,7 +31,7 @@ resource "keycloak_openid_audience_protocol_mapper" "demo_emr_audience_mapper" {
 resource "keycloak_openid_client_default_scopes" "demo_emr_default_scopes" {
   realm_id       = data.keycloak_realm.realm.id
   client_id      = keycloak_openid_client.demo_emr.id
-  default_scopes = ["openid", "profile", "email", "acr"]
+  default_scopes = ["basic", "openid", "profile", "email", "acr"]
   depends_on     = [keycloak_openid_client.postman_emr]
 }
 
