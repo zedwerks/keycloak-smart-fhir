@@ -46,8 +46,8 @@ jobs:
         working-directory: smart-on-fhir-spi
         run: |
           mvn clean install -DskipTests
-          cp ~/.m2/repository/com/zedwerks/*.pom smart-on-fhir-spi/target/*.pom
-          ls -l smart-on-fhir-spi/target/*.pom
+          find ~/.m2/repository/com/zedwerks -name "*.pom" -print
+          find smart-on-fhir-spi/target -name "*.pom" -print
 
       - name: Build and Deploy to GitHub Packages
         working-directory: smart-on-fhir-spi
