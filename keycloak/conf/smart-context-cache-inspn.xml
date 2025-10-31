@@ -1,0 +1,4 @@
+<distributed-cache name="smart-context" mode="SYNC">
+  <expiration lifespan="900000"/> <!-- 15 minutes -->
+  <memory max-count="10000" when-full="REMOVE"/>
+</distributed-cache>

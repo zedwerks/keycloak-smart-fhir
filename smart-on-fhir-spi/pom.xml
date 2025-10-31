@@ -24,7 +24,9 @@
         <org.glassfish.jersey.version>4.0.0-M1</org.glassfish.jersey.version>
         <org.jakarta.ws.rs.version>4.0.0</org.jakarta.ws.rs.version>
         <org.jboss.logging.version>3.6.1.Final</org.jboss.logging.version>
-        <org.mockito.version>5.17.0</org.mockito.version>    
+        <org.mockito.version>5.17.0</org.mockito.version>
+        <keycloak.infinispan.version>1.8.1.Final</keycloak.infinispan.version>  
+        <org.infinispan.version>15.0.0.Final</org.infinispan.version> 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -86,11 +88,18 @@
             <artifactId>keycloak-server-spi-private</artifactId>
             <version>${keycloak.version}</version>
         </dependency>
+        <!-- Provides Infinispan integration and connection provider -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-connections-infinispan</artifactId>
+            <version>${keycloak.infinispan.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- Used for access to org.infinispan.Cache types -->
         <dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-core</artifactId>
-            <version>15.0.0.Final</version>            
+            <version>${org.infinispan.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
