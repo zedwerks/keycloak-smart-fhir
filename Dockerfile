@@ -49,7 +49,11 @@ ENV KEYCLOAK_TARGET_REALM_DISPLAY_NAME="SMART on FHIR"
 ENV KEYCLOAK_TARGET_REALM=smart
 ENV KEYCLOAK_TERRAFORM_CLIENT_ID=terraform
 ENV KEYCLOAK_TERRAFORM_CLIENT_SECRET=terraform!secret
-
+ENV KC_LOG_LEVEL=INFO
+ENV KC_LOG_CONSOLE_COLOR=false
+ENV KC_HTTP_CORS=true
+ENV KC_LOG_CONFIG=/opt/keycloak/conf/logging.properties
+ENV KC_LOG_CONSOLE_OUTPUT=default
 # Set the working directory in the container
 WORKDIR /opt/keycloak/
 
@@ -57,6 +61,7 @@ WORKDIR /opt/keycloak/
 #COPY --from=builder /app/keycloak/bin/*.sh ./bin/
 COPY --from=builder /app/keycloak/bin/bootstrap.sh ./bin/bootstrap.sh
 COPY --from=builder /app/keycloak/bin/terraform-realm-admin.sh ./bin/terraform-realm-admin.sh
+COPY --from=builder /app/keycloak/conf/logging.properties ./conf/logging.properties
 
 # Copy the Keycloak Realm file (which in build phase, the realm name was resolved to the realm name)
 COPY --from=builder /app/keycloak/import/realm-template.json ./data/import/realm.json
@@ -69,7 +74,7 @@ USER keycloak
 COPY --from=builder /app/smart-on-fhir-spi/target/*.jar ./providers/
 
 # Copy the theme files
-COPY --from=builder /app/theme/target/*.jar ./providers/
+#COPY --from=builder /app/theme/target/*.jar ./providers/
 
 # Expose the port if needed
 EXPOSE $KEYCLOAK_PORT

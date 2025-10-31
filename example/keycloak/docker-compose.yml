@@ -25,6 +25,8 @@ services:
       - KC_HTTP_CORS=true
       - KC_PROXY=edge
       - KC_HTTP_CORS_MAX_AGE=3600
+      - KC_LOG_LEVEL=${KC_LOG_LEVEL}
+      - KC_LOG_CONSOLE_COLOR=false
 
     ports:
       - 8080:8080

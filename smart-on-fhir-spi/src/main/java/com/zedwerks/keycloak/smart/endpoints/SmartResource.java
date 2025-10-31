@@ -58,6 +58,8 @@ public class SmartResource {
     @Path("{path:.*}")
     public Response preflightRoot(@Context HttpHeaders headers) {
 
+        logger.info("preflight() **** OPTIONS: SMART on FHIR Context at /smart-on-fnir ****");
+
         Response.ResponseBuilder builder = Response.ok();
         return Cors.builder()
                 .auth()

@@ -30,8 +30,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import com.zedwerks.keycloak.smart.models.ILaunchContextModel;
 
-import jakarta.ws.rs.OPTIONS;
-import jakarta.ws.rs.Path;
+
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -42,7 +41,7 @@ import jakarta.ws.rs.NotAuthorizedException;
 
 public abstract class AbstractSmartContextResource implements IContextResource {
 
-    private static final Logger _logger = Logger.getLogger(AbstractSmartContextResource.class);
+    protected final Logger _logger = Logger.getLogger(getClass());
 
     protected KeycloakSession session = null;
     protected UserSessionModel userSession = null;
@@ -81,8 +80,6 @@ public abstract class AbstractSmartContextResource implements IContextResource {
         }
     }
 
-    @OPTIONS
-    @Path("{path:.*}")
     public Response preflight(@Context HttpHeaders headers) {
 
         String origin = headers.getHeaderString("Origin");

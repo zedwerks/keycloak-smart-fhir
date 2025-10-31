@@ -12,7 +12,6 @@ public class TokenHelper {
 
     private static final Logger logger = Logger.getLogger(TokenHelper.class);
 
-
     static final String PREFIX = "Bearer ";
 
     private static AccessToken verifyAccessToken(String tokenBase64String) {
@@ -26,7 +25,8 @@ public class TokenHelper {
                     .withDefaultChecks()
                     .withChecks(TokenVerifier.IS_ACTIVE, TokenVerifier.SUBJECT_EXISTS_CHECK);
 
-            //verifier.verifySignature(); // @todo figure out when to turn off for local DEV testing.
+            // verifier.verifySignature(); // @todo figure out when to turn off for local
+            // DEV testing.
             // Perform verification
             AccessToken token = verifier.getToken();
             logger.debugf("Access token verified successfully: %s", token.getSubject());
