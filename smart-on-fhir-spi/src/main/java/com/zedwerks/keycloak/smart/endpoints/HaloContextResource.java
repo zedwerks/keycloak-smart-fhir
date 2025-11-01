@@ -1,6 +1,6 @@
-/*
+/**
  * Copyright 2024 Zed Werks Inc.and/or its affiliates
- * * 
+ * 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,10 @@
 package com.zedwerks.keycloak.smart.endpoints;
 
 import java.util.Map;
-import java.util.UUID;
 
 import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.HeaderParam;
@@ -38,8 +35,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
-
-import com.zedwerks.keycloak.smart.models.ILaunchContextModel;
 
 /**
  * Basic Context API endpoint. The EMR/EHR system will call this endpoint to set
@@ -55,64 +50,42 @@ import com.zedwerks.keycloak.smart.models.ILaunchContextModel;
  * @author <a href="mailto:brad@zedwerks.com">Brad Head</a>
  */
 @Path("/halo")
-public class InfowayHaloContextResource extends AbstractSmartContextResource {
+public class HaloContextResource  {
 
-    protected static final Logger logger = Logger.getLogger(InfowayHaloContextResource.class);
+    static final String WRITE_SCOPE = "Context.Write";   // Make this a configuration property
 
-    public InfowayHaloContextResource(KeycloakSession session) {
+    protected static final Logger logger = Logger.getLogger(HaloContextResource.class);
+
+    KeycloakSession session;
+
+    public HaloContextResource(KeycloakSession session) {
         this.session = session;
-    }
-
-    @Override
-    public ILaunchContextModel getContextJson(String contextId) {
-        logger.info("InfowayHaloContextResource() **** GET: SMART on FHIR Context ****");
-        // This method should return the context JSON for the given contextId.
-        // For Infoway Halo, this would typically involve fetching the context from
-        // the database or another storage mechanism.
-        // For now, we return null as a placeholder.
-        return null;
-    }
-
-    @Override
-    public Boolean removeLaunchContext(String contextId) {
-        logger.info("InfowayHaloContextResource() **** DELETE: SMART on FHIR Context ****");
-        // This method should remove the context from the database or another storage
-        // mechanism.
-        // For Infoway Halo, this would typically involve deleting the context from the
-        // database.
-        // For now, we return true as a placeholder.
-        return true;
-    }
-
-    @Override
-    public ObjectNode setContextJson(Map<String, Object> jsonBody) {
-        logger.info("InfowayHaloContextResource() **** POST: SMART on FHIR Context ****");
-        // This method should process the JSON body and create a context.
-        // For Infoway Halo, this would typically involve creating a context in the
-        // database or another storage mechanism.
-        // For now, we return a new ObjectNode with a contextId.
-
-        // We create the Return Values (Output) for the API call, as documented here:
-        // https://simplifier.net/guide/halo/Home/FHIR-Artifacts/Operation-set-context?version=1.1.0-DFT-preBallot
-
-        // @todo: Implement the logic to save the context based on jsonBody
-        // There will be a configuraiton to optionally call to a HALO API to map the
-        // Resources (Patient, etc.)
-
-        ObjectNode contextResponseJson = new ObjectMapper().createObjectNode();
-        contextResponseJson.put("contextId", UUID.randomUUID().toString());
-        return contextResponseJson;
     }
 
     /**
      * Options
      * * Preflight request for CORS. This method allows the browser to check if the
      */
-    @Override
     @OPTIONS
     @Path("{path:.*}")
     public Response preflight(@Context HttpHeaders headers) {
-        return super.preflight(headers);
+
+        String origin = headers.getHeaderString("Origin");
+        if (origin == null) {
+            logger.warn("Preflight request without Origin header");
+            return Response.status(Response.Status.BAD_REQUEST).entity("Missing Origin header").build();
+        }
+
+        logger.info("preflight() **** OPTIONS: SMART on FHIR Context ****");
+        return Response.noContent()
+                .header("Access-Control-Allow-Origin", origin)
+                .header("Access-Control-Allow-Methods", "POST, OPTIONS")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers",
+                        "Origin, Accept, Authorization, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+                .header("Access-Control-Max-Age", "3600")
+                .header("X-Author", "Zed Werks Inc.")
+                .build();
     }
 
     /**
@@ -122,7 +95,6 @@ public class InfowayHaloContextResource extends AbstractSmartContextResource {
      *
      * @return Response
      */
-    @Override
     @POST
     @Path("/$set-context")
     @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
@@ -130,7 +102,18 @@ public class InfowayHaloContextResource extends AbstractSmartContextResource {
     public Response postSmartContext(@HeaderParam("Authorization") String authorizationHeader,
             Map<String, Object> jsonBody) {
 
-        return super.postSmartContext(authorizationHeader, jsonBody);
+        try {
+            AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, WRITE_SCOPE);
+            
+            // Here is where we call the Context Service to persist the context in Cache.
+            // In future, we add a pre-processor step to validate the context and to
+            // call an optional external service to enrich/map the FHIR context bundle.
+
+            return Response.status(Response.Status.OK)
+                    .entity("{ }").build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
+        }
     }
 
     /**
@@ -140,14 +123,25 @@ public class InfowayHaloContextResource extends AbstractSmartContextResource {
      *
      * @return Response
      */
-    @Override
     @POST
     @Path("/$clear-context")
     @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
     @Produces(MediaType.APPLICATION_JSON)
-    public Response clearSmartContext(@HeaderParam("Authorization") String authorizationHeader, String contextId) {
+    public Response clearSmartContext(@HeaderParam("Authorization") String authorizationHeader, 
+            Map<String, Object> jsonBody) {
 
-        return super.clearSmartContext(authorizationHeader, contextId);
+        try {
+            AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, WRITE_SCOPE);
+            
+            // Here is where we call the Context Service to persist the context in Cache.
+            // In future, we add a pre-processor step to validate the context and to
+            // call an optional external service to enrich/map the FHIR context bundle.
+
+            return Response.status(Response.Status.OK)
+                    .entity("{}").build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
+        }
     }
 
 }

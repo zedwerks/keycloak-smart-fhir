@@ -1,5 +1,6 @@
-/*
- * Copyright 2025 Zed Werks Inc.
+/**
+ * Copyright 2025 Zed Werks Inc.and/or its affiliates
+ * 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +17,3 @@
  * @author brad@zedwerks.com
  * 
  */
-package com.zedwerks.keycloak.smart.endpoints;
-import java.util.Map;
-
-import jakarta.ws.rs.HeaderParam;
-import jakarta.ws.rs.core.Response;
-public interface IContextResource {
-
-    /**
-        * Sets the SMART context for the user session.
-     */
-    public Response postSmartContext(@HeaderParam("Authorization") String authorizationHeader,
-            Map<String, Object> jsonBody);
-
-    public Response clearSmartContext(@HeaderParam("Authorization") String authorizationHeader, String contextId);
-}

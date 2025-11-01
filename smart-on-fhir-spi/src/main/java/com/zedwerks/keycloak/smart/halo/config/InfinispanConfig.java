@@ -1,5 +1,6 @@
 /**
- * Copyright 2025 Zed Werks Inc.
+ * Copyright 2025 Zed Werks Inc.and/or its affiliates
+ * 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +17,3 @@
  * @author brad@zedwerks.com
  * 
  */
-
-package com.zedwerks.keycloak.smart.models;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonTypeName("Context")
-public class ContextResponse {
-    @JsonProperty("context_id")
-    public String contextId;
-}

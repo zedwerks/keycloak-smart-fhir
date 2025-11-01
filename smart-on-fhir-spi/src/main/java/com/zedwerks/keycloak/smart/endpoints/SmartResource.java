@@ -1,6 +1,6 @@
-/*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
- * * 
+/**
+ * Copyright 2025 Zed Werks Inc.and/or its affiliates
+ * 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,6 @@ import jakarta.ws.rs.core.Response;
  *
  * @author <a href="mailto:brad@zedwerks.com">Brad Head</a>
  */
-
 public class SmartResource {
 
     protected static final Logger logger = Logger.getLogger(SmartResource.class);
@@ -83,7 +82,7 @@ public class SmartResource {
     }
 
     @Path("/halo")
-    public InfowayHaloContextResource getHaloContextResource() {
-        return new InfowayHaloContextResource(session);
+    public HaloContextResource getHaloContextResource() {
+        return new HaloContextResource(session);
     }
 }

@@ -1,8 +1,6 @@
-/*
- * Copyright 2025 Zed Werks Inc.
+/**
+ * Copyright 2025 Zed Werks Inc.and/or its affiliates
  * 
- * 
- *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,13 +17,3 @@
  * @author brad@zedwerks.com
  * 
  */
-package com.zedwerks.keycloak.smart.halo.dao;
-
-import com.zedwerks.keycloak.smart.halo.models.HaloContext;
-
-public interface IHaloContextDao {
-    void save(String key, HaloContext ctx, long ttlMillis);
-    HaloContext get(String key);
-    void delete(String key);
-    String cacheName(); // expose cache name for diagnostics
-}
