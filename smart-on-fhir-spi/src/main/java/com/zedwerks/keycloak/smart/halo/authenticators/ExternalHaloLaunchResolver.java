@@ -41,6 +41,7 @@ import jakarta.ws.rs.core.Response;
 
 import com.zedwerks.keycloak.smart.authenticators.LaunchHelper;
 import com.zedwerks.keycloak.smart.authenticators.LaunchDetector;
+
 /**
  * This is an authenticator that is used to authenticate SMART on FHIR
  * EHR-Launch requests.
@@ -70,26 +71,26 @@ import com.zedwerks.keycloak.smart.authenticators.LaunchDetector;
  * @see https://build.fhir.org/ig/HL7/smart-app-launch/scopes-and-launch-context.html#apps-that-launch-from-the-ehr
  */
 
-public class HaloLaunchHandler implements Authenticator {
+public class ExternalHaloLaunchResolver implements Authenticator {
 
     public static final String USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON = "additionalParameters";
     public static final String AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID = "halo_contextid";
     public static final String AUTH_NOTE_LAUNCH_CONTEXT_ID = "launch";
 
-    public static final Logger logger = Logger.getLogger(HaloLaunchHandler.class);
+    public static final Logger logger = Logger.getLogger(ExternalHaloLaunchResolver.class);
 
-    public HaloLaunchHandler(KeycloakSession session) {
+    public ExternalHaloLaunchResolver(KeycloakSession session) {
         // NOOP
     }
 
-    public HaloLaunchHandler() {
+    public ExternalHaloLaunchResolver() {
         // NOOP
     }
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
 
-        logger.info("authenticate() **** SMART on FHIR Context Resolver ****");
+        logger.info("authenticate() **** EXTERNAL HALO SMART on FHIR Context Handler ****");
 
         boolean hasLaunchScope = LaunchHelper.hasLaunchScope(context);
         String launchContextId = LaunchDetector.launchContextAuthNote(context); // the opaque
@@ -98,12 +99,12 @@ public class HaloLaunchHandler implements Authenticator {
                                                                                      // launch detector.
 
         if (!hasLaunchScope || (launchContextId == null)) {
-            logger.info("*** SMART on FHIR EHR-Launch: No launch in-flight.");
+            logger.info("*** EXTERNAL SMART on FHIR EHR-Launch: No launch in-flight.");
             context.success(); // just carry on... not a SMART on FHIR request
             return;
         }
 
-        logger.infof("*** SMART on FHIR EHR-Launch: Resolving the context. launch=%s ***", launchContextId);
+        logger.infof("*** EXTERNAL HALO SMART on FHIR EHR-Launch: Resolving the HALO Context. launch=%s ***", launchContextId);
 
         // Resolve the launch parameter to the context that was set into User Session
         //
@@ -124,31 +125,31 @@ public class HaloLaunchHandler implements Authenticator {
 
     @Override
     public boolean requiresUser() {
-        logger.debug("requiresUser() **** SMART on FHIR EHR-Launch Context Resolver : YES, we need a user! ****");
+        logger.debug("requiresUser() **** EXTERNAL HALO SMART on FHIR EHR-Launch Context Handler : YES, we need a user! ****");
         return true;
     }
 
     @Override
     public boolean configuredFor(KeycloakSession session, RealmModel realm, UserModel user) {
-        logger.debug("configuredFor() **** HALO SMART on FHIR Launch Context Handler ****");
+        logger.debug("configuredFor() **** EXTERNAL HALO SMART on FHIR Launch Context Handler ****");
         return true;
     }
 
     @Override
     public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
-        logger.debug("setRequiredActions() **** HALO SMART on FHIR Launch Context Handler ****");
+        logger.debug("setRequiredActions() **** EXTERNAL HALO SMART on FHIR Launch Context Handler ****");
         // NOOP
     }
 
     @Override
     public void action(AuthenticationFlowContext context) {
-        logger.debug("action() **** HALO SMART on FHIR Launch Context Handler ****");
+        logger.debug("action() **** EXTERNAL HALO SMART on FHIR Launch Context Handler ****");
         // NOOP
     }
 
     @Override
     public void close() {
-        logger.debug("close() **** HALO SMART on FHIR Launch Context Handler ****");
+        logger.debug("close() **** EXTERNAL HALO SMART on FHIR Launch Context Handler ****");
         // NOOP
     }
 
@@ -166,8 +167,8 @@ public class HaloLaunchHandler implements Authenticator {
      */
     private static boolean resolveEhrLaunchContext(AuthenticationFlowContext context, String launchContextId) {
 
-        logger.infof("Resolving launch request param: %s", launchContextId);
-        return saveLaunchContextToUserSession(context, launchContextId);
+        logger.infof("*** EXTERNAL HALO SMART Launch: launch=%s", launchContextId);
+        return saveLaunchContextToUserSession(context, launchContextId); // @todo Use an ext HALO context Id to isolate
     }
 
     private static String userSessionNote(AuthenticationFlowContext context, String name) {
@@ -198,6 +199,10 @@ public class HaloLaunchHandler implements Authenticator {
         userSession.removeNote(noteName);
     }
 
+    /** 
+     * @todo this will be replaced by simply retrieving the HALO context from the service... 
+     * And then setting it up to be returned in the token and alongside the tokens.
+     */
     private static boolean saveLaunchContextToUserSession(AuthenticationFlowContext context, String newContextId) {
 
         if (newContextId == null) {

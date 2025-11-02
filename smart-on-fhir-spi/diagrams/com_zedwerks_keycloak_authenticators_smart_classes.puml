@@ -1,7 +1,7 @@
 @startuml
 skinparam classAttributeIconSize 0
-class LaunchHandler {}
-Authenticator <|.. LaunchHandler
+class SmartLaunchResolver {}
+Authenticator <|.. SmartLaunchResolver
 class AudienceValidatorFactory {}
 AuthenticatorFactory <|.. AudienceValidatorFactory
 class StandaloneLaunchSelector {}
@@ -17,8 +17,8 @@ Authenticator <|.. LaunchDetector
 class LaunchHelper {}
 class LaunchDetectorFactory {}
 AuthenticatorFactory <|.. LaunchDetectorFactory
-class LaunchHandlerFactory {}
-AuthenticatorFactory <|.. LaunchHandlerFactory
+class SmartLaunchResolverFactory {}
+AuthenticatorFactory <|.. SmartLaunchResolverFactory
 class StandaloneLaunchSelectorFactory {}
 AuthenticatorFactory <|.. StandaloneLaunchSelectorFactory
 @enduml

@@ -32,9 +32,9 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
-public class LaunchHandlerFactory implements AuthenticatorFactory {
+public class SmartLaunchResolverFactory implements AuthenticatorFactory {
     public static final String PROVIDER_ID = "smart-launch-context-resolver"; // this is used in terraform config.
-    private static final LaunchHandler SINGLETON = new LaunchHandler();
+    private static final SmartLaunchResolver SINGLETON = new SmartLaunchResolver();
 
     private static final String[] MODES = {
         "Basic SMART Launch (FHIR server local to EMR)",

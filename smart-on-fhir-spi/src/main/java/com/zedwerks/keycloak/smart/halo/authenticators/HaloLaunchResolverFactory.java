@@ -32,18 +32,18 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
-public class ExternalHaloLaunchHandlerFactory implements AuthenticatorFactory {
-    public static final String PROVIDER_ID = "external-halo-launch-handler"; // this is used in terraform config.
-    private static final ExternalHaloLaunchHandler SINGLETON = new ExternalHaloLaunchHandler();
+public class HaloLaunchResolverFactory implements AuthenticatorFactory {
+    public static final String PROVIDER_ID = "halo-smart-launch-resolver"; // this is used in terraform config.
+    private static final HaloLaunchResolver SINGLETON = new HaloLaunchResolver();
 
     @Override
     public String getDisplayType() {
-        return "EXTERNAL HALO Launch Context Handler";
+        return "HALO Launch Context Handler";
     }
 
     @Override
     public String getReferenceCategory() {
-        return "external-halo-smart-launch";
+        return "halo-smart-launch";
     }
 
     @Override
@@ -81,11 +81,11 @@ public class ExternalHaloLaunchHandlerFactory implements AuthenticatorFactory {
         List<ProviderConfigProperty> props = new ArrayList<>();
 
         ProviderConfigProperty requiredReadScope = new ProviderConfigProperty();
-        requiredReadScope.setName("requiredScope");
+        requiredReadScope.setName("requiredReadScope");
         requiredReadScope.setLabel("Required Read Context Scope");
         requiredReadScope.setType(ProviderConfigProperty.STRING_TYPE);
         requiredReadScope.setDefaultValue("Context.read");
-        requiredReadScope.setHelpText("OAuth2 scope required to get or retrieve external HALO SMART launch context.");
+        requiredReadScope.setHelpText("OAuth2 scope required to get or retrieve HALO SMART launch context.");
         props.add(requiredReadScope);
 
         return props;

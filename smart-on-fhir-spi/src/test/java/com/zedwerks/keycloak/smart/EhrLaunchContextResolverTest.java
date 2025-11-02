@@ -51,8 +51,8 @@ import org.keycloak.models.UserSessionProvider;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.mockito.MockitoAnnotations;
 
-import com.zedwerks.keycloak.smart.authenticators.LaunchHandlerFactory;
-import com.zedwerks.keycloak.smart.authenticators.LaunchHandler;
+import com.zedwerks.keycloak.smart.authenticators.SmartLaunchResolverFactory;
+import com.zedwerks.keycloak.smart.authenticators.SmartLaunchResolver;
 
 import jakarta.ws.rs.core.UriInfo;
 
@@ -68,7 +68,7 @@ public class EhrLaunchContextResolverTest {
     public void testLaunchResolver() {
 
         KeycloakSession session = mock(KeycloakSession.class);
-        LaunchHandler authenticator = new LaunchHandler(session); // this is the class we want to
+        SmartLaunchResolver authenticator = new SmartLaunchResolver(session); // this is the class we want to
                                                                                         // test
         KeycloakContext keycloakContext = mock(KeycloakContext.class);
         AuthenticationSessionModel authSession = mock(AuthenticationSessionModel.class);
@@ -81,6 +81,6 @@ public class EhrLaunchContextResolverTest {
         ClientConnection clientConnection = mock(ClientConnection.class);
         RealmModel realm = mock(RealmModel.class);
 
-        LaunchHandlerFactory factory = mock(LaunchHandlerFactory.class);
+        SmartLaunchResolverFactory factory = mock(SmartLaunchResolverFactory.class);
     }
 }

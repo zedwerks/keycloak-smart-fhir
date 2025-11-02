@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  * 
  */
-package com.zedwerks.keycloak.smart.authenticators;
+package com.zedwerks.keycloak.smart.halo.authenticators;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -39,6 +39,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.ws.rs.core.Response;
 
+import com.zedwerks.keycloak.smart.authenticators.LaunchHelper;
+import com.zedwerks.keycloak.smart.authenticators.LaunchDetector;
 /**
  * This is an authenticator that is used to authenticate SMART on FHIR
  * EHR-Launch requests.
@@ -68,19 +70,19 @@ import jakarta.ws.rs.core.Response;
  * @see https://build.fhir.org/ig/HL7/smart-app-launch/scopes-and-launch-context.html#apps-that-launch-from-the-ehr
  */
 
-public class LaunchHandler implements Authenticator {
+public class HaloLaunchResolver implements Authenticator {
 
     public static final String USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON = "additionalParameters";
-    public static final String AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID = "smart_contextid";
+    public static final String AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID = "halo_contextid";
     public static final String AUTH_NOTE_LAUNCH_CONTEXT_ID = "launch";
 
-    public static final Logger logger = Logger.getLogger(LaunchHandler.class);
+    public static final Logger logger = Logger.getLogger(HaloLaunchResolver.class);
 
-    public LaunchHandler(KeycloakSession session) {
+    public HaloLaunchResolver(KeycloakSession session) {
         // NOOP
     }
 
-    public LaunchHandler() {
+    public HaloLaunchResolver() {
         // NOOP
     }
 
@@ -128,25 +130,25 @@ public class LaunchHandler implements Authenticator {
 
     @Override
     public boolean configuredFor(KeycloakSession session, RealmModel realm, UserModel user) {
-        logger.debug("configuredFor() **** SMART on FHIR EHR-Launch Context Resolver ****");
+        logger.debug("configuredFor() **** HALO SMART on FHIR Launch Context Handler ****");
         return true;
     }
 
     @Override
     public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
-        logger.debug("setRequiredActions() **** SMART on FHIR EHR-Launch Context Resolver ****");
+        logger.debug("setRequiredActions() **** HALO SMART on FHIR Launch Context Handler ****");
         // NOOP
     }
 
     @Override
     public void action(AuthenticationFlowContext context) {
-        logger.debug("action() **** SMART on FHIR EHR-Launch Context Resolver ****");
+        logger.debug("action() **** HALO SMART on FHIR Launch Context Handler ****");
         // NOOP
     }
 
     @Override
     public void close() {
-        logger.debug("close() **** SMART on FHIR EHR-Launch Context Resolver ****");
+        logger.debug("close() **** HALO SMART on FHIR Launch Context Handler ****");
         // NOOP
     }
 
@@ -199,7 +201,7 @@ public class LaunchHandler implements Authenticator {
     private static boolean saveLaunchContextToUserSession(AuthenticationFlowContext context, String newContextId) {
 
         if (newContextId == null) {
-            logger.warn("*** SMART Launch Context ID is null. Unexpected during an EHR launch.");
+            logger.warn("*** HALO SMART Launch Context ID is null. Unexpected during an HALO launch.");
             return false;
         }
 
