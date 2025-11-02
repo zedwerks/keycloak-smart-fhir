@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Zed Werks Inc.and/or its affiliates
+ * Copyright 2025 Zed Werks Inc.
  * 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +17,14 @@
  * @author brad@zedwerks.com
  * 
  */
-package com.zedwerks.keycloak.smart.endpoints;
+package com.zedwerks.keycloak.smart.helpers;
 
 import org.jboss.logging.Logger;
-
 import org.keycloak.TokenVerifier;
+import org.keycloak.common.VerificationException;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.representations.AccessToken;
-import org.keycloak.common.VerificationException;
+
 import jakarta.ws.rs.ForbiddenException;
 import jakarta.ws.rs.NotAuthorizedException;
 
@@ -83,8 +83,9 @@ public class AuthTokenHelper {
         }
         // Check for required scopes
         if (accessToken.getScope() == null || !accessToken.getScope().contains(scope)) {
+            logger.debugf("Access token scopes: %s", accessToken.getScope());
             logger.warnf("Access token does not contain required scope: %s", scope);
-            throw new ForbiddenException("Missing required scope:" + scope);
+            throw new ForbiddenException("Missing required scope: " + scope);
         }
         return accessToken;
     }

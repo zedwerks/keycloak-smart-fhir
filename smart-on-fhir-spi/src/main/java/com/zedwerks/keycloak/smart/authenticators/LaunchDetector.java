@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
+ * Copyright 2024 Zed Werks Inc.
  * * 
  * 
  *  SPDX-License-Identifier: Apache-2.0
@@ -60,15 +60,15 @@ import jakarta.ws.rs.core.Response;
  * @see https://build.fhir.org/ig/HL7/smart-app-launch/scopes-and-launch-context.html#apps-that-launch-from-the-ehr
  */
 
-public class SmartLaunchDetector implements Authenticator {
+public class LaunchDetector implements Authenticator {
 
-    public static final Logger logger = Logger.getLogger(SmartLaunchDetector.class);
+    public static final Logger logger = Logger.getLogger(LaunchDetector.class);
 
-    public SmartLaunchDetector(KeycloakSession session) {
+    public LaunchDetector(KeycloakSession session) {
         // NOOP
     }
 
-    public SmartLaunchDetector() {
+    public LaunchDetector() {
         // NOOP
     }
 
@@ -77,8 +77,8 @@ public class SmartLaunchDetector implements Authenticator {
 
         logger.info("authenticate() **** SMART on FHIR Launch Detector ****");
 
-        boolean isEhrLaunch = SmartLaunchHelper.isEhrLaunch(context);
-        boolean isStandaloneLaunch = SmartLaunchHelper.isStandaloneLaunch(context);
+        boolean isEhrLaunch = LaunchHelper.isEhrLaunch(context);
+        boolean isStandaloneLaunch = LaunchHelper.isStandaloneLaunch(context);
 
         if (!isEhrLaunch && !isStandaloneLaunch) {
             logger.info("Not a SMART on FHIR Launch request.");
@@ -86,7 +86,7 @@ public class SmartLaunchDetector implements Authenticator {
             return;
         }
 
-        if (isStandaloneLaunch && !SmartLaunchHelper.isStandaloneLaunchValid(context)) {
+        if (isStandaloneLaunch && !LaunchHelper.isStandaloneLaunchValid(context)) {
             String msg = "Invalid Standalone launch request!";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
@@ -110,10 +110,10 @@ public class SmartLaunchDetector implements Authenticator {
         }
         // Save the audience param. For this is a required field for both standalone and ehr launch
         // and we have a user session note mapper for this to get into the access token.
-        SmartLaunchHelper.saveAudienceToSession(context, SmartLaunchHelper.getAudienceParameter(context));
+        LaunchHelper.saveAudienceToSession(context, LaunchHelper.getAudienceParameter(context));
 
         if (isEhrLaunch) {
-            SmartLaunchDetector.setLaunchContextAuthNote(context, getLaunchParameter(context)); // Tuck away in Auth Note
+            LaunchDetector.setLaunchContextAuthNote(context, getLaunchParameter(context)); // Tuck away in Auth Note
         }
 
         context.attempted(); // Do not set this to success???, as we are not done authenticating the user.
@@ -151,8 +151,8 @@ public class SmartLaunchDetector implements Authenticator {
 
     // helper functions ------------------------
     public static boolean isEhrLaunchValid(AuthenticationFlowContext context) {
-        boolean valid = SmartLaunchHelper.hasLaunchContextIdParameter(context) && SmartLaunchHelper.hasLaunchScope(context)
-                && SmartLaunchHelper.hasAudienceParameter(context);
+        boolean valid = LaunchHelper.hasLaunchContextIdParameter(context) && LaunchHelper.hasLaunchScope(context)
+                && LaunchHelper.hasAudienceParameter(context);
         return valid;
     }
     public static String getLaunchParameter(AuthenticationFlowContext context) {
@@ -168,14 +168,14 @@ public class SmartLaunchDetector implements Authenticator {
 
         logger.debug("getLaunchParam() **** SMART on FHIR  ****");
 
-        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartLaunchHelper.LAUNCH_REQUEST_PARAM);
+        String launchParam = context.getUriInfo().getQueryParameters().getFirst(LaunchHelper.LAUNCH_REQUEST_PARAM);
 
         logger.debug("SMART Launch Parameter: " + launchParam);
         return launchParam;
     }
 
-    public static final String AUTH_NOTE_LAUNCH_CONTEXT_ID = SmartLaunchHelper.LAUNCH_REQUEST_PARAM;
-    public static final String AUTH_NOTE_AUDIENCE = SmartLaunchHelper.SMART_AUD_PARAM;
+    public static final String AUTH_NOTE_LAUNCH_CONTEXT_ID = LaunchHelper.LAUNCH_REQUEST_PARAM;
+    public static final String AUTH_NOTE_AUDIENCE = LaunchHelper.SMART_AUD_PARAM;
 
 
     public static void setLaunchContextAuthNote(AuthenticationFlowContext context, String contextId) {

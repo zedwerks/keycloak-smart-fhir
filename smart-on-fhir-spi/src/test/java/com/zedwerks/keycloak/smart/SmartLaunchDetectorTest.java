@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
+ * Copyright 2024 Zed Werks Inc.
  * * 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,8 +45,8 @@ import org.mockito.MockitoAnnotations;
 
 import org.keycloak.common.Profile;
 
-import com.zedwerks.keycloak.smart.authenticators.SmartLaunchDetector;
-import com.zedwerks.keycloak.smart.authenticators.SmartLaunchDetectorFactory;
+import com.zedwerks.keycloak.smart.authenticators.LaunchDetector;
+import com.zedwerks.keycloak.smart.authenticators.LaunchDetectorFactory;
 
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -79,9 +79,9 @@ public class SmartLaunchDetectorTest {
         UserModel user = mock(UserModel.class);
         UriInfo uriInfo = mock(UriInfo.class);
         ClientModel client = mock(ClientModel.class);
-        Authenticator authenticator = new SmartLaunchDetector(session);
+        Authenticator authenticator = new LaunchDetector(session);
 
-        SmartLaunchDetectorFactory factory = mock(SmartLaunchDetectorFactory.class);
+        LaunchDetectorFactory factory = mock(LaunchDetectorFactory.class);
         when(factory.create(session)).thenReturn(authenticator);
 
         MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<>();
@@ -140,9 +140,9 @@ public class SmartLaunchDetectorTest {
         UserModel user = mock(UserModel.class);
         UriInfo uriInfo = mock(UriInfo.class);
         ClientModel client = mock(ClientModel.class);
-        Authenticator authenticator = new SmartLaunchDetector(session);
+        Authenticator authenticator = new LaunchDetector(session);
 
-        SmartLaunchDetectorFactory factory = mock(SmartLaunchDetectorFactory.class);
+        LaunchDetectorFactory factory = mock(LaunchDetectorFactory.class);
         when(factory.create(session)).thenReturn(authenticator);
 
         MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<>();
@@ -199,9 +199,9 @@ public class SmartLaunchDetectorTest {
         UserModel user = mock(UserModel.class);
         UriInfo uriInfo = mock(UriInfo.class);
         ClientModel client = mock(ClientModel.class);
-        Authenticator authenticator = new SmartLaunchDetector(session);
+        Authenticator authenticator = new LaunchDetector(session);
 
-        SmartLaunchDetectorFactory factory = mock(SmartLaunchDetectorFactory.class);
+        LaunchDetectorFactory factory = mock(LaunchDetectorFactory.class);
         when(factory.create(session)).thenReturn(authenticator);
 
         MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<>();

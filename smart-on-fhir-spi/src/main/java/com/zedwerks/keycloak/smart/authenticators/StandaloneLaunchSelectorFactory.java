@@ -1,6 +1,6 @@
-/*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
- * * 
+/**
+ * Copyright 2024 Zed Werks Inc.
+ *
  * 
  *  SPDX-License-Identifier: Apache-2.0
  *

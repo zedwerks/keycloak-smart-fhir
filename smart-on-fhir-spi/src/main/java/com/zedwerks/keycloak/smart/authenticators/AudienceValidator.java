@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
+ * Copyright 2024 Zed Werks Inc.
  * and other contributors as indicated by the @author tags.
  * 
  *  SPDX-License-Identifier: Apache-2.0
@@ -37,11 +37,11 @@ import org.keycloak.models.UserModel;
  * Validate an incoming "aud", "audience", or "resource" query parameter (during
  * OIDC flows) against a set of acceptable FHIR Server Url(s).
  */
-public class AudienceParameterValidator implements Authenticator {
+public class AudienceValidator implements Authenticator {
 
-    private static final Logger logger = Logger.getLogger(AudienceParameterValidator.class);
+    private static final Logger logger = Logger.getLogger(AudienceValidator.class);
 
-    public AudienceParameterValidator(KeycloakSession session) {
+    public AudienceValidator(KeycloakSession session) {
         // NOOP
     }
 
@@ -50,7 +50,7 @@ public class AudienceParameterValidator implements Authenticator {
 
         logger.info("authenticate() **** SMART on FHIR Audience Validator ****");
 
-        if (!SmartLaunchHelper.isEhrLaunch(context) && !SmartLaunchHelper.isStandaloneLaunch(context)) {
+        if (!LaunchHelper.isEhrLaunch(context) && !LaunchHelper.isStandaloneLaunch(context)) {
             logger.info("*** SMART on FHIR Audience Validator: This is not a SMART on FHIR request.");
             context.attempted(); // just carry on... not a SMART on FHIR request
             return;
@@ -58,7 +58,7 @@ public class AudienceParameterValidator implements Authenticator {
 
         if (context.getAuthenticatorConfig() == null ||
                 !context.getAuthenticatorConfig().getConfig()
-                        .containsKey(AudienceParameterValidatorFactory.AUDIENCES_PROP_NAME)) {
+                        .containsKey(AudienceValidatorFactory.AUDIENCES_PROP_NAME)) {
             String msg = "The SMART on FHIR Audience Validation Extension must be configured with one or more allowed audiences (URLs)";
             logger.warn(msg);
             context.failure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED,
@@ -70,7 +70,7 @@ public class AudienceParameterValidator implements Authenticator {
             return; // early exit
         }
 
-        String audience = SmartLaunchHelper.getAudienceParameter(context);
+        String audience = LaunchHelper.getAudienceParameter(context);
         logger.debugf("Requested audience: %s", audience);
 
         if (audience == null || audience.isBlank()) {
@@ -86,7 +86,7 @@ public class AudienceParameterValidator implements Authenticator {
         }
 
         String audiencesString = context.getAuthenticatorConfig().getConfig()
-                .get(AudienceParameterValidatorFactory.AUDIENCES_PROP_NAME);
+                .get(AudienceValidatorFactory.AUDIENCES_PROP_NAME);
 
         List<String> audiences = Arrays.asList(audiencesString.split("##"));
 

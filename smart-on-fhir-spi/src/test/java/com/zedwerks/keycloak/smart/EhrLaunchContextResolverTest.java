@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
+ * Copyright 2024 Zed Werks Inc.
  * * 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,8 +51,8 @@ import org.keycloak.models.UserSessionProvider;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.mockito.MockitoAnnotations;
 
-import com.zedwerks.keycloak.smart.authenticators.EhrLaunchContextResolverFactory;
-import com.zedwerks.keycloak.smart.authenticators.EhrLaunchContextResolver;
+import com.zedwerks.keycloak.smart.authenticators.LaunchHandlerFactory;
+import com.zedwerks.keycloak.smart.authenticators.LaunchHandler;
 
 import jakarta.ws.rs.core.UriInfo;
 
@@ -68,7 +68,7 @@ public class EhrLaunchContextResolverTest {
     public void testLaunchResolver() {
 
         KeycloakSession session = mock(KeycloakSession.class);
-        EhrLaunchContextResolver authenticator = new EhrLaunchContextResolver(session); // this is the class we want to
+        LaunchHandler authenticator = new LaunchHandler(session); // this is the class we want to
                                                                                         // test
         KeycloakContext keycloakContext = mock(KeycloakContext.class);
         AuthenticationSessionModel authSession = mock(AuthenticationSessionModel.class);
@@ -81,6 +81,6 @@ public class EhrLaunchContextResolverTest {
         ClientConnection clientConnection = mock(ClientConnection.class);
         RealmModel realm = mock(RealmModel.class);
 
-        EhrLaunchContextResolverFactory factory = mock(EhrLaunchContextResolverFactory.class);
+        LaunchHandlerFactory factory = mock(LaunchHandlerFactory.class);
     }
 }

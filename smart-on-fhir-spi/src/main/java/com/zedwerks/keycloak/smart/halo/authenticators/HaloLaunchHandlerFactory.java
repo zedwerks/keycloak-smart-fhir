@@ -1,8 +1,6 @@
-/*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
- * * 
+/**
+ * Copyright 2024 Zed Werks Inc.
  * 
- *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +16,13 @@
  * 
  * @author brad@zedwerks.com
  * 
+ * SPDX-License-Identifier: Apache-2.0
+ * 
  */
-package com.zedwerks.keycloak.smart.authenticators;
+package com.zedwerks.keycloak.smart.halo.authenticators;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.keycloak.Config;
 import org.keycloak.authentication.Authenticator;
@@ -31,37 +32,33 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
-public class SmartLaunchDetectorFactory implements AuthenticatorFactory {
-    private static final String PROVIDER_ID = "smart-launch-detector";
-    private static final SmartLaunchDetector SINGLETON = new SmartLaunchDetector();
-
-    public static AuthenticationExecutionModel.Requirement[] getREQUIREMENT_CHOICES() {
-        return REQUIREMENT_CHOICES;
-    }
+public class HaloLaunchHandlerFactory implements AuthenticatorFactory {
+    public static final String PROVIDER_ID = "halo-launch-handler"; // this is used in terraform config.
+    private static final HaloLaunchHandler SINGLETON = new HaloLaunchHandler();
 
     @Override
     public String getDisplayType() {
-        return "SMART on FHIR Launch Detector";
+        return "HALO Launch Context Handler";
     }
 
     @Override
     public String getReferenceCategory() {
-        return null;
+        return "halo-smart-launch";
     }
 
     @Override
     public boolean isConfigurable() {
-        return false;
+        return true;
     }
 
-    private static final AuthenticationExecutionModel.Requirement[] REDUCED_REQUIREMENT_CHOICES = {
+    private static final AuthenticationExecutionModel.Requirement[] LOCAL_REQUIREMENT_CHOICES = {
             AuthenticationExecutionModel.Requirement.REQUIRED,
             AuthenticationExecutionModel.Requirement.DISABLED
     };
 
     @Override
     public AuthenticationExecutionModel.Requirement[] getRequirementChoices() {
-        return REDUCED_REQUIREMENT_CHOICES;
+        return LOCAL_REQUIREMENT_CHOICES;
     }
 
     @Override
@@ -71,13 +68,27 @@ public class SmartLaunchDetectorFactory implements AuthenticatorFactory {
 
     @Override
     public String getHelpText() {
-        return "Detects and validates a SMART on FHIR Launch then sets session values for context selector or resolver.";
+        return "Processes a HALO Launch using the built-in HALO Context service.";
+    }
+
+    @Override
+    public String getId() {
+        return PROVIDER_ID;
     }
 
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
+        List<ProviderConfigProperty> props = new ArrayList<>();
 
-        return null;
+        ProviderConfigProperty requiredReadScope = new ProviderConfigProperty();
+        requiredReadScope.setName("requiredReadScope");
+        requiredReadScope.setLabel("Required Read Context Scope");
+        requiredReadScope.setType(ProviderConfigProperty.STRING_TYPE);
+        requiredReadScope.setDefaultValue("Context.read");
+        requiredReadScope.setHelpText("OAuth2 scope required to get or retrieve HALO SMART launch context.");
+        props.add(requiredReadScope);
+
+        return props;
     }
 
     @Override
@@ -98,10 +109,5 @@ public class SmartLaunchDetectorFactory implements AuthenticatorFactory {
     @Override
     public void postInit(KeycloakSessionFactory factory) {
         // NOOP
-    }
-
-    @Override
-    public String getId() {
-        return PROVIDER_ID;
     }
 }

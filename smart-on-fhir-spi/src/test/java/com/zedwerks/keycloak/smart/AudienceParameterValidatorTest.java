@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
+ * Copyright 2024 Zed Werks Inc.
  * * 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,8 +41,8 @@ import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakContext;
 import org.keycloak.sessions.AuthenticationSessionModel;
 
-import com.zedwerks.keycloak.smart.authenticators.AudienceParameterValidator;
-import com.zedwerks.keycloak.smart.authenticators.AudienceParameterValidatorFactory;
+import com.zedwerks.keycloak.smart.authenticators.AudienceValidator;
+import com.zedwerks.keycloak.smart.authenticators.AudienceValidatorFactory;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -66,9 +66,9 @@ public class AudienceParameterValidatorTest {
         UserModel user = mock(UserModel.class);
         UriInfo uriInfo = mock(UriInfo.class);
         ClientModel client = mock(ClientModel.class);
-        Authenticator authenticator = new AudienceParameterValidator(session);
+        Authenticator authenticator = new AudienceValidator(session);
 
-        AudienceParameterValidatorFactory factory = mock(AudienceParameterValidatorFactory.class);
+        AudienceValidatorFactory factory = mock(AudienceValidatorFactory.class);
 
         MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<String,String>();
         queryParameters.putSingle("aud", "https://fhir.example.com");

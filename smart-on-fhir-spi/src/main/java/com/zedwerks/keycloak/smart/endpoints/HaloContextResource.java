@@ -1,5 +1,5 @@
 /**
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
+ * Copyright 2024 Zed Werks Inc.
  * 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,16 +24,17 @@ import java.util.Map;
 import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
 
+import com.zedwerks.keycloak.smart.helpers.AuthTokenHelper;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.HeaderParam;
+import jakarta.ws.rs.OPTIONS;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.OPTIONS;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType; 
 import jakarta.ws.rs.core.Response;
 
 /**
@@ -50,9 +51,9 @@ import jakarta.ws.rs.core.Response;
  * @author <a href="mailto:brad@zedwerks.com">Brad Head</a>
  */
 @Path("/halo")
-public class HaloContextResource  {
+public class HaloContextResource {
 
-    static final String WRITE_SCOPE = "Context.Write";   // Make this a configuration property
+    static final String WRITE_SCOPE = "Context.write"; // Make this a configuration property
 
     protected static final Logger logger = Logger.getLogger(HaloContextResource.class);
 
@@ -104,7 +105,7 @@ public class HaloContextResource  {
 
         try {
             AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, WRITE_SCOPE);
-            
+
             // Here is where we call the Context Service to persist the context in Cache.
             // In future, we add a pre-processor step to validate the context and to
             // call an optional external service to enrich/map the FHIR context bundle.
@@ -127,12 +128,12 @@ public class HaloContextResource  {
     @Path("/$clear-context")
     @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
     @Produces(MediaType.APPLICATION_JSON)
-    public Response clearSmartContext(@HeaderParam("Authorization") String authorizationHeader, 
+    public Response clearSmartContext(@HeaderParam("Authorization") String authorizationHeader,
             Map<String, Object> jsonBody) {
 
         try {
             AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, WRITE_SCOPE);
-            
+
             // Here is where we call the Context Service to persist the context in Cache.
             // In future, we add a pre-processor step to validate the context and to
             // call an optional external service to enrich/map the FHIR context bundle.

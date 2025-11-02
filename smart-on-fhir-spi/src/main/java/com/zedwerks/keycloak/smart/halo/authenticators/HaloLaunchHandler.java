@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  * 
  */
-package com.zedwerks.keycloak.smart.authenticators;
+package com.zedwerks.keycloak.smart.halo.authenticators;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -39,6 +39,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.ws.rs.core.Response;
 
+import com.zedwerks.keycloak.smart.authenticators.LaunchHelper;
+import com.zedwerks.keycloak.smart.authenticators.LaunchDetector;
 /**
  * This is an authenticator that is used to authenticate SMART on FHIR
  * EHR-Launch requests.
@@ -68,19 +70,19 @@ import jakarta.ws.rs.core.Response;
  * @see https://build.fhir.org/ig/HL7/smart-app-launch/scopes-and-launch-context.html#apps-that-launch-from-the-ehr
  */
 
-public class EhrLaunchContextResolver implements Authenticator {
+public class HaloLaunchHandler implements Authenticator {
 
     public static final String USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON = "additionalParameters";
-    public static final String AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID = "smart_contextid";
+    public static final String AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID = "halo_contextid";
     public static final String AUTH_NOTE_LAUNCH_CONTEXT_ID = "launch";
 
-    public static final Logger logger = Logger.getLogger(EhrLaunchContextResolver.class);
+    public static final Logger logger = Logger.getLogger(HaloLaunchHandler.class);
 
-    public EhrLaunchContextResolver(KeycloakSession session) {
+    public HaloLaunchHandler(KeycloakSession session) {
         // NOOP
     }
 
-    public EhrLaunchContextResolver() {
+    public HaloLaunchHandler() {
         // NOOP
     }
 
@@ -89,8 +91,8 @@ public class EhrLaunchContextResolver implements Authenticator {
 
         logger.info("authenticate() **** SMART on FHIR Context Resolver ****");
 
-        boolean hasLaunchScope = SmartLaunchHelper.hasLaunchScope(context);
-        String launchContextId = SmartLaunchDetector.launchContextAuthNote(context); // the opaque
+        boolean hasLaunchScope = LaunchHelper.hasLaunchScope(context);
+        String launchContextId = LaunchDetector.launchContextAuthNote(context); // the opaque
                                                                                      // ?launch={launchContextId}
                                                                                      // from auth note as set by the
                                                                                      // launch detector.
@@ -128,25 +130,25 @@ public class EhrLaunchContextResolver implements Authenticator {
 
     @Override
     public boolean configuredFor(KeycloakSession session, RealmModel realm, UserModel user) {
-        logger.debug("configuredFor() **** SMART on FHIR EHR-Launch Context Resolver ****");
+        logger.debug("configuredFor() **** HALO SMART on FHIR Launch Context Handler ****");
         return true;
     }
 
     @Override
     public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
-        logger.debug("setRequiredActions() **** SMART on FHIR EHR-Launch Context Resolver ****");
+        logger.debug("setRequiredActions() **** HALO SMART on FHIR Launch Context Handler ****");
         // NOOP
     }
 
     @Override
     public void action(AuthenticationFlowContext context) {
-        logger.debug("action() **** SMART on FHIR EHR-Launch Context Resolver ****");
+        logger.debug("action() **** HALO SMART on FHIR Launch Context Handler ****");
         // NOOP
     }
 
     @Override
     public void close() {
-        logger.debug("close() **** SMART on FHIR EHR-Launch Context Resolver ****");
+        logger.debug("close() **** HALO SMART on FHIR Launch Context Handler ****");
         // NOOP
     }
 
@@ -199,7 +201,7 @@ public class EhrLaunchContextResolver implements Authenticator {
     private static boolean saveLaunchContextToUserSession(AuthenticationFlowContext context, String newContextId) {
 
         if (newContextId == null) {
-            logger.warn("*** SMART Launch Context ID is null. Unexpected during an EHR launch.");
+            logger.warn("*** HALO SMART Launch Context ID is null. Unexpected during an HALO launch.");
             return false;
         }
 
@@ -234,11 +236,11 @@ public class EhrLaunchContextResolver implements Authenticator {
                             String name = entry.get("name").asText();
                             String valueString = entry.get("valueString").asText();
 
-                            if (name.equals(SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM)) {
-                                setUserSessionNote(context, SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM, valueString);
+                            if (name.equals(LaunchHelper.SMART_TOKEN_PATIENT_CLAIM)) {
+                                setUserSessionNote(context, LaunchHelper.SMART_TOKEN_PATIENT_CLAIM, valueString);
                             }
-                            if (name.equals(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER)) {
-                                setUserSessionNote(context, SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER,
+                            if (name.equals(LaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER)) {
+                                setUserSessionNote(context, LaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER,
                                         valueString);
                             }
                         }
@@ -253,10 +255,10 @@ public class EhrLaunchContextResolver implements Authenticator {
                 String key = field.getKey();
                 String value = field.getValue().asText();
 
-                if (key.equals(SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM)) {
-                    setUserSessionNote(context, SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM, value);
-                } else if (key.equals(SmartLaunchHelper.SMART_TOKEN_ENCOUNTER_CLAIM)) {
-                    setUserSessionNote(context, SmartLaunchHelper.SMART_TOKEN_ENCOUNTER_CLAIM, value);
+                if (key.equals(LaunchHelper.SMART_TOKEN_PATIENT_CLAIM)) {
+                    setUserSessionNote(context, LaunchHelper.SMART_TOKEN_PATIENT_CLAIM, value);
+                } else if (key.equals(LaunchHelper.SMART_TOKEN_ENCOUNTER_CLAIM)) {
+                    setUserSessionNote(context, LaunchHelper.SMART_TOKEN_ENCOUNTER_CLAIM, value);
                 }
             });
 
@@ -288,13 +290,13 @@ public class EhrLaunchContextResolver implements Authenticator {
 
         // clear known launch items that may have been set on prior auth under same User
         // session
-        clearUserSessionNote(context, SmartLaunchHelper.CONTEXT_PATIENT);
-        clearUserSessionNote(context, SmartLaunchHelper.CONTEXT_ENCOUNTER);
-        clearUserSessionNote(context, SmartLaunchHelper.SMART_AUD_PARAM);
-        clearUserSessionNote(context, SmartLaunchHelper.CONTEXT_FHIR_CONTEXT);
-        clearUserSessionNote(context, SmartLaunchHelper.CONTEXT_INTENT);
-        clearUserSessionNote(context, SmartLaunchHelper.CONTEXT_NEED_PATIENT_BANNER);
-        clearUserSessionNote(context, SmartLaunchHelper.SMART_STYLE_URL);
+        clearUserSessionNote(context, LaunchHelper.CONTEXT_PATIENT);
+        clearUserSessionNote(context, LaunchHelper.CONTEXT_ENCOUNTER);
+        clearUserSessionNote(context, LaunchHelper.SMART_AUD_PARAM);
+        clearUserSessionNote(context, LaunchHelper.CONTEXT_FHIR_CONTEXT);
+        clearUserSessionNote(context, LaunchHelper.CONTEXT_INTENT);
+        clearUserSessionNote(context, LaunchHelper.CONTEXT_NEED_PATIENT_BANNER);
+        clearUserSessionNote(context, LaunchHelper.SMART_STYLE_URL);
 
         String currentLaunchContextId = userSessionNote(context, AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID);
 

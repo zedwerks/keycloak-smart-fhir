@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
+ * Copyright 2024 Zed Werks Inc.
  * * 
  * 
  *  SPDX-License-Identifier: Apache-2.0
@@ -34,9 +34,9 @@ import org.keycloak.protocol.oidc.OIDCLoginProtocol;
 import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.sessions.AuthenticationSessionModel;
 
-public final class SmartLaunchHelper {
+public final class LaunchHelper {
 
-    public static final Logger logger = Logger.getLogger(SmartLaunchHelper.class);
+    public static final Logger logger = Logger.getLogger(LaunchHelper.class);
 
     public static final String SMART_SCOPE_LAUNCH_PATIENT = "launch/patient";
     public static final String SMART_SCOPE_LAUNCH_ENCOUNTER = "launch/encounter";
@@ -116,7 +116,7 @@ public final class SmartLaunchHelper {
             return false;
         }
 
-        String launchParam = context.getUriInfo().getQueryParameters().getFirst(SmartLaunchHelper.LAUNCH_REQUEST_PARAM);
+        String launchParam = context.getUriInfo().getQueryParameters().getFirst(LaunchHelper.LAUNCH_REQUEST_PARAM);
 
         boolean hasLaunch = (launchParam != null) && !launchParam.isBlank();
         return hasLaunch;
@@ -149,7 +149,7 @@ public final class SmartLaunchHelper {
             return false;
         }
 
-        boolean hasLaunch = scopes.contains(SmartLaunchHelper.SMART_SCOPE_EHR_LAUNCH);
+        boolean hasLaunch = scopes.contains(LaunchHelper.SMART_SCOPE_EHR_LAUNCH);
 
         return hasLaunch;
     }
@@ -183,8 +183,8 @@ public final class SmartLaunchHelper {
             return false;
         }
 
-        boolean hasScopes = (!scopes.isEmpty()) && (scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_PATIENT) ||
-                scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER));
+        boolean hasScopes = (!scopes.isEmpty()) && (scopes.contains(LaunchHelper.SMART_SCOPE_LAUNCH_PATIENT) ||
+                scopes.contains(LaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER));
         // @TODO: Implement the following:
         // setup a configuration for this authenticator to set what scopes are
         // considered for launching standalone.
@@ -192,7 +192,7 @@ public final class SmartLaunchHelper {
         // configurable.
         // ||
         // scopes.stream().anyMatch(s ->
-        // s.startsWith(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ANY_PREFIX)));
+        // s.startsWith(LaunchHelper.SMART_SCOPE_LAUNCH_ANY_PREFIX)));
 
         return hasScopes;
     }

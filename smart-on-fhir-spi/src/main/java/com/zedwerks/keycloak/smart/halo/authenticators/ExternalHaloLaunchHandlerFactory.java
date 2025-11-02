@@ -1,8 +1,6 @@
-/*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
- * and other contributors as indicated by the @author tags.
+/**
+ * Copyright 2024 Zed Werks Inc.
  * 
- *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +16,13 @@
  * 
  * @author brad@zedwerks.com
  * 
+ * SPDX-License-Identifier: Apache-2.0
+ * 
  */
-package com.zedwerks.keycloak.smart.authenticators;
+package com.zedwerks.keycloak.smart.halo.authenticators;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import org.keycloak.Config;
 import org.keycloak.authentication.Authenticator;
@@ -29,28 +32,18 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
-import java.util.Collections;
-import java.util.List;
-
-/**
- * Factory for creating AudienceValidator instances.
- */
-public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
-
-    private static final String PROVIDER_ID = "smart-audience-validator";
-
-    static final String AUDIENCES_PROP_NAME = "smart_audiences";
-    private static final String AUDIENCES_PROP_LABEL = "Accepted FHIR Server URLs";
-    private static final String AUDIENCES_PROP_DESCRIPTION = "Audience values for clients. These are  requested by SMART app using 'aud', 'audience' or 'resource' request parameters. They must be FHIR Server URL(s). Eeach URL is separated bith ##";
+public class ExternalHaloLaunchHandlerFactory implements AuthenticatorFactory {
+    public static final String PROVIDER_ID = "external-halo-launch-handler"; // this is used in terraform config.
+    private static final ExternalHaloLaunchHandler SINGLETON = new ExternalHaloLaunchHandler();
 
     @Override
     public String getDisplayType() {
-        return "SMART on FHIR: Audience Validation";
+        return "EXTERNAL HALO Launch Context Handler";
     }
 
     @Override
     public String getReferenceCategory() {
-        return null;
+        return "external-halo-smart-launch";
     }
 
     @Override
@@ -58,14 +51,14 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
         return true;
     }
 
-    public static final AuthenticationExecutionModel.Requirement[] LOCAL_REQUIREMENT_CHOICES = {
+    private static final AuthenticationExecutionModel.Requirement[] LOCAL_REQUIREMENT_CHOICES = {
             AuthenticationExecutionModel.Requirement.REQUIRED,
             AuthenticationExecutionModel.Requirement.DISABLED
     };
 
     @Override
     public AuthenticationExecutionModel.Requirement[] getRequirementChoices() {
-        return REQUIREMENT_CHOICES;
+        return LOCAL_REQUIREMENT_CHOICES;
     }
 
     @Override
@@ -75,21 +68,27 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
 
     @Override
     public String getHelpText() {
-        return "Verifies that the audience requested by the client (via the 'aud', 'audience', or 'resource' parameter) "
-                + "matches one of the configured, comma-delineated FHIR URLs.";
+        return "Processes a HALO Launch using the built-in HALO Context service.";
+    }
+
+    @Override
+    public String getId() {
+        return PROVIDER_ID;
     }
 
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
+        List<ProviderConfigProperty> props = new ArrayList<>();
 
-        ProviderConfigProperty audiences = new ProviderConfigProperty();
-        audiences.setType(ProviderConfigProperty.MULTIVALUED_STRING_TYPE);
-        audiences.setName(AUDIENCES_PROP_NAME);
-        audiences.setLabel(AUDIENCES_PROP_LABEL);
-        audiences.setHelpText(AUDIENCES_PROP_DESCRIPTION);
-        audiences.setRequired(isConfigurable());
+        ProviderConfigProperty requiredReadScope = new ProviderConfigProperty();
+        requiredReadScope.setName("requiredScope");
+        requiredReadScope.setLabel("Required Read Context Scope");
+        requiredReadScope.setType(ProviderConfigProperty.STRING_TYPE);
+        requiredReadScope.setDefaultValue("Context.read");
+        requiredReadScope.setHelpText("OAuth2 scope required to get or retrieve external HALO SMART launch context.");
+        props.add(requiredReadScope);
 
-        return Collections.singletonList(audiences);
+        return props;
     }
 
     @Override
@@ -99,7 +98,7 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        return new AudienceParameterValidator(session);
+        return SINGLETON;
     }
 
     @Override
@@ -110,10 +109,5 @@ public class AudienceParameterValidatorFactory implements AuthenticatorFactory {
     @Override
     public void postInit(KeycloakSessionFactory factory) {
         // NOOP
-    }
-
-    @Override
-    public String getId() {
-        return PROVIDER_ID;
     }
 }

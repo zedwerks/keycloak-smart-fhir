@@ -1,6 +1,8 @@
 /*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
- * * 
+ * Copyright 2024 Zed Werks Inc.
+ * and other contributors as indicated by the @author tags.
+ * 
+ *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +18,8 @@
  * 
  * @author brad@zedwerks.com
  * 
- * SPDX-License-Identifier: Apache-2.0
- * 
  */
 package com.zedwerks.keycloak.smart.authenticators;
-
-import java.util.List;
 
 import org.keycloak.Config;
 import org.keycloak.authentication.Authenticator;
@@ -31,13 +29,23 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
-public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
-    private static final String PROVIDER_ID = "smart-launch-context-resolver";
-    private static final EhrLaunchContextResolver SINGLETON = new EhrLaunchContextResolver();
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Factory for creating AudienceValidator instances.
+ */
+public class AudienceValidatorFactory implements AuthenticatorFactory {
+
+    private static final String PROVIDER_ID = "smart-audience-validator";
+
+    static final String AUDIENCES_PROP_NAME = "smart_audiences";
+    private static final String AUDIENCES_PROP_LABEL = "Accepted FHIR Server URLs";
+    private static final String AUDIENCES_PROP_DESCRIPTION = "Audience values for clients. These are  requested by SMART app using 'aud', 'audience' or 'resource' request parameters. They must be FHIR Server URL(s). Eeach URL is separated bith ##";
 
     @Override
     public String getDisplayType() {
-        return "SMART EHR-Launch Built-in context resolver";
+        return "SMART on FHIR: Audience Validation";
     }
 
     @Override
@@ -50,14 +58,14 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
         return true;
     }
 
-    private static final AuthenticationExecutionModel.Requirement[] _REQUIREMENT_CHOICES = {
+    public static final AuthenticationExecutionModel.Requirement[] LOCAL_REQUIREMENT_CHOICES = {
             AuthenticationExecutionModel.Requirement.REQUIRED,
             AuthenticationExecutionModel.Requirement.DISABLED
     };
 
     @Override
     public AuthenticationExecutionModel.Requirement[] getRequirementChoices() {
-        return _REQUIREMENT_CHOICES;
+        return LOCAL_REQUIREMENT_CHOICES;
     }
 
     @Override
@@ -67,13 +75,21 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
 
     @Override
     public String getHelpText() {
-        return "Processes a SMART Launch using the built-in Context service.";
+        return "Verifies that the audience requested by the client (via the 'aud', 'audience', or 'resource' parameter) "
+                + "matches one of the configured, comma-delineated FHIR URLs.";
     }
 
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
 
-        return null;
+        ProviderConfigProperty audiences = new ProviderConfigProperty();
+        audiences.setType(ProviderConfigProperty.MULTIVALUED_STRING_TYPE);
+        audiences.setName(AUDIENCES_PROP_NAME);
+        audiences.setLabel(AUDIENCES_PROP_LABEL);
+        audiences.setHelpText(AUDIENCES_PROP_DESCRIPTION);
+        audiences.setRequired(isConfigurable());
+
+        return Collections.singletonList(audiences);
     }
 
     @Override
@@ -83,7 +99,7 @@ public class EhrLaunchContextResolverFactory implements AuthenticatorFactory {
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        return SINGLETON;
+        return new AudienceValidator(session);   // @todo: this should be a singleton, but it is not thread-safe.
     }
 
     @Override

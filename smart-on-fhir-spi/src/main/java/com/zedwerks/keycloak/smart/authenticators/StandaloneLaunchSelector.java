@@ -1,6 +1,5 @@
-/*
- * Copyright 2024 Zed Werks Inc.and/or its affiliates
- * * 
+/** Copyright 2024 Zed Werks Inc.
+ *
  * 
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -59,7 +58,8 @@ public class StandaloneLaunchSelector implements Authenticator {
         KeycloakSession session = context.getSession();
 
         String requestedScopesString = authSession.getClientNote(OIDCLoginProtocol.SCOPE_PARAM);
-        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(session, requestedScopesString, client, user);
+        Stream<ClientScopeModel> clientScopes = TokenManager.getRequestedClientScopes(session, requestedScopesString,
+                client, user);
 
         logger.info("Requested Scopes: " + requestedScopesString);
 
@@ -72,7 +72,7 @@ public class StandaloneLaunchSelector implements Authenticator {
         ArrayList<String> scopes = new ArrayList<>();
         clientScopes.forEach(scope -> scopes.add(scope.getName()));
 
-        if (!scopes.contains(SmartLaunchHelper.SMART_SCOPE_LAUNCH_PATIENT)) {
+        if (!scopes.contains(LaunchHelper.SMART_SCOPE_LAUNCH_PATIENT)) {
             logger.info("Not a SMART on FHIR launch/patient request");
             context.attempted(); // just carry on... not a SMART on FHIR standalone launch/patient request
             return;
@@ -84,23 +84,25 @@ public class StandaloneLaunchSelector implements Authenticator {
         context.attempted();
     }
 
-    /* @todo for future processing...
-    private void fail(AuthenticationFlowContext context, String msg) {
-        logger.warn(msg);
-        context.failure(AuthenticationFlowError.INTERNAL_ERROR,
-                Response.status(302)
-                        .header("Location", context.getAuthenticationSession().getRedirectUri() +
-                                "?error=server_error" +
-                                "&error_description=" + msg)
-                        .build());
-    }
-
-    private void succeed(AuthenticationFlowContext context, String patient) {
-        logger.info("SMART on FHIR launch/patient request succeeded!");
-        // Add selected information to authentication session
-        context.getAuthenticationSession().setUserSessionNote("patient", patient);
-        context.success();
-    } */
+    /*
+     * @todo for future processing...
+     * private void fail(AuthenticationFlowContext context, String msg) {
+     * logger.warn(msg);
+     * context.failure(AuthenticationFlowError.INTERNAL_ERROR,
+     * Response.status(302)
+     * .header("Location", context.getAuthenticationSession().getRedirectUri() +
+     * "?error=server_error" +
+     * "&error_description=" + msg)
+     * .build());
+     * }
+     * 
+     * private void succeed(AuthenticationFlowContext context, String patient) {
+     * logger.info("SMART on FHIR launch/patient request succeeded!");
+     * // Add selected information to authentication session
+     * context.getAuthenticationSession().setUserSessionNote("patient", patient);
+     * context.success();
+     * }
+     */
 
     @Override
     public boolean requiresUser() {
@@ -131,5 +133,4 @@ public class StandaloneLaunchSelector implements Authenticator {
         logger.info("close() **** SMART on FHIR EHR-Launch Authenticator ****");
         // NOOP
     }
-
 }
