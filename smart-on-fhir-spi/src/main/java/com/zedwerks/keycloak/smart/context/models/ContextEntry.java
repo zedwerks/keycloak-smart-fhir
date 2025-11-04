@@ -19,7 +19,8 @@
  * @author brad@zedwerks.com
  * 
  */
-package com.zedwerks.keycloak.smart.halo.models;
+
+package com.zedwerks.keycloak.smart.context.models;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -30,7 +31,6 @@ public class ContextEntry implements Serializable {
     private String userSessionId;
     private String userId; 
     private Instant createdAt;
-    private Instant expiresAt;
     private JsonNode fhirPayload; 
 
     public ContextEntry() {
@@ -60,12 +60,6 @@ public class ContextEntry implements Serializable {
     }
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
-    }
-    public Instant getExpiresAt() {
-        return expiresAt;
-    }
-    public void setExpiresAt(Instant expiresAt) {
-        this.expiresAt = expiresAt;
     }
     public JsonNode getFhirPayload() {
         return fhirPayload;

@@ -19,6 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  * 
  */
+
 package com.zedwerks.keycloak.smart.halo.authenticators;
 
 import java.util.List;

@@ -17,7 +17,8 @@
  * @author brad@zedwerks.com
  * 
  */
-package com.zedwerks.keycloak.smart.halo.services;
+
+package com.zedwerks.keycloak.smart.context.services;
 
 import java.util.Optional;
 
@@ -25,16 +26,16 @@ import org.jboss.logging.Logger;
 import org.keycloak.models.UserSessionModel;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.zedwerks.keycloak.smart.halo.dao.IContextEntryDao;
-import com.zedwerks.keycloak.smart.halo.models.ContextEntry;
+import com.zedwerks.keycloak.smart.context.dao.IContextEntryDao;
+import com.zedwerks.keycloak.smart.context.models.ContextEntry;
 
-public class HaloContextService {
+public class ContextCacheService {
 
-    private static final Logger logger = Logger.getLogger(HaloContextService.class);
+    private static final Logger logger = Logger.getLogger(ContextCacheService.class);
 
     private final IContextEntryDao dao;
 
-    public HaloContextService(IContextEntryDao dao) {
+    public ContextCacheService(IContextEntryDao dao) {
         this.dao = dao;
     }
 
@@ -51,6 +52,11 @@ public class HaloContextService {
     public Optional<ContextEntry> getContext(String userSessionId) {
         logger.debugf("Retrieving context for user session %s", userSessionId);
         return dao.get(userSessionId);
+    }
+
+    public void deleteBySession(String userSessionId) {
+        logger.debugf("Deleting context for user session %s", userSessionId);
+        dao.delete(userSessionId);
     }
 
 }

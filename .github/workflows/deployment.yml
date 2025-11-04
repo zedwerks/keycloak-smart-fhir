@@ -100,7 +100,7 @@ jobs:
       - name: Set environment
         run: echo "Deploying to ${{ inputs.target_environment }} environment"
 
-      - name: Log in to DigitalOcean Container Registry with short-lived token
+      - name: logger in to DigitalOcean Container Registry with short-lived token
         run: doctl registry login --expiry-seconds 600
 
       - name: Docker registry login
@@ -168,7 +168,7 @@ jobs:
             # Clean up stale Docker credentials
             rm -f /root/.docker/config.json || true
       
-            # Log into DigitalOcean Container Registry using fresh token
+            # logger into DigitalOcean Container Registry using fresh token
             echo "$DIGITALOCEAN_ACCESS_TOKEN" | docker login registry.digitalocean.com -u doctl --password-stdin
       
             # Pull latest image

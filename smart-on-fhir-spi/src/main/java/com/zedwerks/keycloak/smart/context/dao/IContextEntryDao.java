@@ -17,11 +17,11 @@
  * @author brad@zedwerks.com
  * 
  */
-package com.zedwerks.keycloak.smart.halo.dao;
+package com.zedwerks.keycloak.smart.context.dao;
 
 import java.util.Optional;
 
-import com.zedwerks.keycloak.smart.halo.models.ContextEntry;
+import com.zedwerks.keycloak.smart.context.models.ContextEntry;
 
 public interface IContextEntryDao {
 
@@ -45,7 +45,7 @@ public interface IContextEntryDao {
      *
      * @param sessionId The user session ID to delete entries for.
      */
-    void deleteBySessionId(String userSessionId);
+    void delete(String userSessionId);
 
     /**
      * Checks if a context entry exists for the given user session ID.

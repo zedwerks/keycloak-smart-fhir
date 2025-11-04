@@ -1,6 +1,6 @@
-/*
+/**
  * Copyright 2024 Zed Werks Inc.
- * * 
+ * 
  * 
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -26,13 +26,16 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.services.resource.RealmResourceProvider;
 
 import com.zedwerks.keycloak.smart.endpoints.SmartResource;
+import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
 
-public class SmartContextRealmResourceProvider implements RealmResourceProvider {
+public class ContextResourceProvider implements RealmResourceProvider {
 
     private final KeycloakSession session;
+    private final ContextCacheService contextService;
 
-    public SmartContextRealmResourceProvider(KeycloakSession session) {
+    public ContextResourceProvider(KeycloakSession session, ContextCacheService contextService) {
         this.session = session;
+        this.contextService = contextService;
     }
 
     @Override

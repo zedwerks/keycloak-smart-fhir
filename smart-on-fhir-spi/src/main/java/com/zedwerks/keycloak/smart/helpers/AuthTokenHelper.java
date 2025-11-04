@@ -74,7 +74,7 @@ public class AuthTokenHelper {
         // check if issuer is this realm
         String realmName = session.getContext().getRealm().getName();
         if (!accessToken.getIssuer().endsWith("/realms/" + realmName)) {
-            throw new ForbiddenException("Token not issued for this realm");
+            throw new NotAuthorizedException("Token not issued for this realm");
         }
 
         if (scope == null || scope.isEmpty()) {

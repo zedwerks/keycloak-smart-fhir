@@ -17,14 +17,20 @@
  * @author brad@zedwerks.com
  * 
  */
+
 package com.zedwerks.keycloak.smart.endpoints;
 
 import java.util.Map;
 
 import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.RealmModel;
+import org.keycloak.models.UserSessionModel;
+import org.keycloak.representations.AccessToken;
 
 import com.zedwerks.keycloak.smart.helpers.AuthTokenHelper;
+import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
+import com.zedwerks.keycloak.smart.context.dao.ContextEntryDao;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.HeaderParam;
@@ -34,8 +40,14 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
-import jakarta.ws.rs.core.MediaType; 
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ForbiddenException;
+import jakarta.ws.rs.NotAuthorizedException;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * Basic Context API endpoint. The EMR/EHR system will call this endpoint to set
@@ -101,19 +113,50 @@ public class HaloContextResource {
     @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
     @Produces(MediaType.APPLICATION_JSON)
     public Response postSmartContext(@HeaderParam("Authorization") String authorizationHeader,
-            Map<String, Object> jsonBody) {
+            String jsonBody) {
 
         try {
-            AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, WRITE_SCOPE);
+            AccessToken token = AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, WRITE_SCOPE);
 
             // Here is where we call the Context Service to persist the context in Cache.
             // In future, we add a pre-processor step to validate the context and to
             // call an optional external service to enrich/map the FHIR context bundle.
 
-            return Response.status(Response.Status.OK)
-                    .entity("{ }").build();
-        } catch (IllegalArgumentException e) {
+            // Retrieve current user session from token
+            RealmModel realm = session.getContext().getRealm();
+            String sid = token.getSessionId();
+            UserSessionModel userSession = session.sessions().getUserSession(realm, sid);
+
+            // Create DAO and Service for this request
+            ContextEntryDao dao = new ContextEntryDao(session);
+            ContextCacheService service = new ContextCacheService(dao);
+
+            // Parse the JSON body to extract context information
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode node = mapper.readTree(jsonBody);
+
+            // Validate the context node (you can add more validation logic here)
+            if (node == null || !node.has("contextId")) {
+                throw new IllegalArgumentException("Invalid context data provided");
+            }
+
+            // Create the context in the cache and return the context ID
+
+            String contextId = service.createContext(userSession, node);
+
+            return Response.ok("{\"contextId\":\"" + contextId + "\"}").build();
+
+        } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
+        } catch (ForbiddenException e) {
+            return Response.status(Response.Status.FORBIDDEN).entity(e.getMessage()).build();
+        } catch (IllegalArgumentException | JsonProcessingException e) {
+            logger.error("Invalid context request: " + e.getMessage(), e);
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (Exception e) {
+            logger.error("Error processing context request", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error processing context request: " + e.getMessage()).build();
         }
     }
 
@@ -129,7 +172,7 @@ public class HaloContextResource {
     @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
     @Produces(MediaType.APPLICATION_JSON)
     public Response clearSmartContext(@HeaderParam("Authorization") String authorizationHeader,
-            Map<String, Object> jsonBody) {
+            String jsonBody) {
 
         try {
             AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, WRITE_SCOPE);

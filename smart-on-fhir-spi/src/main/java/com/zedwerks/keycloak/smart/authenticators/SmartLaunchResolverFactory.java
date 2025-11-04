@@ -37,9 +37,9 @@ public class SmartLaunchResolverFactory implements AuthenticatorFactory {
     private static final SmartLaunchResolver SINGLETON = new SmartLaunchResolver();
 
     private static final String[] MODES = {
-        "Basic SMART Launch (FHIR server local to EMR)",
-        "HALO $set-context (SOFA internal service)",
-        "HALO External $set-context API",
+            "Basic SMART Launch (FHIR server local to EMR)",
+            "HALO $set-context (SOFA internal service)",
+            "HALO External $set-context API",
     };
 
     @Override
@@ -84,61 +84,8 @@ public class SmartLaunchResolverFactory implements AuthenticatorFactory {
 
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
-        List<ProviderConfigProperty> props = new ArrayList<>();
 
-        // 1️⃣ Launch Mode Selector
-        ProviderConfigProperty launchMode = new ProviderConfigProperty();
-        launchMode.setName("launchMode");
-        launchMode.setLabel("SMART Launch Mode");
-        launchMode.setType(ProviderConfigProperty.LIST_TYPE);
-        launchMode.setOptions(List.of(
-                MODES[0],
-                MODES[1],
-                MODES[2]));
-        launchMode.setHelpText("Select the context exchange mode for SMART launch.");
-        props.add(launchMode);
-
-        // 2️⃣ Required Scope (applies to all)
-        ProviderConfigProperty requiredWriteScope = new ProviderConfigProperty();
-        requiredWriteScope.setName("requiredWriteScope");
-        requiredWriteScope.setLabel("Required Write Context Scope");
-        requiredWriteScope.setType(ProviderConfigProperty.STRING_TYPE);
-        requiredWriteScope.setDefaultValue("Context.write");
-        requiredWriteScope.setHelpText("OAuth2 scope required to write, or set SMART launch context.");
-        props.add(requiredWriteScope);
-
-        ProviderConfigProperty requiredReadScope = new ProviderConfigProperty();
-        requiredReadScope.setName("requiredReadScope");
-        requiredReadScope.setLabel("Required Read Context Scope");
-        requiredReadScope.setType(ProviderConfigProperty.STRING_TYPE);
-        requiredReadScope.setDefaultValue("Context.read");
-        requiredReadScope.setHelpText("OAuth2 scope required to get or retrieve SMART launch context.");
-        props.add(requiredReadScope);
-
-        // 3️⃣ External API URLs (only used for HALO external mode)
-        ProviderConfigProperty setUrl = new ProviderConfigProperty();
-        setUrl.setName("setContextUrl");
-        setUrl.setLabel("External HALO set context URL");
-        setUrl.setType(ProviderConfigProperty.STRING_TYPE);
-        setUrl.setHelpText(
-                "URL of external service to POST $set-context requests to (only used for HALO external mode).");
-        props.add(setUrl);
-
-        ProviderConfigProperty clearUrl = new ProviderConfigProperty();
-        clearUrl.setName("clearContextUrl");
-        clearUrl.setLabel("External HALO clear Context URL");
-        clearUrl.setType(ProviderConfigProperty.STRING_TYPE);
-        clearUrl.setHelpText("URL of external service to POST $clear-context (only used for HALO external mode).");
-        props.add(clearUrl);
-
-        ProviderConfigProperty getUrl = new ProviderConfigProperty();
-        getUrl.setName("getContextUrl");
-        getUrl.setLabel("HALO External Get Context URL");
-        getUrl.setType(ProviderConfigProperty.STRING_TYPE);
-        getUrl.setHelpText("URL of external service to GET context by launch ID (only used for HALO external mode).");
-        props.add(getUrl);
-
-        return props;
+        return null;
     }
 
     @Override

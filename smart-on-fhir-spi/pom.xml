@@ -26,7 +26,7 @@
         <org.jboss.logging.version>3.6.1.Final</org.jboss.logging.version>
         <org.mockito.version>5.17.0</org.mockito.version>
         <keycloak.infinispan.version>1.8.1.Final</keycloak.infinispan.version>  
-        <org.infinispan.version>15.0.0.Final</org.infinispan.version> 
+        <org.infinispan.version>15.2.6.Final</org.infinispan.version> 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -89,10 +89,17 @@
             <version>${keycloak.version}</version>
         </dependency>
         <!-- Provides Infinispan integration and connection provider -->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-connections-infinispan</artifactId>
             <version>${keycloak.infinispan.version}</version>
+            <scope>provided</scope>
+        </dependency> -->
+        <!-- Provides Infinispan cache model -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-model-infinispan</artifactId>
+            <version>${keycloak.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Used for access to org.infinispan.Cache types -->
@@ -100,6 +107,12 @@
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-core</artifactId>
             <version>${org.infinispan.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-component-annotations</artifactId>
+            <version>${org.infinispan.version}</version> <!-- Match your Keycloak’s Infinispan version -->
             <scope>provided</scope>
         </dependency>
         <dependency>

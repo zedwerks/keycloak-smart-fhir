@@ -28,13 +28,20 @@ import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.services.resource.RealmResourceProvider;
 import org.keycloak.services.resource.RealmResourceProviderFactory;
 
-public class SmartContextRealmResourceProviderFactory implements RealmResourceProviderFactory {
+import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
+import com.zedwerks.keycloak.smart.context.dao.ContextEntryDao;
+
+import org.jboss.logging.Logger;
+
+public class ContextResourceProviderFactory implements RealmResourceProviderFactory {
 
     public static final String ID = "smart-on-fhir";
+    private static final Logger logger = Logger.getLogger(ContextResourceProviderFactory.class);
+
     @Override
     public RealmResourceProvider create(KeycloakSession session) {
-
-        return new SmartContextRealmResourceProvider(session);
+        ContextCacheService contextCacheService = new ContextCacheService(new ContextEntryDao(session));
+        return new ContextResourceProvider(session, contextCacheService);
     }
 
     @Override

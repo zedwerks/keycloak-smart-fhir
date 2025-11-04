@@ -26,8 +26,8 @@
 									"// Set the userId as a collection variable",
 									"pm.collectionVariables.set(\"context_id\", contextId);",
 									"",
-									"// Log the userId to the Postman console for verification",
-									"console.log(\"contextId: \" + contextId);"
+									"// logger the userId to the Postman console for verification",
+									"console.logger(\"contextId: \" + contextId);"
 								],
 								"type": "text/javascript",
 								"packages": {},

@@ -67,7 +67,6 @@ import jakarta.ws.rs.core.Response;
  * 
  * @see https://build.fhir.org/ig/HL7/smart-app-launch/scopes-and-launch-context.html#apps-that-launch-from-the-ehr
  */
-
 public class SmartLaunchResolver implements Authenticator {
 
     public static final String USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON = "additionalParameters";
@@ -91,9 +90,9 @@ public class SmartLaunchResolver implements Authenticator {
 
         boolean hasLaunchScope = LaunchHelper.hasLaunchScope(context);
         String launchContextId = LaunchDetector.launchContextAuthNote(context); // the opaque
-                                                                                     // ?launch={launchContextId}
-                                                                                     // from auth note as set by the
-                                                                                     // launch detector.
+                                                                                // ?launch={launchContextId}
+                                                                                // from auth note as set by the
+                                                                                // launch detector.
 
         if (!hasLaunchScope || (launchContextId == null)) {
             logger.info("*** SMART on FHIR EHR-Launch: No launch in-flight.");
@@ -165,14 +164,14 @@ public class SmartLaunchResolver implements Authenticator {
     private static boolean resolveEhrLaunchContext(AuthenticationFlowContext context, String launchContextId) {
 
         logger.infof("Resolving launch request param: %s", launchContextId);
-        return saveLaunchContextToUserSession(context, launchContextId);
+        return saveLaunchContextToUserSession(context, launchContextId);  // @todo replace this with ContextService.
     }
 
     private static String userSessionNote(AuthenticationFlowContext context, String name) {
         KeycloakSession session = context.getSession();
         UserSessionProvider userSessionProvider = session.sessions();
         UserSessionModel userSession = userSessionProvider.getUserSession(context.getRealm(),
-                context.getAuthenticationSession().getParentSession().getId());
+                context.getAuthenticationSession().getParentSession().getId());  // replace with call to ContextService
 
         String contextJsonString = userSession.getNote(name);
         return contextJsonString;
@@ -328,7 +327,8 @@ public class SmartLaunchResolver implements Authenticator {
                         }
                     }
                 } catch (JsonProcessingException | RuntimeException ex) {
-                    logger.warnf("*** SMART: Could not make sense of the SMART Launch Context JSON: %s", ex.getMessage());
+                    logger.warnf("*** SMART: Could not make sense of the SMART Launch Context JSON: %s",
+                            ex.getMessage());
                 }
             }
             clearUserSessionNote(context, currentLaunchContextId); // Clear out previous JSON context payload

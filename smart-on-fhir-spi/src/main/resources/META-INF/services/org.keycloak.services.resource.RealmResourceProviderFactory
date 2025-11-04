@@ -1,1 +1,1 @@
-com.zedwerks.keycloak.smart.services.SmartContextRealmResourceProviderFactory
+com.zedwerks.keycloak.smart.services.ContextResourceProviderFactory

@@ -17,6 +17,7 @@
  * @author brad@zedwerks.com
  * 
  */
+
 package com.zedwerks.keycloak.smart.endpoints;
 
 import java.util.Map;

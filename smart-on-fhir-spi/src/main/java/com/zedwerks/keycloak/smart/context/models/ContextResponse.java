@@ -17,7 +17,7 @@
  * 
  */
 
-package com.zedwerks.keycloak.smart.models;
+package com.zedwerks.keycloak.smart.context.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -61,8 +61,8 @@ script:post-response {
   // Set the userId as a collection variable
   bru.setVar("context_id", contextId);
   
-  // Log the userId to the Postman console for verification
-  console.log("context_id: " + contextId);
+  // logger the userId to the Postman console for verification
+  console.logger("context_id: " + contextId);
 }
 
 settings {

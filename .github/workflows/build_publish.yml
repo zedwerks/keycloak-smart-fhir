@@ -61,7 +61,7 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Log in to DigitalOcean Container Registry with short-lived token
+      - name: logger in to DigitalOcean Container Registry with short-lived token
         run: doctl registry login --expiry-seconds 600
 
       - name: Extract short SHA for tagging image

@@ -18,29 +18,33 @@
  * 
  */
 
-package com.zedwerks.keycloak.smart.halo.dao;
+package com.zedwerks.keycloak.smart.context.dao;
 
 import java.util.Optional;
+
+import org.keycloak.connections.infinispan.InfinispanConnectionProvider;
+import org.keycloak.models.KeycloakSession;
 
 import org.infinispan.Cache;
 import org.infinispan.manager.EmbeddedCacheManager;
 import org.jboss.logging.Logger;
 
-import com.zedwerks.keycloak.smart.halo.models.ContextEntry;
+import com.zedwerks.keycloak.smart.context.models.ContextEntry;
 
-public class ContextEntryDao {
+public class ContextEntryDao implements IContextEntryDao {
 
-    private static final Logger LOG = Logger.getLogger(ContextEntryDao.class);
+    public static final String SMART_CONTEXT_CACHE = "smart-context-cache";
+
+    private static final Logger logger = Logger.getLogger(ContextEntryDao.class);
     private final Cache<String, ContextEntry> cache;
 
-    public ContextEntryDao(EmbeddedCacheManager cacheManager) {
-        // "haloContextCache" must be defined in Infinispan config (standalone.xml or keycloak.conf)
-        this.cache = cacheManager.getCache("haloContextCache");
+    @SuppressWarnings({ "rawtypes", "unchecked" }) // type-safety noise in VS Code
+    public ContextEntryDao(KeycloakSession session) {
+        InfinispanConnectionProvider provider = session.getProvider(InfinispanConnectionProvider.class);
+
+        this.cache = provider.getCache(SMART_CONTEXT_CACHE);
     }
 
-    /**
-     * Stores or updates the ContextEntry for a given userSessionId.
-     */
     public void saveOrUpdate(ContextEntry entry) {
         String userSessionId = entry.getUserSessionId();
 
@@ -49,7 +53,7 @@ public class ContextEntryDao {
         }
 
         cache.put(userSessionId, entry); // overwrites any existing entry
-        LOG.debugf("Stored context for session %s in cache (size=%d)", userSessionId, cache.size());
+        logger.debugf("Stored context for session %s in cache (size=%d)", userSessionId, cache.size());
     }
 
     /**
@@ -64,7 +68,7 @@ public class ContextEntryDao {
      */
     public void delete(String userSessionId) {
         cache.remove(userSessionId);
-        LOG.debugf("Removed context for session %s", userSessionId);
+        logger.debugf("Removed context for session %s", userSessionId);
     }
 
     /**
