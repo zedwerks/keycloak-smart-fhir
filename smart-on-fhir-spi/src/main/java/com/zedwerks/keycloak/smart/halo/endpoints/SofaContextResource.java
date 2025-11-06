@@ -53,19 +53,18 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 /**
- * Basic Context API endpoint. The EMR/EHR system will call this endpoint to set
- * the context for the user, as per the SMART on FHIR specification.
- *
- * The endpoint will return a 200 OK No Content response if the context was set
- * successfully, and include a JSON object with the context in the response body
- * that echoes the context identifier that was set. The EMR then uses that
- * "opaque" context identifier during EHR Launch so that the Keycloak server can
- * retrieve the context and use it to set the user's session context, and the
- * target object of the context, which is typicallly a patient or encounter.
+ * SofaContextResource is a RESTful endpoint for managing the SMART on FHIR context for HALO
+ * This behaves as the Context Manager, as described by Canada Health Infoway HALO specifications.
+ * It allows setting, clearing, and retrieving the SOFA context for a user session.
+ * 
+ * It interconnects to the SOFA FHIR R4 Service to post the Bundle contained in the context request.
+ * It also provides CORS support for cross-origin requests.
+ * It uses the ContextCacheService to manage the context entries in a cache.
+ * 
  *
   @author Brad Head
  */
-@Path("/halo/sofa")
+@Path("/halo-sofa")
 public class SofaContextResource {
 
     static final String WRITE_SCOPE = "Context.write"; // Make this a configuration property
@@ -140,9 +139,12 @@ public class SofaContextResource {
             IContextEntryDao dao = new HybridContextEntryDao(session); 
             ContextCacheService service = new ContextCacheService(dao);
 
-            String contextId = service.saveContext(userSession, node);
+            // Here is where we call out to the FHIR Server to post the context bundle
+            // For now, we just save the context in the cache   
 
-            return Response.ok("{\"contextId\":\"" + contextId + "\"}").build();
+            String launchId = service.saveContext(userSession, node);
+
+            return Response.ok("{\"launchId\":\"" + launchId + "\"}").build();  // @todo to return the full context response object
 
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();

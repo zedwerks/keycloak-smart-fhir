@@ -39,7 +39,7 @@ public class SofaContextResourceProviderFactory implements RealmResourceProvider
 
     @Override
     public RealmResourceProvider create(KeycloakSession session) {
-        logger.infof("Creating Infoway HALO SofaContextResourceProvider with session");
+        logger.debug("Creating Infoway HALO SofaContextResourceProvider");
         ContextCacheService contextCacheService = new ContextCacheService(new HybridContextEntryDao(session));
         return new SofaContextResourceProvider(session, contextCacheService);
     }

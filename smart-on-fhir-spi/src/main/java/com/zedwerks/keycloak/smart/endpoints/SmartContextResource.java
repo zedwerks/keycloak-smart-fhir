@@ -36,6 +36,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.OPTIONS;
 import jakarta.ws.rs.POST;
@@ -58,9 +59,9 @@ import jakarta.ws.rs.core.Response.Status;
  * retrieve the context and use it to set the user's session context, and the
  * target object of the context, which is typicallly a patient or encounter.
  *
-  @author  <a href="mailto:brad@zedwerks.com">Brad Head</a>
+ * @author <a href="mailto:brad@zedwerks.com">Brad Head</a>
  */
-@Path("/context")
+@Path("/smart-on-fhir")
 public class SmartContextResource {
 
     protected static final Logger logger = Logger.getLogger(SmartContextResource.class);
@@ -95,6 +96,7 @@ public class SmartContextResource {
      * @return Response
      */
     @POST
+    @Path("/context")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postSmartContext(@HeaderParam("Authorization") String authorizationHeader,
@@ -153,6 +155,7 @@ public class SmartContextResource {
 
         logger.infof("*** SMART: Saved EHR-Launch Context[%s]. Ready for app launch.", contextResponse.contextId);
 
+
         Response.ResponseBuilder builder = Response.ok().entity(contextResponse);
         return Cors.builder()
                 .auth()
@@ -164,7 +167,27 @@ public class SmartContextResource {
                 .add(builder);
     }
 
-    /** 
+    @GET
+    @Path("/context/{contextId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response postSmartContext(@HeaderParam("Authorization") String authorizationHeader,
+            String contextId) {
+
+        String contextPayload = userSession.getNote(contextId);
+
+        Response.ResponseBuilder builder = Response.ok().entity(contextPayload);
+        return Cors.builder()
+                .auth()
+                //.allowedOrigins(token)
+                .allowedMethods("POST", "GET", "OPTIONS")
+                .preflight()
+                .exposedHeaders(Cors.ACCESS_CONTROL_ALLOW_METHODS)
+                .exposedHeaders("Authorization", "Content-Type", "Location")
+                .add(builder);
+
+    }
+
+    /**
      * Preflight request handler for CORS. This method handles OPTIONS requests
      * to the /context endpoint, allowing CORS preflight checks.
      * This method responds with the allowed methods and headers,
@@ -183,9 +206,10 @@ public class SmartContextResource {
         logger.info("preflight() **** OPTIONS: SMART on FHIR Context ****");
         return Response.noContent()
                 .header("Access-Control-Allow-Origin", origin)
-                .header("Access-Control-Allow-Methods", "POST, OPTIONS")
+                .header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
                 .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Headers", "Origin, Accept, Authorization, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+                .header("Access-Control-Allow-Headers",
+                        "Origin, Accept, Authorization, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
                 .header("Access-Control-Max-Age", "3600")
                 .header("X-Author", "Zed Werks Inc.")
                 .build();

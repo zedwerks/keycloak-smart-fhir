@@ -39,7 +39,7 @@ public class SmartContextResourceProviderFactory implements RealmResourceProvide
 
     @Override
     public RealmResourceProvider create(KeycloakSession session) {
-        logger.infof("Creating SmartContextResourceProvider with session");
+        logger.debug("Creating SmartContextResourceProvider with session");
         ContextCacheService contextCacheService = new ContextCacheService(new HybridContextEntryDao(session));
         return new SmartContextResourceProvider(session, contextCacheService);
     }

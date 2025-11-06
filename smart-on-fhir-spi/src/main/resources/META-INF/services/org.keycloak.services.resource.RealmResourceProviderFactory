@@ -1,1 +1,2 @@
-com.zedwerks.keycloak.smart.services.ContextResourceProviderFactory
+com.zedwerks.keycloak.smart.services.SmartContextResourceProviderFactory
+com.zedwerks.keycloak.smart.halo.services.SofaContextResourceProviderFactory
