@@ -22,14 +22,13 @@
 
 package com.zedwerks.keycloak.smart.context.events;
 
-import com.zedwerks.keycloak.smart.context.dao.IContextEntryDao;
-import com.zedwerks.keycloak.smart.context.dao.HybridContextEntryDao;
-import com.zedwerks.keycloak.smart.context.listeners.ContextEntryCacheListener;
-import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
+import org.keycloak.events.EventListenerProviderFactory;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
-import org.keycloak.provider.ProviderFactory;
-import org.keycloak.events.EventListenerProviderFactory;
+
+import com.zedwerks.keycloak.smart.context.dao.HybridContextEntryDao;
+import com.zedwerks.keycloak.smart.context.dao.IContextEntryDao;
+import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
 
 public class ContextEventListenerProviderFactory implements EventListenerProviderFactory {
 
@@ -38,7 +37,7 @@ public class ContextEventListenerProviderFactory implements EventListenerProvide
     @Override
     public ContextEventListenerProvider create(KeycloakSession session) {
         // Wire service with DAO for this session scope
-        IContextEntryDao dao = new HybridContextEntryDao(session); // Use HybridContextEntryDao for flexibility
+        IContextEntryDao dao = new HybridContextEntryDao(session); // Use HybridContextEntryDao for flexibility/scale/performance
         ContextCacheService service = new ContextCacheService(dao);
         return new ContextEventListenerProvider(service);
     }

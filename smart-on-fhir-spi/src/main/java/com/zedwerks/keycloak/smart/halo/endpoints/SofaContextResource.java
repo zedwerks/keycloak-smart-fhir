@@ -18,9 +18,9 @@
  * 
  */
 
-package com.zedwerks.keycloak.smart.endpoints;
+package com.zedwerks.keycloak.smart.halo.endpoints;
 
-import java.util.Map;
+import java.util.Optional;
 
 import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
@@ -28,27 +28,29 @@ import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserSessionModel;
 import org.keycloak.representations.AccessToken;
 
-import com.zedwerks.keycloak.smart.helpers.AuthTokenHelper;
-import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zedwerks.keycloak.smart.context.dao.HybridContextEntryDao;
 import com.zedwerks.keycloak.smart.context.dao.IContextEntryDao;
+import com.zedwerks.keycloak.smart.context.models.ContextEntry;
+import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
+import com.zedwerks.keycloak.smart.helpers.AuthTokenHelper;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.ForbiddenException;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
+import jakarta.ws.rs.NotAuthorizedException;
 import jakarta.ws.rs.OPTIONS;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.ForbiddenException;
-import jakarta.ws.rs.NotAuthorizedException;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * Basic Context API endpoint. The EMR/EHR system will call this endpoint to set
@@ -63,16 +65,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  *
   @author Brad Head
  */
-@Path("/halo")
-public class HaloContextResource {
+@Path("/halo/sofa")
+public class SofaContextResource {
 
     static final String WRITE_SCOPE = "Context.write"; // Make this a configuration property
+    static final String READ_SCOPE = "Context.read"; // Make this a configuration property
 
-    protected static final Logger logger = Logger.getLogger(HaloContextResource.class);
+    protected static final Logger logger = Logger.getLogger(SofaContextResource.class);
 
     KeycloakSession session;
 
-    public HaloContextResource(KeycloakSession session) {
+    public SofaContextResource(KeycloakSession session) {
         this.session = session;
     }
 
@@ -113,7 +116,7 @@ public class HaloContextResource {
     @Path("/$set-context")
     @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postSmartContext(@HeaderParam("Authorization") String authorizationHeader,
+    public Response postContext(@HeaderParam("Authorization") String authorizationHeader,
             String jsonBody) {
 
         try {
@@ -148,7 +151,7 @@ public class HaloContextResource {
         } catch (IllegalArgumentException | JsonProcessingException e) {
             logger.error("Invalid context request: " + e.getMessage(), e);
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             logger.error("Error processing context request", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("Error processing context request: " + e.getMessage()).build();
@@ -176,10 +179,55 @@ public class HaloContextResource {
             // In future, we add a pre-processor step to validate the context and to
             // call an optional external service to enrich/map the FHIR context bundle.
 
-
+            // Parse the JSON body to extract context information
 
             return Response.status(Response.Status.OK)
                     .entity("{}").build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("/$get-context")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSmartContext(@HeaderParam("Authorization") String authorizationHeader, 
+        @QueryParam("launchId") String launchId) {
+        
+        try {
+            AccessToken token = AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, READ_SCOPE);
+
+            if (token.getSessionId() == null) {
+                throw new IllegalArgumentException("Invalid session ID in token");
+            }
+
+            if (launchId == null || launchId.isEmpty()) {
+                throw new IllegalArgumentException("Query Parameter 'contextId' is required");
+            }
+
+            if (!token.getSessionId().equals(launchId)) {
+                throw new IllegalArgumentException("Context ID does not match session ID");
+            }
+
+
+            // Here is where we call the Context Service to retrieve the context from Cache.
+            // In future, we add a pre-processor step to validate the context and to
+            // call an optional external service to enrich/map the FHIR context bundle.
+
+            // Retrieve context by ID
+            IContextEntryDao dao = new HybridContextEntryDao(session);
+            ContextCacheService service = new ContextCacheService(dao);
+            Optional<ContextEntry> contextEntry = service.getContext(launchId);
+
+            if (contextEntry == null) {
+                return Response.status(Response.Status.NOT_FOUND).entity("Context not found").build();
+            }
+            if (contextEntry.isEmpty()) {
+                return Response.status(Response.Status.NOT_FOUND).entity("Context not found").build();
+            }
+            String payload = contextEntry.get().getPayloadJson().toString();
+
+            return Response.ok(payload).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
         }

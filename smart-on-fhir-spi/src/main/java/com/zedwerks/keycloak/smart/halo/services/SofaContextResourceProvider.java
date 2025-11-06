@@ -20,25 +20,26 @@
  * 
  */
 
-package com.zedwerks.keycloak.smart.services;
+package com.zedwerks.keycloak.smart.halo.services;
 
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.services.resource.RealmResourceProvider;
 
 import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
-import com.zedwerks.keycloak.smart.endpoints.SmartResource;
+import com.zedwerks.keycloak.smart.halo.endpoints.SofaContextResource;
 
-public class ContextResourceProvider implements RealmResourceProvider {
+
+public class SofaContextResourceProvider implements RealmResourceProvider {
 
     private final KeycloakSession session;
 
-    public ContextResourceProvider(KeycloakSession session, ContextCacheService contextService) {
+    public SofaContextResourceProvider(KeycloakSession session, ContextCacheService contextService) {
         this.session = session;
     }
 
     @Override
     public Object getResource() {
-        return new SmartResource(this.session);
+        return new SofaContextResource(this.session);
     }
 
     @Override

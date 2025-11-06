@@ -22,13 +22,13 @@
 
 package com.zedwerks.keycloak.smart.context.events;
 
-import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
 import org.jboss.logging.Logger;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
-import org.keycloak.events.admin.OperationType;
+
+import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
 
 /**
  * Option A: Keycloak event listener — catches explicit LOGOUT events.

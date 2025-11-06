@@ -32,16 +32,16 @@ import org.keycloak.services.resource.RealmResourceProviderFactory;
 import com.zedwerks.keycloak.smart.context.dao.HybridContextEntryDao;
 import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
 
-public class ContextResourceProviderFactory implements RealmResourceProviderFactory {
+public class SmartContextResourceProviderFactory implements RealmResourceProviderFactory {
 
     public static final String ID = "smart-on-fhir";
-    private static final Logger logger = Logger.getLogger(ContextResourceProviderFactory.class);
+    private static final Logger logger = Logger.getLogger(SmartContextResourceProviderFactory.class);
 
     @Override
     public RealmResourceProvider create(KeycloakSession session) {
-        logger.infof("Creating ContextResourceProvider with session");
+        logger.infof("Creating SmartContextResourceProvider with session");
         ContextCacheService contextCacheService = new ContextCacheService(new HybridContextEntryDao(session));
-        return new ContextResourceProvider(session, contextCacheService);
+        return new SmartContextResourceProvider(session, contextCacheService);
     }
 
     @Override
