@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author brad@zedwerks.com
+ * @author Brad Head
  * 
  */
 
@@ -39,24 +39,36 @@ public class ContextCacheService {
         this.dao = dao;
     }
 
-    public String createContext(UserSessionModel userSession, JsonNode payload) {
+    public String saveContext(UserSessionModel userSession, JsonNode payload) {
 
         logger.debugf("Creating context for user session %s with payload: %s", userSession.getId(), payload.toString());
         String userSessionId = userSession.getId();
         String userId = userSession.getUser().getId();
-        ContextEntry entry = new ContextEntry(userSessionId, userId, payload);
+        String realmId = userSession.getRealm().getId();
+        ContextEntry entry = new ContextEntry(userSessionId, userId, realmId, payload);
         dao.saveOrUpdate(entry);
-        return userSessionId;
+        return userSessionId;  // we are deliberately using the userSessionId as the context ID
     }
 
     public Optional<ContextEntry> getContext(String userSessionId) {
         logger.debugf("Retrieving context for user session %s", userSessionId);
-        return dao.get(userSessionId);
+        return dao.getByUserSessionId(userSessionId);
     }
 
-    public void deleteBySession(String userSessionId) {
+    public void deleteContext(String userSessionId) {
         logger.debugf("Deleting context for user session %s", userSessionId);
-        dao.delete(userSessionId);
+        dao.removeByUserSessionId(userSessionId);
+    }
+
+    public void deleteByUserId(String realmId, String userId) {
+        logger.debugf("Deleting all contexts for user %s in realm %s", userId, realmId);
+        int deletedCount = dao.removeByUserId(realmId, userId);
+        logger.infof("Deleted %d contexts for user %s in realm %s", deletedCount, userId, realmId);
+    }
+
+    public void deleteAllContexts(String realmId) {
+        logger.debugf("Deleting all contexts for realm %s", realmId);
+        dao.removeAllByRealm(realmId);
     }
 
 }

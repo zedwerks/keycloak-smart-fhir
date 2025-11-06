@@ -111,7 +111,7 @@
       "defaultClientScopes": [
         "acr",
         "email",
-        "openid",
+        "basic",
         "profile",
         "roles",
         "web-origins"

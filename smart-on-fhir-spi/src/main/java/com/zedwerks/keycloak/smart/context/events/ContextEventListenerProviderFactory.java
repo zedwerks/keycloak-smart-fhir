@@ -16,13 +16,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author brad@zedwerks.com
+ * @author Brad Head
  * 
  */
 
 package com.zedwerks.keycloak.smart.context.events;
 
-import com.zedwerks.keycloak.smart.context.dao.ContextEntryDao;
+import com.zedwerks.keycloak.smart.context.dao.IContextEntryDao;
+import com.zedwerks.keycloak.smart.context.dao.HybridContextEntryDao;
+import com.zedwerks.keycloak.smart.context.listeners.ContextEntryCacheListener;
 import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
@@ -31,12 +33,13 @@ import org.keycloak.events.EventListenerProviderFactory;
 
 public class ContextEventListenerProviderFactory implements EventListenerProviderFactory {
 
-    public static final String ID = "smart-context-session-listener";
+    public static final String ID = "smart-context-listener";
 
     @Override
     public ContextEventListenerProvider create(KeycloakSession session) {
         // Wire service with DAO for this session scope
-        ContextCacheService service = new ContextCacheService(new ContextEntryDao(session));
+        IContextEntryDao dao = new HybridContextEntryDao(session); // Use HybridContextEntryDao for flexibility
+        ContextCacheService service = new ContextCacheService(dao);
         return new ContextEventListenerProvider(service);
     }
 

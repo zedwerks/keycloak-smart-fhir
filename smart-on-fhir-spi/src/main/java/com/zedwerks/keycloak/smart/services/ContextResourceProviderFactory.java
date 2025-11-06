@@ -1,6 +1,6 @@
-/*
+/**
  * Copyright 2024 Zed Werks Inc.
- * * 
+ * 
  * 
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -16,22 +16,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author brad@zedwerks.com
+ * @author Brad Head
  * 
  */
 
 package com.zedwerks.keycloak.smart.services;
 
+import org.jboss.logging.Logger;
 import org.keycloak.Config;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.services.resource.RealmResourceProvider;
 import org.keycloak.services.resource.RealmResourceProviderFactory;
 
+import com.zedwerks.keycloak.smart.context.dao.HybridContextEntryDao;
 import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
-import com.zedwerks.keycloak.smart.context.dao.ContextEntryDao;
-
-import org.jboss.logging.Logger;
 
 public class ContextResourceProviderFactory implements RealmResourceProviderFactory {
 
@@ -40,7 +39,8 @@ public class ContextResourceProviderFactory implements RealmResourceProviderFact
 
     @Override
     public RealmResourceProvider create(KeycloakSession session) {
-        ContextCacheService contextCacheService = new ContextCacheService(new ContextEntryDao(session));
+        logger.infof("Creating ContextResourceProvider with session");
+        ContextCacheService contextCacheService = new ContextCacheService(new HybridContextEntryDao(session));
         return new ContextResourceProvider(session, contextCacheService);
     }
 

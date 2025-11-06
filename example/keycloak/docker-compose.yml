@@ -32,7 +32,7 @@ services:
       - 8080:8080
     command:
       - start-dev
-      - --logger-level=INFO
+      - --log-level=INFO
       - --hostname=localhost
       - --hostname-strict=false
       - --import-realm

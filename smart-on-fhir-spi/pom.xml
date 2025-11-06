@@ -89,12 +89,12 @@
             <version>${keycloak.version}</version>
         </dependency>
         <!-- Provides Infinispan integration and connection provider -->
-        <!-- <dependency>
+        <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-connections-infinispan</artifactId>
             <version>${keycloak.infinispan.version}</version>
             <scope>provided</scope>
-        </dependency> -->
+        </dependency>
         <!-- Provides Infinispan cache model -->
         <dependency>
             <groupId>org.keycloak</groupId>

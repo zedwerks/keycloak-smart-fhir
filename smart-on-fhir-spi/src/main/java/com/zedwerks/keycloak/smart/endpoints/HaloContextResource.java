@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author brad@zedwerks.com
+ * @author Brad Head
  * 
  */
 
@@ -30,7 +30,8 @@ import org.keycloak.representations.AccessToken;
 
 import com.zedwerks.keycloak.smart.helpers.AuthTokenHelper;
 import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
-import com.zedwerks.keycloak.smart.context.dao.ContextEntryDao;
+import com.zedwerks.keycloak.smart.context.dao.HybridContextEntryDao;
+import com.zedwerks.keycloak.smart.context.dao.IContextEntryDao;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.HeaderParam;
@@ -60,7 +61,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  * retrieve the context and use it to set the user's session context, and the
  * target object of the context, which is typicallly a patient or encounter.
  *
- * @author <a href="mailto:brad@zedwerks.com">Brad Head</a>
+  @author Brad Head
  */
 @Path("/halo")
 public class HaloContextResource {
@@ -102,8 +103,8 @@ public class HaloContextResource {
     }
 
     /**
-     * Set the [patient] launch context for the user session. This consumes a JSON
-     * context request, saves the object identifier for the context, and returns
+     * Set the launch context for the user session. This consumes a JSON
+     * context request as per the Infoway HALO specifications, saves the object identifier for the context, and returns
      * a 200 OK response with the context identifier in the response body.
      *
      * @return Response
@@ -127,22 +128,16 @@ public class HaloContextResource {
             String sid = token.getSessionId();
             UserSessionModel userSession = session.sessions().getUserSession(realm, sid);
 
-            // Create DAO and Service for this request
-            ContextEntryDao dao = new ContextEntryDao(session);
-            ContextCacheService service = new ContextCacheService(dao);
-
+   
             // Parse the JSON body to extract context information
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(jsonBody);
 
-            // Validate the context node (you can add more validation logic here)
-            if (node == null || !node.has("contextId")) {
-                throw new IllegalArgumentException("Invalid context data provided");
-            }
+            // Create DAO and Service for this request
+            IContextEntryDao dao = new HybridContextEntryDao(session); 
+            ContextCacheService service = new ContextCacheService(dao);
 
-            // Create the context in the cache and return the context ID
-
-            String contextId = service.createContext(userSession, node);
+            String contextId = service.saveContext(userSession, node);
 
             return Response.ok("{\"contextId\":\"" + contextId + "\"}").build();
 
@@ -161,7 +156,7 @@ public class HaloContextResource {
     }
 
     /**
-     * Set the [patient] launch context for the user session. This consumes a JSON
+     * Clear the launch context for the user session. This consumes a JSON
      * context request, saves the object identifier for the context, and returns
      * a 200 OK response with the context identifier in the response body.
      *
@@ -180,6 +175,8 @@ public class HaloContextResource {
             // Here is where we call the Context Service to persist the context in Cache.
             // In future, we add a pre-processor step to validate the context and to
             // call an optional external service to enrich/map the FHIR context bundle.
+
+
 
             return Response.status(Response.Status.OK)
                     .entity("{}").build();

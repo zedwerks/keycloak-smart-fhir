@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author brad@zedwerks.com
+ * @author Brad Head
  * 
  */
 package com.zedwerks.keycloak.smart.authenticators;

@@ -20,29 +20,29 @@
  * 
  */
 
-package com.zedwerks.keycloak.smart.services;
+package com.zedwerks.keycloak.smart.context.jpa;
 
-import org.keycloak.models.KeycloakSession;
-import org.keycloak.services.resource.RealmResourceProvider;
+import java.util.List;
 
-import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
-import com.zedwerks.keycloak.smart.endpoints.SmartResource;
+import org.keycloak.connections.jpa.entityprovider.JpaEntityProvider;
 
-public class ContextResourceProvider implements RealmResourceProvider {
-
-    private final KeycloakSession session;
-
-    public ContextResourceProvider(KeycloakSession session, ContextCacheService contextService) {
-        this.session = session;
+public class ContextJpaEntityProvider implements JpaEntityProvider {
+    @Override
+    public List<Class<?>> getEntities() {
+        return List.of(ContextEntryEntity.class);
     }
 
     @Override
-    public Object getResource() {
-        return new SmartResource(this.session);
-    }
+    public String getChangelogLocation() {
+        return "META-INF/smart-context-jpa-changelog.xml";
+    } // optional; can return null
 
     @Override
     public void close() {
     }
 
+    @Override
+    public String getFactoryId() {
+        return ContextJpaEntityProviderFactory.class.getName();
+    }
 }

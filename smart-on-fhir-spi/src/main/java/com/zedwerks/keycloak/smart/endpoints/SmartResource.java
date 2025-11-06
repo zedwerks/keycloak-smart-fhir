@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author brad@zedwerks.com
+ * @author Brad Head
  * 
  */
 
@@ -42,7 +42,7 @@ import jakarta.ws.rs.core.Response;
  * retrieve the context and use it to set the user's session context, and the
  * target object of the context, which is typicallly a patient or encounter.
  *
- * @author <a href="mailto:brad@zedwerks.com">Brad Head</a>
+  @author  <a href="mailto:brad@zedwerks.com">Brad Head</a>
  */
 public class SmartResource {
 

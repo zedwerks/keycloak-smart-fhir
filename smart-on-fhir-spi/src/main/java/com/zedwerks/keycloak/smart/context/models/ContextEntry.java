@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author brad@zedwerks.com
+ * @author Brad Head
  * 
  */
 
@@ -28,43 +28,69 @@ import java.time.Instant;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class ContextEntry implements Serializable {
+    private String realmId;
     private String userSessionId;
-    private String userId; 
+    private String userId;
     private Instant createdAt;
-    private JsonNode fhirPayload; 
+    private JsonNode payloadJson; // JSON payload for context
+    private Instant expireAt; // optional, for cache TTLs
 
     public ContextEntry() {
     }
 
-    public ContextEntry(String userSessionId, String userId, JsonNode fhirPayload) {
+    public ContextEntry(String userSessionId, String userId, String realmId, JsonNode payloadJson) {
         this.userSessionId = userSessionId;
+        this.realmId = realmId;
         this.userId = userId;
-        this.fhirPayload = fhirPayload;
+        this.payloadJson = payloadJson;
         this.createdAt = Instant.now();
     }
 
     public String getUserSessionId() {
         return userSessionId;
     }
+
     public void setUserSessionId(String userSessionId) {
         this.userSessionId = userSessionId;
     }
+
+    public String getRealmId() {
+        return realmId;
+    }
+
+    public void setRealmId(String realmId) {
+        this.realmId = realmId;
+    }
+
     public String getUserId() {
         return userId;
     }
+
     public void setUserId(String userId) {
-        this.userId = userId;       
+        this.userId = userId;
     }
+
     public Instant getCreatedAt() {
         return createdAt;
     }
+
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
-    public JsonNode getFhirPayload() {
-        return fhirPayload;
+
+    public JsonNode getPayloadJson() {
+        return this.payloadJson;
     }
-    public void setFhirPayload(JsonNode fhirPayload) {
-        this.fhirPayload = fhirPayload;
+
+    public void setPayloadJson(JsonNode payloadJson) {
+        this.payloadJson = payloadJson;
+    }
+
+    public Instant getExpireAt() {
+        return expireAt;
+    }
+
+    public void setExpireAt(Instant expireAt) {
+        this.expireAt = expireAt;
     }
 }

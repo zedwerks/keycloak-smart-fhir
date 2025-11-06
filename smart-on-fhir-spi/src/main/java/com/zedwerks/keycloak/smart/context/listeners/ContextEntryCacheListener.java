@@ -16,13 +16,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author brad@zedwerks.com
+ * @author Brad Head
  * 
  */
 
-package com.zedwerks.keycloak.smart.context.dao;
+package com.zedwerks.keycloak.smart.context.listeners;
 
-import com.zedwerks.keycloak.smart.context.dao.ContextEntryDao;
+import com.zedwerks.keycloak.smart.context.dao.IContextEntryDao;
 import org.infinispan.notifications.Listener;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryRemoved;
 import org.infinispan.notifications.cachelistener.event.CacheEntryRemovedEvent;
@@ -32,20 +32,20 @@ import org.jboss.logging.Logger;
  * Option B: low-level Infinispan listener to catch passive session expiration/eviction.
  */
 @Listener
-public class SessionCacheListener {
+public class ContextEntryCacheListener {
 
-    private static final Logger logger = Logger.getLogger(SessionCacheListener.class);
-    private final ContextEntryDao contextDao;
+    private static final Logger logger = Logger.getLogger(ContextEntryCacheListener.class);
+    private final IContextEntryDao contextDao;
 
-    public SessionCacheListener(ContextEntryDao contextDao) {
+    public ContextEntryCacheListener(IContextEntryDao contextDao) {
         this.contextDao = contextDao;
     }
 
     @CacheEntryRemoved
     public void onSessionRemoved(CacheEntryRemovedEvent<String, ?> event) {
         if (event.isPre()) return;
-        String sessionId = event.getKey();
-        logger.debugf("SMART on FHIR: Session %s removed from USER_SESSION cache; purging any cached Launch Contexts.", sessionId);
-        this.contextDao.delete(sessionId);
+        String userSessionId = event.getKey();
+        logger.debugf("SMART on FHIR: Session %s removed from USER_SESSION cache; purging any cached Launch Contexts.", userSessionId);
+        this.contextDao.removeByUserSessionId(userSessionId);
     }
 }

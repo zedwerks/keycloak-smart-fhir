@@ -58,7 +58,6 @@ ENV KC_LOG_CONSOLE_OUTPUT=default
 WORKDIR /opt/keycloak/
 
 # Copy the script that sets the realm admin roles for the terraform client
-#COPY --from=builder /app/keycloak/bin/*.sh ./bin/
 COPY --from=builder /app/keycloak/bin/bootstrap.sh ./bin/bootstrap.sh
 COPY --from=builder /app/keycloak/bin/terraform-realm-admin.sh ./bin/terraform-realm-admin.sh
 COPY --from=builder /app/keycloak/conf/logging.properties ./conf/logging.properties

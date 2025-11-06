@@ -1,4 +1,4 @@
-resource "keycloak_openid_client" "postman_smart_app" {
+resource "keycloak_openid_client" "postman_halo_smart_app" {
   realm_id                   = var.keycloak_realm
   client_id                  = "postman-halo-smart-app"
   name                       = "Postman SMART Client"
@@ -19,16 +19,16 @@ resource "keycloak_openid_client" "postman_smart_app" {
 }
 
 
-resource "keycloak_openid_client_default_scopes" "postman_smart_app_default_scopes" {
+resource "keycloak_openid_client_default_scopes" "postman_halo_smart_app_default_scopes" {
   realm_id       = data.keycloak_realm.realm.id
   client_id      = keycloak_openid_client.postman_smart_app.id
   default_scopes = ["basic", "openid", "profile", "email", "acr"]
-  depends_on     = [keycloak_openid_client.postman_smart_app]
+  depends_on     = [keycloak_openid_client.postman_halo_smart_app]
 }
 
-resource "keycloak_openid_client_optional_scopes" "postman_smart_app_optional_scopes" {
+resource "keycloak_openid_client_optional_scopes" "postman_halo_smart_app_optional_scopes" {
   realm_id  = data.keycloak_realm.realm.id
-  client_id = keycloak_openid_client.postman_smart_app.id
+  client_id = keycloak_openid_client.postman_halo_smart_app.id
   optional_scopes = [
     "fhirUser",
     "launch",
@@ -42,25 +42,25 @@ resource "keycloak_openid_client_optional_scopes" "postman_smart_app_optional_sc
     "patient/Patient.read",
     "patient/Patient.write",
   "patient/Patient.*"]
-  depends_on = [keycloak_openid_client.postman_smart_app]
+  depends_on = [keycloak_openid_client.postman_halo_smart_app]
 }
 
-resource "keycloak_openid_audience_protocol_mapper" "postman_smart_app_audience_mapper" {
+resource "keycloak_openid_audience_protocol_mapper" "postman_halo_smart_app_audience_mapper" {
   realm_id                 = data.keycloak_realm.realm.id
-  client_id                = keycloak_openid_client.postman_smart_app.id
+  client_id                = keycloak_openid_client.postman_halo_smart_app.id
   name                     = "audience-mapper"
-  included_custom_audience = keycloak_openid_client.postman_smart_app.client_id // included_client_audience is broken.
+  included_custom_audience = keycloak_openid_client.postman_halo_smart_app.client_id // included_client_audience is broken.
   add_to_access_token      = true
   add_to_id_token          = true
-  depends_on               = [keycloak_openid_client.postman_smart_app]
+  depends_on               = [keycloak_openid_client.postman_halo_smart_app]
 }
 
 /// This mapper adds a hardcoded claim to the access token, id token, and userinfo endpoint.
 // It is used to provide a tenant identifier for the Postman SMART app to use in its requests.
 // An example of its use is with Ocean MD.
-resource "keycloak_openid_hardcoded_claim_protocol_mapper" "postman_smart_app_hardcoded_claim_mapper" {
-  realm_id            = keycloak_openid_client.postman_smart_app.realm_id
-  client_id           = keycloak_openid_client.postman_smart_app.id
+resource "keycloak_openid_hardcoded_claim_protocol_mapper" "postman_halo_smart_app_hardcoded_claim_mapper" {
+  realm_id            = keycloak_openid_client.postman_halo_smart_app.realm_id
+  client_id           = keycloak_openid_client.postman_halo_smart_app.id
   name                = "hardcoded-claim-mapper"
   claim_name          = "tenant"
   claim_value         = "unique-tenant-id"
@@ -68,6 +68,6 @@ resource "keycloak_openid_hardcoded_claim_protocol_mapper" "postman_smart_app_ha
   add_to_access_token = true
   add_to_id_token     = false
   add_to_userinfo     = false
-  depends_on          = [keycloak_openid_client.postman_smart_app]
+  depends_on          = [keycloak_openid_client.postman_halo_smart_app]
 }
 

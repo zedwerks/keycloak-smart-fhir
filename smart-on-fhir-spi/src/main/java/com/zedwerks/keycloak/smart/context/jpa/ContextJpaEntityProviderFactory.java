@@ -20,29 +20,32 @@
  * 
  */
 
-package com.zedwerks.keycloak.smart.services;
+package com.zedwerks.keycloak.smart.context.jpa;
 
+import org.keycloak.connections.jpa.entityprovider.JpaEntityProviderFactory;
 import org.keycloak.models.KeycloakSession;
-import org.keycloak.services.resource.RealmResourceProvider;
+import org.keycloak.connections.jpa.entityprovider.JpaEntityProvider;
 
-import com.zedwerks.keycloak.smart.context.services.ContextCacheService;
-import com.zedwerks.keycloak.smart.endpoints.SmartResource;
-
-public class ContextResourceProvider implements RealmResourceProvider {
-
-    private final KeycloakSession session;
-
-    public ContextResourceProvider(KeycloakSession session, ContextCacheService contextService) {
-        this.session = session;
+public class ContextJpaEntityProviderFactory implements JpaEntityProviderFactory {
+    @Override
+    public JpaEntityProvider create(KeycloakSession session) {
+        return new ContextJpaEntityProvider();
     }
 
     @Override
-    public Object getResource() {
-        return new SmartResource(this.session);
+    public String getId() {
+        return "smart-context-jpa";
+    }
+
+    @Override
+    public void init(org.keycloak.Config.Scope config) {
+    }
+
+    @Override
+    public void postInit(org.keycloak.models.KeycloakSessionFactory factory) {
     }
 
     @Override
     public void close() {
     }
-
 }

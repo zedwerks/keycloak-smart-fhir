@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author brad@zedwerks.com
+ * @author Brad Head
  * 
  */
 package com.zedwerks.keycloak.smart.context.dao;
@@ -36,21 +36,31 @@ public interface IContextEntryDao {
      * Retrieves a context entry by user session ID.
      *
      * @param userSessionId The user session ID to retrieve the context for.
-     * @return An Optional containing the context entry if found, or empty if not found.
+     * @return An Optional containing the context entry if found, or empty if not
+     *         found.
      */
-    Optional<ContextEntry> get(String userSessionId);
+    Optional<ContextEntry> getByUserSessionId(String userSessionId);
 
     /**
      * Deletes all context entries for a given user session ID.
      *
      * @param sessionId The user session ID to delete entries for.
      */
-    void delete(String userSessionId);
+    void removeByUserSessionId(String userSessionId);
 
     /**
-     * Checks if a context entry exists for the given user session ID.
-     * @param userSessionId The user session ID to check.
-     * @return true if a context entry exists, false otherwise.
+     * Deletes all context entries for a given user ID in a realm.
+     * 
+     * @param realmId The realm ID to delete entries for.
+     * @param userId  The user ID to delete entries for.
      */
-    public boolean exists(String userSessionId);
+    public int removeByUserId(String realmId, String userId);
+
+    /**
+     * Deletes all context entries for a given realm ID.
+     * 
+     * @param realmId
+     */
+    public void removeAllByRealm(String realmId);
+
 }

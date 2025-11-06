@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author brad@zedwerks.com
+ * @author Brad Head
  * 
  */
 
@@ -52,7 +52,7 @@ public class ContextEventListenerProvider implements EventListenerProvider {
             String sessionId = event.getSessionId();
             logger.debugf("SMART CONTEXT: User LOGOUT event for session %s — purging contexts.", sessionId);
             if (sessionId != null) {
-                contextCacheService.deleteBySession(sessionId);
+                this.contextCacheService.deleteContext(sessionId);
             }
         }
     }
@@ -63,17 +63,36 @@ public class ContextEventListenerProvider implements EventListenerProvider {
 
     @Override
     public void onEvent(AdminEvent event, boolean includeRepresentation) {
-        if (event.getResourceType() != null &&
-                event.getResourceType().name().equals("USER_SESSION") &&
+
+        if (event == null || event.getResourceType() == null || event.getOperationType() == null) {
+            return;
+        }
+
+        String resourcePath = event.getResourcePath();
+        String realmId = event.getRealmId();
+
+        if (resourcePath != null && event.getResourceType().name().equals("USER_SESSION") &&
                 event.getOperationType().name().equals("DELETE")) {
 
-            String resourcePath = event.getResourcePath();
             // e.g. "sessions/2f91b49f-4fcb-4d32-ae90-221bfbbfbb83"
             // or "users/1234abcd/sessions/2f91b49f-4fcb-4d32-ae90-221bfbbfbb83"
 
             String sessionId = extractSessionId(resourcePath);
-            logger.infof("SMART CONTEXT: Session deleted: %s by admin user: %s",
-                    sessionId, event.getAuthDetails().getUserId());
+            logger.debugf("SMART CONTEXT: Admin event for session %s — purging contexts.", sessionId);
+            if (sessionId != null) {
+                this.contextCacheService.deleteContext(sessionId);
+                logger.infof("SMART CONTEXT: Session deleted: %s by admin user: %s", sessionId,
+                        event.getAuthDetails().getUserId());
+            }
+        } else if (resourcePath != null) {
+            if (resourcePath.matches("^users/[^/]+/logout$")) {
+                String userId = resourcePath.split("/")[1];
+                this.contextCacheService.deleteByUserId(realmId, userId);
+            } else if (resourcePath.endsWith("logout-all")) {
+
+                this.contextCacheService.deleteAllContexts(realmId);
+
+            }
         }
     }
 

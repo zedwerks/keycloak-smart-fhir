@@ -1,6 +1,5 @@
-/*
+/**
  * Copyright 2024 Zed Werks Inc.
- * and other contributors as indicated by the @author tags.
  * 
  *  SPDX-License-Identifier: Apache-2.0
  *
@@ -16,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author brad@zedwerks.com
+ * @author Brad Head
  * 
  */
 package com.zedwerks.keycloak.smart.authenticators;
