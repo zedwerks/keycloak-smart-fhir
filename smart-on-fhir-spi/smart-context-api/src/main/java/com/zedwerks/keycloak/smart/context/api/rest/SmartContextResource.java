@@ -35,9 +35,9 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
-import com.zedwerks.keycloak.smart.context.store.spi.IContextStoreProvider;
 import com.zedwerks.keycloak.smart.context.api.helpers.AuthTokenHelper;
+import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
+import com.zedwerks.keycloak.smart.context.store.spi.ContextStoreProvider;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.ForbiddenException;
@@ -78,14 +78,14 @@ public class SmartContextResource {
     static final String READ_SCOPE = "Context.read"; // Make this a configuration property
 
     private KeycloakSession session = null;
-    private IContextStoreProvider contextStore = null;
+    private ContextStoreProvider contextStore = null;
 
     public SmartContextResource() { // needed to skirt CDI issues in Keycloak
         this.session = null;
         this.contextStore = null;
     }
 
-    public SmartContextResource(KeycloakSession session, IContextStoreProvider contextStore) {
+    public SmartContextResource(KeycloakSession session, ContextStoreProvider contextStore) {
         this.session = session;
         this.contextStore = contextStore;
     }

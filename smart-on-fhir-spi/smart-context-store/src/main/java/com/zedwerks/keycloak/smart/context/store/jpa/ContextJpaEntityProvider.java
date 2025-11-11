@@ -27,6 +27,9 @@ import java.util.List;
 import org.keycloak.connections.jpa.entityprovider.JpaEntityProvider;
 
 public class ContextJpaEntityProvider implements JpaEntityProvider {
+
+    public static final String ID = "smart-context-store";
+
     @Override
     public List<Class<?>> getEntities() {
         return List.of(ContextEntryEntity.class);
@@ -43,6 +46,7 @@ public class ContextJpaEntityProvider implements JpaEntityProvider {
 
     @Override
     public String getFactoryId() {
-        return ContextJpaEntityProviderFactory.class.getName();
-    }
+        return ContextJpaEntityProvider.ID;
+    } // this is the factory ID used to create this provider
+
 }

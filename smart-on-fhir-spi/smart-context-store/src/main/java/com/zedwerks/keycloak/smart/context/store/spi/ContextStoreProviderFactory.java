@@ -6,14 +6,16 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderFactory;
 
-public class ContextStoreProviderFactory implements ProviderFactory<IContextStoreProvider> {
+public class ContextStoreProviderFactory implements ProviderFactory<ContextStoreProvider> {
 
     private static final Logger logger = Logger.getLogger(ContextStoreProviderFactory.class);
+    protected ContextStoreProvider provider;
 
     @Override
-    public IContextStoreProvider create(KeycloakSession session) {
-        logger.info("[Factory] Creating ContextStoreProvider");
-        return new ContextStoreProvider(session);
+    public ContextStoreProvider create(KeycloakSession session) {
+        logger.info("[ContextStoreProviderFactory] Creating ContextStoreProvider");
+        provider = new ContextStoreProvider(session);
+        return provider;
     }
 
     @Override
@@ -24,6 +26,9 @@ public class ContextStoreProviderFactory implements ProviderFactory<IContextStor
     @Override
     public void postInit(KeycloakSessionFactory factory) {
         logger.info("🟢 [ContextStoreProviderFactory] successfully registered in KeycloakSessionFactory");
+        // Post-initialization logic can be added here if needed
+        provider.postInit();
+
     }
 
     @Override

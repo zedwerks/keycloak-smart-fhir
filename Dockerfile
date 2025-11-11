@@ -60,6 +60,7 @@ ENV KC_LOG_CONSOLE_COLOR=false
 ENV KC_LOG_CONSOLE_FORMAT="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c{1.}] (%t) %s%e%n"
 ENV KC_LOG_LEVEL=INFO
 ENV KC_LOG_CONFIG_IGNORE=true
+ENV KC_SPI_INFINISPAN_CACHE_CONTAINER_DEFAULT_CONFIG_FILE=infinispan-smart-context.xml
 
 # This disables loading logging.properties completely:
 # Set the working directory in the container
@@ -68,7 +69,8 @@ WORKDIR /opt/keycloak/
 # Copy the script that sets the realm admin roles for the terraform client
 COPY --from=builder /app/keycloak/bin/bootstrap.sh ./bin/bootstrap.sh
 COPY --from=builder /app/keycloak/bin/terraform-realm-admin.sh ./bin/terraform-realm-admin.sh
-COPY --from=builder /app/keycloak/conf/logging.properties ./conf/logging.properties
+#COPY --from=builder /app/keycloak/conf/logging.properties ./conf/logging.properties
+COPY --from=builder /app/keycloak/conf/infinispan-smart-context.xml ./conf/infinispan-smart-context.xml
 
 # Copy the Keycloak Realm file (which in build phase, the realm name was resolved to the realm name)
 COPY --from=builder /app/keycloak/import/realm-template.json ./data/import/realm.json

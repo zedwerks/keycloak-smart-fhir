@@ -31,8 +31,9 @@ import org.keycloak.representations.AccessToken;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
-import com.zedwerks.keycloak.smart.context.store.spi.IContextStoreProvider;
+import com.zedwerks.keycloak.smart.context.store.spi.ContextStoreProvider;
 import com.zedwerks.keycloak.smart.context.api.helpers.AuthTokenHelper;
 
 import jakarta.ws.rs.Consumes;
@@ -74,7 +75,7 @@ public class SofaContextResource {
 
     protected static final Logger logger = Logger.getLogger(SofaContextResource.class);
 
-    private final IContextStoreProvider contextStore;
+    private final ContextStoreProvider contextStore;
 
     KeycloakSession session;
 
@@ -83,7 +84,7 @@ public class SofaContextResource {
         this.contextStore = null;
     }
 
-    public SofaContextResource(KeycloakSession session, IContextStoreProvider contextStore) {
+    public SofaContextResource(KeycloakSession session, ContextStoreProvider contextStore) {
         this.session = session;
         this.contextStore = contextStore;
     }

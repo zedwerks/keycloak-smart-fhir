@@ -1,0 +1,13 @@
+<infinispan>
+    <cache-container name="keycloak">
+        <!-- inherit Keycloak core cache settings -->
+        <local-cache name="smart-context-cache">
+            <encoding>
+                <key media-type="application/x-java-object"/>
+                <value media-type="application/x-java-object"/>
+            </encoding>
+            <memory max-count="5000"/>
+            <expiration interval="60000" max-idle="900000"/>
+        </local-cache>
+    </cache-container>
+</infinispan>
