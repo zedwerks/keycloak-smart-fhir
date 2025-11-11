@@ -22,39 +22,30 @@
 
 package com.zedwerks.keycloak.smart.context.store.jpa;
 
-import java.util.List;
-
+import org.keycloak.connections.jpa.entityprovider.JpaEntityProviderFactory;
+import org.keycloak.models.KeycloakSession;
 import org.keycloak.connections.jpa.entityprovider.JpaEntityProvider;
 
-public class ContextJpaEntityProvider implements JpaEntityProvider {
-<<<<<<< HEAD
-
-    public static final String ID = "smart-context-store";
-
-=======
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
+public class ContextJpaEntityProviderFactory implements JpaEntityProviderFactory {
     @Override
-    public List<Class<?>> getEntities() {
-        return List.of(ContextEntryEntity.class);
+    public JpaEntityProvider create(KeycloakSession session) {
+        return new ContextJpaEntityProvider();
     }
 
     @Override
-    public String getChangelogLocation() {
-        return "META-INF/smart-context-jpa-changelog.xml";
-    } // optional; can return null
+    public String getId() {
+        return "smart-context-jpa";
+    }
+
+    @Override
+    public void init(org.keycloak.Config.Scope config) {
+    }
+
+    @Override
+    public void postInit(org.keycloak.models.KeycloakSessionFactory factory) {
+    }
 
     @Override
     public void close() {
     }
-
-    @Override
-    public String getFactoryId() {
-<<<<<<< HEAD
-        return ContextJpaEntityProvider.ID;
-    } // this is the factory ID used to create this provider
-
-=======
-        return ContextJpaEntityProviderFactory.class.getName();
-    }
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 }

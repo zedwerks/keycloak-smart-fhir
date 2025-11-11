@@ -2,8 +2,8 @@
 # This script sets the 'terraform' client to have the ability to administer the realm.
 # This script is meant to be run from from in the runtime container after the keycloak server is up and running.
 
-username=$KEYCLOAK_ADMIN
-password=$KEYCLOAK_ADMIN_PASSWORD
+username=$KC_BOOTSTRAP_ADMIN_USERNAME
+password=$KC_BOOTSTRAP_ADMIN_PASSWORD
 realm=$KEYCLOAK_TARGET_REALM
 device="/dev/tcp/localhost/$KEYCLOAK_PORT"
 server="http://127.0.0.1:$KEYCLOAK_PORT"

@@ -1,40 +1,46 @@
 services:
   keycloak:
-    container_name: keycloak-smart-fhir  # If you change this, you must also change it in deploy.sh
+    container_name: keycloak-smart-fhir # If you change this, you must also change it in deploy.sh
     build:
       #context: https://github.com/zedwerks/keycloak-smart-fhir.git
       context: ../../.
       dockerfile: Dockerfile
     environment:
-      - KC_HTTP_ENABLED=true
-      - KC_HOSTNAME=localhost
-      - KEYCLOAK_HOSTNAME_URL=${KEYCLOAK_HOSTNAME_URL}
-      - KEYCLOAK_HOSTNAME_ADMIN_URL=${KEYCLOAK_HOSTNAME_ADMIN_URL}
-      - KC_HOSTNAME_STRICT=false
-      - KC_HOSTNAME_STRICT_HTTPS=false
-      - KC_HOSTNAME_URL=${KEYCLOAK_HOSTNAME_URL}
-      - KC_HOSTNAME_ADMIN_URL=${KEYCLOAK_HOSTNAME_ADMIN_URL}
+      # Environment variables for Keycloak
       - KC_BOOTSTRAP_ADMIN_PASSWORD=${KC_BOOTSTRAP_ADMIN_PASSWORD}
       - KC_BOOTSTRAP_ADMIN_USERNAME=${KC_BOOTSTRAP_ADMIN_USERNAME}
-      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
-      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
-      - KEYCLOAK_TARGET_REALM=${KEYCLOAK_TARGET_REALM}
-      - KEYCLOAK_TERRAFORM_CLIENT_ID=${KEYCLOAK_TERRAFORM_CLIENT_ID}
-      - KEYCLOAK_TERRAFORM_CLIENT_SECRET=${KEYCLOAK_TERRAFORM_CLIENT_SECRET}
-      - KEYCLOAK_TARGET_REALM_DISPLAY_NAME=${KEYCLOAK_TARGET_REALM_DISPLAY_NAME}
-      - KC_HTTP_CORS=true
-      - KC_PROXY=edge
-      - KC_HTTP_CORS_MAX_AGE=3600
+
+      # Eplicitly set the HTTP and disable all strictness checks
+      - KC_HTTP_ENABLED=true
+      - KC_HOSTNAME_STRICT=false
+      - KC_HOSTNAME_STRICT_HTTPS=false
+
+      # DO NOT configure provy behaviour for localhost setup.
+      - KC_PROXY=none
+
+      - KEYCLOAK_PORT=8080
+      - KC_HOSTNAME=localhost
+      - KC_HOSTNAME_URL=http://localhost:8080
+      - KC_HOSTNAME_ADMIN_URL=http://localhost:8080
+
+      # Logging
       - KC_LOG_LEVEL=${KC_LOG_LEVEL}
       - KC_LOG_CONSOLE_COLOR=false
+
+      # CORS settings
+      - KC_HTTP_CORS=true
+      - KC_HTTP_CORS_MAX_AGE=3600
+
+      # Realm Settings
+      - KEYCLOAK_TARGET_REALM=smart
+      - KEYCLOAK_TARGET_REALM_DISPLAY_NAME="SMART on FHIR""
+
+      # Terraform Client Settings
+      - KEYCLOAK_TERRAFORM_CLIENT_ID=${KEYCLOAK_TERRAFORM_CLIENT_ID}
+      - KEYCLOAK_TERRAFORM_CLIENT_SECRET=${KEYCLOAK_TERRAFORM_CLIENT_SECRET}
 
     ports:
       - 8080:8080
     command:
       - start-dev
-      - --log-level=INFO
-      - --hostname=localhost
-      - --hostname-strict=false
       - --import-realm
-
-

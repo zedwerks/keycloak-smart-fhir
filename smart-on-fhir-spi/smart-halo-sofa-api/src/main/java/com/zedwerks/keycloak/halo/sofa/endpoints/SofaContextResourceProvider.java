@@ -25,7 +25,11 @@ package com.zedwerks.keycloak.halo.sofa.endpoints;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.services.resource.RealmResourceProvider;
 
+<<<<<<< HEAD
 import com.zedwerks.keycloak.smart.context.store.spi.ContextStoreProvider;
+=======
+import com.zedwerks.keycloak.smart.context.store.spi.IContextStoreProvider;
+>>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 
 
 public class SofaContextResourceProvider implements RealmResourceProvider {
@@ -38,7 +42,11 @@ public class SofaContextResourceProvider implements RealmResourceProvider {
 
     @Override
     public Object getResource() {
+<<<<<<< HEAD
         ContextStoreProvider contextStore = session.getProvider(ContextStoreProvider.class);
+=======
+        IContextStoreProvider contextStore = session.getProvider(IContextStoreProvider.class);
+>>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
         return new SofaContextResource(this.session, contextStore);
     }
 

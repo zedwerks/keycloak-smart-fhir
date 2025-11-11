@@ -1,6 +1,7 @@
 {
   "realm": "{{place_realm_name_here}}",
-  "displayName": "{{place_realm_display_name_here}}",
+  "sslRequired": "external",
+  "displayName": "SMART on FHIR",
   "enabled": true,
   "roles": {
     "realm": [

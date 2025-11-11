@@ -45,12 +45,14 @@ ENV KEYCLOAK_PORT=8080
 
 # Default ENV vars for the Keycloak image
 ENV KEYCLOAK_ADMIN=admin
-ENV KEYCLOAK_ADMIN_PASSWORD=admin
+ENV KC_HOSTNAME_STRICT=false
+ENV KC_HOSTNAME_STRICT_HTTPS=false
+ENV KC_HOSTNAME_URL=http://localhost:$KEYCLOAK_PORT
 ENV KC_BOOTSTRAP_ADMIN_USERNAME=admin
-ENV KC_BOOTSTRAP_ADMIN_PASSWORD=admin
 ENV KEYCLOAK_TARGET_REALM_DISPLAY_NAME="SMART on FHIR"
 ENV KEYCLOAK_TARGET_REALM=smart
 ENV KEYCLOAK_TERRAFORM_CLIENT_ID=terraform
+<<<<<<< HEAD
 ENV KEYCLOAK_TERRAFORM_CLIENT_SECRET=terraform!secret
 ENV KC_HTTP_CORS=true
 #ENV KC_LOG_CONFIG=/opt/keycloak/conf/logging.properties
@@ -63,6 +65,13 @@ ENV KC_LOG_CONFIG_IGNORE=true
 ENV KC_SPI_INFINISPAN_CACHE_CONTAINER_DEFAULT_CONFIG_FILE=infinispan-smart-context.xml
 
 # This disables loading logging.properties completely:
+=======
+ENV KC_LOG_LEVEL=INFO
+ENV KC_LOG_CONSOLE_COLOR=false
+ENV KC_HTTP_CORS=true
+#ENV KC_LOG_CONFIG=/opt/keycloak/conf/logging.properties
+ENV KC_LOG_CONSOLE_OUTPUT=default
+>>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 # Set the working directory in the container
 WORKDIR /opt/keycloak/
 

@@ -23,10 +23,17 @@
 package com.zedwerks.keycloak.smart.context.api.rest;
 
 import org.jboss.logging.Logger;
+<<<<<<< HEAD
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.services.resource.RealmResourceProvider;
 
 import com.zedwerks.keycloak.smart.context.store.spi.ContextStoreProvider;
+=======
+
+import org.keycloak.models.KeycloakSession;
+import org.keycloak.services.resource.RealmResourceProvider;
+import com.zedwerks.keycloak.smart.context.store.spi.IContextStoreProvider;
+>>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 
 public class SmartContextResourceProvider implements RealmResourceProvider {
 
@@ -39,8 +46,23 @@ public class SmartContextResourceProvider implements RealmResourceProvider {
 
     @Override
     public Object getResource() {
+<<<<<<< HEAD
         logger.debug("Creating SmartContextResource with session: " + session);
         ContextStoreProvider contextStore = session.getProvider(ContextStoreProvider.class);
+=======
+        IContextStoreProvider contextStore = session.getProvider(IContextStoreProvider.class);
+        if (contextStore == null) {
+            logger.warn("ContextStoreProvider not found via unnamed lookup, trying by id...");
+            contextStore = session.getProvider(IContextStoreProvider.class, "smart-context-store");
+        }
+
+        if (contextStore == null) {
+            logger.error("ContextStoreProvider could not be resolved from KeycloakSession.");
+        } else {
+            logger.debugf("Resolved ContextStoreProvider impl: %s", contextStore.getClass().getName());
+        }
+
+>>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
         return new SmartContextResource(this.session, contextStore);
     }
 

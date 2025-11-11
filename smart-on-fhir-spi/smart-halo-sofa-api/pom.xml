@@ -87,6 +87,7 @@
             <version>${commons-io.version}</version>
         </dependency>
     </dependencies>
+<<<<<<< HEAD
     <build>                                    
         <finalName>com.zedwerks.smart-halo-sofa-api</finalName>
         <resources>
@@ -95,6 +96,9 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+=======
+    <build>
+>>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -154,6 +158,32 @@
                     <argLine>-javaagent:${settings.localRepository}/org/mockito/mockito-core/${org.mockito.version}/mockito-core-${org.mockito.version}.jar</argLine>
                 </configuration>
             </plugin>
+<<<<<<< HEAD
+=======
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade-plugin.version}</version>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>module-info.class</exclude>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+>>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
         </plugins>
     </build>
 </project>

@@ -35,9 +35,15 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+<<<<<<< HEAD
 import com.zedwerks.keycloak.smart.context.api.helpers.AuthTokenHelper;
 import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
 import com.zedwerks.keycloak.smart.context.store.spi.ContextStoreProvider;
+=======
+import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
+import com.zedwerks.keycloak.smart.context.store.spi.IContextStoreProvider;
+import com.zedwerks.keycloak.smart.context.api.helpers.AuthTokenHelper;
+>>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.ForbiddenException;
@@ -78,14 +84,22 @@ public class SmartContextResource {
     static final String READ_SCOPE = "Context.read"; // Make this a configuration property
 
     private KeycloakSession session = null;
+<<<<<<< HEAD
     private ContextStoreProvider contextStore = null;
+=======
+    private IContextStoreProvider contextStore = null;
+>>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 
     public SmartContextResource() { // needed to skirt CDI issues in Keycloak
         this.session = null;
         this.contextStore = null;
     }
 
+<<<<<<< HEAD
     public SmartContextResource(KeycloakSession session, ContextStoreProvider contextStore) {
+=======
+    public SmartContextResource(KeycloakSession session, IContextStoreProvider contextStore) {
+>>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
         this.session = session;
         this.contextStore = contextStore;
     }
