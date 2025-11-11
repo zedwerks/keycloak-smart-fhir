@@ -1,5 +1,0 @@
-com.zedwerks.keycloak.smart.authenticators.AudienceValidatorFactory
-com.zedwerks.keycloak.smart.authenticators.LaunchDetectorFactory
-com.zedwerks.keycloak.smart.authenticators.SmartLaunchResolverFactory
-com.zedwerks.keycloak.smart.halo.authenticators.HaloLaunchResolverFactory
-com.zedwerks.keycloak.smart.halo.authenticators.ExternalHaloLaunchResolverFactory

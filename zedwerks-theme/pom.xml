@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+  <groupId>com.zedwerks</groupId>
+    <artifactId>com.zedwerks.keycloak-smart-theme</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+    <name>Zedwerks SMART on FHIR Theme</name>
+    <description/>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <packaging>jar</packaging>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                    <include>css/*.css</include>
+                    <include>img/*.*</include>
+                </includes>
+                <excludes>
+                    <exclude>.gitignore</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
+</project>

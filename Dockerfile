@@ -12,28 +12,31 @@ FROM maven:3.9.11-sapmachine-25 AS builder
 WORKDIR /app
 
 # Copy the Maven configuration and project files
-COPY smart-on-fhir-spi/pom.xml ./smart-on-fhir-spi/
-COPY smart-on-fhir-spi/src ./smart-on-fhir-spi/src
-COPY keycloak keycloak
 
-# Copy the theme files
-COPY smart-theme/pom.xml ./theme/
-COPY smart-theme/src ./theme/src
-# Build the theme
-RUN mvn -B -f theme/pom.xml clean package
+# copy the entire multi-module project
+COPY smart-on-fhir-spi/ ./smart-on-fhir-spi/
 
-# Build the application JAR
-RUN mvn -B -DskipTests -f smart-on-fhir-spi/pom.xml clean package 
+RUN ls -R /app/smart-on-fhir-spi
+
+COPY keycloak/ ./keycloak/
 
 # Make the script executable
-RUN chmod +x keycloak/bin/*.sh
+RUN chmod +x ./keycloak/bin/*.sh
+
+# Build the SMART on FHIR SPI modules
+# This will build the smart-context-store module and copy the jar to the target directory
+WORKDIR /app/smart-on-fhir-spi/smart-context-store
+RUN mvn -B -DskipTests clean install
+WORKDIR /app/smart-on-fhir-spi
+RUN mvn -B -DskipTests clean package
+
+
 
 ## =================================================================================================
 # Package Stage - add to an official Keycloak image
 # As of 22-Oct-25, Keycloak 26.4.x broke terraform by removing server version in json response to server-info\
 
 FROM quay.io/keycloak/keycloak:26.3.5  
-
 
 # need the Keycloak Port ENV var set so we can use it in entrypoint to 
 # apply realm admin rights to the terraform client. 
@@ -49,11 +52,16 @@ ENV KEYCLOAK_TARGET_REALM_DISPLAY_NAME="SMART on FHIR"
 ENV KEYCLOAK_TARGET_REALM=smart
 ENV KEYCLOAK_TERRAFORM_CLIENT_ID=terraform
 ENV KEYCLOAK_TERRAFORM_CLIENT_SECRET=terraform!secret
-ENV KC_LOG_LEVEL=INFO
-ENV KC_LOG_CONSOLE_COLOR=false
 ENV KC_HTTP_CORS=true
-ENV KC_LOG_CONFIG=/opt/keycloak/conf/logging.properties
-ENV KC_LOG_CONSOLE_OUTPUT=default
+#ENV KC_LOG_CONFIG=/opt/keycloak/conf/logging.properties
+ENV KC_LOG=console
+ENV KC_LOG_CONSOLE_OUTPUT=default 
+ENV KC_LOG_CONSOLE_COLOR=false
+ENV KC_LOG_CONSOLE_FORMAT="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c{1.}] (%t) %s%e%n"
+ENV KC_LOG_LEVEL=INFO
+ENV KC_LOG_CONFIG_IGNORE=true
+
+# This disables loading logging.properties completely:
 # Set the working directory in the container
 WORKDIR /opt/keycloak/
 
@@ -70,7 +78,7 @@ RUN chown keycloak:root -R ./data/import/
 USER keycloak
 
 # Copy the SMART on FHIR SPI Jar to the providers folder
-COPY --from=builder /app/smart-on-fhir-spi/target/*.jar ./providers/
+COPY --from=builder /app/smart-on-fhir-spi/dist/target/com.zedwerks.*.jar ./providers/
 
 # Copy the theme files
 #COPY --from=builder /app/theme/target/*.jar ./providers/

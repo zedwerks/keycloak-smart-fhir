@@ -1,0 +1,3 @@
+com.zedwerks.keycloak.smart.authenticators.AudienceValidatorFactory
+com.zedwerks.keycloak.smart.authenticators.LaunchDetectorFactory
+com.zedwerks.keycloak.smart.authenticators.SmartLaunchResolverFactory

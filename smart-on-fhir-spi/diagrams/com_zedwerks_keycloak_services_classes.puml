@@ -1,7 +1,0 @@
-@startuml
-skinparam classAttributeIconSize 0
-class ContextResourceProviderFactory {}
-RealmResourceProviderFactory <|.. ContextResourceProviderFactory
-class ContextResourceProvider {}
-RealmResourceProvider <|.. ContextResourceProvider
-@enduml
