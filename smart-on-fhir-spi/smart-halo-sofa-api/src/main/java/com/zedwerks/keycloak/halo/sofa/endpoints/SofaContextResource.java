@@ -1,6 +1,6 @@
 /**
  * Copyright 2024 Zed Werks Inc.
- * 
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * @author Brad Head
- * 
+ *
  */
-
 package com.zedwerks.keycloak.halo.sofa.endpoints;
 
 import java.util.Optional;
@@ -32,8 +31,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
-import com.zedwerks.keycloak.smart.context.store.spi.ContextStoreProvider;
+import com.zedwerks.keycloak.smart.context.store.services.SmartContextCacheService;
 import com.zedwerks.keycloak.smart.context.api.helpers.AuthTokenHelper;
 
 import jakarta.ws.rs.Consumes;
@@ -53,17 +51,14 @@ import jakarta.ws.rs.core.Response;
 
 /**
  * SofaContextResource is a RESTful endpoint for managing the SMART on FHIR
- * context for HALO
- * This behaves as the Context Manager, as described by Canada Health Infoway
- * HALO specifications.
- * It allows setting, clearing, and retrieving the SOFA context for a user
- * session.
- * 
+ * context for HALO This behaves as the Context Manager, as described by Canada
+ * Health Infoway HALO specifications. It allows setting, clearing, and
+ * retrieving the SOFA context for a user session.
+ *
  * It interconnects to the SOFA FHIR R4 Service to post the Bundle contained in
- * the context request.
- * It also provides CORS support for cross-origin requests.
+ * the context request. It also provides CORS support for cross-origin requests.
  * It uses the ContextCacheService to manage the context entries in a cache.
- * 
+ *
  *
  * @author Brad Head
  */
@@ -85,13 +80,9 @@ public class SofaContextResource {
         this.session = session;
     }
 
-    private ContextStoreProvider getContextStore() {
-        return this.session.getProvider(ContextStoreProvider.class);
-    }
-
     /**
-     * Options
-     * * Preflight request for CORS. This method allows the browser to check if the
+     * Options * Preflight request for CORS. This method allows the browser to
+     * check if the
      */
     @OPTIONS
     @Path("{path:.*}")
@@ -116,16 +107,16 @@ public class SofaContextResource {
     }
 
     /**
-     * Set the launch context for the user session. This consumes a JSON
-     * context request as per the Infoway HALO specifications, saves the object
-     * identifier for the context, and returns
-     * a 200 OK response with the context identifier in the response body.
+     * Set the launch context for the user session. This consumes a JSON context
+     * request as per the Infoway HALO specifications, saves the object
+     * identifier for the context, and returns a 200 OK response with the
+     * context identifier in the response body.
      *
      * @return Response
      */
     @POST
     @Path("/$set-context")
-    @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
+    @Consumes({MediaType.APPLICATION_JSON, "application/fhir+json"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response postContext(@HeaderParam("Authorization") String authorizationHeader,
             String jsonBody) {
@@ -136,7 +127,6 @@ public class SofaContextResource {
             // Here is where we call the Context Service to persist the context in Cache.
             // In future, we add a pre-processor step to validate the context and to
             // call an optional external service to enrich/map the FHIR context bundle.
-
             // Retrieve current user session from token
             RealmModel realm = session.getContext().getRealm();
             String sid = token.getSessionId();
@@ -148,11 +138,11 @@ public class SofaContextResource {
 
             // Here is where we call out to the FHIR Server to post the context bundle
             // For now, we just save the context in the cache
-            ContextStoreProvider contextStore = getContextStore();
-            String launchId = contextStore.storeContext(userSession, node.toString());
+            SmartContextCacheService contextStore = new SmartContextCacheService(session);
+            String launchId = contextStore.store(userSession.getId(), node.toString());
 
             return Response.ok("{\"launchId\":\"" + launchId + "\"}").build(); // @todo to return the full context
-                                                                               // response object
+            // response object
 
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
@@ -177,7 +167,7 @@ public class SofaContextResource {
      */
     @POST
     @Path("/$clear-context")
-    @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
+    @Consumes({MediaType.APPLICATION_JSON, "application/fhir+json"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response clearSmartContext(@HeaderParam("Authorization") String authorizationHeader,
             String jsonBody) {
@@ -190,8 +180,8 @@ public class SofaContextResource {
 
             // @todo -- check that the sessionId associated to the contextid matches the
             // token session.
-            ContextStoreProvider contextStore = getContextStore();
-            contextStore.deleteContext(contextId);
+            SmartContextCacheService contextStore = new SmartContextCacheService(session);
+            //contextStore.delete(contextId);
 
             return Response.status(Response.Status.OK)
                     .entity("{}").build();
@@ -228,17 +218,17 @@ public class SofaContextResource {
                 throw new IllegalArgumentException("Context ID does not match session ID");
             }
 
-            RealmModel realm = session.getContext().getRealm();
+            //RealmModel realm = session.getContext().getRealm();
             String sid = token.getSessionId();
+            RealmModel realm = session.getContext().getRealm();
             UserSessionModel userSession = session.sessions().getUserSession(realm, sid);
 
-            ContextStoreProvider contextStore = getContextStore();
-            Optional<ContextEntry> contextEntry = contextStore.getContext(launchId);
+            SmartContextCacheService contextStore = new SmartContextCacheService(session);
+            String payload = contextStore.retrieve(launchId);
 
-            if (contextEntry.isEmpty()) {
+            if (payload == null) {
                 return Response.status(Response.Status.NOT_FOUND).entity("Context not found").build();
             }
-            String payload = contextEntry.get().getPayload();
 
             return Response.ok(payload).build();
         } catch (IllegalArgumentException e) {

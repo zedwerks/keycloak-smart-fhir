@@ -20,21 +20,21 @@
  * 
  */
 
-package com.zedwerks.keycloak.smart.context.store.jpa;
+package com.zedwerks.keycloak.smart.context.store.spi;
 
+import org.keycloak.connections.jpa.entityprovider.JpaEntityProvider;
 import org.keycloak.connections.jpa.entityprovider.JpaEntityProviderFactory;
 import org.keycloak.models.KeycloakSession;
-import org.keycloak.connections.jpa.entityprovider.JpaEntityProvider;
 
-public class ContextJpaEntityProviderFactory implements JpaEntityProviderFactory {
+public class ContextJpaProviderFactory implements JpaEntityProviderFactory {
     @Override
     public JpaEntityProvider create(KeycloakSession session) {
-        return new ContextJpaEntityProvider();
+        return new ContextJpaProvider();
     }
 
     @Override
     public String getId() {
-        return "smart-context-jpa";
+        return ContextJpaProvider.ID;
     }
 
     @Override

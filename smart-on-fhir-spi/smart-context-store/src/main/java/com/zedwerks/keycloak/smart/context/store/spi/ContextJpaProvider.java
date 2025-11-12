@@ -1,7 +1,7 @@
 /**
  * Copyright 2024 Zed Werks Inc.
- * 
- * 
+ *
+ *
  *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,20 +15,27 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * @author Brad Head
- * 
+ *
  */
-
-package com.zedwerks.keycloak.smart.context.store.jpa;
+package com.zedwerks.keycloak.smart.context.store.spi;
 
 import java.util.List;
 
+import org.jboss.logging.Logger;
 import org.keycloak.connections.jpa.entityprovider.JpaEntityProvider;
 
-public class ContextJpaEntityProvider implements JpaEntityProvider {
+import com.zedwerks.keycloak.smart.context.store.jpa.ContextEntryEntity;
 
-    public static final String ID = "smart-context-store";
+public class ContextJpaProvider implements JpaEntityProvider {
+
+    public static final String ID = "smart-context-jpa";
+    private final Logger logger = Logger.getLogger(getClass());
+
+    public ContextJpaProvider() {
+        logger.info("[ContextJpaProvider] Initializing ContextJpaProvider");
+    }
 
     @Override
     public List<Class<?>> getEntities() {
@@ -46,7 +53,7 @@ public class ContextJpaEntityProvider implements JpaEntityProvider {
 
     @Override
     public String getFactoryId() {
-        return ContextJpaEntityProvider.ID;
+        return ID;
     } // this is the factory ID used to create this provider
 
 }

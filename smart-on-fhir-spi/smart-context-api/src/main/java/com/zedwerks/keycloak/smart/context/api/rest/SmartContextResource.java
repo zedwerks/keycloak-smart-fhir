@@ -20,8 +20,6 @@
 
 package com.zedwerks.keycloak.smart.context.api.rest;
 
-import java.util.Optional;
-
 import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
@@ -36,8 +34,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zedwerks.keycloak.smart.context.api.helpers.AuthTokenHelper;
-import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
-import com.zedwerks.keycloak.smart.context.store.spi.ContextStoreProvider;
+import com.zedwerks.keycloak.smart.context.store.services.SmartContextCacheService;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.ForbiddenException;
@@ -87,10 +84,6 @@ public class SmartContextResource {
         this.session = session;
     }
 
-    private ContextStoreProvider getContextStore() {
-        return this.session.getProvider(ContextStoreProvider.class);
-    }
-
     /**
      * Set the launch context for the user session. This consumes a JSON
      * context request, saves the object identifier for the context, and returns
@@ -123,9 +116,9 @@ public class SmartContextResource {
 
             // Here is where we call out to the FHIR Server to post the context bundle
             // For now, we just save the context in the cache
+            SmartContextCacheService contextStore = new SmartContextCacheService(session);
 
-            ContextStoreProvider contextStore = getContextStore();
-            String contextId = contextStore.storeContext(userSession, node.toString());
+            String contextId = contextStore.store(userSession.getId(), node.toString());
 
             ContextResponse response = new ContextResponse();
             response.contextId = contextId;
@@ -155,17 +148,17 @@ public class SmartContextResource {
             AccessToken token = AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, READ_SCOPE);
 
             // Retrieve current user session from token
-            RealmModel realm = session.getContext().getRealm();
-            String sid = token.getSessionId();
-            UserSessionModel userSession = session.sessions().getUserSession(realm, sid);
+            //RealmModel realm = session.getContext().getRealm();
+            //String sid = token.getSessionId();
+            //UserSessionModel userSession = session.sessions().getUserSession(realm, sid);
 
-            ContextStoreProvider contextStore = getContextStore();
-            Optional<ContextEntry> contextEntry = contextStore.getContext(userSession.getId());
+            SmartContextCacheService contextStore = new SmartContextCacheService(session);
 
-            if (contextEntry.isEmpty()) {
+            String contextPayload = contextStore.retrieve(contextId);
+
+            if (contextPayload == null) {
                 return Response.status(Response.Status.NOT_FOUND).entity("Context not found").build();
             }
-            String contextPayload = contextEntry.get().getPayload();
 
             Response.ResponseBuilder builder = Response.ok().entity(contextPayload);
             return Cors.builder()

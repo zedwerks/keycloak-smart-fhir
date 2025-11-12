@@ -19,10 +19,6 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="realm_id" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-
             <column name="user_session_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
@@ -48,10 +44,6 @@
         </createTable>
 
         <!-- Optional: Create indexes to speed up lookups -->
-        <createIndex indexName="idx_context_entry_realm" tableName="context_entry">
-            <column name="realm_id"/>
-        </createIndex>
-
         <createIndex indexName="idx_context_entry_user_session" tableName="context_entry">
             <column name="user_session_id"/>
         </createIndex>
@@ -60,7 +52,7 @@
         <addUniqueConstraint 
             constraintName="uk_context_entry_unique_session"
             tableName="context_entry"
-            columnNames="realm_id, user_session_id, context_id"/>
+            columnNames="user_session_id, context_id"/>
 
         <!-- Rollback: drop the table -->
         <rollback>

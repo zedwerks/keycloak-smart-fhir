@@ -24,23 +24,16 @@ package com.zedwerks.keycloak.smart.context.store.models;
 
 import java.io.Serializable;
 
-import org.keycloak.models.UserSessionModel;
-
 public class ContextEntry implements Serializable {
     private String userSessionId;
-    private String realmId;
-    private String userId;
     private String contextId;
     private String payload; // JSON payload as a String or perhaps encrypted and encoded
 
     public ContextEntry() {
     }
 
-    public ContextEntry(UserSessionModel userSession, String contextId, String payload) {
-        this.userSessionId = userSession.getId();
-        this.userId = userSession.getUser().getId();
-        this.realmId = userSession.getRealm().getId();
-        this.userId = userSession.getUser().getId();
+    public ContextEntry(String userSessionId, String contextId, String payload) {
+        this.userSessionId = userSessionId;
         this.payload = payload;
         this.contextId = contextId;
     }
@@ -58,22 +51,6 @@ public class ContextEntry implements Serializable {
 
     public void setUserSessionId(String userSessionId) {
         this.userSessionId = userSessionId;
-    }
-
-    public String getRealmId() {
-        return realmId;
-    }
-
-    public void setRealmId(String realmId) {
-        this.realmId = realmId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getPayload() {

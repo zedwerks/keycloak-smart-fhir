@@ -20,8 +20,11 @@ package com.zedwerks.keycloak.smart.context.store.jpa;
 
 import java.time.Instant;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicUpdate;
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -38,6 +41,8 @@ import jakarta.persistence.Version;
  */
 @Entity
 @Table(name = "context_entry")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @DynamicUpdate
 public class ContextEntryEntity {
 
@@ -45,8 +50,6 @@ public class ContextEntryEntity {
     @Column(name = "context_id", nullable = false, updatable = false, length = 255)
     private String contextId;
 
-     @Column(name = "realm_id", nullable = false, length = 255)
-    private String realmId;
 
     @Column(name = "user_session_id", nullable = false, updatable = false, length = 255)
     private String userSessionId;
@@ -93,13 +96,6 @@ public class ContextEntryEntity {
         return contextId;
     }
 
-    public String getRealmId() {
-        return realmId;
-    }
-
-    public void setRealmId(String realmId) {
-        this.realmId = realmId;
-    }
 
     public String getUserSessionId() {
         return userSessionId;

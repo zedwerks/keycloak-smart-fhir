@@ -2,21 +2,21 @@ package com.zedwerks.keycloak.smart.context.store.spi;
 
 import org.jboss.logging.Logger;
 import org.keycloak.Config;
+import org.keycloak.events.EventListenerProviderFactory;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
-import org.keycloak.provider.ProviderFactory;
 
-public class ContextStoreProviderFactory implements ProviderFactory<ContextStoreProvider> {
+public class ContextStoreEventProviderFactory implements EventListenerProviderFactory {
 
     protected final static String ID = "smart-context-store"; // must match getId() in ContextStoreSpi
 
-    private static final Logger logger = Logger.getLogger(ContextStoreProviderFactory.class);
-    protected ContextStoreProvider provider;
+    private static final Logger logger = Logger.getLogger(ContextStoreEventProviderFactory.class);
+    protected ContextStoreEventProvider provider;
 
     @Override
-    public ContextStoreProvider create(KeycloakSession session) {
+    public ContextStoreEventProvider create(KeycloakSession session) {
         logger.info("[ContextStoreProviderFactory] Creating ContextStoreProvider");
-        provider = new ContextStoreProviderImpl(session);
+        provider = new ContextStoreEventProvider(session);
         return provider;
     }
 
@@ -29,8 +29,6 @@ public class ContextStoreProviderFactory implements ProviderFactory<ContextStore
     public void postInit(KeycloakSessionFactory factory) {
         logger.info("🟢 [ContextStoreProviderFactory] successfully registered in KeycloakSessionFactory");
         // Post-initialization logic can be added here if needed
-        provider.postInit();
-
     }
 
     @Override

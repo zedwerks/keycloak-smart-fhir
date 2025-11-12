@@ -44,3 +44,4 @@ services:
     command:
       - start-dev
       - --import-realm
+      - --verbose

@@ -6,7 +6,7 @@ import org.infinispan.notifications.cachelistener.annotation.CacheEntryRemoved;
 import org.infinispan.notifications.cachelistener.event.CacheEntryEvent;
 import org.jboss.logging.Logger;
 
-import com.zedwerks.keycloak.smart.context.store.dao.IContextDbDao;
+import com.zedwerks.keycloak.smart.context.store.dao.ContextStoreDao;
 import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
 
 /**
@@ -15,20 +15,20 @@ import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
 @Listener(observation = Listener.Observation.POST)
 public class ContextCacheListener {
 
-    private static final Logger LOG = Logger.getLogger(ContextCacheListener.class);
-    private final IContextDbDao dbDao;
+    private static final Logger logger = Logger.getLogger(ContextCacheListener.class);
+    private final ContextStoreDao contextStoreDao;
     private final String cacheName;
 
-    public ContextCacheListener(String cacheName, IContextDbDao dbDao) {
+    public ContextCacheListener(String cacheName, ContextStoreDao contextStoreDao) {
         this.cacheName = cacheName;
-        this.dbDao = dbDao;
+        this.contextStoreDao = contextStoreDao;
     }
 
     @CacheEntryExpired
     public void onCacheEntryExpired(CacheEntryEvent<String, ContextEntry> event) {
         if (event.isPre()) return;
         String key = event.getKey();
-        LOG.debugf("[%s] Cache entry expired: %s", cacheName, key);
+        logger.debugf("[%s] Cache entry expired: %s", cacheName, key);
         handleRemoval(key);
     }
 
@@ -36,15 +36,15 @@ public class ContextCacheListener {
     public void onCacheEntryRemoved(CacheEntryEvent<String, ContextEntry> event) {
         if (event.isPre()) return;
         String key = event.getKey();
-        LOG.debugf("[%s] Cache entry removed: %s", cacheName, key);
+        logger.debugf("[%s] Cache entry removed: %s", cacheName, key);
         handleRemoval(key);
     }
 
     private void handleRemoval(String cacheKey) {
         try {
-            dbDao.deleteById(cacheKey);
+            contextStoreDao.deleteByContextId(cacheKey);
         } catch (Exception e) {
-            LOG.warnf(e, "[%s] Failed to delete DB entry for cache key: %s", cacheName, cacheKey);
+            logger.warnf(e, "[%s] Failed to delete DB entry for cache key: %s", cacheName, cacheKey);
         }
     }
 }
