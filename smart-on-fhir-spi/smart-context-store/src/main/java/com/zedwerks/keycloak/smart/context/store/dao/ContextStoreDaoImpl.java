@@ -1,13 +1,11 @@
 package com.zedwerks.keycloak.smart.context.store.dao;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.jboss.logging.Logger;
 import org.keycloak.models.UserSessionModel;
 
 import com.zedwerks.keycloak.smart.context.store.jpa.ContextEntryEntity;
-import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -23,39 +21,34 @@ public class ContextStoreDaoImpl implements ContextStoreDao {
 
     @Transactional
     @Override
-    public String persistOrUpdate(ContextEntry entry) {
+    public String persistOrUpdate(UserSessionModel userSession, String contextId, String contextPayload) {
 
-        String contextId = entry.getContextId();
+        String realmId = userSession.getRealm().getId();
+        String userSessionId = userSession.getId();
 
         ContextEntryEntity e = this.em.find(ContextEntryEntity.class, contextId);
         if (e == null) {
-            e = new ContextEntryEntity(entry.getUserSessionId(), contextId, entry.getPayload());
+            e = new ContextEntryEntity(realmId, contextId, userSessionId, contextPayload);
             this.em.persist(e);
         } else {
-            e.setPayload(entry.getPayload());
+            e.setPayload(contextPayload);
+            e.setUserSessionId(userSessionId);
+            e.setRealmId(realmId);
+            this.em.merge(e); // Merge to update the entity
+            // Note: Hibernate will automatically handle the versioning and optimistic locking
             // updatedAt auto-updated by @PreUpdate
         }
         return e.getContextId();
     }
 
-    @Transactional
-    @Override
-    public String persistOrUpdate(UserSessionModel userSession, String context) {
-        String contextStringId = userSession.getId() + "-" + context.hashCode();
-        ContextEntry entry = new ContextEntry(userSession.getId(), contextStringId, context);
-        return this.persistOrUpdate(entry);
-    }
 
     @Override
-    public Optional<ContextEntry> findById(String contextId) {
+    public Optional<String> findByContextId(String contextId) {
 
         ContextEntryEntity e = em.find(ContextEntryEntity.class, contextId);
         if (e != null) {
-            ContextEntry entry = new ContextEntry();
-            entry.setContextId(e.getContextId());
-            entry.setUserSessionId(e.getUserSessionId());
-            entry.setPayload(e.getPayload());
-            return Optional.of(entry);
+            String payload = e.getPayload();
+            return Optional.of(payload);
         }
 
         // Lookup from DB
@@ -84,18 +77,5 @@ public class ContextStoreDaoImpl implements ContextStoreDao {
                 .executeUpdate();
     }
 
-    @Override
-    public List<ContextEntry> findByUserSessionId(String userSessionId) {
-        List<ContextEntryEntity> entities = em.createQuery("SELECT e FROM ContextEntryEntity e WHERE e.userSessionId = :userSessionId", ContextEntryEntity.class)
-                .setParameter("userSessionId", userSessionId)
-                .getResultList();
-        return entities.stream().map(e -> {
-            ContextEntry entry = new ContextEntry();
-            entry.setContextId(e.getContextId());
-            entry.setUserSessionId(e.getUserSessionId());
-            entry.setPayload(e.getPayload());
-            return entry;
-        }).toList();
-    }
 
 }

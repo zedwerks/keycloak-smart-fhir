@@ -118,7 +118,7 @@ public class SmartContextResource {
             // For now, we just save the context in the cache
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
 
-            String contextId = contextStore.store(userSession.getId(), node.toString());
+            String contextId = contextStore.store(userSession, node.toString());
 
             ContextResponse response = new ContextResponse();
             response.contextId = contextId;

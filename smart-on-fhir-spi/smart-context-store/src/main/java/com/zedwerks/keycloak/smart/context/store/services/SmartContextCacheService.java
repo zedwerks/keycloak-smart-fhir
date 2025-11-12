@@ -6,10 +6,10 @@ import org.jboss.logging.Logger;
 import org.keycloak.connections.jpa.JpaConnectionProvider;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
+import org.keycloak.models.UserSessionModel;
 
 import com.zedwerks.keycloak.smart.context.store.dao.ContextStoreDao;
 import com.zedwerks.keycloak.smart.context.store.dao.ContextStoreDaoImpl;
-import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
 
 import jakarta.persistence.EntityManager;
 
@@ -31,7 +31,7 @@ public class SmartContextCacheService {
         this.realm = session.getContext().getRealm();
     }
 
-    public String store(String userSessionId, String contextJson) {
+    public String store(UserSessionModel userSessionModel, String contextJson) {
         EntityManager em = session.getProvider(JpaConnectionProvider.class).getEntityManager();
         try {
             em.joinTransaction();
@@ -42,14 +42,13 @@ public class SmartContextCacheService {
         ContextStoreDao dao = new ContextStoreDaoImpl(em);
         //String contextId = userSessionId + "-" + contextJson.hashCode();
         String contextId = uuid();
-        ContextEntry entry = new ContextEntry(userSessionId, contextId, contextJson);
-        return dao.persistOrUpdate(entry);
+        return dao.persistOrUpdate(userSessionModel, contextId, contextJson);
     }
 
     public String retrieve(String contextIdString) {
         EntityManager em = session.getProvider(JpaConnectionProvider.class).getEntityManager();
         ContextStoreDao dao = new ContextStoreDaoImpl(em);
-        Optional<ContextEntry> entry = dao.findById(contextIdString);
-        return entry.isEmpty() ? null : entry.get().getPayload();
+        Optional<String> entry = dao.findByContextId(contextIdString);
+        return entry.isEmpty() ? null : entry.get();
     }
 }

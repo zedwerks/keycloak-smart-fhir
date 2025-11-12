@@ -139,7 +139,7 @@ public class SofaContextResource {
             // Here is where we call out to the FHIR Server to post the context bundle
             // For now, we just save the context in the cache
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
-            String launchId = contextStore.store(userSession.getId(), node.toString());
+            String launchId = contextStore.store(userSession, node.toString());
 
             return Response.ok("{\"launchId\":\"" + launchId + "\"}").build(); // @todo to return the full context
             // response object

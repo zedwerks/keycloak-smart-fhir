@@ -88,3 +88,16 @@ To try this out, use Postman. Included in this repo, is ```example/postman``` fo
 [Badge-Stable]: https://img.shields.io/badge/status-Stable-brightgreen
 
 
+# A note about MacOS
+
+When you have private relay enabled, as is the default on macOS Tahoe, running the quick-start on local docker
+using the docker compose with no HTTPS enabled will cause the terraform config scripts to fail. This is because
+this private relay that Apple employs assigns your host ocmputer an external Public IP address. Keycloak detects 
+this fact and rightfully blocks accesss. saying HTTPS is required. 
+
+Here is how to over come this on your macOS computer:
+
+```bash
+sudo defaults write /Library/Preferences/com.apple.networkextension Disabled -bool true
+sudo defaults write /Library/Preferences/com.apple.icloud.private_relay.plist PrivateRelayEnabled -bool false
+```

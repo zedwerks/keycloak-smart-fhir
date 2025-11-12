@@ -28,10 +28,10 @@ printenv | grep TF_VAR_
 echo "-------------------------"
 
 echo "Building Services..."
-docker compose down -v --file ./docker-compose.yml
-if docker compose --file ./docker-compose.yml build --no-cache; then
+docker compose down -v -f ./docker-compose.yml
+if docker compose -f ./docker-compose.yml build --no-cache; then
     echo "Services built successfully. Now starting..."
-    docker compose --file ./docker-compose.yml up -d
+    docker compose -f ./docker-compose.yml up -d
 else 
     echo "Services failed to start."
     exit 1

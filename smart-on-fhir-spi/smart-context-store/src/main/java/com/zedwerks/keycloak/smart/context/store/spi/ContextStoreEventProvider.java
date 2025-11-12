@@ -1,6 +1,6 @@
 package com.zedwerks.keycloak.smart.context.store.spi;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 import org.jboss.logging.Logger;
 import org.keycloak.connections.jpa.JpaConnectionProvider;
@@ -9,10 +9,11 @@ import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
+import org.keycloak.models.UserModel;
+import org.keycloak.models.UserSessionModel;
 
 import com.zedwerks.keycloak.smart.context.store.dao.ContextStoreDao;
 import com.zedwerks.keycloak.smart.context.store.dao.ContextStoreDaoImpl;
-import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
 
 import jakarta.persistence.EntityManager;
 
@@ -24,28 +25,46 @@ public class ContextStoreEventProvider implements EventListenerProvider {
 
     protected final Logger logger = Logger.getLogger(getClass());
     protected final KeycloakSession session;
-    protected final RealmModel realm;
 
     protected ContextStoreDao dbDao;
 
     protected ContextStoreEventProvider(KeycloakSession session) {
         this.session = session;
-        this.realm = session.getContext().getRealm();
     }
 
-    protected void clearContextForUserId(String userId) {
-        EntityManager em = this.session.getProvider(JpaConnectionProvider.class).getEntityManager();
+    protected void deleteContextForEvent(Event event) {
 
-        ContextStoreDao dao = new ContextStoreDaoImpl(em);
-        List<ContextEntry> entries = dao.findByUserSessionId(userId);
-        if (entries != null && !entries.isEmpty()) {
-            for (ContextEntry entry : entries) {
-                dao.deleteByContextId(entry.getContextId());
-                logger.debugf("Cleared context for user %s, contextId %s", userId, entry.getContextId());
-            }
-        } else {
-            logger.debugf("No context entries found for user %s", userId);
+        String userId = event.getUserId();
+
+        RealmModel realm = session.realms().getRealm(event.getRealmId());
+
+        if (userId == null || realm == null) {
+            logger.debugf("Event %s has no userId, skipping context clear", event.getType());
+            return;
         }
+
+        // ✅ Find all sessions for this user
+        UserModel user = session.users().getUserById(realm, userId);
+        if (user == null) {
+            logger.debugf("User %s not found in realm %s", userId, realm.getName());
+            return;
+        }
+
+        // ✅ Obtain your EntityManager
+        EntityManager em = this.session.getProvider(JpaConnectionProvider.class).getEntityManager();
+        ContextStoreDao contextDao = new ContextStoreDaoImpl(em);
+
+        // ✅ Delete by sessionId or userId
+        // Online sessions
+        Stream<UserSessionModel> userSessionsStream = session.sessions().getUserSessionsStream(realm, user);
+
+        // Iterate over the stream and evict your cache entries
+        userSessionsStream.forEach(userSession -> {
+            String sessionId = userSession.getId();
+            contextDao.deleteByUserSessionId(sessionId);
+            logger.debugf("🧹 Removed context cache for user %s, session %s", userId, sessionId);
+        });
+
     }
 
     @Override
@@ -53,7 +72,7 @@ public class ContextStoreEventProvider implements EventListenerProvider {
         try {
             switch (event.getType()) {
                 case LOGOUT, LOGOUT_ERROR ->
-                    this.clearContextForUserId(event.getUserId());
+                    this.deleteContextForEvent(event);
                 case LOGIN_ERROR, TOKEN_EXCHANGE ->
                     logger.debugf("[ContextStoreEventListener] Event: %s (User: %s)", event.getType(), event.getUserId());
                 default -> {

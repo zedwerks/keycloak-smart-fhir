@@ -15,7 +15,6 @@
  *
  * @author Brad Head
  */
-
 package com.zedwerks.keycloak.smart.context.store.jpa;
 
 import java.time.Instant;
@@ -36,7 +35,7 @@ import jakarta.persistence.Version;
 
 /**
  * Represents a stored SMART or HALO context entry for a specific user session.
- * 
+ *
  * Uses a composite key of (realmId, userSessionId, contextKind).
  */
 @Entity
@@ -50,6 +49,8 @@ public class ContextEntryEntity {
     @Column(name = "context_id", nullable = false, updatable = false, length = 255)
     private String contextId;
 
+    @Column(name = "realm_id", nullable = false, updatable = false, length = 255)
+    private String realmId;
 
     @Column(name = "user_session_id", nullable = false, updatable = false, length = 255)
     private String userSessionId;
@@ -71,12 +72,14 @@ public class ContextEntryEntity {
     @Column(name = "version", nullable = false)
     private final long version = 0L;
 
-    public ContextEntryEntity() {}
+    public ContextEntryEntity() {
+    }
 
-    public ContextEntryEntity(String userSessionId, String contextId, String payload) {
+    public ContextEntryEntity(String realmId, String userSessionId, String contextId, String payload) {
         this.contextId = contextId;
         this.userSessionId = userSessionId;
         this.payload = payload;
+        this.realmId = realmId;
     }
 
     @PrePersist
@@ -90,12 +93,18 @@ public class ContextEntryEntity {
         updatedAt = Instant.now();
     }
 
-      // --- Getters and Setters ---
-
+    // --- Getters and Setters ---
     public String getContextId() {
         return contextId;
     }
 
+    public String getRealmId() {
+        return realmId;
+    }
+
+    public void setRealmId(String realmId) {
+        this.realmId = realmId;
+    }
 
     public String getUserSessionId() {
         return userSessionId;
@@ -133,5 +142,3 @@ public class ContextEntryEntity {
         return version;
     }
 }
-
-
