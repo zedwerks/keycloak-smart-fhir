@@ -36,7 +36,6 @@ public class SmartContextResourceProviderFactory implements RealmResourceProvide
 
     @Override
     public RealmResourceProvider create(KeycloakSession session) {
-        logger.info("[SmartContextResourceProviderFactory] Creating SmartContextResourceProvider");
         return new SmartContextResourceProvider(session);
     }
 
@@ -46,6 +45,7 @@ public class SmartContextResourceProviderFactory implements RealmResourceProvide
 
     @Override
     public void postInit(KeycloakSessionFactory factory) {
+        logger.info("🟢 SMART ON FHIR [SmartContextResourceProviderFactory] successfully initalized.");
     }
 
     @Override

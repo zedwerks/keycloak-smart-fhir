@@ -12,11 +12,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * @author Brad Head
- * 
+ *
  * SPDX-License-Identifier: Apache-2.0
- * 
+ *
  */
 package com.zedwerks.keycloak.smart.authenticators;
 
@@ -36,36 +36,31 @@ import org.keycloak.models.UserSessionProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zedwerks.keycloak.smart.context.store.services.SmartContextCacheService;
 
 import jakarta.ws.rs.core.Response;
 
 /**
  * This is an authenticator that is used to authenticate SMART on FHIR
- * EHR-Launch requests.
- * Apps that launch from the EHR will be passed an explicit URL parameter called
- * launch, whose
- * value must associate the app’s authorization
- * request with the current EHR session. For example, If an app receives the URL
- * parameter launch=abc123,
- * then it requests the scope launch and provides an additional URL parameter of
- * launch=abc123.
- * 
+ * EHR-Launch requests. Apps that launch from the EHR will be passed an explicit
+ * URL parameter called launch, whose value must associate the app’s
+ * authorization request with the current EHR session. For example, If an app
+ * receives the URL parameter launch=abc123, then it requests the scope launch
+ * and provides an additional URL parameter of launch=abc123.
+ *
  * The application could choose to also provide launch/patient,
- * launch/encounter, or other
- * launch/ scopes as “hints” regarding which contexts the app would like the EHR
- * to gather.
- * The EHR MAY ignore these hints (for example, if the user is in a workflow
- * where these contexts do not exist).
- * 
+ * launch/encounter, or other launch/ scopes as “hints” regarding which contexts
+ * the app would like the EHR to gather. The EHR MAY ignore these hints (for
+ * example, if the user is in a workflow where these contexts do not exist).
+ *
  * If an application requests a FHIR Resource scope which is restricted to a
- * single patient (e.g., patient/*.rs),
- * and the authorization results in the EHR is granting that scope, the EHR
- * SHALL establish a patient in context.
- * The EHR MAY refuse authorization requests including patient/ that do not also
- * include a valid launch,
- * or it MAY infer the launch/patient scope.
- * 
- * @see https://build.fhir.org/ig/HL7/smart-app-launch/scopes-and-launch-context.html#apps-that-launch-from-the-ehr
+ * single patient (e.g., patient/*.rs), and the authorization results in the EHR
+ * is granting that scope, the EHR SHALL establish a patient in context. The EHR
+ * MAY refuse authorization requests including patient/ that do not also include
+ * a valid launch, or it MAY infer the launch/patient scope.
+ *
+ * @see
+ * https://build.fhir.org/ig/HL7/smart-app-launch/scopes-and-launch-context.html#apps-that-launch-from-the-ehr
  */
 public class SmartLaunchResolver implements Authenticator {
 
@@ -90,9 +85,9 @@ public class SmartLaunchResolver implements Authenticator {
 
         boolean hasLaunchScope = LaunchHelper.hasLaunchScope(context);
         String launchContextId = LaunchDetector.launchContextAuthNote(context); // the opaque
-                                                                                // ?launch={launchContextId}
-                                                                                // from auth note as set by the
-                                                                                // launch detector.
+        // ?launch={launchContextId}
+        // from auth note as set by the
+        // launch detector.
 
         if (!hasLaunchScope || (launchContextId == null)) {
             logger.info("*** SMART on FHIR EHR-Launch: No launch in-flight.");
@@ -109,9 +104,9 @@ public class SmartLaunchResolver implements Authenticator {
             logger.warn(msg);
             context.failure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR,
                     Response.status(302)
-                            .header("Location", context.getAuthenticationSession().getRedirectUri() +
-                                    "?error=server_error" +
-                                    "&error_description=" + msg)
+                            .header("Location", context.getAuthenticationSession().getRedirectUri()
+                                    + "?error=server_error"
+                                    + "&error_description=" + msg)
                             .build());
             return;
         }
@@ -150,13 +145,11 @@ public class SmartLaunchResolver implements Authenticator {
     }
 
     /**
-     * Retrieve the user session Context that was previously set into session by the
-     * EHR ahead of launch,
-     * and then parse and save the claims as User Session Note Mapper values for the
-     * auth
-     * this way, they are returned in and alongside the token(s) as per the
-     * corresponding mapper.
-     * 
+     * Retrieve the user session Context that was previously set into session by
+     * the EHR ahead of launch, and then parse and save the claims as User
+     * Session Note Mapper values for the auth this way, they are returned in
+     * and alongside the token(s) as per the corresponding mapper.
+     *
      * @param context
      * @param launchContextId
      * @return true when the context was found and resolved, otherwise false.
@@ -197,12 +190,15 @@ public class SmartLaunchResolver implements Authenticator {
 
     private static boolean saveLaunchContextToUserSession(AuthenticationFlowContext context, String newContextId) {
 
+        KeycloakSession session = context.getSession();
+
         if (newContextId == null) {
             logger.warn("*** SMART Launch Context ID is null. Unexpected during an EHR launch.");
             return false;
         }
 
-        String contextJson = userSessionNote(context, newContextId);
+        SmartContextCacheService contextStore = new SmartContextCacheService(session);
+        String contextJson = contextStore.retrieve(newContextId);
 
         if (contextJson == null) {
             logger.warn(

@@ -1,7 +1,7 @@
 /**
  * Copyright 2024 Zed Werks Inc.
- * 
- * 
+ *
+ *
  *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,11 +15,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * @author Brad Head
- * 
+ *
  */
-
 package com.zedwerks.keycloak.halo.sofa.endpoints;
 
 import org.jboss.logging.Logger;
@@ -34,10 +33,8 @@ public class SofaContextResourceProviderFactory implements RealmResourceProvider
     public static final String ID = "halo";
     private static final Logger logger = Logger.getLogger(SofaContextResourceProviderFactory.class);
 
-
     @Override
     public RealmResourceProvider create(KeycloakSession session) {
-        logger.info("[SofaContextResourceProviderFactory] Creating Infoway HALO SofaContextResourceProvider");
         return new SofaContextResourceProvider(session);
     }
 
@@ -47,6 +44,8 @@ public class SofaContextResourceProviderFactory implements RealmResourceProvider
 
     @Override
     public void postInit(KeycloakSessionFactory factory) {
+        logger.info("🟢 SMART ON FHIR: HALO SOFA [SofaContextResourceProviderFactory] successfully initalized.");
+
     }
 
     @Override

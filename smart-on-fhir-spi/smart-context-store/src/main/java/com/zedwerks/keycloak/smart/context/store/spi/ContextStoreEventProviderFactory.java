@@ -15,7 +15,6 @@ public class ContextStoreEventProviderFactory implements EventListenerProviderFa
 
     @Override
     public ContextStoreEventProvider create(KeycloakSession session) {
-        logger.info("[ContextStoreProviderFactory] Creating ContextStoreProvider");
         provider = new ContextStoreEventProvider(session);
         return provider;
     }
@@ -27,8 +26,7 @@ public class ContextStoreEventProviderFactory implements EventListenerProviderFa
 
     @Override
     public void postInit(KeycloakSessionFactory factory) {
-        logger.info("🟢 [ContextStoreProviderFactory] successfully registered in KeycloakSessionFactory");
-        // Post-initialization logic can be added here if needed
+        logger.info("🟢 SMART ON FHIR [ContextStoreEventProviderFactory] successfully registered.");
     }
 
     @Override
