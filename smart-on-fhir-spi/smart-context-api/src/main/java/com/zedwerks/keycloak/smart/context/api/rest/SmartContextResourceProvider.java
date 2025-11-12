@@ -26,8 +26,6 @@ import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.services.resource.RealmResourceProvider;
 
-import com.zedwerks.keycloak.smart.context.store.spi.ContextStoreProvider;
-
 public class SmartContextResourceProvider implements RealmResourceProvider {
 
     private static final Logger logger = Logger.getLogger(SmartContextResourceProvider.class);
@@ -40,8 +38,7 @@ public class SmartContextResourceProvider implements RealmResourceProvider {
     @Override
     public Object getResource() {
         logger.debug("Creating SmartContextResource with session: " + session);
-        ContextStoreProvider contextStore = session.getProvider(ContextStoreProvider.class);
-        return new SmartContextResource(this.session, contextStore);
+        return new SmartContextResource(this.session);
     }
 
     @Override

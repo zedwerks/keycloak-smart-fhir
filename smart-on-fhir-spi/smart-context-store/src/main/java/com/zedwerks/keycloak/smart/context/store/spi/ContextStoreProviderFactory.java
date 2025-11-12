@@ -14,7 +14,7 @@ public class ContextStoreProviderFactory implements ProviderFactory<ContextStore
     @Override
     public ContextStoreProvider create(KeycloakSession session) {
         logger.info("[ContextStoreProviderFactory] Creating ContextStoreProvider");
-        provider = new ContextStoreProvider(session);
+        provider = new ContextStoreProviderImpl(session);
         return provider;
     }
 

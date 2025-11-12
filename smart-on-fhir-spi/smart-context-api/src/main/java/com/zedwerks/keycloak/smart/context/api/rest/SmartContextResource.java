@@ -38,7 +38,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zedwerks.keycloak.smart.context.api.helpers.AuthTokenHelper;
 import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
 import com.zedwerks.keycloak.smart.context.store.spi.ContextStoreProvider;
-import com.zedwerks.keycloak.smart.context.store.spi.IContextStoreProvider;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.ForbiddenException;
@@ -79,16 +78,17 @@ public class SmartContextResource {
     static final String READ_SCOPE = "Context.read"; // Make this a configuration property
 
     private KeycloakSession session = null;
-    private ContextStoreProvider contextStore = null;
 
     public SmartContextResource() { // needed to skirt CDI issues in Keycloak
         this.session = null;
-        this.contextStore = null;
     }
 
-    public SmartContextResource(KeycloakSession session, ContextStoreProvider contextStore) {
+    public SmartContextResource(KeycloakSession session) {
         this.session = session;
-        this.contextStore = contextStore;
+    }
+
+    private ContextStoreProvider getContextStore() {
+        return this.session.getProvider(ContextStoreProvider.class);
     }
 
     /**
@@ -124,9 +124,8 @@ public class SmartContextResource {
             // Here is where we call out to the FHIR Server to post the context bundle
             // For now, we just save the context in the cache
 
-            // IContextStoreProvider contextStore =
-            // session.getProvider(IContextStoreProvider.class);
-            String contextId = this.contextStore.storeContext(userSession, node.toString());
+            ContextStoreProvider contextStore = getContextStore();
+            String contextId = contextStore.storeContext(userSession, node.toString());
 
             ContextResponse response = new ContextResponse();
             response.contextId = contextId;
@@ -160,7 +159,8 @@ public class SmartContextResource {
             String sid = token.getSessionId();
             UserSessionModel userSession = session.sessions().getUserSession(realm, sid);
 
-            Optional<ContextEntry> contextEntry = this.contextStore.getContext(userSession.getId());
+            ContextStoreProvider contextStore = getContextStore();
+            Optional<ContextEntry> contextEntry = contextStore.getContext(userSession.getId());
 
             if (contextEntry.isEmpty()) {
                 return Response.status(Response.Status.NOT_FOUND).entity("Context not found").build();

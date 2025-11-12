@@ -75,18 +75,18 @@ public class SofaContextResource {
 
     protected static final Logger logger = Logger.getLogger(SofaContextResource.class);
 
-    private final ContextStoreProvider contextStore;
-
     KeycloakSession session;
 
     public SofaContextResource() { // needed to skirt CDI issues in Keycloak
         this.session = null;
-        this.contextStore = null;
     }
 
-    public SofaContextResource(KeycloakSession session, ContextStoreProvider contextStore) {
+    public SofaContextResource(KeycloakSession session) {
         this.session = session;
-        this.contextStore = contextStore;
+    }
+
+    private ContextStoreProvider getContextStore() {
+        return this.session.getProvider(ContextStoreProvider.class);
     }
 
     /**
@@ -148,8 +148,8 @@ public class SofaContextResource {
 
             // Here is where we call out to the FHIR Server to post the context bundle
             // For now, we just save the context in the cache
-
-            String launchId = this.contextStore.storeContext(userSession, node.toString());
+            ContextStoreProvider contextStore = getContextStore();
+            String launchId = contextStore.storeContext(userSession, node.toString());
 
             return Response.ok("{\"launchId\":\"" + launchId + "\"}").build(); // @todo to return the full context
                                                                                // response object
@@ -190,8 +190,8 @@ public class SofaContextResource {
 
             // @todo -- check that the sessionId associated to the contextid matches the
             // token session.
-
-            this.contextStore.deleteContext(contextId);
+            ContextStoreProvider contextStore = getContextStore();
+            contextStore.deleteContext(contextId);
 
             return Response.status(Response.Status.OK)
                     .entity("{}").build();
@@ -232,7 +232,8 @@ public class SofaContextResource {
             String sid = token.getSessionId();
             UserSessionModel userSession = session.sessions().getUserSession(realm, sid);
 
-            Optional<ContextEntry> contextEntry = this.contextStore.getContext(launchId);
+            ContextStoreProvider contextStore = getContextStore();
+            Optional<ContextEntry> contextEntry = contextStore.getContext(launchId);
 
             if (contextEntry.isEmpty()) {
                 return Response.status(Response.Status.NOT_FOUND).entity("Context not found").build();
