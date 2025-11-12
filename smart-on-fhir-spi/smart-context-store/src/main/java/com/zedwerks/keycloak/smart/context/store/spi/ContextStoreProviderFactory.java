@@ -8,6 +8,8 @@ import org.keycloak.provider.ProviderFactory;
 
 public class ContextStoreProviderFactory implements ProviderFactory<ContextStoreProvider> {
 
+    protected final static String ID = "smart-context-store"; // must match getId() in ContextStoreSpi
+
     private static final Logger logger = Logger.getLogger(ContextStoreProviderFactory.class);
     protected ContextStoreProvider provider;
 
@@ -37,6 +39,6 @@ public class ContextStoreProviderFactory implements ProviderFactory<ContextStore
 
     @Override
     public String getId() {
-        return "smart-context-store";
+        return ID;
     }
 }
