@@ -28,7 +28,7 @@ public class ContextStoreDaoImpl implements ContextStoreDao {
 
         ContextEntryEntity e = this.em.find(ContextEntryEntity.class, contextId);
         if (e == null) {
-            e = new ContextEntryEntity(realmId, contextId, userSessionId, contextPayload);
+            e = new ContextEntryEntity(realmId, userSessionId, contextId, contextPayload);
             this.em.persist(e);
         } else {
             e.setPayload(contextPayload);
