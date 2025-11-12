@@ -31,14 +31,9 @@ import org.keycloak.representations.AccessToken;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-<<<<<<< HEAD
 
 import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
 import com.zedwerks.keycloak.smart.context.store.spi.ContextStoreProvider;
-=======
-import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
-import com.zedwerks.keycloak.smart.context.store.spi.IContextStoreProvider;
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 import com.zedwerks.keycloak.smart.context.api.helpers.AuthTokenHelper;
 
 import jakarta.ws.rs.Consumes;
@@ -80,11 +75,7 @@ public class SofaContextResource {
 
     protected static final Logger logger = Logger.getLogger(SofaContextResource.class);
 
-<<<<<<< HEAD
     private final ContextStoreProvider contextStore;
-=======
-    private final IContextStoreProvider contextStore;
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 
     KeycloakSession session;
 
@@ -93,11 +84,7 @@ public class SofaContextResource {
         this.contextStore = null;
     }
 
-<<<<<<< HEAD
     public SofaContextResource(KeycloakSession session, ContextStoreProvider contextStore) {
-=======
-    public SofaContextResource(KeycloakSession session, IContextStoreProvider contextStore) {
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
         this.session = session;
         this.contextStore = contextStore;
     }

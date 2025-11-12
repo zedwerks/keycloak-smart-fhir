@@ -2,9 +2,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<<<<<<< HEAD
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>com.zedwerks</groupId>
         <artifactId>smart-on-fhir-spi</artifactId>
@@ -15,7 +13,6 @@
     <artifactId>dist</artifactId>
     <packaging>pom</packaging>
     <name>SMART on FHIR SPI Distribution</name>
-
     <build>
         <plugins>
             <plugin>
@@ -97,95 +94,4 @@
             <artifactId>smart-halo-launch-auth</artifactId>
         </dependency>
     </dependencies>
-=======
-  <modelVersion>4.0.0</modelVersion>
-
-  <parent>
-    <groupId>com.zedwerks</groupId>
-    <artifactId>smart-on-fhir-spi</artifactId>
-    <version>2.0.0</version>
-    <relativePath>../pom.xml</relativePath>
-  </parent>
-
-  <artifactId>dist</artifactId>
-  <packaging>pom</packaging>
-  <name>SMART on FHIR SPI Distribution</name>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>${maven-dependency-plugin.version}</version>
-        <executions>
-          <execution>
-            <id>copy-all-artifacts</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/</outputDirectory>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>com.zedwerks</groupId>
-                  <artifactId>smart-context-store</artifactId>
-                  <version>${project.version}</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>com.zedwerks</groupId>
-                  <artifactId>smart-context-api</artifactId>
-                  <version>${project.version}</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>com.zedwerks</groupId>
-                  <artifactId>smart-halo-sofa-api</artifactId>
-                  <version>${project.version}</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>com.zedwerks</groupId>
-                  <artifactId>smart-launch-auth</artifactId>
-                  <version>${project.version}</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>com.zedwerks</groupId>
-                  <artifactId>smart-halo-launch-auth</artifactId>
-                  <version>${project.version}</version>
-                  <type>jar</type>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
-  <dependencies>
-    <dependency>
-      <groupId>com.zedwerks</groupId>
-      <artifactId>smart-context-store</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.zedwerks</groupId>
-      <artifactId>smart-context-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.zedwerks</groupId>
-      <artifactId>smart-halo-sofa-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.zedwerks</groupId>
-      <artifactId>smart-launch-auth</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.zedwerks</groupId>
-      <artifactId>smart-halo-launch-auth</artifactId>
-    </dependency>
-  </dependencies>
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 </project>

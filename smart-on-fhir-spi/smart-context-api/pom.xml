@@ -106,7 +106,6 @@
         </dependency>
     </dependencies>
     <build>
-<<<<<<< HEAD
         <finalName>com.zedwerks.smart-context-api</finalName>
         <resources>
             <resource>
@@ -114,8 +113,6 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-=======
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -125,11 +122,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-<<<<<<< HEAD
                 <version>${maven-compiler-plugin.version}</version>
-=======
-                <version>3.14.1</version>
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
                 <configuration>
                     <release>${java.version}</release>
                     <compilerArgs>
@@ -141,7 +134,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>${maven-jar-plugin.version}</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -178,32 +171,6 @@
                     <argLine>-javaagent:${settings.localRepository}/org/mockito/mockito-core/${org.mockito.version}/mockito-core-${org.mockito.version}.jar</argLine>
                 </configuration>
             </plugin>
-<<<<<<< HEAD
-=======
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>${maven-shade-plugin.version}</version>
-                <configuration>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>module-info.class</exclude>
-                                <exclude>META-INF/*.SF</exclude>
-                                <exclude>META-INF/*.DSA</exclude>
-                                <exclude>META-INF/*.RSA</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                    </execution>
-                </executions>
-            </plugin>
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
         </plugins>
     </build>
 </project>

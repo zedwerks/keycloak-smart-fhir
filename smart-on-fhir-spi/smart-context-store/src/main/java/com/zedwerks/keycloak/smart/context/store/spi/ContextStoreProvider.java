@@ -8,34 +8,22 @@ import org.keycloak.connections.infinispan.InfinispanConnectionProvider;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserSessionModel;
-<<<<<<< HEAD
 import org.keycloak.provider.Provider;
-=======
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 
 import com.zedwerks.keycloak.smart.context.store.dao.ContextCacheDao;
 import com.zedwerks.keycloak.smart.context.store.dao.ContextDbDao;
 import com.zedwerks.keycloak.smart.context.store.listeners.ContextCacheListener;
 import com.zedwerks.keycloak.smart.context.store.models.ContextEntry;
 import com.zedwerks.uuid.UuidUtils;
-<<<<<<< HEAD
-=======
-
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 /**
  * Base class for hybrid (cache + DB) context services.
  * Each subclass defines its cache name and DAO implementations.
  */
-<<<<<<< HEAD
 public class ContextStoreProvider implements IContextStoreProvider, Provider {
-=======
-public class ContextStoreProvider implements IContextStoreProvider {
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 
     protected final Logger logger = Logger.getLogger(getClass());
     protected final KeycloakSession session;
     protected final RealmModel realm;
-<<<<<<< HEAD
     protected Cache<String, ContextEntry> cache;
 
     protected ContextCacheDao cacheDao;
@@ -56,28 +44,6 @@ public class ContextStoreProvider implements IContextStoreProvider {
         this.dbDao = new ContextDbDao(session); 
         this.cacheListener = new ContextCacheListener(DEFAULT_CACHE_NAME, dbDao);
         this.cache.addListener(this.cacheListener);
-=======
-    protected final Cache<String, ContextEntry> cache;
-
-    protected final ContextCacheDao cacheDao;
-    protected final ContextDbDao dbDao;
-    protected final ContextCacheListener listener;
-
-    private static final String DEFAULT_CACHE_NAME = "smart-context-cache";
-
-    protected ContextStoreProvider(KeycloakSession session ) {
-        this.session = session;
-        this.realm = session.getContext().getRealm();
-        this.dbDao = new ContextDbDao(session); // Default kind
-
-        this.cache = session
-                .getProvider(InfinispanConnectionProvider.class)
-                .getCache(DEFAULT_CACHE_NAME);
-
-        this.listener = new ContextCacheListener(DEFAULT_CACHE_NAME, dbDao);
-        this.cache.addListener(listener);
-
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
         this.cacheDao = new ContextCacheDao(cache);
     }
 
@@ -91,11 +57,7 @@ public class ContextStoreProvider implements IContextStoreProvider {
         String contextId = UuidUtils.generateContextId();
         logger.debugf("Storing context %s for user session %s", contextId, sessionId);
 
-<<<<<<< HEAD
         ContextEntry entry = new ContextEntry(userSession, contextId, contextPayload); // in future, we encrypt this!
-=======
-        ContextEntry entry = new ContextEntry(userSession, contextId, contextPayload);  // in future, we encrypt this!
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
 
         cacheDao.put(contextId, entry);
         dbDao.saveOrUpdate(entry);
@@ -126,10 +88,6 @@ public class ContextStoreProvider implements IContextStoreProvider {
         dbDao.deleteById(contextId);
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
     @Override
     public void deleteByUserSessionId(String userSessionId) {
 
@@ -140,16 +98,10 @@ public class ContextStoreProvider implements IContextStoreProvider {
     @Override
     public void close() {
         try {
-<<<<<<< HEAD
             if (this.cache != null && this.cacheListener != null) {
                 this.cache.removeListener(this.cacheListener);
                 logger.infof("%s: Infinispan listener removed for cache %s", this.getClass().getName(),
                         this.cache.getName());
-=======
-            if (cache != null && listener != null) {
-                cache.removeListener(listener);
-                logger.infof("%s: Infinispan listener removed for cache %s", this.getClass().getName(), cache.getName());
->>>>>>> d63d3f7 (pissing around with local docker -- macos vpn messing wth me.)
             }
         } catch (Exception e) {
             logger.warn("Failed to remove Infinispan listener cleanly", e);
