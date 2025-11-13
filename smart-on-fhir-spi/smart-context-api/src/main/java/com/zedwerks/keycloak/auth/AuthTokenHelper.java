@@ -17,7 +17,7 @@
  * @author Brad Head
  * 
  */
-package com.zedwerks.keycloak.smart.context.api.helpers;
+package com.zedwerks.keycloak.auth;
 
 import org.jboss.logging.Logger;
 import org.keycloak.TokenVerifier;

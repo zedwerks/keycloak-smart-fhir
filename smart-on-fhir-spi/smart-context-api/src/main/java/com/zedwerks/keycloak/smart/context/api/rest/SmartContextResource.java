@@ -1,6 +1,6 @@
 /**
  * Copyright 2024 Zed Werks Inc.
- * 
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * @author Brad Head
- * 
+ *
  */
-
 package com.zedwerks.keycloak.smart.context.api.rest;
 
 import org.jboss.logging.Logger;
@@ -33,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zedwerks.keycloak.smart.context.api.helpers.AuthTokenHelper;
+import com.zedwerks.keycloak.auth.AuthTokenHelper;
 import com.zedwerks.keycloak.smart.context.store.services.SmartContextCacheService;
 
 import jakarta.ws.rs.Consumes;
@@ -54,7 +53,7 @@ import jakarta.ws.rs.core.Response;
 /**
  * Basic Context API endpoint. The EMR/EHR system will call this endpoint to set
  * the context for the user, as per the SMART on FHIR specification.
- * 
+ *
  * this is a JAX-rs resource that provides the /smart-on-fhir/context
  *
  * The endpoint will return a 200 OK No Content response if the context was set
@@ -85,9 +84,9 @@ public class SmartContextResource {
     }
 
     /**
-     * Set the launch context for the user session. This consumes a JSON
-     * context request, saves the object identifier for the context, and returns
-     * a 200 OK response with the context identifier in the response body.
+     * Set the launch context for the user session. This consumes a JSON context
+     * request, saves the object identifier for the context, and returns a 200
+     * OK response with the context identifier in the response body.
      *
      * @return Response
      */
@@ -103,7 +102,6 @@ public class SmartContextResource {
             // Here is where we call the Context Service to persist the context in Cache.
             // In future, we add a pre-processor step to validate the context and to
             // call an optional external service to enrich/map the FHIR context bundle.
-
             // Retrieve current user session from token
             RealmModel realm = session.getContext().getRealm();
             String sid = token.getSessionId();
@@ -151,7 +149,6 @@ public class SmartContextResource {
             //RealmModel realm = session.getContext().getRealm();
             //String sid = token.getSessionId();
             //UserSessionModel userSession = session.sessions().getUserSession(realm, sid);
-
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
 
             String contextPayload = contextStore.retrieve(contextId);
@@ -187,9 +184,9 @@ public class SmartContextResource {
 
     /**
      * Preflight request handler for CORS. This method handles OPTIONS requests
-     * to the /context endpoint, allowing CORS preflight checks.
-     * This method responds with the allowed methods and headers,
-     * and includes the Access-Control-Allow-Origin header.
+     * to the /context endpoint, allowing CORS preflight checks. This method
+     * responds with the allowed methods and headers, and includes the
+     * Access-Control-Allow-Origin header.
      */
     @OPTIONS
     @Path("{path:.*}")
@@ -216,6 +213,7 @@ public class SmartContextResource {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonTypeName("Context")
     class ContextResponse {
+
         @JsonProperty("context_id")
         public String contextId;
     }

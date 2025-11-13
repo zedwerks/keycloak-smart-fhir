@@ -19,8 +19,6 @@
  */
 package com.zedwerks.keycloak.halo.sofa.endpoints;
 
-import java.util.Optional;
-
 import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
@@ -30,9 +28,8 @@ import org.keycloak.representations.AccessToken;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.zedwerks.keycloak.auth.AuthTokenHelper;
 import com.zedwerks.keycloak.smart.context.store.services.SmartContextCacheService;
-import com.zedwerks.keycloak.smart.context.api.helpers.AuthTokenHelper;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.ForbiddenException;
