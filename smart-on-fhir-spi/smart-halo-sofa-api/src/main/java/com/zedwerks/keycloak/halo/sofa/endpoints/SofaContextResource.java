@@ -141,6 +141,9 @@ public class SofaContextResource {
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
             String launchId = contextStore.store(userSession, node.toString());
 
+            // @todo -- call the FHIR Server to post the context bundle
+            // String fhirResponse = fhirClient.postBundle(node.toString(), token.getToken());
+
             return Response.ok("{\"launchId\":\"" + launchId + "\"}").build(); // @todo to return the full context
             // response object
 
@@ -175,13 +178,19 @@ public class SofaContextResource {
         try {
             AccessToken token = AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, WRITE_SCOPE);
 
+            if (token.getSessionId() == null) {
+                throw new IllegalArgumentException("Invalid session ID in token");
+            }
+
             JsonNode node = new ObjectMapper().readTree(jsonBody);
-            String contextId = node.path("launchId").asText();
+            String launchId = node.path("launchId").asText();
 
             // @todo -- check that the sessionId associated to the contextid matches the
             // token session.
+
+
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
-            //contextStore.delete(contextId);
+            contextStore.delete(launchId);
 
             return Response.status(Response.Status.OK)
                     .entity("{}").build();

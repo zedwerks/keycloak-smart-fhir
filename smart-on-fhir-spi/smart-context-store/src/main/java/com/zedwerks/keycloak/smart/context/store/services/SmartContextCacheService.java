@@ -51,4 +51,10 @@ public class SmartContextCacheService {
         Optional<String> entry = dao.findByContextId(contextIdString);
         return entry.isEmpty() ? null : entry.get();
     }
+
+    public void delete(String contextIdString) {
+        EntityManager em = session.getProvider(JpaConnectionProvider.class).getEntityManager();
+        ContextStoreDao dao = new ContextStoreDaoImpl(em);
+        dao.deleteByContextId(contextIdString);
+    }
 }
