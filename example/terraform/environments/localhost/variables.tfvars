@@ -3,9 +3,10 @@
 // This is a sample configuration file for the Keycloak Smart Configuration module.
 // --------------------------------------------------
 keycloak_smart_configuration = {
-  fhir_audiences               = "https://fhirserver.com##http://localhost:9000"
-  smart_v1_scopes              = true
-  smart_v2_scopes              = false
+  fhir_audiences     = "https://fhirserver.com##http://localhost:9000"
+  sofa_fhir_audience = "http://localhost:9000"
+  smart_v1_scopes = true
+  smart_v2_scopes = false
 }
 
 // --------------------------------------------------
@@ -13,9 +14,9 @@ keycloak_smart_configuration = {
 // --------------------------------------------------
 
 client_fhir_rs = {
-  client_id     = "fhir-rs"
-  audience      = "http://localhost:9000"
-  base_url      = "http://localhost:9000"
+  client_id = "fhir-rs"
+  audience  = "http://localhost:9000"
+  base_url  = "http://localhost:9000"
 }
 
 // --------------------------------------------------

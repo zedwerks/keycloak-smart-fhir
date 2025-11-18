@@ -17,11 +17,13 @@ variable "keycloak_base_url" {
 variable "keycloak_smart_configuration" {
   type = object({
     fhir_audiences = optional(string, "http://example.fhir.org")
+    sofa_fhir_audience = optional(string, "http://example.fhir.org")
     smart_v1_scopes = optional(bool, true)
     smart_v2_scopes = optional(bool, false)
   })
   default = {
     fhir_audiences = "ttp://example.fhir.org"
+    sofa_fhir_audience = "http://example.fhir.org"
     smart_v1_scopes = true
     smart_v2_scopes = false
   }

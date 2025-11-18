@@ -58,7 +58,7 @@ public class ContextStoreDaoImpl implements ContextStoreDao {
     @Transactional
     @Override
     public int deleteByContextId(String contextId) {
-        logger.debugf("Deleting context entry for contextId %s", contextId);
+        logger.infof("Deleting context entry for contextId %s", contextId);
         ContextEntryEntity e = em.find(ContextEntryEntity.class, contextId);
         if (e != null) {
             em.remove(e);
@@ -72,7 +72,8 @@ public class ContextStoreDaoImpl implements ContextStoreDao {
     @Override
     public int deleteByUserSessionId(String userSessionId) {
         // Delete all entries for this user session
-        return em.createQuery("DELETE FROM ContextEntryEntity e WHERE e.id.userSessionId = :userSessionId")
+        logger.infof("Deleting Context cache for user session: %s", userSessionId);
+        return em.createQuery("DELETE FROM ContextEntryEntity e WHERE e.userSessionId = :userSessionId")
                 .setParameter("userSessionId", userSessionId)
                 .executeUpdate();
     }

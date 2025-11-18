@@ -24,19 +24,23 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
 
 
-public class RestFhirClient implements SofaFhirClient {
+public class SofaFhirClientImpl implements SofaFhirClient {
 
     private final HttpClient http = HttpClient.newHttpClient();
+
+    protected static final Logger logger = Logger.getLogger(SofaFhirClientImpl.class);
 
     private final String baseUrl;
     private final KeycloakSession session;
 
-    public RestFhirClient(String baseUrl, KeycloakSession session) {
+    public SofaFhirClientImpl(String baseUrl, KeycloakSession session) {
         this.baseUrl = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
         this.session = session;
     }
@@ -56,15 +60,24 @@ public class RestFhirClient implements SofaFhirClient {
     // INTERNAL: Adds Authorization header + performs HTTP call
     // ------------------------------------------------------------
     private String doPost(String url, String bodyJson) {
+
         try {
-            String userToken = accessToken();
+            String userAccessToken = accessToken();
+
+            if (userAccessToken == null) {
+                logger.warn("Access Token from session is null");
+            }
+
+            logger.debugf("Bearer Token = '%s'", userAccessToken);
 
             HttpRequest req = HttpRequest.newBuilder()
                     .uri(URI.create(url))
-                    .header("Authorization", "Bearer " + userToken)
+                    .header("Authorization", "Bearer " + userAccessToken)
                     .header("Content-Type", "application/fhir+json")
-                    .POST(HttpRequest.BodyPublishers.ofString(bodyJson))
+                    .POST(HttpRequest.BodyPublishers.ofString(bodyJson, StandardCharsets.UTF_8))
                     .build();
+
+            logger.info("About to do http.send()");
 
             HttpResponse<String> res = http.send(req, HttpResponse.BodyHandlers.ofString());
 
@@ -76,18 +89,23 @@ public class RestFhirClient implements SofaFhirClient {
 
             return res.body();
         } catch (Exception e) {
-            throw new RuntimeException("HTTP POST error", e);
+            String msg = "HTTP POST error: " + e.getMessage();
+            throw new RuntimeException(msg, e);
         }
     }
 
     private String doGet(String url) {
         try {
-            String token = accessToken();
+            String userAccessToken = accessToken();
+
+            if (userAccessToken == null) {
+                logger.warn("Access Token from session is null");
+            }
 
             HttpRequest req = HttpRequest.newBuilder()
                     .uri(URI.create(url))
-                    .header("Authorization", "Bearer " + token)
-                    .header("Accept", "application/fhir+json")
+                    .header("Authorization", "Bearer " + userAccessToken)
+                    .header("Accept", "application/fhir+json, application/json")
                     .GET()
                     .build();
 
@@ -110,17 +128,24 @@ public class RestFhirClient implements SofaFhirClient {
     // ------------------------------------------------------------
     @Override
     public String postBundle(String bundleJson) {
+        logger.debugf("Posting FHIR Bundle to FHIR Server %s", bundleJson);
         return doPost(baseUrl, bundleJson);
     }
 
     @Override
-    public String read(String resourceType, String id) {
+    public String getResource(String resourceType, String id) {
         String url = baseUrl + resourceType + "/" + id;
         return doGet(url);
     }
 
     @Override
-    public String search(String resourceType, Map<String, String> params) {
+    public String deleteResource(String resourceType, String id) {
+        String url = baseUrl + "/" + resourceType + "/" + id;
+        return doGet(url);
+    }
+
+    @Override
+    public String searchResource(String resourceType, Map<String, String> params) {
         StringBuilder url = new StringBuilder(baseUrl).append(resourceType).append("?");
         params.forEach((k, v) -> url.append(k).append("=").append(v).append("&"));
         return doGet(url.toString());

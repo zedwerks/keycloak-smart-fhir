@@ -10,10 +10,12 @@ services:
       - KC_BOOTSTRAP_ADMIN_PASSWORD=${KC_BOOTSTRAP_ADMIN_PASSWORD}
       - KC_BOOTSTRAP_ADMIN_USERNAME=${KC_BOOTSTRAP_ADMIN_USERNAME}
 
-      # Eplicitly set the HTTP and disable all strictness checks
+      # Eplicitly set the HTTP and disable all strictness checks (for localhost development)
       - KC_HTTP_ENABLED=true
       - KC_HOSTNAME_STRICT=false
       - KC_HOSTNAME_STRICT_HTTPS=false
+      - KC_HTTPS_REQUIRED=false
+      - KC_PROXY_HEADERS=xforwarded
 
       # DO NOT configure provy behaviour for localhost setup.
       - KC_PROXY=none
@@ -33,7 +35,7 @@ services:
 
       # Realm Settings
       - KEYCLOAK_TARGET_REALM=smart
-      - KEYCLOAK_TARGET_REALM_DISPLAY_NAME="SMART on FHIR""
+      - KEYCLOAK_TARGET_REALM_DISPLAY_NAME="SMART on FHIR"
 
       # Terraform Client Settings
       - KEYCLOAK_TERRAFORM_CLIENT_ID=${KEYCLOAK_TERRAFORM_CLIENT_ID}

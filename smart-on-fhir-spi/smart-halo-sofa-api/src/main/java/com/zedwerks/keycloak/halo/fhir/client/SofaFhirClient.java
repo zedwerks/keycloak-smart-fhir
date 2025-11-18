@@ -30,8 +30,10 @@ public interface SofaFhirClient {
      */
     String postBundle(String bundle);
 
-    String read(String resourceType, String resourceId);
+    public String getResource(String resourceType, String id);
 
-    String search(String resourceType, Map<String, String> parameters);
+    String deleteResource(String resourceType, String resourceId);
+
+    public String searchResource(String resourceType, Map<String, String> params);
 
 }

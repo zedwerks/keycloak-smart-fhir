@@ -4,10 +4,10 @@
 // --------------------------------------------------
 keycloak_smart_configuration = {
   fhir_audiences               = "https://fhirserver.com##http://localhost:9000"
+  sofa_fhir_audience           = "http://localhost:9000"
   smart_v1_scopes              = true
   smart_v2_scopes              = false
-}
-
+}å
 // --------------------------------------------------
 // FHIR Resource Servers
 // --------------------------------------------------

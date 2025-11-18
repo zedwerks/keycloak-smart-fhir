@@ -1,2 +1,4 @@
 com.zedwerks.keycloak.halo.authenticators.HaloLaunchResolverFactory
 com.zedwerks.keycloak.halo.authenticators.ExternalHaloLaunchResolverFactory
+com.zedwerks.keycloak.halo.authenticators.SofaAudienceValidatorFactory
+

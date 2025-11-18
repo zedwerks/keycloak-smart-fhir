@@ -129,5 +129,9 @@
         "manage": true
       }
     }
-  ]
+  ],
+  "attributes": {
+    "haloFhirServerBaseUrl": "http://host.docker.internal:9000",
+    "haloSofaServerBaseUrl": ""
+  }
 }

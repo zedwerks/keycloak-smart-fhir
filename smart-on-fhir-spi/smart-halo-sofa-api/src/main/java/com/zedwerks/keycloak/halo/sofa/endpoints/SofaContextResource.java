@@ -29,6 +29,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zedwerks.keycloak.auth.AuthTokenHelper;
+import com.zedwerks.keycloak.halo.fhir.client.SofaFhirClient;
+import com.zedwerks.keycloak.halo.fhir.client.SofaFhirClientImpl;
+import com.zedwerks.keycloak.halo.sofa.models.SofaContextHelper;
 import com.zedwerks.keycloak.smart.context.store.services.SmartContextCacheService;
 
 import jakarta.ws.rs.Consumes;
@@ -68,6 +71,7 @@ public class SofaContextResource {
     protected static final Logger logger = Logger.getLogger(SofaContextResource.class);
 
     KeycloakSession session;
+    static String fhirBaseUrl = null;
 
     public SofaContextResource() { // needed to skirt CDI issues in Keycloak
         this.session = null;
@@ -75,7 +79,41 @@ public class SofaContextResource {
 
     public SofaContextResource(KeycloakSession session) {
         this.session = session;
+        fhirBaseUrl = session.getContext().getRealm().getAttribute("haloFhirServerBaseUrl");
+        logger.infof("Using fhir server: %s", fhirBaseUrl);
     }
+
+    /**
+     * Save the FHIR Bundle to the FHIR Server. This method extracts the
+     * @param contextJsonString
+     * @return
+     */
+    private String saveBundleToFhirServer(String contextJsonString) {
+
+        if (fhirBaseUrl == null || fhirBaseUrl.isEmpty()) {
+            throw new IllegalStateException("FHIR Server Base URL is not configured");
+        }
+        if (contextJsonString == null || contextJsonString.isEmpty()) {
+            throw new IllegalArgumentException("Context JSON string cannot be null or empty");
+        }
+
+        return SofaContextHelper.extractBundle(contextJsonString).map(bundleJson -> {
+
+                      // Okay, not empty, so we can proceed to save to the FHIR server
+            logger.debugf("Extracted FHIR Bundle: %s", bundleJson);
+
+            SofaFhirClient fhirClient = new SofaFhirClientImpl(fhirBaseUrl, session);
+            final String response = fhirClient.postBundle(bundleJson);
+            logger.debugf("FHIR Server Response: %s", response);
+
+            // @todo -- handle the response, check for errors, etc.
+            // Save the response into Sofa Bundle Context DB.. for later use
+            // to return to the SMART client that launches for this Context.
+            // Also return this json response to the client, modifying the
+            // Bundle to have the payload returned.
+            return response;
+        }).orElse(null);
+    } 
 
     /**
      * Options * Preflight request for CORS. This method allows the browser to
@@ -91,7 +129,7 @@ public class SofaContextResource {
             return Response.status(Response.Status.BAD_REQUEST).entity("Missing Origin header").build();
         }
 
-        logger.info("preflight() **** OPTIONS: SMART on FHIR Context ****");
+        logger.debug("preflight() **** OPTIONS: SMART on FHIR Context ****");
         return Response.noContent()
                 .header("Access-Control-Allow-Origin", origin)
                 .header("Access-Control-Allow-Methods", "POST, OPTIONS")
@@ -113,7 +151,7 @@ public class SofaContextResource {
      */
     @POST
     @Path("/$set-context")
-    @Consumes({MediaType.APPLICATION_JSON, "application/fhir+json"})
+    @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
     @Produces(MediaType.APPLICATION_JSON)
     public Response postContext(@HeaderParam("Authorization") String authorizationHeader,
             String jsonBody) {
@@ -139,7 +177,9 @@ public class SofaContextResource {
             String launchId = contextStore.store(userSession, node.toString());
 
             // @todo -- call the FHIR Server to post the context bundle
-            // String fhirResponse = fhirClient.postBundle(node.toString(), token.getToken());
+            String responseString = this.saveBundleToFhirServer(jsonBody);
+
+            logger.infof("FHIR Server returned: %s", responseString);
 
             return Response.ok("{\"launchId\":\"" + launchId + "\"}").build(); // @todo to return the full context
             // response object
@@ -167,7 +207,7 @@ public class SofaContextResource {
      */
     @POST
     @Path("/$clear-context")
-    @Consumes({MediaType.APPLICATION_JSON, "application/fhir+json"})
+    @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
     @Produces(MediaType.APPLICATION_JSON)
     public Response clearSmartContext(@HeaderParam("Authorization") String authorizationHeader,
             String jsonBody) {
@@ -184,7 +224,6 @@ public class SofaContextResource {
 
             // @todo -- check that the sessionId associated to the contextid matches the
             // token session.
-
 
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
             contextStore.delete(launchId);
@@ -224,7 +263,7 @@ public class SofaContextResource {
                 throw new IllegalArgumentException("Context ID does not match session ID");
             }
 
-            //RealmModel realm = session.getContext().getRealm();
+            // RealmModel realm = session.getContext().getRealm();
             String sid = token.getSessionId();
             RealmModel realm = session.getContext().getRealm();
             UserSessionModel userSession = session.sessions().getUserSession(realm, sid);

@@ -31,6 +31,8 @@ public class SmartContextCacheService {
         this.realm = session.getContext().getRealm();
     }
 
+
+
     public String store(UserSessionModel userSessionModel, String contextJson) {
         EntityManager em = session.getProvider(JpaConnectionProvider.class).getEntityManager();
         try {
@@ -56,5 +58,11 @@ public class SmartContextCacheService {
         EntityManager em = session.getProvider(JpaConnectionProvider.class).getEntityManager();
         ContextStoreDao dao = new ContextStoreDaoImpl(em);
         dao.deleteByContextId(contextIdString);
+    }
+
+    public void deleteByUserSessionId(String userSessionId) {
+        EntityManager em = session.getProvider(JpaConnectionProvider.class).getEntityManager();
+        ContextStoreDao dao = new ContextStoreDaoImpl(em);
+        dao.deleteByUserSessionId(userSessionId);
     }
 }
