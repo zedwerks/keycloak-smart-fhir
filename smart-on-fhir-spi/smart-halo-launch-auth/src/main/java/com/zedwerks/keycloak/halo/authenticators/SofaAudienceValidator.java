@@ -18,6 +18,7 @@
  * @author Brad Head
  *
  */
+
 package com.zedwerks.keycloak.halo.authenticators;
 
 import com.zedwerks.keycloak.smart.authenticators.LaunchHelper;
@@ -57,14 +58,6 @@ public class SofaAudienceValidator implements Authenticator {
             return;
         }
 
-        if (context.getAuthenticatorConfig() == null
-                || !context.getAuthenticatorConfig().getConfig()
-                        .containsKey(SofaAudienceValidatorFactory.SOFA_AUDIENCE_PROP_NAME)) {
-            String msg = "The HALO SOFA Audience Validation Extension must be configured exactly one FHIR server base URL";
-            this.redirectAuthError(context, "server_config_error", msg);
-            return; // early exit
-        }
-
         String audience = LaunchHelper.getAudienceParameter(context);
         logger.debugf("Requested audience: %s", audience);
 
@@ -76,13 +69,10 @@ public class SofaAudienceValidator implements Authenticator {
         }
 
         // Load configured audiences from AuthenticatorConfigModel
-        AuthenticatorConfigModel cfg = context.getAuthenticatorConfig();
-
-        String audienceSetting = cfg.getConfig().get(SofaAudienceValidatorFactory.SOFA_AUDIENCE_PROP_NAME);
-
+        String audienceSetting = context.getRealm().getAttribute("smart.config.sofa_audience");
 
         if (audienceSetting == null || audienceSetting.isBlank()) {
-            String msg = "The HALO SOFA Audience Validator Configuration is Empty";
+            String msg = "The HALO SOFA Audience Validator Configuration is Mising";
             redirectAuthError(context, "bad_configuration", msg);
             return; // early exit
         }
@@ -164,10 +154,4 @@ public class SofaAudienceValidator implements Authenticator {
         // NOOP
     }
 
-    public static String getAudienceFromConfig(AuthenticatorConfigModel config) {
-        if (config == null || config.getConfig() == null) {
-            return null;
-        }
-        return config.getConfig().get(SofaAudienceValidatorFactory.SOFA_AUDIENCE_PROP_NAME);
-    }
 }

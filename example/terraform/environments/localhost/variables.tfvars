@@ -3,8 +3,8 @@
 // This is a sample configuration file for the Keycloak Smart Configuration module.
 // --------------------------------------------------
 keycloak_smart_configuration = {
-  fhir_audiences     = "https://fhirserver.com##http://localhost:9000"
-  sofa_fhir_audience = "http://localhost:9000"
+  fhir_audiences     = "http://locahost:9000##http://host.docker.internal:9000##http://hapi-fhir:8080/fhir"
+  halo_sofa_audience = "http://hapi-fhir:8080/fhir"
   smart_v1_scopes = true
   smart_v2_scopes = false
 }
@@ -15,8 +15,8 @@ keycloak_smart_configuration = {
 
 client_fhir_rs = {
   client_id = "fhir-rs"
-  audience  = "http://localhost:9000"
-  base_url  = "http://localhost:9000"
+  audience  = "http://hapi-fhir:8080"
+  base_url  = "http://hapi-fhir:8080"
 }
 
 // --------------------------------------------------
@@ -30,4 +30,8 @@ fhir_resources_supported = {
   Practitioner        = true
   MedicationStatement = true
 }
+
+// Skip since we are using localhost and self-signed certs for HTTPS.
+tls_insecure_skip_verify = true
+
 

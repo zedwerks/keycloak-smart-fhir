@@ -2,5 +2,5 @@
 
 export TF_VAR_keycloak_terraform_client_id=terraform
 export TF_VAR_keycloak_terraform_client_secret=t3vGj9MTjULLXeVbvnP33gANmgRuk1Ul
-export TF_VAR_keycloak_base_url=http://localhost:8080
+export TF_VAR_keycloak_base_url=https://localhost:8443
 export TF_VAR_keycloak_realm=smart

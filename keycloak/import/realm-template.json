@@ -1,6 +1,6 @@
 {
   "realm": "{{place_realm_name_here}}",
-  "sslRequired": "external",
+  "sslRequired": "none",
   "displayName": "SMART on FHIR",
   "enabled": true,
   "roles": {
@@ -131,7 +131,6 @@
     }
   ],
   "attributes": {
-    "haloFhirServerBaseUrl": "http://host.docker.internal:9000",
-    "haloSofaServerBaseUrl": ""
+    "smart.config.sofa_audience": "http://host.docker.internal:8081"
   }
 }

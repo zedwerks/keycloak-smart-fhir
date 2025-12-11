@@ -1,6 +1,7 @@
 /**
- * Copyright 2025 Zed Werks Inc.
+ * Copyright 2024 Zed Werks Inc.
  * 
+ *  SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,31 +17,18 @@
  * 
  * @author Brad Head
  * 
- * SPDX-License-Identifier: Apache-2.0
- * 
  */
 
-package com.zedwerks.keycloak.halo.sofa.endpoints;
+package com.zedwerks.keycloak.halo.models;
 
-import org.keycloak.models.KeycloakSession;
-import org.keycloak.services.resource.RealmResourceProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+public class SetContextParser {
 
-public class SofaContextResourceProvider implements RealmResourceProvider {
+    private static final ObjectMapper mapper = new ObjectMapper();
 
-    private final KeycloakSession session;
-
-    public SofaContextResourceProvider(KeycloakSession session) {
-        this.session = session;
-    }
-
-    @Override
-    public Object getResource() {
-        return new SofaContextResource(this.session);
-    }
-
-    @Override
-    public void close() {
+    public static SetContextParameters fromJson(String json) throws Exception {
+        return mapper.readValue(json, SetContextParameters.class);
     }
 
 }

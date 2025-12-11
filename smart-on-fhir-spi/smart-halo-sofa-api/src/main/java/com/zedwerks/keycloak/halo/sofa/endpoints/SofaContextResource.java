@@ -1,6 +1,6 @@
 /**
- * Copyright 2024 Zed Werks Inc.
- *
+ * Copyright 2025 Zed Werks Inc.
+ * 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ * 
  * @author Brad Head
- *
+ * 
+ * SPDX-License-Identifier: Apache-2.0
+ * 
  */
+
 package com.zedwerks.keycloak.halo.sofa.endpoints;
 
 import org.jboss.logging.Logger;
@@ -31,7 +34,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zedwerks.keycloak.auth.AuthTokenHelper;
 import com.zedwerks.keycloak.halo.fhir.client.SofaFhirClient;
 import com.zedwerks.keycloak.halo.fhir.client.SofaFhirClientImpl;
-import com.zedwerks.keycloak.halo.sofa.models.SofaContextHelper;
+import com.zedwerks.keycloak.halo.sofa.models.ContextCacheEntry;
+import com.zedwerks.keycloak.halo.sofa.models.OperationOutcome;
+import com.zedwerks.keycloak.halo.sofa.models.JsonObjectHelper;
+import com.zedwerks.keycloak.halo.sofa.models.SofaContextResponse;
 import com.zedwerks.keycloak.smart.context.store.services.SmartContextCacheService;
 
 import jakarta.ws.rs.Consumes;
@@ -65,6 +71,8 @@ import jakarta.ws.rs.core.Response;
 @Path("/halo-sofa")
 public class SofaContextResource {
 
+    static final String REALM_ATTR_AUDIENCE_URL = "smart_halo_sofa_audience"; // SET WITH TERRAFORM
+
     static final String WRITE_SCOPE = "Context.write"; // Make this a configuration property
     static final String READ_SCOPE = "Context.read"; // Make this a configuration property
 
@@ -79,7 +87,7 @@ public class SofaContextResource {
 
     public SofaContextResource(KeycloakSession session) {
         this.session = session;
-        fhirBaseUrl = session.getContext().getRealm().getAttribute("haloFhirServerBaseUrl");
+        fhirBaseUrl = session.getContext().getRealm().getAttribute(REALM_ATTR_AUDIENCE_URL);
         logger.infof("Using fhir server: %s", fhirBaseUrl);
     }
 
@@ -88,16 +96,16 @@ public class SofaContextResource {
      * @param contextJsonString
      * @return
      */
-    private String saveBundleToFhirServer(String contextJsonString) {
+    private String saveBundleToFhirServer(JsonNode contextJson) {
 
         if (fhirBaseUrl == null || fhirBaseUrl.isEmpty()) {
             throw new IllegalStateException("FHIR Server Base URL is not configured");
         }
-        if (contextJsonString == null || contextJsonString.isEmpty()) {
+        if (contextJson == null) {
             throw new IllegalArgumentException("Context JSON string cannot be null or empty");
         }
 
-        return SofaContextHelper.extractBundle(contextJsonString).map(bundleJson -> {
+        return JsonObjectHelper.extractBundle(contextJson).map(bundleJson -> {
 
                       // Okay, not empty, so we can proceed to save to the FHIR server
             logger.debugf("Extracted FHIR Bundle: %s", bundleJson);
@@ -169,20 +177,28 @@ public class SofaContextResource {
 
             // Parse the JSON body to extract context information
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode node = mapper.readTree(jsonBody);
+            JsonNode contextJsonNode = mapper.readTree(jsonBody);
 
             // Here is where we call out to the FHIR Server to post the context bundle
             // For now, we just save the context in the cache
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
-            String launchId = contextStore.store(userSession, node.toString());
 
-            // @todo -- call the FHIR Server to post the context bundle
-            String responseString = this.saveBundleToFhirServer(jsonBody);
+            // 1. Create a new object to store the context and the SOFA resolved bundle
 
-            logger.infof("FHIR Server returned: %s", responseString);
+            ContextCacheEntry entry = new ContextCacheEntry();
+            entry.setContextJson(contextJsonNode);
 
-            return Response.ok("{\"launchId\":\"" + launchId + "\"}").build(); // @todo to return the full context
-            // response object
+                // Call the FHIR Server to post the context bundle
+            String bundleResponseString = this.saveBundleToFhirServer(contextJsonNode);
+            JsonNode sofaBundleJson = mapper.readTree(bundleResponseString);
+            entry.setSofaBundleJson(sofaBundleJson);
+
+            String launchId = contextStore.store(userSession, ContextCacheEntry.toJsonString(entry));
+
+            OperationOutcome outcome = OperationOutcome.success("Context set successfully");
+            SofaContextResponse response = new SofaContextResponse(launchId, sofaBundleJson, outcome);
+
+            return Response.ok(response).build();
 
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
@@ -210,7 +226,7 @@ public class SofaContextResource {
     @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
     @Produces(MediaType.APPLICATION_JSON)
     public Response clearSmartContext(@HeaderParam("Authorization") String authorizationHeader,
-            String jsonBody) {
+            @QueryParam("launchID") String launchId) {
 
         try {
             AccessToken token = AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, WRITE_SCOPE);
@@ -219,22 +235,18 @@ public class SofaContextResource {
                 throw new IllegalArgumentException("Invalid session ID in token");
             }
 
-            JsonNode node = new ObjectMapper().readTree(jsonBody);
-            String launchId = node.path("launchId").asText();
-
             // @todo -- check that the sessionId associated to the contextid matches the
             // token session.
 
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
             contextStore.delete(launchId);
 
-            return Response.status(Response.Status.OK)
-                    .entity("{}").build();
+            OperationOutcome outcome = OperationOutcome.success("Context cleared successfully");
+
+            return Response.status(Response.Status.OK).entity(outcome).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
-        } catch (JsonProcessingException e) {
-            logger.error("Invalid context request: " + e.getMessage(), e);
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (RuntimeException e) {
             logger.error("Error processing context request", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -246,7 +258,8 @@ public class SofaContextResource {
     @Path("/$get-context")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSmartContext(@HeaderParam("Authorization") String authorizationHeader,
-            @QueryParam("launchId") String launchId) {
+            @QueryParam("launchID") String launchId,
+            @QueryParam("cached") Boolean cached) {
 
         try {
             AccessToken token = AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, READ_SCOPE);
@@ -256,26 +269,28 @@ public class SofaContextResource {
             }
 
             if (launchId == null || launchId.isEmpty()) {
-                throw new IllegalArgumentException("Query Parameter 'contextId' is required");
+                throw new IllegalArgumentException("Query Parameter 'launchID' is required");
             }
 
-            if (!token.getSessionId().equals(launchId)) {
-                throw new IllegalArgumentException("Context ID does not match session ID");
-            }
-
-            // RealmModel realm = session.getContext().getRealm();
             String sid = token.getSessionId();
             RealmModel realm = session.getContext().getRealm();
             UserSessionModel userSession = session.sessions().getUserSession(realm, sid);
 
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
-            String payload = contextStore.retrieve(launchId);
+            String cacheJsonString = contextStore.retrieve(launchId);
 
-            if (payload == null) {
-                return Response.status(Response.Status.NOT_FOUND).entity("Context not found").build();
+            if (cacheJsonString == null) {
+                OperationOutcome outcome = OperationOutcome.success("Context not found");
+                return Response.status(Response.Status.NOT_FOUND).entity(outcome).build();
             }
 
-            return Response.ok(payload).build();
+            ContextCacheEntry cache = ContextCacheEntry.fromJsonString(cacheJsonString);
+            String responseBody = cacheJsonString;
+            if ((cached == null) || (cached == false)) {
+                responseBody = JsonObjectHelper.toJsonString(cache.getContextJson());
+            }
+
+            return Response.ok(responseBody).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
         }

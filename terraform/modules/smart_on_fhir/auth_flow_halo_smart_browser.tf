@@ -17,20 +17,13 @@ resource "keycloak_authentication_subflow" "halo_smart_browser_flow_step1" {
 resource "keycloak_authentication_execution" "halo_smart_browser_flow_s1e1" {
   realm_id          = data.keycloak_realm.realm.id
   parent_flow_alias = keycloak_authentication_subflow.halo_smart_browser_flow_step1.alias
-  authenticator     = "halo-launch-aud-validator"  // this is from the custom SPI. check Server Info to make sue it is loaded.
+  authenticator     = "halo-launch-aud-validator"  // this is from the custom SPI. 
   requirement       = "REQUIRED"
   priority          = 10
   depends_on        = [keycloak_authentication_subflow.halo_smart_browser_flow_step1]
 
 }
-resource "keycloak_authentication_execution_config" "halo_smart_browser_flow_s1e1_config" {
-  realm_id     = data.keycloak_realm.realm.id
-  execution_id = keycloak_authentication_execution.halo_smart_browser_flow_s1e1.id
-  alias        = "halo_smart_browser_flow-smart-audience-validator-config"
-  config = {
-    smart_audiences = var.keycloak_smart_configuration.sofa_fhir_audience
-  }
-}
+
 //==============================================================
 //------------------------  STEP 2 -----------------------------
 resource "keycloak_authentication_subflow" "halo_smart_browser_flow_step2" {

@@ -18,6 +18,7 @@
  * @author Brad Head
  * 
  */
+
 package com.zedwerks.keycloak.halo.authenticators;
 
 import java.util.List;
@@ -37,9 +38,6 @@ import org.keycloak.provider.ProviderConfigurationBuilder;
 public class SofaAudienceValidatorFactory implements AuthenticatorFactory {
 
     private static final String PROVIDER_ID = "halo-launch-aud-validator";
-
-    static final String SOFA_AUDIENCE_PROP_NAME = "smart_halo_audience";
-    private static final String SOFA_AUDIENCE_PROP_LABEL = "FHIR Server URL";
 
     @Override
     public String getDisplayType() {

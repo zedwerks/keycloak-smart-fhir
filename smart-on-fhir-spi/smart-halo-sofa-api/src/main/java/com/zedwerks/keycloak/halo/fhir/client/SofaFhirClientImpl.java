@@ -26,10 +26,11 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.io.IOException;
+import java.lang.InterruptedException;
 
 import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
-
 
 public class SofaFhirClientImpl implements SofaFhirClient {
 
@@ -59,38 +60,57 @@ public class SofaFhirClientImpl implements SofaFhirClient {
     // ------------------------------------------------------------
     // INTERNAL: Adds Authorization header + performs HTTP call
     // ------------------------------------------------------------
+
     private String doPost(String url, String bodyJson) {
+        String token = accessToken();
+        if (token == null) {
+            logger.warn("Access Token from session is null");
+        }
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/fhir+json")
+                .POST(HttpRequest.BodyPublishers.ofString(bodyJson, StandardCharsets.UTF_8))
+                .build();
 
         try {
-            String userAccessToken = accessToken();
-
-            if (userAccessToken == null) {
-                logger.warn("Access Token from session is null");
-            }
-
-            logger.debugf("Bearer Token = '%s'", userAccessToken);
-
-            HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .header("Authorization", "Bearer " + userAccessToken)
-                    .header("Content-Type", "application/fhir+json")
-                    .POST(HttpRequest.BodyPublishers.ofString(bodyJson, StandardCharsets.UTF_8))
-                    .build();
-
-            logger.info("About to do http.send()");
+            logger.infof("HTTP POST → %s", url);
 
             HttpResponse<String> res = http.send(req, HttpResponse.BodyHandlers.ofString());
+            int status = res.statusCode();
 
-            if (res.statusCode() < 200 || res.statusCode() >= 300) {
-                throw new RuntimeException(
-                        "FHIR POST failed: HTTP " + res.statusCode() + "\n" + res.body()
-                );
+            if (status != 200) {
+                logger.errorf("FHIR POST failed (%d): %s", status, res.body());
+                return errorJson(
+                        "fhir_post_error",
+                        "FHIR server returned HTTP " + status,
+                        res.body());
             }
 
             return res.body();
+
+        } catch (IOException ioe) {
+            logger.errorf(ioe, "Network error POSTing to %s", url);
+            return errorJson(
+                    "network_error",
+                    "Unable to reach FHIR server at " + url,
+                    rootCause(ioe).getMessage());
+
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+            logger.errorf(ie, "HTTP POST interrupted");
+            return errorJson(
+                    "interrupted",
+                    "Request was interrupted",
+                    ie.getMessage());
+
         } catch (Exception e) {
-            String msg = "HTTP POST error: " + e.getMessage();
-            throw new RuntimeException(msg, e);
+            logger.errorf(e, "Unexpected POST error to %s", url);
+            return errorJson(
+                    "unexpected_error",
+                    "Unexpected error contacting FHIR server",
+                    rootCause(e).getMessage());
         }
     }
 
@@ -110,17 +130,59 @@ public class SofaFhirClientImpl implements SofaFhirClient {
                     .build();
 
             HttpResponse<String> res = http.send(req, HttpResponse.BodyHandlers.ofString());
+            int status = res.statusCode();
 
-            if (res.statusCode() != 200) {
-                throw new RuntimeException(
-                        "FHIR GET failed: HTTP " + res.statusCode() + "\n" + res.body()
-                );
+            if (status < 200 || status >= 300) {
+                logger.errorf("FHIR POST failed (%d): %s", status, res.body());
+                return errorJson(
+                        "fhir_get_error",
+                        "FHIR server returned HTTP " + status,
+                        res.body());
             }
-
             return res.body();
+
+        } catch (IOException ioe) {
+            logger.errorf(ioe, "Network error POSTing to %s", url);
+            return errorJson(
+                    "network_error",
+                    "Unable to reach FHIR server at " + url,
+                    rootCause(ioe).getMessage());
+
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+            logger.errorf(ie, "HTTP POST interrupted");
+            return errorJson(
+                    "interrupted",
+                    "Request was interrupted",
+                    ie.getMessage());
+
         } catch (Exception e) {
-            throw new RuntimeException("HTTP GET error", e);
+            logger.errorf(e, "Unexpected POST error to %s", url);
+            return errorJson(
+                    "unexpected_error",
+                    "Unexpected error contacting FHIR server",
+                    rootCause(e).getMessage());
         }
+    }
+
+    private Throwable rootCause(Throwable t) {
+        Throwable cause = t;
+        while (cause.getCause() != null) {
+            cause = cause.getCause();
+        }
+        return cause;
+    }
+
+    private String errorJson(String code, String message, String detail) {
+        return "{"
+                + "\"error\":\"" + code + "\","
+                + "\"message\":\"" + escape(message) + "\","
+                + "\"detail\":\"" + escape(detail) + "\""
+                + "}";
+    }
+
+    private String escape(String s) {
+        return s == null ? "" : s.replace("\"", "\\\"");
     }
 
     // ------------------------------------------------------------

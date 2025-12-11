@@ -19,28 +19,3 @@
  * SPDX-License-Identifier: Apache-2.0
  * 
  */
-
-package com.zedwerks.keycloak.halo.sofa.endpoints;
-
-import org.keycloak.models.KeycloakSession;
-import org.keycloak.services.resource.RealmResourceProvider;
-
-
-public class SofaContextResourceProvider implements RealmResourceProvider {
-
-    private final KeycloakSession session;
-
-    public SofaContextResourceProvider(KeycloakSession session) {
-        this.session = session;
-    }
-
-    @Override
-    public Object getResource() {
-        return new SofaContextResource(this.session);
-    }
-
-    @Override
-    public void close() {
-    }
-
-}

@@ -12,6 +12,7 @@ provider "keycloak" {
   client_secret = var.keycloak_terraform_client_secret
   url           = var.keycloak_base_url
   realm         = var.keycloak_realm
+  tls_insecure_skip_verify = var.tls_insecure_skip_verify
 }
 
 data "keycloak_realm" "realm" {

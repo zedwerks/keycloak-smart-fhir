@@ -20,7 +20,7 @@ else
 fi
 popd
 echo "Quick Start is done."
-echo "Go to http://localhost:8080 to see the example Keycloak admin login"
+echo "Go to https://localhost:8443 to see the example Keycloak admin login"
 echo "username: admin"
 echo "password: admin"
 echo "You login using the Postman client, with username: alice and password: password"

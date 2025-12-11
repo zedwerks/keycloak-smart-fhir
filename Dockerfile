@@ -75,6 +75,11 @@ COPY --from=builder /app/keycloak/conf/infinispan-smart-context.xml ./conf/infin
 # Copy the Keycloak Realm file (which in build phase, the realm name was resolved to the realm name)
 COPY --from=builder /app/keycloak/import/realm-template.json ./data/import/realm.json
 
+COPY --from=builder /app/keycloak/certs/keycloak.key ./certs/keycloak.key
+COPY --from=builder /app/keycloak/certs/keycloak.crt ./certs/keycloak.crt
+
+
+
 USER root
 RUN chown keycloak:root -R ./data/import/
 USER keycloak

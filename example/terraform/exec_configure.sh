@@ -23,7 +23,7 @@ fi
 
 # Wait for the service to start.
 echo "Waiting for Keycloak to start..."
-until $(curl --output /dev/null --silent --head --fail $TF_VAR_keycloak_base_url); do
+until $(curl --insecure --output /dev/null --silent --head --fail $TF_VAR_keycloak_base_url); do
     printf '.'
     sleep 1
 done
@@ -46,6 +46,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+echo 'Running terraform import realm...'
+terraform -chdir=$workdir import -var-file="$tfvars_file" keycloak_realm.smart_realm $TF_VAR_keycloak_realm
+if [ $? -ne 0 ]; then
+    echo "Terraform import for realm failed. Exiting..."
+    exit 1
+fi
 
 echo 'Running terraform plan...'
 terraform -chdir=$workdir plan -var-file="$tfvars_file" -out=${state_dir}/localhost.tfplan -compact-warnings

@@ -26,7 +26,7 @@ if (& "./exec_configure.ps1") {
 Pop-Location
 
 Write-Host "Quick Start is done."
-Write-Host "Go to http://localhost:8080 to see the example Keycloak admin login"
+Write-Host "Go to https://localhost:8443 to see the example Keycloak admin login"
 Write-Host "username: admin"
 Write-Host "password: admin"
 Write-Host "You can logger in using the Postman client, with username: alice and password: password"
