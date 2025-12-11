@@ -52,6 +52,7 @@ public class SofaContextResponse extends FhirParameters {
         Meta meta = new Meta();
         meta.setProfile(List.of("http://fhir.infoway-inforoute.ca/io/HALO/StructureDefinition/set-context-output-parameters"));
         this.setMeta(meta);
+        this.setId(java.util.UUID.randomUUID().toString());
     }
 
     // --- Helpers to convert inputs into JsonNode ---

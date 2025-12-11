@@ -41,10 +41,8 @@ public class OperationOutcome implements Serializable {
     public static final String SEVERITY_INFORMATION = "information";
     public static final String SEVERITY_SUCCESS = "success";
 
-    public static final String CODE_SUCCESS = "success";
-    public static final String CODE_NOTFOUND = "not-found";
-    public static final String CODE_ERROR = "error";
     public static final String CODE_INFO = "informational";
+    public static final String CODE_PROCESSING = "processing";
 
 
     private String resourceType = "OperationOutcome";
@@ -64,7 +62,7 @@ public class OperationOutcome implements Serializable {
 
         public Issue() {
             this.severity = SEVERITY_INFORMATION;
-            this.code = CODE_SUCCESS;
+            this.code = CODE_INFO;
             this.detailsText = "Operation Successful";
         }
 
@@ -121,6 +119,20 @@ public class OperationOutcome implements Serializable {
     public static OperationOutcome success(String detailsText) {
         Issue issue = new Issue(); // default is success.
         issue.setDetailsText(detailsText);
+        OperationOutcome outcome = new OperationOutcome();
+        outcome.addIssue(issue);
+        return outcome;
+    }
+
+    public static OperationOutcome outcome(String severity, String code, String detailsText) {
+        Issue issue = new Issue(severity, code, detailsText);
+        OperationOutcome outcome = new OperationOutcome();
+        outcome.addIssue(issue);
+        return outcome;
+    }
+
+    public static OperationOutcome error(String detailsText) {
+        Issue issue = new Issue(SEVERITY_ERROR, CODE_PROCESSING, detailsText);
         OperationOutcome outcome = new OperationOutcome();
         outcome.addIssue(issue);
         return outcome;

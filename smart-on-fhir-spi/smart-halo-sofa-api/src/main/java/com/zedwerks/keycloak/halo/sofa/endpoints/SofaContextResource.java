@@ -201,16 +201,19 @@ public class SofaContextResource {
             return Response.ok(response).build();
 
         } catch (NotAuthorizedException e) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
+            OperationOutcome outcome = OperationOutcome.error(e.getMessage());
+            return Response.status(Response.Status.UNAUTHORIZED).entity(outcome).build();
         } catch (ForbiddenException e) {
-            return Response.status(Response.Status.FORBIDDEN).entity(e.getMessage()).build();
+            OperationOutcome outcome = OperationOutcome.error(e.getMessage());
+            return Response.status(Response.Status.FORBIDDEN).entity(outcome).build();
         } catch (IllegalArgumentException | JsonProcessingException e) {
+            OperationOutcome outcome = OperationOutcome.error(e.getMessage());
             logger.error("Invalid context request: " + e.getMessage(), e);
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(outcome).build();
         } catch (RuntimeException e) {
+            OperationOutcome outcome = OperationOutcome.error(e.getMessage());
             logger.error("Error processing context request", e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Error processing context request: " + e.getMessage()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(outcome).build();
         }
     }
 
@@ -246,11 +249,12 @@ public class SofaContextResource {
             return Response.status(Response.Status.OK).entity(outcome).build();
 
         } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
+            OperationOutcome outcome = OperationOutcome.error(e.getMessage());
+            return Response.status(Response.Status.UNAUTHORIZED).entity(outcome).build();
         } catch (RuntimeException e) {
+            OperationOutcome outcome = OperationOutcome.error(e.getMessage());
             logger.error("Error processing context request", e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Error processing context request: " + e.getMessage()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(outcome).build();
         }
     }
 
@@ -280,7 +284,7 @@ public class SofaContextResource {
             String cacheJsonString = contextStore.retrieve(launchId);
 
             if (cacheJsonString == null) {
-                OperationOutcome outcome = OperationOutcome.success("Context not found");
+                OperationOutcome outcome = OperationOutcome.error("Context not found");
                 return Response.status(Response.Status.NOT_FOUND).entity(outcome).build();
             }
 
