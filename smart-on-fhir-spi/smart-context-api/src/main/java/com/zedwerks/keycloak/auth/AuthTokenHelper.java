@@ -1,92 +1,129 @@
-/**
- * Copyright 2025 Zed Werks Inc.
- * 
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * 
- * @author Brad Head
- * 
- */
 package com.zedwerks.keycloak.auth;
 
 import org.jboss.logging.Logger;
+
 import org.keycloak.TokenVerifier;
 import org.keycloak.common.VerificationException;
+import org.keycloak.crypto.KeyUse;
+import org.keycloak.jose.jws.JWSHeader;
+import org.keycloak.jose.jws.JWSInput;
+import org.keycloak.jose.jws.JWSInputException;
 import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.RealmModel;
 import org.keycloak.representations.AccessToken;
 
 import jakarta.ws.rs.ForbiddenException;
 import jakarta.ws.rs.NotAuthorizedException;
 
+import java.security.Key;
+import java.security.PublicKey;
+import java.util.Locale;
+
 public class AuthTokenHelper {
 
     private static final Logger logger = Logger.getLogger(AuthTokenHelper.class);
+    private static final String BEARER_PREFIX = "Bearer ";
 
-    static final String PREFIX = "Bearer ";
-
-    private static AccessToken verifyAccessToken(String tokenBase64String) {
-
-        logger.debugf("Verifying access token: %s", tokenBase64String);
+    private static AccessToken verifyAccessToken(
+            RealmModel realm,
+            KeycloakSession session,
+            String token
+    ) {
 
         try {
-            // Build the verifier for AccessToken type
-            TokenVerifier<AccessToken> verifier = TokenVerifier.create(tokenBase64String, AccessToken.class)
-                    .parse()
-                    .withDefaultChecks()
-                    .withChecks(TokenVerifier.IS_ACTIVE, TokenVerifier.SUBJECT_EXISTS_CHECK);
+            // ─────────────────────────────────────────────
+            // 1. Parse JWT header
+            // ─────────────────────────────────────────────
+            JWSInput jws = new JWSInput(token);
+            JWSHeader header = jws.getHeader();
 
-            // verifier.verifySignature(); // @todo figure out when to turn off for local
-            // DEV testing.
-            // Perform verification
-            AccessToken token = verifier.getToken();
-            logger.debugf("Access token verified successfully: %s", token.getSubject());
-            return token;
+            String kid = header.getKeyId();
+            String alg = header.getAlgorithm()
+                    .toString()
+                    .trim()
+                    .toUpperCase(Locale.ROOT);
 
-        } catch (VerificationException e) {
-            logger.error("Verification failed for access token: " + e.getMessage(), e);
-            throw new NotAuthorizedException("Invalid or expired access token");
+            // ─────────────────────────────────────────────
+            // 2. Resolve signing key
+            // ─────────────────────────────────────────────
+            var keyEntry = (kid != null)
+                    ? session.keys().getKey(realm, kid, KeyUse.SIG, alg)
+                    : null;
+
+            Key key = (keyEntry != null)
+                    ? keyEntry.getPublicKey()
+                    : session.keys().getActiveKey(realm, KeyUse.SIG, alg).getPublicKey();
+
+            if (!(key instanceof PublicKey)) {
+                throw new VerificationException("Resolved key is not a PublicKey");
+            }
+
+            PublicKey publicKey = (PublicKey) key;
+
+            // ─────────────────────────────────────────────
+            // 3. Verify signature + time validity
+            // ─────────────────────────────────────────────
+            TokenVerifier<AccessToken> verifier =
+                    TokenVerifier.create(token, AccessToken.class)
+                            .publicKey(publicKey)
+                            .withChecks(
+                                    TokenVerifier.IS_ACTIVE,
+                                    TokenVerifier.SUBJECT_EXISTS_CHECK
+                            );
+
+            verifier.verify();
+            AccessToken accessToken = verifier.getToken();
+
+            // ─────────────────────────────────────────────
+            // 4. Manual issuer validation (KC-26+)
+            // ─────────────────────────────────────────────
+            String expectedIssuer =
+                    session.getContext().getUri().getBaseUriBuilder()
+                            .path("realms")
+                            .path(realm.getName())
+                            .build()
+                            .toString();
+
+            if (!expectedIssuer.equals(accessToken.getIssuer())) {
+                throw new VerificationException(
+                        "Invalid token issuer: " + accessToken.getIssuer()
+                );
+            }
+
+            return accessToken;
+
+        } catch (VerificationException | JWSInputException e) {
+            logger.warnf("Access token verification failed: %s", e.getMessage());
+            throw new NotAuthorizedException("Invalid or expired access token", e);
         }
     }
 
-    public static AccessToken verifyAuthorizationHeader(KeycloakSession session, String authorizationHeader,
-            String scope) {
+    public static AccessToken verifyAuthorizationHeader(
+            KeycloakSession session,
+            String authorizationHeader,
+            String requiredScope
+    ) {
 
-        logger.debug("verifyAuthorizationHeader() **** Verifying Authorization Header ****");
-
-        final int prefixLength = PREFIX.length();
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            logger.error("Authorization header must start with 'Bearer '");
-            throw new NotAuthorizedException("Authorization header must be provided with Bearer token");
+        if (authorizationHeader == null || !authorizationHeader.startsWith(BEARER_PREFIX)) {
+            throw new NotAuthorizedException("Authorization header must contain Bearer token");
         }
 
-        AccessToken accessToken = verifyAccessToken(authorizationHeader.substring(prefixLength));
+        RealmModel realm = session.getContext().getRealm();
 
-        // check if issuer is this realm
-        String realmName = session.getContext().getRealm().getName();
-        if (!accessToken.getIssuer().endsWith("/realms/" + realmName)) {
-            throw new NotAuthorizedException("Token not issued for this realm");
+        AccessToken token = verifyAccessToken(
+                realm,
+                session,
+                authorizationHeader.substring(BEARER_PREFIX.length())
+        );
+
+        if (requiredScope == null || requiredScope.isEmpty()) {
+            return token;
         }
 
-        if (scope == null || scope.isEmpty()) {
-            logger.debug("No specific scope required, returning access token");
-            return accessToken;
+        if (token.getScope() == null || !token.getScope().contains(requiredScope)) {
+            throw new ForbiddenException("Missing required scope: " + requiredScope);
         }
-        // Check for required scopes
-        if (accessToken.getScope() == null || !accessToken.getScope().contains(scope)) {
-            logger.debugf("Access token scopes: %s", accessToken.getScope());
-            logger.warnf("Access token does not contain required scope: %s", scope);
-            throw new ForbiddenException("Missing required scope: " + scope);
-        }
-        return accessToken;
+
+        return token;
     }
 }

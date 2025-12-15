@@ -26,11 +26,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * Minimal FHIR OperationOutcome representation.
  * 
  * https://hl7.org/fhir/operationoutcome.html
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OperationOutcome implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,6 +54,7 @@ public class OperationOutcome implements Serializable {
 
     // ---------------- Nested Issue Class ----------------
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Issue implements Serializable {
 
         private static final long serialVersionUID = 1L;

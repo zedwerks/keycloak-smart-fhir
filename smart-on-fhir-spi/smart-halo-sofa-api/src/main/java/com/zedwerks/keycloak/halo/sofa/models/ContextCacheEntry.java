@@ -27,10 +27,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ContextCacheEntry {
@@ -42,7 +43,7 @@ public class ContextCacheEntry {
      * additional launch parameters to be returned alongside the
      * tokens when the HALO SMART app launches.
      */
-    @JsonProperty("contextJson")
+    @JsonProperty("context")
     private JsonNode contextJson;
 
     /**
@@ -50,36 +51,23 @@ public class ContextCacheEntry {
      * Use this to build up the fhirContext payload returned to the
      * HALO SMART app alongside the auth tokens during launch.
      */
-    @JsonProperty("sofaBundleJson")
-    private JsonNode sofaBundleJson;
+    @JsonProperty("launchContext")
+    private SmartLaunchContext launchContext;
 
-    public JsonNode getContextJson() {
-        return contextJson;
+    public JsonNode getContextRequest() {
+        return this.contextJson;
     }
 
-    public void setContextJson(JsonNode contextJson) {
-        this.contextJson = contextJson;
+    public void setContextRequest(JsonNode json) {
+        this.contextJson = json;
     }
 
-    public JsonNode getSofaBundleJson() {
-        return sofaBundleJson;
+    public SmartLaunchContext getLaunchContext() {
+        return this.launchContext;
     }
 
-    public void setSofaBundleJson(JsonNode bundleJson) {
-        this.sofaBundleJson = bundleJson;
-    }
-
-    public static String toJsonString(ContextCacheEntry obj) {
-
-        return JsonObjectHelper.toJsonString(obj);
-    }
-
-    public static ContextCacheEntry fromJsonString(String jsonString) {
-        try {
-            return mapper.readValue(jsonString, ContextCacheEntry.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Failed to convert to ContextCacheEntry from Json String", e);
-        }
+    public void setLaunchContext(SmartLaunchContext obj) {
+        this.launchContext = obj;
     }
 
 }

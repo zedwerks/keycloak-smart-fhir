@@ -59,6 +59,7 @@ services:
       HAPI_FHIR_SERVER_ID_STRATEGY: "UUID"
       HAPI_FHIR_REST_SERVER_DEFAULT_ENCODING: "JSON"
       HAPI_FHIR_REST_SERVER_DEFAULT_PREFER_RETURN: "representation"
+      # HAPI_FHIR_SERVER_ADDRESS: "http://localhost:9001/fhir"
     ports:
       - "9001:8080"
     networks:
