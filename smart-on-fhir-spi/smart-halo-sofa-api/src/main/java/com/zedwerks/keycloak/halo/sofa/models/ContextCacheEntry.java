@@ -43,8 +43,8 @@ public class ContextCacheEntry {
      * additional launch parameters to be returned alongside the
      * tokens when the HALO SMART app launches.
      */
-    @JsonProperty("context")
-    private JsonNode contextJson;
+    @JsonProperty("contextRequest")
+    private JsonNode contextRequestJson;
 
     /**
      * the FHIR Bundle as saved into the SOFA FHIR Server.
@@ -55,11 +55,11 @@ public class ContextCacheEntry {
     private SmartLaunchContext launchContext;
 
     public JsonNode getContextRequest() {
-        return this.contextJson;
+        return this.contextRequestJson;
     }
 
     public void setContextRequest(JsonNode json) {
-        this.contextJson = json;
+        this.contextRequestJson = json;
     }
 
     public SmartLaunchContext getLaunchContext() {
