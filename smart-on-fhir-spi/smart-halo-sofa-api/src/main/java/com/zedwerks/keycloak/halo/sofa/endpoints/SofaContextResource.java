@@ -187,8 +187,8 @@ public class SofaContextResource {
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
 
             // 1. Create a new object to store the context and the SOFA resolved bundle
-            ContextCacheEntry entry = new ContextCacheEntry();
-            entry.setContextRequest(contextJsonNode); // hang onto the original context json.
+            ContextCacheEntry cacheEntry = new ContextCacheEntry();
+            cacheEntry.setContextRequest(contextJsonNode); // hang onto the original context json.
 
             logger.info("1. Saved $set-context original payload into Cache");
 
@@ -214,11 +214,11 @@ public class SofaContextResource {
                 launchContext.addFhirContextsFromBundle(bundleResponseJsonString);
                 logger.info("4. Saved fhirContexts into launchContext cache");
             }
-            entry.setLaunchContext(launchContext);
+            cacheEntry.setLaunchContext(launchContext);
 
             // 5. Save the launch context -> ready for use by the SMART app launched by this
             // user.
-            String launchId = contextStore.store(userSession, JsonMapper.toJsonString(entry));
+            String launchId = contextStore.store(userSession, JsonMapper.toJsonString(cacheEntry));
             logger.info("5. Saved fully processed context to cache");
 
             OperationOutcome outcome = OperationOutcome.success("Context set successfully");
@@ -288,12 +288,19 @@ public class SofaContextResource {
         }
     }
 
+    /**
+     * 
+     * @param authorizationHeader. -- the Bearer Token Header
+     * @param launchId - the launch ID as returned by /$set-context
+     * @param smart. -- true when to return the parse SMART launch context json.
+     * @return
+     */
     @GET
     @Path("/$get-context")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSmartContext(@HeaderParam("Authorization") String authorizationHeader,
             @QueryParam("launchID") String launchId,
-            @QueryParam("cached") Boolean cached) {
+            @QueryParam("smart") Boolean smart) {
 
         try {
             AccessToken token = AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, READ_SCOPE);
@@ -319,9 +326,12 @@ public class SofaContextResource {
             }
 
             ContextCacheEntry cache = JsonMapper.toObjectFromJsonString(cacheJsonString, ContextCacheEntry.class);
-            String responseBody = cacheJsonString;
-            if ((cached == null) || (cached == false)) {
+            String responseBody = null;
+            if ((smart == null) || (smart == false)) {
                 responseBody = JsonMapper.toJsonString(cache.getContextRequest());
+            }
+            else {
+                responseBody = JsonMapper.toJsonString(cache);
             }
 
             return Response.ok(responseBody).build();

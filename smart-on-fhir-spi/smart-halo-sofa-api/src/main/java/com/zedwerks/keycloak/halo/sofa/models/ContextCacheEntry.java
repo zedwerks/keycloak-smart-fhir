@@ -51,7 +51,7 @@ public class ContextCacheEntry {
      * Use this to build up the fhirContext payload returned to the
      * HALO SMART app alongside the auth tokens during launch.
      */
-    @JsonProperty("launchContext")
+    @JsonProperty("smartLaunchContext")
     private SmartLaunchContext launchContext;
 
     public JsonNode getContextRequest() {
