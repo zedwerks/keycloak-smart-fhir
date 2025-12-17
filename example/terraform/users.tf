@@ -6,11 +6,13 @@ resource "keycloak_user" "test_user_alice" {
   last_name      = "Smith"
   email          = "alice@doctors.ca"
   email_verified = true
-  attributes = {
-    fhirUser = "Practitioner/1234494959"
-  }
+
   initial_password {
     value     = var.test_user_password
     temporary = false
+  }
+
+  attributes = {
+    "fhirUser" = "PractitionerRole/b3b7f021-6566-4be5-a6ec-736bc44fefb8"
   }
 }

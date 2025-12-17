@@ -15,7 +15,9 @@
       }
     ]
   },
-  "defaultRoles": ["user"],
+  "defaultRoles": [
+    "user"
+  ],
   "clients": [
     {
       "clientId": "terraform",
@@ -129,8 +131,5 @@
         "manage": true
       }
     }
-  ],
-  "attributes": {
-    "smart.config.sofa_audience": "http://host.docker.internal:8081"
-  }
+  ]
 }

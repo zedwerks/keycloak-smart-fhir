@@ -250,6 +250,7 @@ public class HaloLaunchResolver implements Authenticator {
         setUserSessionNote(context, LaunchHelper.CONTEXT_NEED_PATIENT_BANNER, smartLaunchObj.getNeedPatientBanner());
         setUserSessionNote(context, LaunchHelper.SMART_STYLE_URL, smartLaunchObj.getSmartStyleUrl());
         setUserSessionNote(context, LaunchHelper.CONTEXT_FHIR_CONTEXT, JsonMapper.toJsonString(smartLaunchObj.getFhirContext()));
+        setUserSessionNote(context, LaunchHelper.SMART_FHIR_USER_CLAIM, smartLaunchObj.getFhirUser());
         return true;
 
     }

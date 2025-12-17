@@ -34,3 +34,7 @@ sh /opt/keycloak/bin/kcadm.sh config credentials --server $server --realm master
 # Create a composite role from realm-management client
 echo "Adding realm-managment role(s) to the terraform service account."
 sh /opt/keycloak/bin/kcadm.sh add-roles --uusername $service_account --cclientid realm-management --rolename realm-admin -r $realm
+
+# This sets the realm to allow unamanged User account attributes to be added => Important for fhirUser, and other user attributes
+echo "Setting the realm user profile to allow unmanaged attributes."
+sh /opt/keycloak/bin/kcadm.sh update "realms/${realm}/users/profile" -s unmanagedAttributePolicy=ENABLED

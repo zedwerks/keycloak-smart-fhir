@@ -70,6 +70,9 @@ public class SmartLaunchContext {
     @JsonProperty("fhirContext")
     private List<JsonNode> fhirContext;
 
+    @JsonProperty("fhirUser")
+    private String fhirUser;
+
     // Getters/Setters
     public String getPatient() {
         return this.patient;
@@ -93,6 +96,14 @@ public class SmartLaunchContext {
 
     public List<JsonNode> getFhirContext() {
         return this.fhirContext;
+    }
+
+    public void setFhirUser(String fhirUser) {
+        this.fhirUser = fhirUser;
+    }
+
+    public String getFhirUser() {
+        return fhirUser;
     }
 
     public String getNeedPatientBanner() {
@@ -160,6 +171,11 @@ public class SmartLaunchContext {
         }
         List<JsonNode> fhirContexts = HaloParametersHelper.fhirContextReferences(node);
         this.setFhirContext(fhirContexts);
+
+        Optional<String> fhirUser = HaloParametersHelper.fhirUserReference(node);
+        if (fhirUser.isPresent()) {
+            this.setFhirUser(fhirUser.get());
+        }
     }
 
     /**
