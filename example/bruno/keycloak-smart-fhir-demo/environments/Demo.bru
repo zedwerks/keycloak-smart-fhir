@@ -1,7 +1,11 @@
 vars {
   keycloak_url_base: https://kc.zedwerks.com
   fhir_server_url: https://localhost:9000/fhir
+  halo_audience: http://hapi-fhir:8080/fhir
+  redirect_uri: "http://localhost:8081/auth/callback"
+  realm: smart
+  emr_client_id: demo-emr
 }
 vars:secret [
-  postman_emr_secret
+  demo_emr_secret
 ]

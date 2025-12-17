@@ -37,8 +37,12 @@ import org.keycloak.models.UserSessionProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zedwerks.keycloak.halo.sofa.models.ContextCacheEntry;
+import com.zedwerks.keycloak.halo.sofa.models.JsonMapper;
+import com.zedwerks.keycloak.halo.sofa.models.SmartLaunchContext;
 import com.zedwerks.keycloak.smart.authenticators.LaunchDetector;
 import com.zedwerks.keycloak.smart.authenticators.LaunchHelper;
+import com.zedwerks.keycloak.smart.context.store.services.SmartContextCacheService;
 
 import jakarta.ws.rs.core.Response;
 /**
@@ -198,88 +202,54 @@ public class HaloLaunchResolver implements Authenticator {
         userSession.removeNote(noteName);
     }
 
-    private static boolean saveLaunchContextToUserSession(AuthenticationFlowContext context, String newContextId) {
+    private static boolean saveLaunchContextToUserSession(AuthenticationFlowContext context, String newLaunchID) {
 
-        if (newContextId == null) {
-            logger.warn("*** HALO SMART Launch Context ID is null. Unexpected during an HALO launch.");
+        if (newLaunchID == null) {
+            logger.warn("*** HALO SMART Launch ID is null. Unexpected during an HALO launch.");
             return false;
         }
+        
+        //--------
+        // Step 1.  Retrieve the Halo Context object from the cache storage
+        //--------
+        SmartContextCacheService contextStore = new SmartContextCacheService(context.getSession());
+        String cacheJsonString = contextStore.retrieve(newLaunchID);
 
-        String contextJson = userSessionNote(context, newContextId);
-
-        if (contextJson == null) {
+        if (cacheJsonString == null) {
             logger.warn(
-                    "*** SMART Launch Context JSON is missing. Unexpected during an EHR launch. Likely due to bad launch parameter sent by SMART App");
+                    "*** SMART HALO Launch Context JSON is missing. Unexpected during an EHR launch. Likely due to bad launch parameter sent by SMART App");
             return false;
         }
-        logger.debugf("New Context JSON = %s", contextJson);
+        logger.debugf("New Context JSON = %s", cacheJsonString);
+
+        ContextCacheEntry cache = JsonMapper.toObjectFromJsonString(cacheJsonString, ContextCacheEntry.class);
+        SmartLaunchContext smartLaunchObj = cache.getLaunchContext();
+
+        if ((cache == null) || (smartLaunchObj == null)) {
+           logger.warn(
+                    "*** SMART HALO Launch Context JSON is missing. Unexpected during an EHR launch. Likely due to bad launch parameter sent by SMART App");
+            return false;
+        }
+
+        // --------
+        // Step 2: Clear out old context values from session
+        // --------
         clearUserSessionNotes(context);
 
-        setUserSessionNote(context, AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID, newContextId);
+        // --------
+        // Step 3: Set User Session Values from SMART context cache
+        // Note: This allows us to control where these values are placed during the token response sent back to the SMART app
+        // --------
 
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(contextJson);
+        logger.debug("Save top-level Context key/value pairs");
 
-            // Is this legacy format?
-            JsonNode resourceTypeNode = rootNode.get("resourceType");
-            if (resourceTypeNode != null && resourceTypeNode.isTextual()) {
-                String resourceTypeText = resourceTypeNode.asText();
-                if (resourceTypeText.equals("Parameters")) {
-                    logger.warn(
-                            "*** SMART Context: Deprecated Launch Context JSON found. Will process. Future releases my drop support.");
-                    JsonNode parameterArray = rootNode.get("parameter");
-                    if (parameterArray != null && parameterArray.isArray()) {
-                        // Iterate over each element in the array
-                        for (JsonNode entry : parameterArray) {
-                            // Extract "name" and "valueString" fields
-                            String name = entry.get("name").asText();
-                            String valueString = entry.get("valueString").asText();
-
-                            if (name.equals(LaunchHelper.SMART_TOKEN_PATIENT_CLAIM)) {
-                                setUserSessionNote(context, LaunchHelper.SMART_TOKEN_PATIENT_CLAIM, valueString);
-                            }
-                            if (name.equals(LaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER)) {
-                                setUserSessionNote(context, LaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER,
-                                        valueString);
-                            }
-                        }
-                    } else {
-                        logger.error("The Legacy Launch Context JSON 'parameter' field is not an array or is missing.");
-                    }
-                }
-            }
-
-            logger.debug("Save top-level Context key/value pairs");
-            rootNode.fields().forEachRemaining(field -> {
-                String key = field.getKey();
-                String value = field.getValue().asText();
-
-                if (key.equals(LaunchHelper.SMART_TOKEN_PATIENT_CLAIM)) {
-                    setUserSessionNote(context, LaunchHelper.SMART_TOKEN_PATIENT_CLAIM, value);
-                } else if (key.equals(LaunchHelper.SMART_TOKEN_ENCOUNTER_CLAIM)) {
-                    setUserSessionNote(context, LaunchHelper.SMART_TOKEN_ENCOUNTER_CLAIM, value);
-                }
-            });
-
-            JsonNode paramsNode = rootNode.get(USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON);
-
-            if (paramsNode != null && paramsNode.isObject()) {
-                logger.info("Processing Launch Context additional Parameters...");
-                Iterator<Map.Entry<String, JsonNode>> params = paramsNode.fields();
-                while (params.hasNext()) {
-                    Map.Entry<String, JsonNode> param = params.next();
-                    String paramName = param.getKey();
-                    JsonNode paramValueNode = param.getValue();
-                    String paramValue = paramValueNode.isTextual() ? paramValueNode.asText()
-                            : paramValueNode.toString();
-                    setUserSessionNote(context, paramName, paramValue);
-                }
-            }
-        } catch (JsonProcessingException | RuntimeException ex) {
-            logger.warnf("*** SMART: Processing launch request param: Launch Context JSON issue. %s", ex.getMessage());
-            return false;
-        }
+        setUserSessionNote(context, AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID, newLaunchID); // Hang onto the launchId
+        setUserSessionNote(context, LaunchHelper.CONTEXT_PATIENT, smartLaunchObj.getPatient());
+        setUserSessionNote(context, LaunchHelper.CONTEXT_ENCOUNTER, smartLaunchObj.getEncounter());
+        setUserSessionNote(context, LaunchHelper.CONTEXT_INTENT, smartLaunchObj.getIntent());
+        setUserSessionNote(context, LaunchHelper.CONTEXT_NEED_PATIENT_BANNER, smartLaunchObj.getNeedPatientBanner());
+        setUserSessionNote(context, LaunchHelper.SMART_STYLE_URL, smartLaunchObj.getSmartStyleUrl());
+        setUserSessionNote(context, LaunchHelper.CONTEXT_FHIR_CONTEXT, JsonMapper.toJsonString(smartLaunchObj.getFhirContext()));
         return true;
 
     }
@@ -302,37 +272,6 @@ public class HaloLaunchResolver implements Authenticator {
 
         if (currentLaunchContextId != null) {
             logger.debugf("*** Clearing Current Launch Context In Session %s", currentLaunchContextId);
-
-            String contextJson = userSessionNote(context, currentLaunchContextId);
-
-            logger.debugf("DEBUG: Old Context JSON to be cleared: %s", contextJson);
-
-            if (contextJson != null) {
-                logger.info("*** SMART: Removing old EHR Context from User Session");
-                try {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    JsonNode rootNode = objectMapper.readTree(contextJson);
-
-                    // Iterate over top-level nodes
-                    rootNode.fields().forEachRemaining(field -> {
-                        String key = field.getKey();
-                        clearUserSessionNote(context, key);
-                    });
-                    JsonNode paramsNode = rootNode.get(USER_SESSION_EXTRA_CONTEXT_PARAMS_JSON);
-
-                    if (paramsNode != null && paramsNode.isObject()) {
-                        logger.debug("Clearing Launch Context additional Parameters...");
-                        Iterator<Map.Entry<String, JsonNode>> params = paramsNode.fields();
-                        while (params.hasNext()) {
-                            Map.Entry<String, JsonNode> param = params.next();
-                            String paramName = param.getKey();
-                            clearUserSessionNote(context, paramName);
-                        }
-                    }
-                } catch (JsonProcessingException | RuntimeException ex) {
-                    logger.warnf("*** SMART: Could not make sense of the SMART Launch Context JSON: %s", ex.getMessage());
-                }
-            }
             clearUserSessionNote(context, currentLaunchContextId); // Clear out previous JSON context payload
             clearUserSessionNote(context, AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID); // Clear out the Key
         }

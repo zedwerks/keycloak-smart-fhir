@@ -1,0 +1,242 @@
+meta {
+  name: Set HALO Context [L]
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{keycloak_url_base}}/realms/{{realm}}/halo/$set-context
+  body: json
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: {{$oauth2.credentials.access_token}}
+}
+
+body:json {
+  {
+    "resourceType": "Parameters",
+    "id": "set-context-invocation-example",
+    "meta": {
+      "profile": [
+        "http://fhir.infoway-inforoute.ca/io/HALO/StructureDefinition/set-context-input-parameters"
+      ]
+    },
+    "parameter": [
+      {
+        "valueReference": {
+          "reference": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+          "type": "Patient"
+        },
+        "name": "patient"
+      },
+      {
+        "valueReference": {
+          "reference": "urn:uuid:e753f568-6faf-4a9e-aec8-fe0d2a4f397c",
+          "type": "Encounter"
+        },
+        "name": "encounter"
+      },
+      {
+        "valueReference": {
+          "reference": "urn:uuid:9b530e85-bf64-4f35-a186-65ac1ddaf303",
+          "type": "Organization"
+        },
+        "name": "fhirContext"
+      },
+      {
+        "valueReference": {
+          "reference": "urn:uuid:039b0733-79ec-476b-9ccc-109944222d58",
+          "type": "Location"
+        },
+        "name": "fhirContext"
+      },
+      {
+        "valueReference": {
+          "reference": "urn:uuid:b3b7f021-6566-4be5-a6ec-736bc44fefb8",
+          "type": "PractitionerRole"
+        },
+        "name": "fhirUser"
+      },
+      {
+        "name": "need_patient_banner",
+        "valueBoolean": true
+      },
+      {
+        "name": "intent",
+        "valueString": "medication-review"
+      },
+      {
+        "name": "smart_style_url",
+        "valueUrl": "http://example.com/smart_v1.json"
+      },
+      {
+        "name": "tenant",
+        "valueString": "tenant-xyz"
+      },
+      {
+        "name": "resources",
+        "resource": {
+          "resourceType": "Bundle",
+          "id": "set-context-transaction-bundle-example",
+          "type": "transaction",
+          "meta": {
+            "profile": [
+              "http://fhir.infoway-inforoute.ca/io/HALO/StructureDefinition/set-context-transaction-bundle"
+            ]
+          },
+          "entry": [
+            {
+              "request": {
+                "method": "POST",
+                "url": "Patient"
+              },
+              "fullUrl": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+              "resource": {
+                "resourceType": "Patient",
+                "name": [
+                  {
+                    "use": "official",
+                    "family": "Smith",
+                    "given": [
+                      "Jane"
+                    ]
+                  }
+                ],
+                "gender": "female"
+              }
+            },
+            {
+              "request": {
+                "method": "POST",
+                "url": "Encounter"
+              },
+              "fullUrl": "urn:uuid:e753f568-6faf-4a9e-aec8-fe0d2a4f397c",
+              "resource": {
+                "resourceType": "Encounter",
+                "status": "in-progress",
+                "class": {
+                  "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                  "code": "IMP",
+                  "display": "inpatient encounter"
+                },
+                "subject": {
+                  "reference": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+                  "type": "Patient"
+                }
+              }
+            },
+            {
+              "request": {
+                "method": "POST",
+                "url": "PractitionerRole"
+              },
+              "fullUrl": "urn:uuid:b3b7f021-6566-4be5-a6ec-736bc44fefb8",
+              "resource": {
+                "resourceType": "PractitionerRole",
+                "active": true,
+                "practitioner": {
+                  "reference": "urn:uuid:1ba55e38-715b-4072-8608-f5739245e6d8",
+                  "type": "Practitioner"
+                },
+                "organization": {
+                  "reference": "urn:uuid:9b530e85-bf64-4f35-a186-65ac1ddaf303",
+                  "type": "Organization"
+                },
+                "location": [
+                  {
+                    "reference": "urn:uuid:039b0733-79ec-476b-9ccc-109944222d58",
+                    "type": "Location"
+                  }
+                ]
+              }
+            },
+            {
+              "request": {
+                "method": "POST",
+                "url": "Practitioner"
+              },
+              "fullUrl": "urn:uuid:1ba55e38-715b-4072-8608-f5739245e6d8",
+              "resource": {
+                "resourceType": "Practitioner",
+                "name": [
+                  {
+                    "use": "official",
+                    "family": "Jones",
+                    "given": [
+                      "Julie"
+                    ],
+                    "suffix": [
+                      "MD"
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "request": {
+                "method": "POST",
+                "url": "Organization"
+              },
+              "fullUrl": "urn:uuid:9b530e85-bf64-4f35-a186-65ac1ddaf303",
+              "resource": {
+                "resourceType": "Organization",
+                "name": "Example Hospital"
+              }
+            },
+            {
+              "request": {
+                "method": "POST",
+                "url": "Location"
+              },
+              "fullUrl": "urn:uuid:039b0733-79ec-476b-9ccc-109944222d58",
+              "resource": {
+                "resourceType": "Location",
+                "status": "active",
+                "name": "North Wing",
+                "mode": "instance",
+                "physicalType": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                      "code": "wi",
+                      "display": "Wing"
+                    }
+                  ]
+                },
+                "managingOrganization": {
+                  "reference": "urn:uuid:9b530e85-bf64-4f35-a186-65ac1ddaf303",
+                  "type": "Organization"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+
+script:post-response {
+  // Parse the JSON response
+  var body = res.getBody();
+  
+  // Extract the launchID
+  var launchID = body.parameter?.find(p => p.name === "launchID")?.valueString;
+  
+  // Set the userId as a collection variable
+  bru.setVar("launch_id", launchID);
+  
+  // log the value
+  console.log("launch ID: ", launchID);
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

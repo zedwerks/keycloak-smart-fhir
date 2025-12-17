@@ -77,7 +77,6 @@ import jakarta.ws.rs.core.Response;
  *
  * @author Brad Head
  */
-@Path("/halo-sofa")
 public class SofaContextResource {
 
     static final String REALM_ATTR_AUDIENCE_URL = "smart_halo_sofa_audience"; // SET WITH TERRAFORM
@@ -235,13 +234,50 @@ public class SofaContextResource {
             return Response.status(Response.Status.FORBIDDEN).entity(outcome).build();
         } catch (IllegalArgumentException e) {
             OperationOutcome outcome = OperationOutcome.error(e.getMessage());
-            logger.error("Invalid context request: " + e.getMessage(), e);
+            logger.warn("Invalid context request: " + e.getMessage(), e);
             return Response.status(Response.Status.BAD_REQUEST).entity(outcome).build();
         } catch (RuntimeException e) {
             OperationOutcome outcome = OperationOutcome.error(e.getMessage());
             logger.error("Error processing context request", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(outcome).build();
         }
+    }
+
+    /**
+     * Extracts launchID from a FHIR Parameters resource.
+     *
+     * @param root root JsonNode of the request body
+     * @return launchID value
+     * @throws IllegalArgumentException if missing or invalid
+     */
+    public static String extractLaunchId(JsonNode root) {
+
+        if (root == null) {
+            throw new IllegalArgumentException("Request body is null");
+        }
+
+        if (!"Parameters".equals(root.path("resourceType").asText())) {
+            throw new IllegalArgumentException("Not a FHIR Parameters resource");
+        }
+
+        JsonNode parameters = root.get("parameter");
+        if (parameters == null || !parameters.isArray()) {
+            throw new IllegalArgumentException("Parameters.parameter[] is missing");
+        }
+
+        for (JsonNode param : parameters) {
+            if ("launchID".equals(param.path("name").asText())) {
+
+                JsonNode valueNode = param.get("valueString");
+                if (valueNode == null || valueNode.isNull()) {
+                    throw new IllegalArgumentException("launchID parameter missing valueString");
+                }
+
+                return valueNode.asText();
+            }
+        }
+
+        throw new IllegalArgumentException("launchID parameter not found");
     }
 
     /**
@@ -256,7 +292,7 @@ public class SofaContextResource {
     @Consumes({ MediaType.APPLICATION_JSON, "application/fhir+json" })
     @Produces(MediaType.APPLICATION_JSON)
     public Response clearSmartContext(@HeaderParam("Authorization") String authorizationHeader,
-            @QueryParam("launchID") String launchId) {
+            String jsonBody) {
 
         try {
             AccessToken token = AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, WRITE_SCOPE);
@@ -269,7 +305,13 @@ public class SofaContextResource {
             // token session.
 
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
-            contextStore.delete(launchId);
+
+
+
+            JsonNode requestJsonNode = JsonMapper.toJsonNode(jsonBody);
+            String launchID = extractLaunchId(requestJsonNode);
+
+            contextStore.delete(launchID);
 
             OperationOutcome outcome = OperationOutcome.success("Context cleared successfully");
 

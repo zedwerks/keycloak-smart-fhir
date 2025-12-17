@@ -18,6 +18,10 @@
             <artifactId>smart-launch-auth</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.zedwerks</groupId>
+            <artifactId>smart-halo-sofa-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-services</artifactId>
             <scope>provided</scope>

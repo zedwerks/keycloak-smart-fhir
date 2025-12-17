@@ -1,0 +1,59 @@
+meta {
+  name: Set HALO Context [XXS]
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{keycloak_url_base}}/realms/{{realm}}/halo/$set-context
+  body: json
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: {{$oauth2.credentials.access_token}}
+}
+
+body:json {
+  {
+    "resourceType": "Parameters",
+    "id": "set-context-invocation-example-XS",
+    "meta": {
+      "profile": [
+        "http://fhir.infoway-inforoute.ca/io/HALO/StructureDefinition/set-context-input-parameters"
+      ]
+    },
+    "parameter": [
+      {
+        "valueReference": {
+          "reference": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+          "type": "Patient"
+        },
+        "name": "patient"
+      }
+    ]
+  }
+}
+
+script:post-response {
+  // Parse the JSON response
+  var body = res.getBody();
+  
+  // Extract the launchID
+  var launchID = body.parameter?.find(p => p.name === "launchID")?.valueString;
+  
+  // Set the userId as a collection variable
+  bru.setVar("launch_id", launchID);
+  
+  // log the value
+  console.log("launch ID: ", launchID);
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

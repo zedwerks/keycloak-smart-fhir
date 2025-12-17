@@ -1,0 +1,22 @@
+meta {
+  name: Launch Response 
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{keycloak_url_base}}/realms/{{realm}}/protocol/openid-connect/token
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  grant_type: refresh_token
+  refresh_token: {{$oauth2.credentials.refresh_token}}
+  client_id: demo-smart-app
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

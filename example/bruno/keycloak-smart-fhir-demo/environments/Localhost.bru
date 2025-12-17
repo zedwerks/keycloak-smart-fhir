@@ -1,7 +1,17 @@
 vars {
-  keycloak_url_base: http://localhost:8080
-  fhir_server_url: https://localhost:9000/fhir
+  keycloak_url_base: https://localhost:8443
+  fhir_server_url: http://locahost:9000
+  halo_audience: http://hapi-fhir:8080/fhir
+  demo_emr_redirect_url: http://localhost:8081/auth/callback
+  realm: smart
+  emr_client_id: demo-emr
+  demo_smart_client_id: demo-smart-app
+  demo_smart_client_redirect_url: http://localhost:3000/oauth-callback
+  demo_halo_client_id: demo-halo-app
+  demo_halo_client_redirect_url: http://localhost:3000/oauth-callback
 }
 vars:secret [
-  postman_emr_secret
+  demo_emr_client_secret,
+  demo_smart_client_secret,
+  demo_halo_client_secret
 ]

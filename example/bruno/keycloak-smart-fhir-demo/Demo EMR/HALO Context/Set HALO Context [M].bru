@@ -1,0 +1,126 @@
+meta {
+  name: Set HALO Context [M]
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{keycloak_url_base}}/realms/{{realm}}/halo/$set-context
+  body: json
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: {{$oauth2.credentials.access_token}}
+}
+
+body:json {
+  {
+    "resourceType": "Parameters",
+    "id": "set-context-invocation-example-M",
+    "meta": {
+      "profile": [
+        "http://fhir.infoway-inforoute.ca/io/HALO/StructureDefinition/set-context-input-parameters"
+      ]
+    },
+    "parameter": [
+      {
+        "valueReference": {
+          "reference": "urn:uuid:b3b7f021-6566-4be5-a6ec-736bc44fefb8",
+          "type": "PractitionerRole"
+        },
+        "name": "fhirUser"
+      },
+      {
+        "name": "need_patient_banner",
+        "valueBoolean": false
+      },
+      {
+        "name": "intent",
+        "valueString": "medication-review"
+      },
+      {
+        "name": "tenant",
+        "valueString": "tenant-xyz"
+      },
+      {
+        "name": "resources",
+        "resource": {
+          "resourceType": "Bundle",
+          "id": "set-context-transaction-bundle-example-minimal",
+          "type": "transaction",
+          "meta": {
+            "profile": [
+              "http://fhir.infoway-inforoute.ca/io/HALO/StructureDefinition/set-context-transaction-bundle"
+            ]
+          },
+          "entry": [
+            {
+              "request": {
+                "method": "POST",
+                "url": "Patient"
+              },
+              "fullUrl": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+              "resource": {
+                "resourceType": "Patient",
+                "name": [
+                  {
+                    "use": "official",
+                    "family": "Smith",
+                    "given": [
+                      "Jane"
+                    ]
+                  }
+                ],
+                "gender": "female"
+              }
+            },
+            {
+              "request": {
+                "method": "POST",
+                "url": "Encounter"
+              },
+              "fullUrl": "urn:uuid:e753f568-6faf-4a9e-aec8-fe0d2a4f397c",
+              "resource": {
+                "resourceType": "Encounter",
+                "status": "in-progress",
+                "class": {
+                  "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                  "code": "IMP",
+                  "display": "inpatient encounter"
+                },
+                "subject": {
+                  "reference": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+                  "type": "Patient"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+
+script:post-response {
+  // Parse the JSON response
+  var body = res.getBody();
+  
+  // Extract the launchID
+  var launchID = body.parameter?.find(p => p.name === "launchID")?.valueString;
+  
+  // Set the userId as a collection variable
+  bru.setVar("launch_id", launchID);
+  
+  // log the value
+  console.log("launch ID: ", launchID);
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

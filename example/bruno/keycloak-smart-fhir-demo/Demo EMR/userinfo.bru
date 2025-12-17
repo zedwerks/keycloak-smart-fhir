@@ -1,11 +1,11 @@
 meta {
-  name: Example FHIR API Call
+  name: userinfo
   type: http
-  seq: 2
+  seq: 1
 }
 
 get {
-  url: https://111ce016-7858-49f2-bc89-2a9c35f322c1.mock.pstmn.io
+  url: {{keycloak_url_base}}/realms/{{realm}}/protocol/openid-connect/userinfo
   body: none
   auth: bearer
 }

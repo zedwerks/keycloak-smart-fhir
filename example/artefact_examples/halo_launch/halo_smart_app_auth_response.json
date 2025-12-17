@@ -1,0 +1,44 @@
+{
+    "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJYZTdMUnBKQll0dS13SXdaQTcyUWg3cmxobGdLVG11LXNod3ZVcWRGUkUwIn0.eyJleHAiOjE3NjU5MTEzNTcsImlhdCI6MTc2NTkxMTA1NywiYXV0aF90aW1lIjoxNzY1OTEwNDE3LCJqdGkiOiJvbnJ0YWM6YTY5ZDg5NzktZDZmYS01ODlmLWYwMTQtYWQyNzZjODAwOGEwIiwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6ODQ0My9yZWFsbXMvc21hcnQiLCJhdWQiOlsiaHR0cDovL2hhcGktZmhpcjo4MDgwL2ZoaXIiLCJwb3N0bWFuLWhhbG8tc21hcnQtYXBwIl0sInN1YiI6ImJiNDVhYjlmLTQxYTctNDA3ZC1iOTc5LTEzZDg4MDBmN2EwNiIsInR5cCI6IkJlYXJlciIsImF6cCI6InBvc3RtYW4taGFsby1zbWFydC1hcHAiLCJzaWQiOiI1MjJjNmM4MC1iOTVmLTQzYTQtYTBjZC0xNjY0ODUzNjJmODIiLCJhY3IiOiIwIiwic2NvcGUiOiJwcm9maWxlIGVtYWlsIG9wZW5pZCBsYXVuY2giLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGF0aWVudCI6InVybjp1dWlkOmQxMjAwNGE3LTVlZDUtNDFhYi1hOGYyLTBkZTVmMGM5ODg0NyIsIm5hbWUiOiJBbGljZSBTbWl0aCIsInByZWZlcnJlZF91c2VybmFtZSI6ImFsaWNlIiwiZW5jb3VudGVyIjoidXJuOnV1aWQ6ZTc1M2Y1NjgtNmZhZi00YTllLWFlYzgtZmUwZDJhNGYzOTdjIiwiZ2l2ZW5fbmFtZSI6IkFsaWNlIiwiZmFtaWx5X25hbWUiOiJTbWl0aCIsInRlbmFudCI6InVuaXF1ZS10ZW5hbnQtaWQiLCJlbWFpbCI6ImFsaWNlQGRvY3RvcnMuY2EifQ.AbZUcX22p_tEdHqV4oYtxyxbVPRR6_5GlWdnTNA00FFG89MZl1PSSQkiX0QK44VUaooa2ngRKHjPehLqt95wrhnyDaTOLmSWLImyjDkWzqJPMBnczp7707ExxOdo8waaoMWYSKMH76z3euB3TxtJlYodxK0I4JsRHP9ncucWXEqqlAGvaguj4qz0PMcLDc3oVuJbD1eBUaRN5TVp3OR7tfMDcNeBo8xQ-o37Cgp2pW7EQE05Ux3ex188yLpAFM5_HDHvs0xu7Y8msjltQ7Xvn81gfq7sH6GW_vHkdIBCQnZf7_XNN8YH8WICmpwJqN7Ufi9yI1fxLIWyW5T3eawIRA",
+    "expires_in": 300,
+    "refresh_expires_in": 1800,
+    "refresh_token": "eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5NDgxMTM2OS1mMTQwLTRmZWUtOGMyNS1hYmY1ZjgyZTZiMzAifQ.eyJleHAiOjE3NjU5MTI4NTcsImlhdCI6MTc2NTkxMTA1NywianRpIjoiMGM0YjVlYWQtNmU1NS1lYjZhLTQ5ODItYjI0ZTc0MzM0MjFhIiwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6ODQ0My9yZWFsbXMvc21hcnQiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo4NDQzL3JlYWxtcy9zbWFydCIsInN1YiI6ImJiNDVhYjlmLTQxYTctNDA3ZC1iOTc5LTEzZDg4MDBmN2EwNiIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJwb3N0bWFuLWhhbG8tc21hcnQtYXBwIiwic2lkIjoiNTIyYzZjODAtYjk1Zi00M2E0LWEwY2QtMTY2NDg1MzYyZjgyIiwic2NvcGUiOiJhY3IgYmFzaWMgcHJvZmlsZSBlbWFpbCBvcGVuaWQgbGF1bmNoIn0.SoY5FQ6ml9nX-NUfPa1bdcUUh0A_y-rkCnLnM_lQL7saKA-OUZkNebvGudpXJJS18tv4JByyVVslVDSAPVM7hg",
+    "token_type": "Bearer",
+    "id_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJYZTdMUnBKQll0dS13SXdaQTcyUWg3cmxobGdLVG11LXNod3ZVcWRGUkUwIn0.eyJleHAiOjE3NjU5MTEzNTcsImlhdCI6MTc2NTkxMTA1NywiYXV0aF90aW1lIjoxNzY1OTEwNDE3LCJqdGkiOiI2ZmU3MzMyYy1lM2JhLWQ5MWYtOTNmYS1hMTFjNmMzZmFmYWUiLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo4NDQzL3JlYWxtcy9zbWFydCIsImF1ZCI6InBvc3RtYW4taGFsby1zbWFydC1hcHAiLCJzdWIiOiJiYjQ1YWI5Zi00MWE3LTQwN2QtYjk3OS0xM2Q4ODAwZjdhMDYiLCJ0eXAiOiJJRCIsImF6cCI6InBvc3RtYW4taGFsby1zbWFydC1hcHAiLCJzaWQiOiI1MjJjNmM4MC1iOTVmLTQzYTQtYTBjZC0xNjY0ODUzNjJmODIiLCJhdF9oYXNoIjoiQUNmWGczNHhDVDhPXzR3NlV1a1J6dyIsImFjciI6IjAiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkFsaWNlIFNtaXRoIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWxpY2UiLCJnaXZlbl9uYW1lIjoiQWxpY2UiLCJmYW1pbHlfbmFtZSI6IlNtaXRoIiwiZW1haWwiOiJhbGljZUBkb2N0b3JzLmNhIn0.PpHgzDrEZ0L30qZOKrFzsQ1ninwW7ivzcBzcNlHobdpb7OdbVV1_bVQoNozhPSLlKWpW9jjHgmW099ptXRoTw6BQubg2MI-tV1e5wQFN-7XYqnZDREazKTlH94TFjrI4I23Q-C0z_AJ2Un06kT769gV0k36mYniP6PqaYIvYj1BCDom9iYyIQuS10ChFK7F5K3FQf7sZ2lKG6OFYbUMeNOltQZHAm8KIsoheWjhQ5A4RTEM3J8UL0K8MT5BiHXgGpl4C9cU6iAIbNTQdDdMKi74aGGeojVh5R46s_0d2hDmqAu6r2sSG3273Dbq-nnUMOBx6UpKVMcBgFnKyonKm5g",
+    "not-before-policy": 0,
+    "session_state": "522c6c80-b95f-43a4-a0cd-166485362f82",
+    "scope": "profile email openid launch",
+    "patient": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+    "need_patient_banner": "true",
+    "fhirContext": [
+        {
+            "reference": "urn:uuid:9b530e85-bf64-4f35-a186-65ac1ddaf303",
+            "type": "Organization"
+        },
+        {
+            "reference": "urn:uuid:039b0733-79ec-476b-9ccc-109944222d58",
+            "type": "Location"
+        },
+        {
+            "reference": "Patient/85cbce29-3e93-4740-9ef9-ed33b37a47fc/_history/1"
+        },
+        {
+            "reference": "Encounter/ed869eee-62c4-4ea0-a586-3e07c6394d1b/_history/1"
+        },
+        {
+            "reference": "PractitionerRole/ebf3c19a-6a73-4907-8d86-50e3055da5e9/_history/1"
+        },
+        {
+            "reference": "Practitioner/b54af250-22aa-4178-928f-d05d7de24ff4/_history/1"
+        },
+        {
+            "reference": "Organization/d50c4c92-74b9-4b0c-a681-09e797baad5d/_history/1"
+        },
+        {
+            "reference": "Location/6281d9d0-a1d4-4a94-9f54-55387e949032/_history/1"
+        }
+    ],
+    "smart_style_url": "http://example.com/smart_v1.json",
+    "encounter": "urn:uuid:e753f568-6faf-4a9e-aec8-fe0d2a4f397c",
+    "intent": "medication-review"
+}

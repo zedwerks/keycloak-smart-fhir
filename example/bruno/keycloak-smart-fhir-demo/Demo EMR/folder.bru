@@ -1,0 +1,31 @@
+meta {
+  name: Demo EMR
+  seq: 2
+}
+
+auth {
+  mode: oauth2
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: https://oauth.pstmn.io/v1/callback
+  authorization_url: {{keycloak_url_base}}/realms/{{realm}}/protocol/openid-connect/auth
+  access_token_url: {{keycloak_url_base}}/realms/{{realm}}/protocol/openid-connect/token
+  refresh_token_url: {{keycloak_url_base}}/realms/{{realm}}/protocol/openid-connect/token
+  client_id: {{emr_client_id}}
+  client_secret: {{emr_client_secret}}
+  scope: openid Context.write Context.read
+  state: adsfdsfsdfsdfsdfffkdfajsdfasldfjaslfk
+  pkce: true
+  credentials_placement: body
+  credentials_id: credentials
+  token_placement: header
+  token_header_prefix: 
+  auto_fetch_token: true
+  auto_refresh_token: true
+}
+
+docs {
+  This is the authenticated EMR that then has the ability to POST a new context just before it wants to launch a smart app
+}

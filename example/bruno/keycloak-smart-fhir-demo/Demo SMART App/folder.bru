@@ -1,0 +1,48 @@
+meta {
+  name: Demo SMART App
+  seq: 3
+}
+
+auth {
+  mode: oauth2
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: {{demo_smart_client_redirect_url}}
+  authorization_url: {{keycloak_url_base}}/realms/{{realm}}/protocol/openid-connect/auth
+  access_token_url: {{keycloak_url_base}}/realms/{{realm}}/protocol/openid-connect/token
+  refresh_token_url: 
+  client_id: {{demo_smart_client_id}}
+  client_secret: {{demo_smart_client_secret}}
+  scope: openid launch user/*.read
+  state: dfaksdflksdgflkjdgflk-some-state
+  pkce: true
+  credentials_placement: body
+  credentials_id: credentials
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: true
+  auto_refresh_token: false
+}
+
+auth:oauth2:additional_params:auth_req:queryparams {
+  aud: {{fhir_server_url}}
+  launch: {{context_id}}
+}
+
+tests {
+  console.log("smart auth");
+}
+
+docs {
+  Represents a SMART app attempting to authenticate after having received the launch context during the request to launch. This launch parameter was set by the authenticated user directly from the EMR to its auth server (keycloak).
+  
+  Step 1:  Do an Auth at this level.
+  Step 2: Perform Refresh token POST to access SMART Launch Response.
+      
+      
+  Note: Bruno and Postman don't allow Scripts to fire after built-in Auth occurs. So, to get around this, we POST refresh token.
+  
+  
+}

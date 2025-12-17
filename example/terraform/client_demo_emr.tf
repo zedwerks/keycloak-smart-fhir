@@ -9,8 +9,8 @@ resource "keycloak_openid_client" "demo_emr" {
     "http://localhost:8081/auth/callback",
     "http://localhost:8081",
     "http://localhost:8082/auth/callback",
-
-  "https://oauth.pstmn.io/v1/callback", "https://oauth.pstmn.io/v1/browser-callback"]
+    "https://oauth.pstmn.io/v1/callback", 
+    "https://oauth.pstmn.io/v1/browser-callback"]
   web_origins                = ["https://emr.zedwerks.com/", "http://localhost:8081", "http://localhost:8082"]
   root_url                   = "https://emr.zedwerks.com/"
   base_url                   = "https://emr.zedwerks.com/"
@@ -32,7 +32,7 @@ resource "keycloak_openid_client_default_scopes" "demo_emr_default_scopes" {
   realm_id       = data.keycloak_realm.realm.id
   client_id      = keycloak_openid_client.demo_emr.id
   default_scopes = ["basic", "openid", "profile", "email", "acr"]
-  depends_on     = [keycloak_openid_client.postman_emr]
+  depends_on     = [keycloak_openid_client.demo_emr]
 }
 
 resource "keycloak_openid_client_optional_scopes" "demo_emr_optional_scopes" {

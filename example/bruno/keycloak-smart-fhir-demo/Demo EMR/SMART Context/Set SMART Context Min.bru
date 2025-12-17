@@ -1,0 +1,45 @@
+meta {
+  name: Set SMART Context Min
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{keycloak_url_base}}/realms/{{realm}}/smart-on-fhir/context
+  body: json
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: {{$oauth2.credentials.access_token}}
+}
+
+body:json {
+  {
+    "resourceType" : "LaunchContext",
+    "patient": "1234567890"
+  }
+}
+
+script:post-response {
+  // Parse the JSON response
+  var jsonData = res.getBody();
+  
+  // Extract the userId
+  var contextId = jsonData.context_id;
+  
+  // Set the userId as a collection variable
+  bru.setVar("context_id", contextId);
+  
+  // logger the userId to the Postman console for verification
+  console.log("context_id: " + contextId);
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -41,6 +41,8 @@ import jakarta.ws.rs.core.UriBuilder;
  */
 public class SofaAudienceValidator implements Authenticator {
 
+    static final String REALM_ATTR_AUDIENCE_URL = "smart_halo_sofa_audience"; // SET WITH TERRAFORM
+
     private static final Logger logger = Logger.getLogger(SofaAudienceValidator.class);
 
     public SofaAudienceValidator(KeycloakSession session) {
@@ -69,7 +71,7 @@ public class SofaAudienceValidator implements Authenticator {
         }
 
         // Load configured audiences from AuthenticatorConfigModel
-        String audienceSetting = context.getRealm().getAttribute("smart.config.sofa_audience");
+        String audienceSetting = context.getRealm().getAttribute(REALM_ATTR_AUDIENCE_URL);
 
         if (audienceSetting == null || audienceSetting.isBlank()) {
             String msg = "The HALO SOFA Audience Validator Configuration is Mising";

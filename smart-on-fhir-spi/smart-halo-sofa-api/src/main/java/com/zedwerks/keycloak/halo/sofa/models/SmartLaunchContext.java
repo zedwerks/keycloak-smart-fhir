@@ -35,8 +35,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import org.jboss.logging.Logger;
+
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SmartLaunchContext {
+
+    protected static final Logger logger = Logger.getLogger(SmartLaunchContext.class);
 
     private static final ObjectMapper mapper = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -48,7 +53,7 @@ public class SmartLaunchContext {
     private String encounter;
 
     @JsonProperty("need_patient_banner")
-    private Boolean needPatientBanner;
+    private String needPatientBanner;
 
     @JsonProperty("intent")
     private String intent;
@@ -63,7 +68,7 @@ public class SmartLaunchContext {
     private String smartAppId;
 
     @JsonProperty("fhirContext")
-    private List<JsonNode> fhirContext = new ArrayList<>();
+    private List<JsonNode> fhirContext;
 
     // Getters/Setters
     public String getPatient() {
@@ -90,12 +95,12 @@ public class SmartLaunchContext {
         return this.fhirContext;
     }
 
-    public Boolean getNeedPatientBanner() {
+    public String getNeedPatientBanner() {
         return needPatientBanner;
     }
 
     public void setNeedPatientBanner(Boolean need) {
-        this.needPatientBanner = need;
+        this.needPatientBanner = need.toString();
     }
 
     public String getIntent() {
@@ -140,11 +145,11 @@ public class SmartLaunchContext {
         Optional<Boolean> needPatientBanner = HaloParametersHelper.needPatientBanner(node);
         if (needPatientBanner.isPresent()) {
             this.setNeedPatientBanner(needPatientBanner.get());
-        }  
+        }
         Optional<String> intent = HaloParametersHelper.intent(node);
         if (intent.isPresent()) {
             this.setIntent(intent.get());
-        } 
+        }
         Optional<String> smartStyleUrl = HaloParametersHelper.smartStyleUrl(node);
         if (smartStyleUrl.isPresent()) {
             this.setSmartStyleUrl(smartStyleUrl.get());
@@ -152,7 +157,7 @@ public class SmartLaunchContext {
         Optional<String> tenant = HaloParametersHelper.tenant(node);
         if (tenant.isPresent()) {
             this.setTenant(tenant.get());
-        }    
+        }
         List<JsonNode> fhirContexts = HaloParametersHelper.fhirContextReferences(node);
         this.setFhirContext(fhirContexts);
     }
@@ -160,6 +165,8 @@ public class SmartLaunchContext {
     /**
      * Extracts the bundle.entry[].location for each bundle
      * as returned from the SOFA FHIR Server, as likely was created.
+     * 
+     * The resource bundle starts at { "resourceType": "Bundle", ...}
      * 
      * @param bundleJsonString
      */
@@ -169,9 +176,19 @@ public class SmartLaunchContext {
         try {
             JsonNode root = mapper.readTree(bundleJsonString);
 
-            JsonNode entryArray = root.path("entry");
-            if (!entryArray.isArray()) {
+            logger.debugf("FhirContext from Bundle: %s", bundleJsonString);
+
+
+            String resourceType = root.path("resourceType").asText(null);
+            if (!"Bundle".equals(resourceType)) {
+                logger.warn("The SOFA returned resource entry but type was not 'Bundle'. Skipping...");
                 return;
+            }
+
+
+            JsonNode entryArray = root.get("entry");
+            if (entryArray == null || !entryArray.isArray()) {
+                logger.warn("The SOFA returned resource Bundle, but no 'entry' array found. Skipping...");
             }
 
             for (JsonNode entry : entryArray) {

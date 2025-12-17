@@ -1,0 +1,34 @@
+meta {
+  name: Clear HALO Context
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{keycloak_url_base}}/realms/{{realm}}/halo/$clear-context
+  body: json
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/fhir+json
+  Cache-Control: no-cache
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{$oauth2.credentials.access_token}}
+}
+
+body:json {
+  {
+    "resourceType": "Parameters",
+    "id": "clear-context-invocation-example",
+    "parameter": [
+      {
+        "name": "launchID",
+        "valueString": "{{launch_id}}"
+      }
+    ]
+  }
+}

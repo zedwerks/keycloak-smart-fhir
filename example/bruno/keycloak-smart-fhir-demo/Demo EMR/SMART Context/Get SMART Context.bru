@@ -1,11 +1,11 @@
 meta {
-  name: userinfo
+  name: Get SMART Context
   type: http
-  seq: 2
+  seq: 4
 }
 
 get {
-  url: {{keycloak_url_base}}/realms/smart/protocol/openid-connect/userinfo
+  url: {{keycloak_url_base}}/realms/smart/smart-on-fhir/context/{{context_id}}
   body: none
   auth: bearer
 }

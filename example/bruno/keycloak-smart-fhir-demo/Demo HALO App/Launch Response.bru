@@ -1,11 +1,11 @@
 meta {
-  name: Refresh Token -- hack to see full JSON Response
+  name: Launch Response
   type: http
   seq: 1
 }
 
 post {
-  url: {{keycloak_url_base}}/realms/smart/protocol/openid-connect/token
+  url: {{keycloak_url_base}}/realms/{{realm}}/protocol/openid-connect/token
   body: formUrlEncoded
   auth: none
 }
@@ -13,7 +13,7 @@ post {
 body:form-urlencoded {
   grant_type: refresh_token
   refresh_token: {{$oauth2.credentials.refresh_token}}
-  client_id: postman-smart-app
+  client_id: {{demo_halo_client_id}}
 }
 
 settings {

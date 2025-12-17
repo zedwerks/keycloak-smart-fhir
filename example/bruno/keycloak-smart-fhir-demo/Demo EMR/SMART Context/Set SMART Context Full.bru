@@ -1,11 +1,11 @@
 meta {
-  name: Set Context
+  name: Set SMART Context Full
   type: http
   seq: 1
 }
 
 post {
-  url: {{keycloak_url_base}}/realms/smart/smart-on-fhir/context
+  url: {{keycloak_url_base}}/realms/{{realm}}/smart-on-fhir/context
   body: json
   auth: bearer
 }
@@ -62,7 +62,7 @@ script:post-response {
   bru.setVar("context_id", contextId);
   
   // logger the userId to the Postman console for verification
-  console.logger("context_id: " + contextId);
+  console.log("context_id: " + contextId);
 }
 
 settings {
