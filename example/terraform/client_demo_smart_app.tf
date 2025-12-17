@@ -36,6 +36,7 @@ resource "keycloak_openid_client_optional_scopes" "demo_smart_app_optional_scope
     "fhirUser",
     "launch",
     "launch/patient",
+    "launch/encounter",
     "offline_access",
     "online_access",
     "user/Patient.read",

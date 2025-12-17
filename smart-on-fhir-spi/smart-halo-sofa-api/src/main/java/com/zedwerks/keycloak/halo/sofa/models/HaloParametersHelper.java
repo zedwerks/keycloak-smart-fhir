@@ -65,8 +65,8 @@ public final class HaloParametersHelper {
         return referenceValue(root, "encounter");
     }
 
-    public static Optional<String> fhirUserReference(JsonNode root) {
-        return referenceValue(root, "fhirUser");
+    public static Optional<JsonNode> fhirUserReference(JsonNode root) {
+        return firstParam(root, "fhirUser");
     }
 
     /**

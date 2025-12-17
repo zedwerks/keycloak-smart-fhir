@@ -2,28 +2,9 @@
 // The current edition of the Keycloak Terraform Provider does not support setting the access token response claim to true for the user session note protocol mapper.
 // The generic protocol mapper allows us to set the access token response claim to true.
 
-resource "keycloak_generic_protocol_mapper" "launch_smart_patient_mapper" {
+resource "keycloak_generic_protocol_mapper" "launch_patient_scope_mapper" {
   realm_id        = data.keycloak_realm.realm.id
-  client_scope_id = keycloak_openid_client_scope.ehr_launch_context_scope.id
-  name            = "user-session-patient-mapper"
-  protocol        = "openid-connect"
-  protocol_mapper = "oidc-usersessionmodel-note-mapper"
-  config = {
-    "user.session.note"          = "patient"
-    "claim.name"                 = "patient"
-    "jsonType.label"             = "String"
-    "introspection.token.claim"  = "true"
-    "userinfo.token.claim"       = "false"
-    "id.token.claim"             = "false"
-    "access.token.claim"         = "true"
-    "access.tokenResponse.claim" = "true"
-  }
-  depends_on = [keycloak_openid_client_scope.ehr_launch_context_scope]
-}
-
-resource "keycloak_generic_protocol_mapper" "standalone_launch_patient_scope_mapper" {
-  realm_id        = data.keycloak_realm.realm.id
-  client_scope_id = keycloak_openid_client_scope.standalone_launch_patient_context_scope.id
+  client_scope_id = keycloak_openid_client_scope.launch_patient_context_scope.id
   name            = "user-session-launch-patient-mapper"
   protocol        = "openid-connect"
   protocol_mapper = "oidc-usersessionmodel-note-mapper"
@@ -37,12 +18,12 @@ resource "keycloak_generic_protocol_mapper" "standalone_launch_patient_scope_map
     "access.token.claim"         = "true"
     "access.tokenResponse.claim" = "true"
   }
-  depends_on = [keycloak_openid_client_scope.standalone_launch_patient_context_scope]
+    depends_on = [keycloak_openid_client_scope.ehr_launch_context_scope, keycloak_openid_client_scope.launch_patient_context_scope]
 }
 
-resource "keycloak_generic_protocol_mapper" "launch_smart_launch_encounter_scope_mapper" {
+resource "keycloak_generic_protocol_mapper" "smart_launch_encounter_scope_mapper" {
   realm_id        = data.keycloak_realm.realm.id
-  client_scope_id = keycloak_openid_client_scope.ehr_launch_context_scope.id
+  client_scope_id = keycloak_openid_client_scope.launch_encounter_context_scope.id
   name            = "user-session-encounter-mapper"
   protocol        = "openid-connect"
   protocol_mapper = "oidc-usersessionmodel-note-mapper"
@@ -56,26 +37,8 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_launch_encounter_scope
     "access.token.claim"         = "true"
     "access.tokenResponse.claim" = "true"
   }
-  depends_on = [keycloak_openid_client_scope.ehr_launch_context_scope]
-}
-
-resource "keycloak_generic_protocol_mapper" "standalone_smart_launch_encounter_scope_mapper" {
-  realm_id        = data.keycloak_realm.realm.id
-  client_scope_id = keycloak_openid_client_scope.standalone_launch_encounter_context_scope.id
-  name            = "user-session-launch-encounter-mapper"
-  protocol        = "openid-connect"
-  protocol_mapper = "oidc-usersessionmodel-note-mapper"
-  config = {
-    "user.session.note"          = "encounter"
-    "claim.name"                 = "encounter"
-    "jsonType.label"             = "String"
-    "introspection.token.claim"  = "true"
-    "userinfo.token.claim"       = "false"
-    "id.token.claim"             = "false"
-    "access.token.claim"         = "true"
-    "access.tokenResponse.claim" = "true"
-  }
-  depends_on = [keycloak_openid_client_scope.standalone_launch_encounter_context_scope]
+  depends_on = [keycloak_openid_client_scope.ehr_launch_context_scope, 
+                  keycloak_openid_client_scope.launch_encounter_context_scope]
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_aud_mapper" {
@@ -175,6 +138,30 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_tenant_mapper" {
   config = {
     "user.session.note"          = "tenant"
     "claim.name"                 = "tenant"
+    "jsonType.label"             = "String"
+    "introspection.token.claim"  = "false"
+    "userinfo.token.claim"       = "false"
+    "id.token.claim"             = "false"
+    "access.token.claim"         = "false"
+    "access.tokenResponse.claim" = "true"
+  }
+  depends_on = [keycloak_openid_client_scope.ehr_launch_context_scope]
+}
+
+// Canada Health Infoway HALO added the means to pass fhirUser as part of the CONTEXT setting step.
+// This is unusual, as normally the fhirUser is bound to the authenticated user, i.e. present INSIDE
+// the ID Token. In order to support this oddity, this mapper returns the fhirUser Reference object 
+// *alongside* the tokens -- very odd. 
+//
+resource "keycloak_generic_protocol_mapper" "launch_halo_fhirUser_session_note_mapper" {
+  realm_id        = data.keycloak_realm.realm.id
+  client_scope_id = keycloak_openid_client_scope.ehr_launch_context_scope.id
+  name            = "user-session-halo-fhirUser-mapper"
+  protocol        = "openid-connect"
+  protocol_mapper = "oidc-usersessionmodel-note-mapper"
+  config = {
+    "user.session.note"          = "fhirUser"
+    "claim.name"                 = "fhirUser"
     "jsonType.label"             = "String"
     "introspection.token.claim"  = "false"
     "userinfo.token.claim"       = "false"
