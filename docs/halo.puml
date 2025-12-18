@@ -14,10 +14,10 @@ participant "HALO SMART App" as App
 == Authentication & Context Authorization ==
 
 User -> EMR : Access EMR
-EMR -> KC : OIDC Authorization Request\n(scopes: openid, fhirContext, halo.*)
-KC -> User : Authenticate User
+EMR -> KC : OIDC Authorization Request\n(scopes: openid, Context.write, etc.)
+KC -> User : Authenticate User. (User Session Established)
 User -> KC : Credentials
-KC -> EMR : ID Token + Access Token\n(Context-enabled)
+KC -> EMR : ID Token + Access Token
 
 == HALO Context Establishment ==
 
@@ -33,8 +33,8 @@ KC -> EMR : OperationOutcome (success)\n+ launchID
 
 User -> EMR : Select HALO App
 EMR -> App : Launch SMART App\n(launch=launchID)
-App -> KC : OIDC Authorization Request\n(launch parameter)
-KC -> App : ID Token + Access Token\n(fhirContext + halo claims)
+App -> KC : OIDC Authorization Request\n(launch launch/patient, user/*.read, ...)
+KC -> App : ID Token + Access Token\n+ SMART Launch claims: fhirContext, patient, encounter...)
 
 == Data Retrieval ==
 User -> App
