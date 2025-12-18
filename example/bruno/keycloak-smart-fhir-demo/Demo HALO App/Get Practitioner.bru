@@ -1,0 +1,16 @@
+meta {
+  name: Get Practitioner
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:9001/fhir/{{Practitioner}}
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

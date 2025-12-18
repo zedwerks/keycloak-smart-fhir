@@ -1,7 +1,7 @@
 meta {
-  name: Set HALO Context [L]
+  name: Set HALO Context [XL]
   type: http
-  seq: 5
+  seq: 6
 }
 
 post {
@@ -21,7 +21,7 @@ auth:bearer {
 body:json {
   {
     "resourceType": "Parameters",
-    "id": "set-context-invocation-example-L",
+    "id": "set-context-invocation-example-XL",
     "meta": {
       "profile": [
         "http://fhir.infoway-inforoute.ca/io/HALO/StructureDefinition/set-context-input-parameters"
@@ -30,7 +30,7 @@ body:json {
     "parameter": [
       {
         "name": "appID",
-        "valueString": "459-L"
+        "valueString": "459-XL"
       },
       {
         "valueReference": {
@@ -57,6 +57,13 @@ body:json {
         "valueReference": {
           "reference": "urn:uuid:039b0733-79ec-476b-9ccc-109944222d58",
           "type": "Location"
+        },
+        "name": "fhirContext"
+      },
+      {
+        "valueReference": {
+          "reference": "urn:uuid:6f1b7b32-4e9c-4c92-8f3e-8b2c5c3c9e01",
+          "type": "MedicationStatement"
         },
         "name": "fhirContext"
       },
@@ -217,6 +224,71 @@ body:json {
                   "reference": "urn:uuid:9b530e85-bf64-4f35-a186-65ac1ddaf303",
                   "type": "Organization"
                 }
+              }
+            },
+            {
+              "request": {
+                "method": "POST",
+                "url": "Location"
+              },
+              "fullUrl": "urn:uuid:6f1b7b32-4e9c-4c92-8f3e-8b2c5c3c9e01",
+              "resource": {
+                "resourceType": "MedicationStatement",
+                "id": "medstatement-adalimumab",
+                "status": "active",
+                "medicationCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                      "code": "32968",
+                      "display": "adalimumab"
+                    }
+                  ],
+                  "text": "Adalimumab (Humira)"
+                },
+                "subject": {
+                  "reference": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+                  "type": "Patient"
+                },
+                "effectivePeriod": {
+                  "start": "2024-01-15"
+                },
+                "dosage": [
+                  {
+                    "text": "40 mg subcutaneous injection every 2 weeks",
+                    "route": {
+                      "coding": [
+                        {
+                          "system": "http://terminology.hl7.org/CodeSystem/v3-RouteOfAdministration",
+                          "code": "SQ",
+                          "display": "Subcutaneous"
+                        }
+                      ]
+                    },
+                    "doseAndRate": [
+                      {
+                        "doseQuantity": {
+                          "value": 40,
+                          "unit": "mg",
+                          "system": "http://unitsofmeasure.org",
+                          "code": "mg"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "reasonCode": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/sid/icd-10",
+                        "code": "K50.90",
+                        "display": "Crohn's disease, unspecified"
+                      }
+                    ],
+                    "text": "Crohn's disease"
+                  }
+                ]
               }
             }
           ]
