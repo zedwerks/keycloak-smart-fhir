@@ -213,7 +213,7 @@ public class SofaContextResource {
                 Optional<String> response = this.postBundleToFhirServer(bundle);
 
                 if (response.isPresent()) {
-                    logger.info("SOFA FHIR Server Returned a response");
+                    logger.debug("SOFA FHIR Server Returned a response");
                     sofaResponseBundle = JsonMapper.toJsonNode(response.get());
                     cacheEntry.setContextResponse(sofaResponseBundle);  // hang onto this for the $get-context custom endpoint.
 
@@ -232,7 +232,7 @@ public class SofaContextResource {
 
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
             String launchId = contextStore.store(userSession, JsonMapper.toJsonString(cacheEntry));
-            logger.infof("Saved fully processed context to cache: %s", launchId);
+            logger.infof("Saved fully processed context to cache. launchID: %s", launchId);
 
             OperationOutcome outcome = OperationOutcome.success("Context set successfully");
             HaloSetContextResponse response = new HaloSetContextResponse(launchId, sofaResponseBundle, outcome);

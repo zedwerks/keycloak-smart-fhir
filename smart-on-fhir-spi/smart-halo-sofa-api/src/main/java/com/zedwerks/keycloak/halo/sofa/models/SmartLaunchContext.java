@@ -214,7 +214,7 @@ public class SmartLaunchContext {
         Optional<ObjectNode> requestBundleOption = HaloContextHelper.getResourceBundle(root);
 
         if (!requestBundleOption.isPresent()) {
-            logger.info("$set-context does not contain a Bundle");
+            logger.debug("$set-context does not contain a Bundle");
             return;
         }
 
@@ -224,8 +224,8 @@ public class SmartLaunchContext {
 
         Map<String, String> fullUrlToLocation = HaloContextHelper.mapFullUrlToLocation(requestBundle, responseBundle);
 
-        logger.infof("parameters = %s", JsonMapper.toJsonString(parameters));
-        logger.infof("fullUrlToLocation = %s", fullUrlToLocation);
+        logger.debugf("parameters = %s", JsonMapper.toJsonString(parameters));
+        logger.debugf("fullUrlToLocation = %s", fullUrlToLocation);
 
         // Track already-added references to avoid duplicates
         Set<String> addedRefs = new HashSet<>();
@@ -246,7 +246,7 @@ public class SmartLaunchContext {
                 String resolved = fullUrlToLocation.get(ref);
                 addedRefs.add(resolved);
 
-                logger.infof("name: %s : reference: %s", name, resolved);
+                logger.debugf("name: %s : reference: %s", name, resolved);
 
                 switch (name) {
                     case "patient":
@@ -270,8 +270,6 @@ public class SmartLaunchContext {
             // Case 2: already-resolved reference
             else if (!ref.startsWith("urn:uuid:")) {
                 addedRefs.add(ref);
-
-                logger.infof("name: %s : ref: %s", name, ref);
 
                 switch (name) {
                     case "patient":
@@ -315,7 +313,7 @@ public class SmartLaunchContext {
                 if (addedRefs.contains(location))
                     continue;
 
-                logger.infof("Adding response-only fhirContext reference: %s", location);
+                logger.debugf("Adding response-only fhirContext reference: %s", location);
 
                 addFhirContextRef(location);
                 addedRefs.add(location);
