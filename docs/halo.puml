@@ -1,0 +1,44 @@
+@startuml HALO
+title HALO / SOFA Context Establishment and SMART Launch Flow\n 
+
+legend top
+    SOFHIE™ - SMART on FHIR HALO Integration Extension - Copyright © 2025 by Zed Werks Inc. 
+end legend
+
+actor "EMR User" as User
+participant "EMR System" as EMR
+participant "SOFHIE™ Keycloak OP\n(w/ HALO)" as KC
+participant "HAPI FHIR Server\n(SOFA)" as FHIR
+participant "HALO SMART App" as App
+
+== Authentication & Context Authorization ==
+
+User -> EMR : Access EMR
+EMR -> KC : OIDC Authorization Request\n(scopes: openid, fhirContext, halo.*)
+KC -> User : Authenticate User
+User -> KC : Credentials
+KC -> EMR : ID Token + Access Token\n(Context-enabled)
+
+== HALO Context Establishment ==
+
+EMR -> EMR : Build HALO $set-context\nFHIR Parameters\n+ resources Bundle
+EMR -> KC : POST /halo/$set-context\n(Bundle + Parameters)
+KC -> FHIR : POST FHIR Bundle\n(transaction)
+FHIR -> KC : Bundle Response\n(resource IDs / URLs)
+
+KC -> KC : Map resource IDs\n→ launchID-bound session state
+KC -> EMR : OperationOutcome (success)\n+ launchID
+
+== SMART App Launch ==
+
+User -> EMR : Select HALO App
+EMR -> App : Launch SMART App\n(launch=launchID)
+App -> KC : OIDC Authorization Request\n(launch parameter)
+KC -> App : ID Token + Access Token\n(fhirContext + halo claims)
+
+== Data Retrieval ==
+User -> App
+App -> FHIR : GET Resources\n(by URLs in fhirContext)
+FHIR -> App : FHIR Resources
+
+@enduml
