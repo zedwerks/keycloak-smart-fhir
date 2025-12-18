@@ -23,8 +23,11 @@
 package com.zedwerks.keycloak.halo.sofa.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,7 +40,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.jboss.logging.Logger;
 
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SmartLaunchContext {
 
@@ -46,6 +48,9 @@ public class SmartLaunchContext {
     private static final ObjectMapper mapper = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
+    @JsonProperty("appID")
+    private String appID;
+
     @JsonProperty("patient")
     private String patient;
 
@@ -53,7 +58,7 @@ public class SmartLaunchContext {
     private String encounter;
 
     @JsonProperty("need_patient_banner")
-    private String needPatientBanner;
+    private Boolean needPatientBanner;
 
     @JsonProperty("intent")
     private String intent;
@@ -71,9 +76,18 @@ public class SmartLaunchContext {
     private List<JsonNode> fhirContext;
 
     @JsonProperty("fhirUser")
-    private JsonNode fhirUser;
+    private String fhirUser;
 
     // Getters/Setters
+
+    public String getAppID() {
+        return this.appID;
+    }
+
+    public void setAppID(String appID) {
+        this.appID = appID;
+    }
+
     public String getPatient() {
         return this.patient;
     }
@@ -98,20 +112,20 @@ public class SmartLaunchContext {
         return this.fhirContext;
     }
 
-    public void setFhirUser(JsonNode fhirUser) {
+    public void setFhirUser(String fhirUser) {
         this.fhirUser = fhirUser;
     }
 
-    public JsonNode getFhirUser() {
+    public String getFhirUser() {
         return fhirUser;
     }
 
-    public String getNeedPatientBanner() {
+    public Boolean getNeedPatientBanner() {
         return needPatientBanner;
     }
 
     public void setNeedPatientBanner(Boolean need) {
-        this.needPatientBanner = need.toString();
+        this.needPatientBanner = need;
     }
 
     public String getIntent() {
@@ -142,85 +156,182 @@ public class SmartLaunchContext {
         // make constructor private
     }
 
-    public SmartLaunchContext(JsonNode node) {
+    public SmartLaunchContext(JsonNode setContextRoot) {
 
         // Now parse the $set-context json
-        Optional<String> patient = HaloParametersHelper.patientReference(node);
-        if (patient.isPresent()) {
-            this.setPatient(patient.get());
+
+        Optional<String> appID = HaloContextHelper.appID(setContextRoot);
+        if (appID.isPresent()) {
+            this.setAppID(appID.get());
         }
-        Optional<String> encounter = HaloParametersHelper.encounterReference(node);
-        if (encounter.isPresent()) {
-            this.setEncounter(encounter.get());
-        }
-        Optional<Boolean> needPatientBanner = HaloParametersHelper.needPatientBanner(node);
+
+        Optional<Boolean> needPatientBanner = HaloContextHelper.needPatientBanner(setContextRoot);
         if (needPatientBanner.isPresent()) {
             this.setNeedPatientBanner(needPatientBanner.get());
         }
-        Optional<String> intent = HaloParametersHelper.intent(node);
+        Optional<String> intent = HaloContextHelper.intent(setContextRoot);
         if (intent.isPresent()) {
             this.setIntent(intent.get());
         }
-        Optional<String> smartStyleUrl = HaloParametersHelper.smartStyleUrl(node);
+        Optional<String> smartStyleUrl = HaloContextHelper.smartStyleUrl(setContextRoot);
         if (smartStyleUrl.isPresent()) {
             this.setSmartStyleUrl(smartStyleUrl.get());
         }
-        Optional<String> tenant = HaloParametersHelper.tenant(node);
+        Optional<String> tenant = HaloContextHelper.tenant(setContextRoot);
         if (tenant.isPresent()) {
             this.setTenant(tenant.get());
         }
-        List<JsonNode> fhirContexts = HaloParametersHelper.fhirContextReferences(node);
-        this.setFhirContext(fhirContexts);
-
-        Optional<JsonNode> fhirUser = HaloParametersHelper.fhirUserReference(node);
+        Optional<String> patient = HaloContextHelper.patientReference(setContextRoot);
+        if (patient.isPresent()) {
+            this.setPatient(patient.get());
+        }
+        Optional<String> encounter = HaloContextHelper.encounterReference(setContextRoot);
+        if (encounter.isPresent()) {
+            this.setEncounter(encounter.get());
+        }
+        Optional<String> fhirUser = HaloContextHelper.fhirUserReference(setContextRoot);
         if (fhirUser.isPresent()) {
             this.setFhirUser(fhirUser.get());
         }
     }
 
     /**
-     * Extracts the bundle.entry[].location for each bundle
-     * as returned from the SOFA FHIR Server, as likely was created.
+     * This sets the parameters that had cross-referencing to the reqeust Bundle
+     * resources
+     * with the location (e.g. "Patient/12345") Url that was returned by the SOFA
+     * FHIR Server.
+     * The reference values starting with "urn:uuid" useless to the SMART app. No
+     * way to resolve
+     * to a resource on the server.
      * 
-     * The resource bundle starts at { "resourceType": "Bundle", ...}
-     * 
-     * @param bundleJsonString
+     * @param setContextParameters
+     * @param requestBundle
+     * @param responseBundle
      */
 
-    public void addFhirContextsFromBundle(String bundleJsonString) {
+    public void addResolvedContextLocations(JsonNode root, JsonNode responseBundle) {
 
-        try {
-            JsonNode root = mapper.readTree(bundleJsonString);
+        Optional<ObjectNode> requestBundleOption = HaloContextHelper.getResourceBundle(root);
 
-            logger.debugf("FhirContext from Bundle: %s", bundleJsonString);
+        if (!requestBundleOption.isPresent()) {
+            logger.info("$set-context does not contain a Bundle");
+            return;
+        }
 
+        JsonNode requestBundle = requestBundleOption.get();
 
-            String resourceType = root.path("resourceType").asText(null);
-            if (!"Bundle".equals(resourceType)) {
-                logger.warn("The SOFA returned resource entry but type was not 'Bundle'. Skipping...");
-                return;
-            }
+        List<JsonNode> parameters = HaloContextHelper.parameters(root);
 
+        Map<String, String> fullUrlToLocation = HaloContextHelper.mapFullUrlToLocation(requestBundle, responseBundle);
 
-            JsonNode entryArray = root.get("entry");
-            if (entryArray == null || !entryArray.isArray()) {
-                logger.warn("The SOFA returned resource Bundle, but no 'entry' array found. Skipping...");
-            }
+        logger.infof("parameters = %s", JsonMapper.toJsonString(parameters));
+        logger.infof("fullUrlToLocation = %s", fullUrlToLocation);
 
-            for (JsonNode entry : entryArray) {
-                JsonNode response = entry.path("response");
-                if (!response.isMissingNode()) {
-                    JsonNode locationNode = response.path("location");
-                    if (locationNode.isTextual()) {
-                        ObjectNode referenceNode = mapper.createObjectNode();
-                        referenceNode.put("reference", locationNode.asText(null));
-                        this.fhirContext.add(referenceNode);
-                    }
+        // Track already-added references to avoid duplicates
+        Set<String> addedRefs = new HashSet<>();
+
+        for (JsonNode param : parameters) {
+            JsonNode valueRef = param.path("valueReference");
+            if (valueRef.isMissingNode())
+                continue;
+
+            String ref = valueRef.path("reference").asText(null);
+            if (ref == null)
+                continue;
+
+            String name = param.path("name").asText();
+
+            // Case 1: bundle-backed reference (urn:uuid → location)
+            if (ref.startsWith("urn:uuid:") && fullUrlToLocation.containsKey(ref)) {
+                String resolved = fullUrlToLocation.get(ref);
+                addedRefs.add(resolved);
+
+                logger.infof("name: %s : reference: %s", name, resolved);
+
+                switch (name) {
+                    case "patient":
+                        this.patient = resolved;
+                        break;
+
+                    case "encounter":
+                        this.encounter = resolved;
+                        break;
+
+                    case "fhirUser":
+                        this.fhirUser = resolved;
+                        break;
+
+                    case "fhirContext":
+                        addFhirContextRef(resolved);
+                        break;
                 }
             }
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Failed to convert POJO to JSON", e);
+
+            // Case 2: already-resolved reference
+            else if (!ref.startsWith("urn:uuid:")) {
+                addedRefs.add(ref);
+
+                logger.infof("name: %s : ref: %s", name, ref);
+
+                switch (name) {
+                    case "patient":
+                        this.patient = ref;
+                        break;
+
+                    case "encounter":
+                        this.encounter = ref;
+                        break;
+
+                    case "fhirUser":
+                        this.fhirUser = ref;
+                        break;
+
+                    case "fhirContext":
+                        addFhirContextRef(ref);
+                        break;
+                }
+            }
         }
-        return;
+
+        // ------------------------------------------------------------------
+        // Case 3: response-only resources (no matching request reference)
+        // ------------------------------------------------------------------
+        JsonNode entries = responseBundle.path("entry");
+        if (entries.isArray()) {
+            for (JsonNode entry : entries) {
+                JsonNode locationNode = entry.path("response").path("location");
+                if (!locationNode.isTextual())
+                    continue;
+
+                String location = locationNode.asText();
+
+                // Normalize: strip history if present
+                // e.g. Patient/123/_history/1 → Patient/123
+                int historyIdx = location.indexOf("/_history/");
+                if (historyIdx > 0) {
+                    location = location.substring(0, historyIdx);
+                }
+
+                if (addedRefs.contains(location))
+                    continue;
+
+                logger.infof("Adding response-only fhirContext reference: %s", location);
+
+                addFhirContextRef(location);
+                addedRefs.add(location);
+            }
+        }
     }
+
+    /**
+     * Helper to safely add a fhirContext reference
+     */
+    private void addFhirContextRef(String reference) {
+        fhirContext = (fhirContext == null) ? new ArrayList<>() : fhirContext;
+
+        ObjectNode ctxRef = mapper.createObjectNode();
+        ctxRef.put("reference", reference);
+        fhirContext.add(ctxRef);
+    }
+
 }

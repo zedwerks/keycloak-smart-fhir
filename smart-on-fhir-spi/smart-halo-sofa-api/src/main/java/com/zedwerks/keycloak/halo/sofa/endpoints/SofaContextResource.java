@@ -22,6 +22,7 @@
 
 package com.zedwerks.keycloak.halo.sofa.endpoints;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.text.html.Option;
@@ -38,12 +39,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import com.zedwerks.keycloak.auth.AuthTokenHelper;
+import com.zedwerks.keycloak.halo.fhir.client.FhirClientException;
+import com.zedwerks.keycloak.halo.fhir.client.FhirHttpException;
 import com.zedwerks.keycloak.halo.fhir.client.SofaFhirClient;
 import com.zedwerks.keycloak.halo.fhir.client.SofaFhirClientImpl;
 
 import com.zedwerks.keycloak.halo.sofa.models.ContextCacheEntry;
 import com.zedwerks.keycloak.halo.sofa.models.OperationOutcome;
-import com.zedwerks.keycloak.halo.sofa.models.HaloParametersHelper;
+
+import com.zedwerks.keycloak.halo.sofa.models.HaloContextHelper;
+
 import com.zedwerks.keycloak.halo.sofa.models.SmartLaunchContext;
 import com.zedwerks.keycloak.halo.sofa.models.JsonMapper;
 import com.zedwerks.keycloak.halo.sofa.models.HaloSetContextResponse;
@@ -88,15 +93,23 @@ public class SofaContextResource {
 
     KeycloakSession session;
     static String fhirBaseUrl = null;
+    static int _logServer = 0;
 
     public SofaContextResource() { // needed to skirt CDI issues in Keycloak
         this.session = null;
     }
 
+    private void logServer() {
+        if (_logServer == 0) {
+            logger.infof("Using SOFA FHIR server: %s", fhirBaseUrl);
+            _logServer++;
+        }
+    }
+
     public SofaContextResource(KeycloakSession session) {
         this.session = session;
         fhirBaseUrl = session.getContext().getRealm().getAttribute(REALM_ATTR_AUDIENCE_URL);
-        logger.infof("Using fhir server: %s", fhirBaseUrl);
+        logServer();
     }
 
     /**
@@ -105,24 +118,17 @@ public class SofaContextResource {
      * @param contextJsonString
      * @return
      */
-    private Optional<String> saveBundleToFhirServer(JsonNode contextJson) {
+    private Optional<String> postBundleToFhirServer(JsonNode requestBundle) {
 
         if (fhirBaseUrl == null || fhirBaseUrl.isEmpty()) {
             throw new IllegalStateException("FHIR Server Base URL is not configured");
         }
-        if (contextJson == null) {
-            throw new IllegalArgumentException("Context JSON string cannot be null or empty");
+        if (requestBundle == null) {
+            throw new IllegalArgumentException("Request Bundle JSON string cannot be null");
         }
 
-        Optional<ObjectNode> bundleOpt = HaloParametersHelper.resourceBundle(contextJson);
-
-        if (bundleOpt.isEmpty()) {
-            logger.info("The $set-context does not contain any resources Bundle");
-            return Optional.empty();
-        }
-
-        String bundleJson = JsonMapper.toJsonString(bundleOpt.get());
-        logger.debugf("Extracted FHIR Bundle (POST to SOFA): %s", bundleJson);
+        String bundleJson = JsonMapper.toJsonString(requestBundle);
+        logger.debugf("Will POST this Bundle: %s", bundleJson);
 
         SofaFhirClient fhirClient = new SofaFhirClientImpl(fhirBaseUrl, session);
         final String response = fhirClient.postBundle(bundleJson);
@@ -181,50 +187,62 @@ public class SofaContextResource {
             UserSessionModel userSession = session.sessions().getUserSession(realm, sid);
 
             // Parse the JSON body to extract context information
-            JsonNode contextJsonNode = JsonMapper.toJsonNode(jsonBody);
+            JsonNode setContextRoot = JsonMapper.toJsonNode(jsonBody);
 
-            SmartContextCacheService contextStore = new SmartContextCacheService(session);
+            HaloContextHelper.checkContainsParameters(setContextRoot); // will throw if not.
 
-            // 1. Create a new object to store the context and the SOFA resolved bundle
-            ContextCacheEntry cacheEntry = new ContextCacheEntry();
-            cacheEntry.setContextRequest(contextJsonNode); // hang onto the original context json.
+            // Pre-Flight Step 1: Extract the transaction Bundle from $set-context payload
 
-            logger.info("1. Saved $set-context original payload into Cache");
+            JsonNode bundle = null;  // The $set-context might not contain any Bundle, as per HALO spec.
+            Optional<ObjectNode> requestBundle = HaloContextHelper.getResourceBundle(setContextRoot);
+            JsonNode sofaResponseBundle = null; // this is the response Bundle that whill have locations.
 
-            // 2. Call the FHIR Server to post the context bundle
-            Optional<String> sofaResponse = this.saveBundleToFhirServer(contextJsonNode);
+            // Pre-build the SMART Launch values from the $set-context payload. This may be all we
+            // do if there is not resource Bundle present. 
+            SmartLaunchContext smartLaunchContext = new SmartLaunchContext(setContextRoot);
 
-            logger.info("2. Saved to SOFA FHIR Server");
+            ContextCacheEntry cacheEntry = new ContextCacheEntry();  // for session side-car storage
 
-            // 3. Build up the SMART on FHIR Launch Context Json to cache for the SMART app
-            // launch...
-            SmartLaunchContext launchContext = new SmartLaunchContext(contextJsonNode);
+            logger.debugf("requestBundle.isPresent() = %s", Boolean.toString(requestBundle.isPresent()));
 
-            logger.info("3. Built a launchContext object for the SMART launch flow");
+            if (requestBundle.isPresent()) {
+                logger.debug("Executing Pre-Flight processing on $set-context payload...");
+                bundle = requestBundle.get();
+    
+                // Now POST the bundle to SOFA FHIR Server.
+                Optional<String> response = this.postBundleToFhirServer(bundle);
 
-            // 4. Add fhirContext entries for each bundled resource returned.
-            // . -- This is how the SMART app will pull data from the SOFA FHIR Server.
+                if (response.isPresent()) {
+                    logger.info("SOFA FHIR Server Returned a response");
+                    sofaResponseBundle = JsonMapper.toJsonNode(response.get());
+                    cacheEntry.setContextResponse(sofaResponseBundle);  // hang onto this for the $get-context custom endpoint.
+
+                    // Lastly, let's add the resolved resource references to the SMART Launch,
+                    // updating any values that were "urn:uuid" references into the Bundle.
+                    smartLaunchContext.addResolvedContextLocations(setContextRoot, sofaResponseBundle);
+                } else {
+
+                }
+            }
 
             String bundleResponseJsonString = null;
 
-            if (sofaResponse.isPresent()) {
-                logger.info("sofa fhir response is present!");
-                bundleResponseJsonString = sofaResponse.get();
-                launchContext.addFhirContextsFromBundle(bundleResponseJsonString);
-                logger.info("4. Saved fhirContexts into launchContext cache");
-            }
-            cacheEntry.setLaunchContext(launchContext);
+            // Set Launch Context so we can reference it during SMART app launch.
+            cacheEntry.setLaunchContext(smartLaunchContext);
 
-            // 5. Save the launch context -> ready for use by the SMART app launched by this
-            // user.
+            SmartContextCacheService contextStore = new SmartContextCacheService(session);
             String launchId = contextStore.store(userSession, JsonMapper.toJsonString(cacheEntry));
-            logger.info("5. Saved fully processed context to cache");
+            logger.infof("Saved fully processed context to cache: %s", launchId);
 
             OperationOutcome outcome = OperationOutcome.success("Context set successfully");
-            HaloSetContextResponse response = new HaloSetContextResponse(launchId, bundleResponseJsonString, outcome);
+            HaloSetContextResponse response = new HaloSetContextResponse(launchId, sofaResponseBundle, outcome);
 
             return Response.ok(response).build();
 
+        } catch (FhirHttpException e) {
+            logger.error("FHIR client failure", e);
+            OperationOutcome outcome = OperationOutcome.error(e.getMessage());
+            return Response.status(502).entity(outcome).build();
         } catch (NotAuthorizedException e) {
             logger.warn("Not authorized");
             OperationOutcome outcome = OperationOutcome.error(e.getMessage());
@@ -306,8 +324,6 @@ public class SofaContextResource {
 
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
 
-
-
             JsonNode requestJsonNode = JsonMapper.toJsonNode(jsonBody);
             String launchID = extractLaunchId(requestJsonNode);
 
@@ -333,8 +349,9 @@ public class SofaContextResource {
     /**
      * 
      * @param authorizationHeader. -- the Bearer Token Header
-     * @param launchId - the launch ID as returned by /$set-context
-     * @param smart. -- true when to return the parse SMART launch context json.
+     * @param launchId             - the launch ID as returned by /$set-context
+     * @param smart.               -- true when to return the parse SMART launch
+     *                             context json.
      * @return
      */
     @GET
@@ -370,9 +387,8 @@ public class SofaContextResource {
             ContextCacheEntry cache = JsonMapper.toObjectFromJsonString(cacheJsonString, ContextCacheEntry.class);
             String responseBody = null;
             if ((smart == null) || (smart == false)) {
-                responseBody = JsonMapper.toJsonString(cache.getContextRequest());
-            }
-            else {
+                responseBody = JsonMapper.toJsonString(cache.getContextResponse());
+            } else {
                 responseBody = JsonMapper.toJsonString(cache);
             }
 

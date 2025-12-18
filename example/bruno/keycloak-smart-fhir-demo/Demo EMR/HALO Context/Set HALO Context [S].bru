@@ -21,7 +21,7 @@ auth:bearer {
 body:json {
   {
     "resourceType": "Parameters",
-    "id": "set-context-invocation-example",
+    "id": "set-context-invocation-example-S",
     "meta": {
       "profile": [
         "http://fhir.infoway-inforoute.ca/io/HALO/StructureDefinition/set-context-input-parameters"
@@ -29,10 +29,35 @@ body:json {
     },
     "parameter": [
       {
+        "name": "appID",
+        "valueString": "15"
+      },
+      {
+        "valueReference": {
+          "reference": "Practitioner/1b676b4f-e646-40c6-bfff-f75b095b7e69",
+          "type": "Practitioner"
+        },
+        "name": "fhirContext"
+      },
+      {
+        "valueReference": {
+          "reference": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+          "type": "Patient"
+        },
+        "name": "patient"
+      },
+      {
+        "valueReference": {
+          "reference": "urn:uuid:e753f568-6faf-4a9e-aec8-fe0d2a4f397c",
+          "type": "Encounter"
+        },
+        "name": "encounter"
+      },
+      {
         "name": "resources",
         "resource": {
           "resourceType": "Bundle",
-          "id": "set-context-transaction-bundle-example-minimal",
+          "id": "set-context-transaction-bundle-example-S",
           "type": "transaction",
           "meta": {
             "profile": [

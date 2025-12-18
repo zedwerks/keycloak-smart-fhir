@@ -63,9 +63,6 @@ public class SofaFhirClientImpl implements SofaFhirClient {
 
     private String doPost(String url, String bodyJson) {
         String token = accessToken();
-        if (token == null) {
-            logger.warn("Access Token from session is null");
-        }
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -78,107 +75,56 @@ public class SofaFhirClientImpl implements SofaFhirClient {
             logger.infof("HTTP POST → %s", url);
 
             HttpResponse<String> res = http.send(req, HttpResponse.BodyHandlers.ofString());
-            int status = res.statusCode();
 
-            if (status != 200) {
-                logger.errorf("FHIR POST failed (%d): %s", status, res.body());
-                return errorJson(
-                        "fhir_post_error",
-                        "FHIR server returned HTTP " + status,
-                        res.body());
+            if (res.statusCode() < 200 || res.statusCode() >= 300) {
+                throw new FhirHttpException(res.statusCode(), res.body());
             }
 
             return res.body();
 
-        } catch (IOException ioe) {
-            logger.errorf(ioe, "Network error POSTing to %s", url);
-            return errorJson(
-                    "network_error",
-                    "Unable to reach FHIR server at " + url,
-                    rootCause(ioe).getMessage());
-
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
-            logger.errorf(ie, "HTTP POST interrupted");
-            return errorJson(
-                    "interrupted",
-                    "Request was interrupted",
-                    ie.getMessage());
+            throw new FhirClientException("FHIR POST interrupted", ie);
 
-        } catch (Exception e) {
-            logger.errorf(e, "Unexpected POST error to %s", url);
-            return errorJson(
-                    "unexpected_error",
-                    "Unexpected error contacting FHIR server",
-                    rootCause(e).getMessage());
+        } catch (IOException ioe) {
+            throw new FhirClientException("Network error POSTing to " + url, ioe);
         }
     }
 
+    /**
+     * doGet()
+     * 
+     * @param url
+     * @return
+     */
     private String doGet(String url) {
+        String token = accessToken();
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Authorization", "Bearer " + token)
+                .header("Accept", "application/fhir+json, application/json")
+                .GET()
+                .build();
+
         try {
-            String userAccessToken = accessToken();
-
-            if (userAccessToken == null) {
-                logger.warn("Access Token from session is null");
-            }
-
-            HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .header("Authorization", "Bearer " + userAccessToken)
-                    .header("Accept", "application/fhir+json, application/json")
-                    .GET()
-                    .build();
+            logger.infof("HTTP GET → %s", url);
 
             HttpResponse<String> res = http.send(req, HttpResponse.BodyHandlers.ofString());
-            int status = res.statusCode();
 
-            if (status < 200 || status >= 300) {
-                logger.errorf("FHIR POST failed (%d): %s", status, res.body());
-                return errorJson(
-                        "fhir_get_error",
-                        "FHIR server returned HTTP " + status,
-                        res.body());
+            if (res.statusCode() < 200 || res.statusCode() >= 300) {
+                throw new FhirHttpException(res.statusCode(), res.body());
             }
-            return res.body();
 
-        } catch (IOException ioe) {
-            logger.errorf(ioe, "Network error POSTing to %s", url);
-            return errorJson(
-                    "network_error",
-                    "Unable to reach FHIR server at " + url,
-                    rootCause(ioe).getMessage());
+            return res.body();
 
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
-            logger.errorf(ie, "HTTP POST interrupted");
-            return errorJson(
-                    "interrupted",
-                    "Request was interrupted",
-                    ie.getMessage());
+            throw new FhirClientException("FHIR GET interrupted", ie);
 
-        } catch (Exception e) {
-            logger.errorf(e, "Unexpected POST error to %s", url);
-            return errorJson(
-                    "unexpected_error",
-                    "Unexpected error contacting FHIR server",
-                    rootCause(e).getMessage());
+        } catch (IOException ioe) {
+            throw new FhirClientException("Network error GETting " + url, ioe);
         }
-    }
-
-    private Throwable rootCause(Throwable t) {
-        Throwable cause = t;
-        while (cause.getCause() != null) {
-            cause = cause.getCause();
-        }
-        return cause;
-    }
-
-    private String errorJson(String code, String message, String detail) {
-        return "{"
-                + "\"error\":\"" + code + "\","
-                + "\"message\":\"" + escape(message) + "\","
-                + "\"detail\":\"" + escape(detail) + "\""
-                + "}";
     }
 
     private String escape(String s) {
@@ -189,25 +135,25 @@ public class SofaFhirClientImpl implements SofaFhirClient {
     // SofaFhirClient interface functions (no token args needed)
     // ------------------------------------------------------------
     @Override
-    public String postBundle(String bundleJson) {
+    public String postBundle(String bundleJson) throws FhirHttpException {
         logger.debugf("Posting FHIR Bundle to FHIR Server %s", bundleJson);
         return doPost(baseUrl, bundleJson);
     }
 
     @Override
-    public String getResource(String resourceType, String id) {
+    public String getResource(String resourceType, String id) throws FhirHttpException {
         String url = baseUrl + resourceType + "/" + id;
         return doGet(url);
     }
 
     @Override
-    public String deleteResource(String resourceType, String id) {
+    public String deleteResource(String resourceType, String id) throws FhirHttpException {
         String url = baseUrl + "/" + resourceType + "/" + id;
         return doGet(url);
     }
 
     @Override
-    public String searchResource(String resourceType, Map<String, String> params) {
+    public String searchResource(String resourceType, Map<String, String> params) throws FhirHttpException {
         StringBuilder url = new StringBuilder(baseUrl).append(resourceType).append("?");
         params.forEach((k, v) -> url.append(k).append("=").append(v).append("&"));
         return doGet(url.toString());

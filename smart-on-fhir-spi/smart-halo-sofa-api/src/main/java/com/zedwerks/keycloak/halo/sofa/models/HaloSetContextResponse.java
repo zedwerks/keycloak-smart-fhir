@@ -74,12 +74,12 @@ public class HaloSetContextResponse {
     }
 
     public HaloSetContextResponse(String launchId,
-            String resourcesResponseJsonString,
+            JsonNode bundleResponse,
             OperationOutcome operationOutcomeObj) {
         this.setLaunchId(launchId);
 
-        if (resourcesResponseJsonString != null) {
-            this.setResourcesResponse(JsonMapper.toJsonNode(resourcesResponseJsonString));
+        if (bundleResponse != null) {
+            this.setResourcesResponse(bundleResponse);
         }
         this.setOperationOutcome(MAPPER.valueToTree(operationOutcomeObj));
 

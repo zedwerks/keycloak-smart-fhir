@@ -22,6 +22,7 @@
 package com.zedwerks.keycloak.halo.authenticators;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.jboss.logging.Logger;
@@ -247,16 +248,21 @@ public class HaloLaunchResolver implements Authenticator {
         setUserSessionNote(context, LaunchHelper.CONTEXT_PATIENT, smartLaunchObj.getPatient());
         setUserSessionNote(context, LaunchHelper.CONTEXT_ENCOUNTER, smartLaunchObj.getEncounter());
         setUserSessionNote(context, LaunchHelper.CONTEXT_INTENT, smartLaunchObj.getIntent());
-        setUserSessionNote(context, LaunchHelper.CONTEXT_NEED_PATIENT_BANNER, smartLaunchObj.getNeedPatientBanner());
+        if (smartLaunchObj.getNeedPatientBanner() != null) {
+            setUserSessionNote(context, LaunchHelper.CONTEXT_NEED_PATIENT_BANNER, smartLaunchObj.getNeedPatientBanner().toString());
+        }
         setUserSessionNote(context, LaunchHelper.SMART_STYLE_URL, smartLaunchObj.getSmartStyleUrl());
-        setUserSessionNote(context, LaunchHelper.CONTEXT_FHIR_CONTEXT, JsonMapper.toJsonString(smartLaunchObj.getFhirContext()));
-        setUserSessionNote(context, LaunchHelper.SMART_FHIR_USER_CLAIM, JsonMapper.toJsonString(smartLaunchObj.getFhirUser()));
+        List<JsonNode> fhirContext = smartLaunchObj.getFhirContext();
+        if ((fhirContext != null) && fhirContext.size()>0) {
+            setUserSessionNote(context, LaunchHelper.CONTEXT_FHIR_CONTEXT, JsonMapper.toJsonString(smartLaunchObj.getFhirContext()));
+        }
+        setUserSessionNote(context, LaunchHelper.SMART_FHIR_USER_CLAIM, smartLaunchObj.getFhirUser());
         return true;
     }
 
     private static void clearUserSessionNotes(AuthenticationFlowContext context) {
 
-        logger.info(" *** SMART: Clearing Previous Launch Context User Session Notes");
+        logger.debug(" *** SMART: Clearing Previous Launch Context User Session Notes");
 
         // clear known launch items that may have been set on prior auth under same User
         // session
@@ -267,6 +273,7 @@ public class HaloLaunchResolver implements Authenticator {
         clearUserSessionNote(context, LaunchHelper.CONTEXT_INTENT);
         clearUserSessionNote(context, LaunchHelper.CONTEXT_NEED_PATIENT_BANNER);
         clearUserSessionNote(context, LaunchHelper.SMART_STYLE_URL);
+        clearUserSessionNote(context, LaunchHelper.SMART_FHIR_USER_CLAIM);
 
         String currentLaunchContextId = userSessionNote(context, AUTH_SESSION_NOTE_LAUNCH_CONTEXT_ID);
 

@@ -29,8 +29,12 @@ body:json {
     },
     "parameter": [
       {
+        "name": "appID",
+        "valueString": "12"
+      },
+      {
         "valueReference": {
-          "reference": "urn:uuid:b3b7f021-6566-4be5-a6ec-736bc44fefb8",
+          "reference": "PracitionerRole/b3b7f021-6566-4be5-a6ec-736bc44fefb8",
           "type": "PractitionerRole"
         },
         "name": "fhirUser"
@@ -46,6 +50,20 @@ body:json {
       {
         "name": "tenant",
         "valueString": "tenant-xyz"
+      },
+      {
+        "valueReference": {
+          "reference": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+          "type": "Patient"
+        },
+        "name": "patient"
+      },
+      {
+        "valueReference": {
+          "reference": "urn:uuid:e753f568-6faf-4a9e-aec8-fe0d2a4f397c",
+          "type": "Encounter"
+        },
+        "name": "encounter"
       },
       {
         "name": "resources",

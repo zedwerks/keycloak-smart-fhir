@@ -21,7 +21,7 @@ auth:bearer {
 body:json {
   {
     "resourceType": "Parameters",
-    "id": "set-context-invocation-example-XS",
+    "id": "set-context-invocation-example-XXS",
     "meta": {
       "profile": [
         "http://fhir.infoway-inforoute.ca/io/HALO/StructureDefinition/set-context-input-parameters"
@@ -30,10 +30,17 @@ body:json {
     "parameter": [
       {
         "valueReference": {
-          "reference": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+          "reference": "Patient/d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
           "type": "Patient"
         },
         "name": "patient"
+      },
+      {
+        "valueReference": {
+          "reference": "Provider/1cd0eb7c-9f77-4157-952e-bda6f514ac92",
+          "type": "Provider"
+        },
+        "name": "fhirUser"
       }
     ]
   }

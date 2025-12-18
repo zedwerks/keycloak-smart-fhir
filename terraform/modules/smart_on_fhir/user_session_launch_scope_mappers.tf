@@ -81,7 +81,7 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_patient_banner_mapper"
   config = {
     "user.session.note"          = "need_patient_banner"
     "claim.name"                 = "need_patient_banner"
-    "jsonType.label"             = "String"
+    "jsonType.label"             = "boolean"
     "introspection.token.claim"  = "false"
     "userinfo.token.claim"       = "false"
     "id.token.claim"             = "false"
