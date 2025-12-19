@@ -78,8 +78,6 @@ COPY --from=builder /app/keycloak/import/realm-template.json ./data/import/realm
 COPY --from=builder /app/keycloak/certs/keycloak.key ./certs/keycloak.key
 COPY --from=builder /app/keycloak/certs/keycloak.crt ./certs/keycloak.crt
 
-
-
 USER root
 RUN chown keycloak:root -R ./data/import/
 USER keycloak

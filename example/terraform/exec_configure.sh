@@ -40,14 +40,14 @@ terraform workspace new localhost >> /dev/null 2>&1
 # If the workspace already exists, we will get an error, so we ignore it.
 # We will select the workspace, and if it doesn't exist, we will create it.
 terraform workspace select localhost
-terraform -chdir=$workdir init --upgrade -var-file="$tfvars_file"
+terraform -chdir=$workdir init --upgrade -input=false -var-file="$tfvars_file"
 if [ $? -ne 0 ]; then
     echo "Terraform init failed. Exiting..."
     exit 1
 fi
 
 echo 'Running terraform import realm...'
-terraform -chdir=$workdir import -var-file="$tfvars_file" keycloak_realm.smart_realm $TF_VAR_keycloak_realm
+terraform -chdir=$workdir import -input=false -var-file="$tfvars_file" keycloak_realm.realm $TF_VAR_keycloak_realm
 if [ $? -ne 0 ]; then
     echo "Terraform import for realm failed. Exiting..."
     exit 1
@@ -61,7 +61,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo 'Running terraform apply...'
-terraform -chdir=$workdir apply -auto-approve -compact-warnings ${state_dir}/localhost.tfplan
+terraform -chdir=$workdir apply -input=false -auto-approve -compact-warnings ${state_dir}/localhost.tfplan
 if [ $? -ne 0 ]; then
     echo "Terraform apply failed. Exiting..."
     exit 1

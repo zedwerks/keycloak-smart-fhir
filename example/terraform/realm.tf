@@ -8,7 +8,7 @@ data "keycloak_openid_client_scope" "openid_profile_scope" {
 }
 
 
-resource "keycloak_realm" "smart_realm" {
+resource "keycloak_realm" "realm" {
   realm = var.keycloak_realm
   ssl_required = "all"
   # Core Attributes

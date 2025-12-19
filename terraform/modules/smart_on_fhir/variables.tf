@@ -30,7 +30,3 @@ variable "keycloak_smart_configuration" {
   description = "SMART on FHIR Configurations"
 }
 
-variable "tls_insecure_skip_verify" {
-  type = bool
-  default = false
-}
