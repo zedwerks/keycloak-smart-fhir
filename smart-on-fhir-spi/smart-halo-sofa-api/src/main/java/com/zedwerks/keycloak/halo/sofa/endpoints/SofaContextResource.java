@@ -82,6 +82,7 @@ import jakarta.ws.rs.core.Response;
  *
  * @author Brad Head
  */
+
 public class SofaContextResource {
 
     static final String REALM_ATTR_AUDIENCE_URL = "smart_halo_sofa_audience"; // SET WITH TERRAFORM

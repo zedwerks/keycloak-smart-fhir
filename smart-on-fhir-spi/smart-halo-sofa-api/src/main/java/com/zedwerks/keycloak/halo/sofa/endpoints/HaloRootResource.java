@@ -22,25 +22,21 @@
 
 package com.zedwerks.keycloak.halo.sofa.endpoints;
 
+
+import jakarta.ws.rs.Path;
+import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
-import org.keycloak.services.resource.RealmResourceProvider;
 
-
-public class SofaContextResourceProvider implements RealmResourceProvider {
+public class HaloRootResource {
 
     private final KeycloakSession session;
 
-    public SofaContextResourceProvider(KeycloakSession session) {
+    public HaloRootResource(KeycloakSession session) {
         this.session = session;
     }
 
-    @Override
-    public Object getResource() {
-        return new HaloRootResource(this.session);
+    @Path("sofa")
+    public SofaContextResource sofa() {
+        return new SofaContextResource(session);
     }
-
-    @Override
-    public void close() {
-    }
-
 }
