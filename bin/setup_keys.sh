@@ -1,1 +1,0 @@
-doctl compute ssh-key import "RSA Key" --public-key-file ~/.ssh/id_rsa.pub

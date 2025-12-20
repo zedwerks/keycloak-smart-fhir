@@ -1,5 +1,6 @@
 meta {
   name: Demo SMART App
+  seq: 4
 }
 
 auth {
@@ -14,7 +15,7 @@ auth:oauth2 {
   refresh_token_url: 
   client_id: {{demo_smart_client_id}}
   client_secret: {{demo_smart_client_secret}}
-  scope: openid launch user/*.read launch/patient 
+  scope: openid launch user/*.read launch/patient
   state: dfaksdflksdgflkjdgflk-some-state
   pkce: true
   credentials_placement: body

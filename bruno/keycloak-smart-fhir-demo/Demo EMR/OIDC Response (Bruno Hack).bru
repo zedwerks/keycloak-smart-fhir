@@ -1,0 +1,69 @@
+meta {
+  name: OIDC Response (Bruno Hack)
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{keycloak_url_base}}/realms/{{realm}}/protocol/openid-connect/token
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  grant_type: refresh_token
+  refresh_token: {{$oauth2.credentials.refresh_token}}
+  client_id: {{demo_halo_client_id}}
+}
+
+script:pre-request {
+  console.log("GET launch Response -------")
+}
+
+script:post-response {
+  // Parse JSON response
+  
+  var jsonData = res.getBody();
+  
+  console.log("Post Response")
+  // -----------------------------
+  // Simple top-level fields
+  // -----------------------------
+  if (jsonData.patient) {
+    bru.setEnvVar("patient", jsonData.patient);
+  }
+  
+  if (jsonData.encounter) {
+    bru.setEnvVar("encounter", jsonData.encounter);
+    console.log(bru.getEnvVar("encounter"))
+  }
+  
+  if (jsonData.fhirUser) {
+    bru.setEnvVar("fhirUser", jsonData.fhirUser);
+    console.log(bru.getEnvVar("fhirUser"))
+  }
+  
+  // -----------------------------
+  // fhirContext[] handling
+  // -----------------------------
+  if (Array.isArray(jsonData.fhirContext)) {
+    jsonData.fhirContext.forEach((ctx, index) => {
+      if (!ctx.reference) return;
+  
+      // Example reference: "Organization/37106108-4ece-449b-86cb-dc7eccee4a09"
+      const [resourceType, id] = ctx.reference.split("/");
+  
+      if (resourceType && id) {
+        // Variable name: Organization_37106108-4ece-449b-86cb-dc7eccee4a09
+        const varName = `${resourceType}`;
+        bru.setEnvVar(varName, ctx.reference);
+        console.log(varName + "=" + bru.getEnvVar(varName))
+      }
+    });
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

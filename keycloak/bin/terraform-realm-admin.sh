@@ -37,4 +37,4 @@ sh /opt/keycloak/bin/kcadm.sh add-roles --uusername $service_account --cclientid
 
 # This sets the realm to allow unamanged User account attributes to be added => Important for fhirUser, and other user attributes
 echo "Setting the realm user profile to allow unmanaged attributes."
-sh /opt/keycloak/bin/kcadm.sh update "realms/${realm}/users/profile" -s unmanagedAttributePolicy=ENABLED
+sh /opt/keycloak/bin/kcadm.sh update "realms/$realm/users/profile" -s unmanagedAttributePolicy=ENABLED
