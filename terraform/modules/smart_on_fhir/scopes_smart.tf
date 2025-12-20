@@ -1,5 +1,5 @@
 resource "keycloak_openid_client_scope" "fhir_user_scope" {
-  realm_id               = data.keycloak_realm.realm.id
+  realm_id               = var.keycloak_realm
   name                   = "fhirUser"
   description            = "Permission to retrieve current logged-in user"
   consent_screen_text    = "Permission to retrieve current logged-in user"
@@ -24,7 +24,7 @@ resource "keycloak_generic_protocol_mapper" "fhir_user_context_protocol_mapper" 
 }
 #------------------------------------------------------------
 resource "keycloak_openid_client_scope" "online_access_scope" {
-  realm_id               = data.keycloak_realm.realm.id
+  realm_id               = var.keycloak_realm
   name                   = "online_access"
   description            = "Request a refresh_token that can be used to obtain a new access token to replace an expired one, and that will be usable for as long as the end-user remains online"
   consent_screen_text    = "Retain access while you are online"
@@ -32,21 +32,21 @@ resource "keycloak_openid_client_scope" "online_access_scope" {
 }
 #------------------------------------------------------------
 resource "keycloak_openid_client_scope" "ehr_launch_context_scope" {
-  realm_id               = data.keycloak_realm.realm.id
+  realm_id               = var.keycloak_realm
   name                   = "launch"
   description            = "EHR-Launch scope - must be provided to trigger an EHR Launch"
   include_in_token_scope = true
 }
 #------------------------------------------------------------
 resource "keycloak_openid_client_scope" "launch_patient_context_scope" {
-  realm_id               = data.keycloak_realm.realm.id
+  realm_id               = var.keycloak_realm
   name                   = "launch/patient"
   description            = "When launching either EHR or standalone, this gains access to patient identifier returned alongside tokens."
   include_in_token_scope = true
 }
 #------------------------------------------------------------
 resource "keycloak_generic_protocol_mapper" "standalone_launch_patient_context_usermodel_protocol_mapper" {
-  realm_id               = data.keycloak_realm.realm.id
+  realm_id               = var.keycloak_realm
   client_scope_id = keycloak_openid_client_scope.launch_patient_context_scope.id
   name            = "Patient ID Claim Mapper"
   protocol        = "openid-connect"
@@ -63,7 +63,7 @@ resource "keycloak_generic_protocol_mapper" "standalone_launch_patient_context_u
 }
 #------------------------------------------------------------
 resource "keycloak_openid_client_scope" "launch_encounter_context_scope" {
-  realm_id               = data.keycloak_realm.realm.id
+  realm_id               = var.keycloak_realm
   name                   = "launch/encounter"
   description            = "When launching either EHR or standalone, this gains access to encounter identifier returned alongside tokens."
   include_in_token_scope = true

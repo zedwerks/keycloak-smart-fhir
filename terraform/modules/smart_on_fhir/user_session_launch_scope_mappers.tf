@@ -3,7 +3,7 @@
 // The generic protocol mapper allows us to set the access token response claim to true.
 
 resource "keycloak_generic_protocol_mapper" "launch_patient_scope_mapper" {
-  realm_id        = data.keycloak_realm.realm.id
+  realm_id        = var.keycloak_realm
   client_scope_id = keycloak_openid_client_scope.launch_patient_context_scope.id
   name            = "user-session-launch-patient-mapper"
   protocol        = "openid-connect"
@@ -22,7 +22,7 @@ resource "keycloak_generic_protocol_mapper" "launch_patient_scope_mapper" {
 }
 
 resource "keycloak_generic_protocol_mapper" "smart_launch_encounter_scope_mapper" {
-  realm_id        = data.keycloak_realm.realm.id
+  realm_id        = var.keycloak_realm
   client_scope_id = keycloak_openid_client_scope.launch_encounter_context_scope.id
   name            = "user-session-encounter-mapper"
   protocol        = "openid-connect"
@@ -42,7 +42,7 @@ resource "keycloak_generic_protocol_mapper" "smart_launch_encounter_scope_mapper
 }
 
 resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_aud_mapper" {
-  realm_id            = data.keycloak_realm.realm.id
+  realm_id            = var.keycloak_realm
   client_scope_id     = keycloak_openid_client_scope.ehr_launch_context_scope.id
   name                = "user-session-smart-audience-mapper"
   claim_name          = "aud"
@@ -54,7 +54,7 @@ resource "keycloak_openid_user_session_note_protocol_mapper" "launch_smart_aud_m
 }
 
 resource "keycloak_generic_protocol_mapper" "launch_smart_fhir_context_mapper" {
-  realm_id        = data.keycloak_realm.realm.id
+  realm_id        = var.keycloak_realm
   client_scope_id = keycloak_openid_client_scope.ehr_launch_context_scope.id
   name            = "user-session-fhir-context-mapper"
   protocol        = "openid-connect"
@@ -73,7 +73,7 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_fhir_context_mapper" {
 }
 
 resource "keycloak_generic_protocol_mapper" "launch_smart_patient_banner_mapper" {
-  realm_id        = data.keycloak_realm.realm.id
+  realm_id        = var.keycloak_realm
   client_scope_id = keycloak_openid_client_scope.ehr_launch_context_scope.id
   name            = "user-session-patient-banner-mapper"
   protocol        = "openid-connect"
@@ -92,7 +92,7 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_patient_banner_mapper"
 }
 
 resource "keycloak_generic_protocol_mapper" "launch_smart_intent_mapper" {
-  realm_id        = data.keycloak_realm.realm.id
+  realm_id        = var.keycloak_realm
   client_scope_id = keycloak_openid_client_scope.ehr_launch_context_scope.id
   name            = "user-session-intent-mapper"
   protocol        = "openid-connect"
@@ -111,7 +111,7 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_intent_mapper" {
 }
 
 resource "keycloak_generic_protocol_mapper" "launch_smart_style_mapper" {
-  realm_id        = data.keycloak_realm.realm.id
+  realm_id        = var.keycloak_realm
   client_scope_id = keycloak_openid_client_scope.ehr_launch_context_scope.id
   name            = "user-session-smart-style-url-mapper"
   protocol        = "openid-connect"
@@ -130,7 +130,7 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_style_mapper" {
 }
 
 resource "keycloak_generic_protocol_mapper" "launch_smart_tenant_mapper" {
-  realm_id        = data.keycloak_realm.realm.id
+  realm_id        = var.keycloak_realm
   client_scope_id = keycloak_openid_client_scope.ehr_launch_context_scope.id
   name            = "user-session-tenant-mapper"
   protocol        = "openid-connect"
@@ -154,7 +154,7 @@ resource "keycloak_generic_protocol_mapper" "launch_smart_tenant_mapper" {
 // *alongside* the tokens -- very odd. 
 //
 resource "keycloak_generic_protocol_mapper" "launch_halo_fhirUser_session_note_mapper" {
-  realm_id        = data.keycloak_realm.realm.id
+  realm_id        = var.keycloak_realm
   client_scope_id = keycloak_openid_client_scope.ehr_launch_context_scope.id
   name            = "user-session-halo-fhirUser-mapper"
   protocol        = "openid-connect"

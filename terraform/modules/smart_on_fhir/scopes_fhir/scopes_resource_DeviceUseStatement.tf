@@ -1,0 +1,79 @@
+// patient/DeviceUseStatement ---------------------------------------------------------------------
+resource "keycloak_openid_client_scope" "patient_device_use_read_scope" {
+  count                  = var.fhir_resources_supported.DeviceUseStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "patient/DeviceUseStatement.read"
+  description            = "Read access to DeviceUseStatement"
+  consent_screen_text    = "Permission to read DeviceUseStatement about the patient"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "patient_device_use_write_scope" {
+  count                  = var.fhir_resources_supported.DeviceUseStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "patient/DeviceUseStatement.write"
+  description            = "Write access to DeviceUseStatement"
+  consent_screen_text    = "Permission to write DeviceUseStatement about the patient"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "patient_device_use_full_scope" {
+  count                  = var.fhir_resources_supported.DeviceUseStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "patient/DeviceUseStatement.*"
+  description            = "Full access to DeviceUseStatement"
+  consent_screen_text    = "Permission to read and write DeviceUseStatement about the patient"
+  include_in_token_scope = true
+}
+// system/DeviceUseStatement ---------------------------------------------------------------------
+resource "keycloak_openid_client_scope" "system_device_use_read_scope" {
+  count                  = var.fhir_resources_supported.DeviceUseStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "system/DeviceUseStatement.read"
+  description            = "Read access to DeviceUseStatement"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "system_device_use_write_scope" {
+  count                  = var.fhir_resources_supported.DeviceUseStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "system/DeviceUseStatement.write"
+  description            = "Write access to DeviceUseStatement"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "system_device_use_full_scope" {
+  count                  = var.fhir_resources_supported.DeviceUseStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "system/DeviceUseStatement.*"
+  description            = "Full access to DeviceUseStatement"
+  include_in_token_scope = true
+}
+// user/DeviceUseStatement ---------------------------------------------------------------------
+resource "keycloak_openid_client_scope" "user_device_use_read_scope" {
+  count                  = var.fhir_resources_supported.DeviceUseStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "user/DeviceUseStatement.read"
+  description            = "Read access to DeviceUseStatement"
+  consent_screen_text    = "Permission to read DeviceUseStatement for the user"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "user_device_use_write_scope" {
+  count                  = var.fhir_resources_supported.DeviceUseStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "user/DeviceUseStatement.write"
+  description            = "Write access to DeviceUseStatement"
+  consent_screen_text    = "Permission to write DeviceUseStatement for the user"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "user_device_use_full_scope" {
+  count                  = var.fhir_resources_supported.DeviceUseStatement && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "user/DeviceUseStatement.*"
+  description            = "Full access to DeviceUseStatement"
+  consent_screen_text    = "Permission to read and write DeviceUseStatement for the user"
+  include_in_token_scope = true
+}
+
+
+
+
+
+
+

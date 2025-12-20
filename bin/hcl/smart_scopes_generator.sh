@@ -50,7 +50,7 @@ for prefix in "${PREFIXES[@]//,/}"; do
     for action in "${ACCESS[@]//,/}"; do
         access_meaning=$(get_access $action)
         echo "resource keycloak_openid_client_scope \"${prefix}_wildcard_${action}_scope\" {" >> $filename
-        echo "  realm_id               = data.keycloak_realm.realm.id" >> $filename
+        echo "  realm_id               = var.keycloak_realm" >> $filename
         echo "  name                   = \"${prefix}/*.${action}\"" >> $filename
         echo "  description            = \"${access_meaning} access to any resource for ${prefix}.\"" >> $filename
         echo "  consent_screen_text    = \"${access_meaning} access to any resource for ${prefix}.\"" >> $filename
@@ -71,7 +71,7 @@ for resource in "${RESOURCES[@]//,/}"; do
       access_meaning=$(get_access $action)
       echo "resource keycloak_openid_client_scope \"${prefix}_${resource}_${action}\" {" >> $filename
       echo "  count                  = var.fhir_resources_supported.${resource} ? 1 : 0" >> $filename
-      echo "  realm_id               = data.keycloak_realm.realm.id" >> $filename
+      echo "  realm_id               = var.keycloak_realm" >> $filename
       echo "  name                   = \"${prefix}/${resource}.${action}\"" >> $filename
       echo "  description            = \"${access_meaning} access to ${resource} resource for ${prefix}.\"" >> $filename
       echo "  consent_screen_text    = \"${access_meaning} access to ${resource} resource for ${prefix}.\"" >> $filename

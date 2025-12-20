@@ -2,20 +2,12 @@
 # A simple script to start the quick start example
 
 pushd .
-cd example/keycloak
+cd example_install
 echo "installing Keycloak..."
 if sh install.sh; then
     echo "Keycloak installed successfully."
 else
     echo "Keycloak installation failed."
-    exit 1
-fi
-cd ../terraform
-echo "Applying smart realm configurations with terraform..."
-if sh exec_configure.sh; then
-    echo "Terraform installed successfully."
-else
-    echo "Terraform installation failed."
     exit 1
 fi
 popd

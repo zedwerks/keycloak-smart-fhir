@@ -1,17 +1,17 @@
+
+# modules/smart_on_fhir/main.tf
 terraform {
   required_providers {
     keycloak = {
       source  = "keycloak/keycloak"
-      version = ">= 5.4.0"
+      version = "=5.4.0"
     }
   }
 }
 
-data "keycloak_realm" "realm" {
-  realm = var.keycloak_realm
-}
-
-data "keycloak_openid_client_scope" "openid_profile_scope" {
-  realm_id = data.keycloak_realm.realm.id
-  name = "profile"
+module "scopes_fhir" {
+  source = "./scopes_fhir"
+  keycloak_smart_configuration = var.keycloak_smart_configuration
+  fhir_resources_supported     = var.fhir_resources_supported
+  keycloak_realm               = var.keycloak_realm
 }

@@ -1,19 +1,3 @@
-variable "keycloak_realm" {
-  type = string
-}
-
-variable "keycloak_terraform_client_id" {
-  type = string
-}
-
-variable "keycloak_terraform_client_secret" {
-  type = string
-}
-
-variable "keycloak_base_url" {
-  type = string
-}
-
 variable "keycloak_smart_configuration" {
   type = object({
     fhir_audiences = optional(string, "http://example.fhir.org")
@@ -30,3 +14,7 @@ variable "keycloak_smart_configuration" {
   description = "SMART on FHIR Configurations"
 }
 
+variable "keycloak_realm" {
+  type = string
+  default = "smart"
+}

@@ -1,0 +1,72 @@
+// patient/MedicinalProductIndication -----------------------------------------------------
+resource "keycloak_openid_client_scope" "patient_medicinal_product_indication_read_scope" {
+count                 = var.fhir_resources_supported.MedicinalProductIndication && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "patient/MedicinalProductIndication.read"
+  description            = "Read access to MedicinalProductIndication"
+  consent_screen_text    = "Permission to read MedicinalProductIndication about the patient"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "patient_medicinal_product_indication_write_scope" {
+    count                = var.fhir_resources_supported.MedicinalProductIndication && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "patient/MedicinalProductIndication.write"
+  description            = "Write access to MedicinalProductIndication"
+  consent_screen_text    = "Permission to write MedicinalProductIndication about the patient"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "patient_medicinal_product_indication_full_scope" {
+    count                = var.fhir_resources_supported.MedicinalProductIndication && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "patient/MedicinalProductIndication.*"
+  description            = "Full access to MedicinalProductIndication"
+  consent_screen_text    = "Permission to read and write MedicinalProductIndication about the patient"
+  include_in_token_scope = true
+}
+// system/MedicinalProductIndication -----------------------------------------------------
+resource "keycloak_openid_client_scope" "system_medicinal_product_indication_read_scope" {
+    count                = var.fhir_resources_supported.MedicinalProductIndication && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "system/MedicinalProductIndication.read"
+  description            = "Read access to MedicinalProductIndication"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "system_medicinal_product_indication_write_scope" {
+    count                = var.fhir_resources_supported.MedicinalProductIndication && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "system/MedicinalProductIndication.write"
+  description            = "Write access to MedicinalProductIndication"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "system_medicinal_product_indication_full_scope" {
+    count                = var.fhir_resources_supported.MedicinalProductIndication && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "system/MedicinalProductIndication.*"
+  description            = "Full access to MedicinalProductIndication"
+  include_in_token_scope = true
+}
+// user/MedicinalProductIndication -----------------------------------------------------
+resource "keycloak_openid_client_scope" "user_medicinal_product_indication_read_scope" {
+    count                = var.fhir_resources_supported.MedicinalProductIndication && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "user/MedicinalProductIndication.read"
+  description            = "Read access to MedicinalProductIndication"
+  consent_screen_text    = "Permission to read MedicinalProductIndication for the user"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "user_medicinal_product_indication_write_scope" {
+    count                = var.fhir_resources_supported.MedicinalProductIndication && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "user/MedicinalProductIndication.write"
+  description            = "Write access to MedicinalProductIndication"
+  consent_screen_text    = "Permission to write MedicinalProductIndication for the user"
+  include_in_token_scope = true
+}
+resource "keycloak_openid_client_scope" "user_medicinal_product_indication_full_scope" {
+    count                = var.fhir_resources_supported.MedicinalProductIndication && var.keycloak_smart_configuration.smart_v1_scopes ? 1 : 0
+  realm_id               = var.keycloak_realm
+  name                   = "user/MedicinalProductIndication.*"
+  description            = "Full access to MedicinalProductIndication"
+  consent_screen_text    = "Permission to read and write MedicinalProductIndication for the user"
+  include_in_token_scope = true
+}

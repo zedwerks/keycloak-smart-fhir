@@ -11,14 +11,12 @@ FROM maven:3.9.11-sapmachine-25 AS builder
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the Maven configuration and project files
-
-# copy the entire multi-module project
-COPY smart-on-fhir-spi/ ./smart-on-fhir-spi/
+# copy the SPI source code for building
+COPY ../smart-on-fhir-spi/ ./smart-on-fhir-spi/
 
 RUN ls -R /app/smart-on-fhir-spi
 
-COPY keycloak/ ./keycloak/
+COPY ../keycloak/ ./keycloak/
 
 # Make the script executable
 RUN chmod +x ./keycloak/bin/*.sh
@@ -29,8 +27,6 @@ WORKDIR /app/smart-on-fhir-spi/smart-context-store
 RUN mvn -B -DskipTests clean install
 WORKDIR /app/smart-on-fhir-spi
 RUN mvn -B -DskipTests clean package
-
-
 
 ## =================================================================================================
 # Package Stage - add to an official Keycloak image
@@ -74,9 +70,6 @@ COPY --from=builder /app/keycloak/conf/infinispan-smart-context.xml ./conf/infin
 
 # Copy the Keycloak Realm file (which in build phase, the realm name was resolved to the realm name)
 COPY --from=builder /app/keycloak/import/realm-template.json ./data/import/realm.json
-
-COPY --from=builder /app/keycloak/certs/keycloak.key ./certs/keycloak.key
-COPY --from=builder /app/keycloak/certs/keycloak.crt ./certs/keycloak.crt
 
 USER root
 RUN chown keycloak:root -R ./data/import/

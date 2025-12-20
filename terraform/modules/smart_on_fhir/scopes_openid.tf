@@ -8,7 +8,7 @@
   */
 
 resource "keycloak_openid_client_scope" "openid_scope" {
-  realm_id               = data.keycloak_realm.realm.id
+  realm_id               = var.keycloak_realm
   name                   = "openid"
   description            = "OpenID Connect scope"
   include_in_token_scope = true
