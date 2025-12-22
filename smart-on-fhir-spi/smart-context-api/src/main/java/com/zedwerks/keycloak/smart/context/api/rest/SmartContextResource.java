@@ -99,10 +99,6 @@ public class SmartContextResource {
         try {
             AccessToken token = AuthTokenHelper.verifyAuthorizationHeader(session, authorizationHeader, WRITE_SCOPE);
 
-            // Here is where we call the Context Service to persist the context in Cache.
-            // In future, we add a pre-processor step to validate the context and to
-            // call an optional external service to enrich/map the FHIR context bundle.
-            // Retrieve current user session from token
             RealmModel realm = session.getContext().getRealm();
             String sid = token.getSessionId();
             UserSessionModel userSession = session.sessions().getUserSession(realm, sid);
@@ -110,10 +106,7 @@ public class SmartContextResource {
             // Parse the JSON body to extract context information
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(jsonBody);
-            // @todo process this a bit... check if contents are structured correctly.
 
-            // Here is where we call out to the FHIR Server to post the context bundle
-            // For now, we just save the context in the cache
             SmartContextCacheService contextStore = new SmartContextCacheService(session);
 
             String contextId = contextStore.store(userSession, node.toString());

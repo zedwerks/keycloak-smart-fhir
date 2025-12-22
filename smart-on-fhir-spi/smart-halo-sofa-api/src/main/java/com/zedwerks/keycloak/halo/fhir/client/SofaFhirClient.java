@@ -20,6 +20,7 @@
 package com.zedwerks.keycloak.halo.fhir.client;
 
 import java.util.Map;
+import com.zedwerks.keycloak.halo.sofa.models.DeleteBundleMapper;
 
 public interface SofaFhirClient {
 
@@ -33,6 +34,8 @@ public interface SofaFhirClient {
     public String getResource(String resourceType, String id);
 
     String deleteResource(String resourceType, String resourceId);
+
+    String deleteBundle(String bundle);
 
     public String searchResource(String resourceType, Map<String, String> params);
 

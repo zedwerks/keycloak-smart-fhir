@@ -32,6 +32,8 @@ import java.lang.InterruptedException;
 import org.jboss.logging.Logger;
 import org.keycloak.models.KeycloakSession;
 
+import com.zedwerks.keycloak.halo.sofa.models.JsonMapper;
+
 public class SofaFhirClientImpl implements SofaFhirClient {
 
     private final HttpClient http = HttpClient.newHttpClient();
@@ -151,6 +153,14 @@ public class SofaFhirClientImpl implements SofaFhirClient {
         String url = baseUrl + "/" + resourceType + "/" + id;
         return doGet(url);
     }
+
+    @Override
+    public String deleteBundle(String jsonBundleString) throws FhirHttpException {
+        logger.debugf("Deleting Bundle %s", jsonBundleString);
+        return doPost(baseUrl, jsonBundleString);
+    }
+
+
 
     @Override
     public String searchResource(String resourceType, Map<String, String> params) throws FhirHttpException {

@@ -8,37 +8,23 @@
     "not-before-policy": 0,
     "session_state": "522c6c80-b95f-43a4-a0cd-166485362f82",
     "scope": "profile email openid launch",
-    "patient": "urn:uuid:d12004a7-5ed5-41ab-a8f2-0de5f0c98847",
+    "patient": "Patient/85cbce29-3e93-4740-9ef9-ed33b37a47fc",
     "need_patient_banner": "true",
     "fhirContext": [
         {
-            "reference": "urn:uuid:9b530e85-bf64-4f35-a186-65ac1ddaf303",
-            "type": "Organization"
+            "reference": "PractitionerRole/ebf3c19a-6a73-4907-8d86-50e3055da5e9"
         },
         {
-            "reference": "urn:uuid:039b0733-79ec-476b-9ccc-109944222d58",
-            "type": "Location"
+            "reference": "Practitioner/b54af250-22aa-4178-928f-d05d7de24ff4"
         },
         {
-            "reference": "Patient/85cbce29-3e93-4740-9ef9-ed33b37a47fc/_history/1"
+            "reference": "Organization/d50c4c92-74b9-4b0c-a681-09e797baad5d"
         },
         {
-            "reference": "Encounter/ed869eee-62c4-4ea0-a586-3e07c6394d1b/_history/1"
-        },
-        {
-            "reference": "PractitionerRole/ebf3c19a-6a73-4907-8d86-50e3055da5e9/_history/1"
-        },
-        {
-            "reference": "Practitioner/b54af250-22aa-4178-928f-d05d7de24ff4/_history/1"
-        },
-        {
-            "reference": "Organization/d50c4c92-74b9-4b0c-a681-09e797baad5d/_history/1"
-        },
-        {
-            "reference": "Location/6281d9d0-a1d4-4a94-9f54-55387e949032/_history/1"
+            "reference": "Location/6281d9d0-a1d4-4a94-9f54-55387e949032"
         }
     ],
     "smart_style_url": "http://example.com/smart_v1.json",
-    "encounter": "urn:uuid:e753f568-6faf-4a9e-aec8-fe0d2a4f397c",
+    "encounter": "Encounter/ed869eee-62c4-4ea0-a586-3e07c6394d1b",
     "intent": "medication-review"
 }

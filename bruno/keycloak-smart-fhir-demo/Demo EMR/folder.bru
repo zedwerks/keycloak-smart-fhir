@@ -14,7 +14,7 @@ auth:oauth2 {
   refresh_token_url: {{keycloak_url_base}}/realms/{{realm}}/protocol/openid-connect/token
   client_id: {{emr_client_id}}
   client_secret: {{emr_client_secret}}
-  scope: openid Context.write Context.read
+  scope: openid Context.write Context.read fhirUser
   state: adsfdsfsdfsdfsdfffkdfajsdfasldfjaslfk
   pkce: true
   credentials_placement: body
