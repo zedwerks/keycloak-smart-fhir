@@ -6,48 +6,44 @@ services:
       context: ../.
       dockerfile: Dockerfile
     environment:
+      KC_HOSTNAME: keycloak.local
       # Environment variables for Keycloak
-        KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
-        KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
 
       # Going to make use of built-in self-generating keys for Keycloak for non-production
-        KC_HTTPS_REQUIRED: "true"
+      KC_HTTPS_REQUIRED: true
+      KC_HTTP_ENABLED: false
+      KC_HOSTNAME_STRICT: true
+      KC_HOSTNAME_STRICT_HTTPS: true
 
       # Logging
-        KC_LOG_LEVEL: "INFO"
+      KC_LOG_LEVEL: "INFO"
 
       # CORS settings
-        KC_HTTP_CORS: "true"
-        KC_HTTP_CORS_MAX_AGE: 3600
+      KC_HTTP_CORS: "true"
+      KC_HTTP_CORS_MAX_AGE: 3600
 
       # Realm Settings
-        KEYCLOAK_TARGET_REALM: "smart"
+      KEYCLOAK_TARGET_REALM: "smart"
 
         # Terraform Client Settings
-        KEYCLOAK_TERRAFORM_CLIENT_ID: ${KEYCLOAK_TERRAFORM_CLIENT_ID}
-        KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${KEYCLOAK_TERRAFORM_CLIENT_SECRET}
+      KEYCLOAK_TERRAFORM_CLIENT_ID: ${KEYCLOAK_TERRAFORM_CLIENT_ID}
+      KEYCLOAK_TERRAFORM_CLIENT_SECRET: ${KEYCLOAK_TERRAFORM_CLIENT_SECRET}
 
         # Certificates for non-production environment to enable HTTPS (simpler)
         # a script runs to create these certs and are copied in by the keycloak Dockerfile
-        KC_HTTPS_CERTIFICATE_FILE: /run/secrets/keycloak_tls_cert
-        KC_HTTPS_CERTIFICATE_KEY_FILE: /run/secrets/keycloak_tls_key
+      KC_HTTPS_CERTIFICATE_FILE: /run/secrets/keycloak_tls_cert
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /run/secrets/keycloak_tls_key
     
     ports:
       - "8443:8443"
     command:
       - start-dev
       - --import-realm
-      
       - --https-port=8443
     networks:
       - fhir-network
-    labels:
-      - "protocol=https"
-      # Tell Docker Desktop what URL to use for the hyperlink
-      - "docker.desktop.extension.http.url=https://localhost:8443"
-      # OCIs for nicer display (optional)
-      - "org.opencontainers.image.title=Keycloak"
-      - "org.opencontainers.image.description=Keycloak Local Dev with HTTPS"
     secrets:
       - keycloak_tls_cert
       - keycloak_tls_key
@@ -72,9 +68,9 @@ networks:
     driver: bridge
 secrets:
   keycloak_tls_cert:
-    file: ./keycloak/certs/keycloak.crt
+    file: ./keycloak/https/certs/keycloak.local.pem
   keycloak_tls_key:
-    file: ./keycloak/certs/keycloak.key
+    file: ./keycloak/https/certs/keycloak.local-key.pem
 
 
 

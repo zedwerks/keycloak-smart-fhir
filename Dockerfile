@@ -40,10 +40,10 @@ FROM quay.io/keycloak/keycloak:26.3.5
 ENV KEYCLOAK_PORT=8080
 
 # Default ENV vars for the Keycloak image
+ENV KC_HOSTNAME=localhost
 ENV KEYCLOAK_ADMIN=admin
 ENV KC_HOSTNAME_STRICT=false
 ENV KC_HOSTNAME_STRICT_HTTPS=false
-ENV KC_HOSTNAME_URL=http://localhost:$KEYCLOAK_PORT
 ENV KC_BOOTSTRAP_ADMIN_USERNAME=admin
 ENV KEYCLOAK_TARGET_REALM_DISPLAY_NAME="SMART on FHIR"
 ENV KEYCLOAK_TARGET_REALM=smart
@@ -86,4 +86,4 @@ EXPOSE $KEYCLOAK_PORT
 
 # Start Keycloak with the import-realm optin to load in the SMART on FHIR realm
 ENTRYPOINT ["/opt/keycloak/bin/bootstrap.sh"]
-CMD ["start-dev", "--import-realm", "--hostname=localhost"]
+CMD ["start-dev", "--import-realm"]
