@@ -20,12 +20,6 @@ then
     exit
 fi
 
-if ! command -v openssl &> /dev/null
-then
-    echo "openssl could not be located. Please install it first."
-    exit
-fi
-
 source ./keycloak/config-env.sh
 echo "[1] Environment variables:"
 printenv | grep KC_
@@ -35,15 +29,12 @@ echo "-------------------------"
 
 echo "[2] Setup the Certificates for HTTPS..."
 pushd .
-cd ./keycloak/
+cd ./keycloak/https
 if [ -d certs ]; then
-    echo "SSL Certs already generated; Will use in case you have already trusted the keycloak.cer"
+    echo "SSL Certs already generated; Assume you added these with mkcerts"
 else
-    rm -rf certs
-    mkdir certs
-    cd certs
-    openssl genrsa -out keycloak.key 2048
-    openssl req -new -x509 -key keycloak.key -out keycloak.crt -days 365 -subj "/CN=localhost"
+    echo "Follow the README in /example_install/keycloak/https to setup trusted certs for HTTPS"
+    exit 1
 fi
 popd 
 
@@ -65,11 +56,6 @@ until $(curl --insecure --output /dev/null --silent --head --fail "$URL"); do
     printf '.'
     sleep 1
 done
-
-# if the following fails, Keycloak put itself into HTTPS-Required mode.
-# Running this locally for playing around, or dev won't work. So, check any changes
-# you may have made to the docker-compose.yml that may have tripped Keycloak
-# to want HTTPS
 
 echo "Checking Keycloak endpoint: $URL"
 # Perform the curl and capture the HTTP status code
