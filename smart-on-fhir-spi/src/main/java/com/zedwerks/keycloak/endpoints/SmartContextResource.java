@@ -131,6 +131,10 @@ public class SmartContextResource {
             return Response.status(Response.Status.UNAUTHORIZED).entity(errorMessage).build();
         }
 
+        Cors cors = Cors.builder()
+                .auth()
+                .checkAllowedOrigins(token);
+
         ContextResponse contextResponse = new ContextResponse();
         contextResponse.contextId = UUID.randomUUID().toString();
 
@@ -153,9 +157,7 @@ public class SmartContextResource {
         logger.infof("*** SMART: Saved EHR-Launch Context[%s]. Ready for app launch.", contextResponse.contextId);
 
         Response.ResponseBuilder builder = Response.ok().entity(contextResponse);
-        return Cors.builder()
-                .auth()
-                .allowedOrigins(token)
+        return cors
                 .allowedMethods("POST", "OPTIONS")
                 .preflight()
                 .exposedHeaders(Cors.ACCESS_CONTROL_ALLOW_METHODS)

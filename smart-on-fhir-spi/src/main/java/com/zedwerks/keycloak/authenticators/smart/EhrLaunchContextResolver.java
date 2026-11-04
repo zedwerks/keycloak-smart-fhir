@@ -26,7 +26,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.stream.Stream;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.jboss.logging.Logger;
@@ -246,7 +245,7 @@ public class EhrLaunchContextResolver implements Authenticator {
             }
 
             logger.debug("Save top-level Context key/value pairs");
-            rootNode.fields().forEachRemaining(field -> {
+            rootNode.properties().forEach(field -> {
                 String key = field.getKey();
                 String value = field.getValue().asText();
 
@@ -261,9 +260,7 @@ public class EhrLaunchContextResolver implements Authenticator {
 
             if (paramsNode != null && paramsNode.isObject()) {
                 logger.info("Processing Launch Context additional Parameters...");
-                Iterator<Map.Entry<String, JsonNode>> params = paramsNode.fields();
-                while (params.hasNext()) {
-                    Map.Entry<String, JsonNode> param = params.next();
+                for (Map.Entry<String, JsonNode> param : paramsNode.properties()) {
                     String paramName = param.getKey();
                     JsonNode paramValueNode = param.getValue();
                     String paramValue = paramValueNode.isTextual() ? paramValueNode.asText()
@@ -309,7 +306,7 @@ public class EhrLaunchContextResolver implements Authenticator {
                     JsonNode rootNode = objectMapper.readTree(contextJson);
 
                     // Iterate over top-level nodes
-                    rootNode.fields().forEachRemaining(field -> {
+                    rootNode.properties().forEach(field -> {
                         String key = field.getKey();
                         clearUserSessionNote(context, key);
                     });
@@ -317,9 +314,7 @@ public class EhrLaunchContextResolver implements Authenticator {
 
                     if (paramsNode != null && paramsNode.isObject()) {
                         logger.debug("Clearing Launch Context additional Parameters...");
-                        Iterator<Map.Entry<String, JsonNode>> params = paramsNode.fields();
-                        while (params.hasNext()) {
-                            Map.Entry<String, JsonNode> param = params.next();
+                        for (Map.Entry<String, JsonNode> param : paramsNode.properties()) {
                             String paramName = param.getKey();
                             clearUserSessionNote(context, paramName);
                         }
