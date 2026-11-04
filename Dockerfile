@@ -26,7 +26,7 @@ RUN chmod +x keycloak/bin/*.sh
 # Package Stage - add to an official Keycloak image
 # As of 22-Oct-25, Keycloak 26.4.x broke terraform by removing server version in json response to server-info\
 
-FROM quay.io/keycloak/keycloak:26.3.5  
+FROM quay.io/keycloak/keycloak:26.8.1  
 
 
 # need the Keycloak Port ENV var set so we can use it in entrypoint to 
