@@ -16,12 +16,6 @@ COPY smart-on-fhir-spi/pom.xml ./smart-on-fhir-spi/
 COPY smart-on-fhir-spi/src ./smart-on-fhir-spi/src
 COPY keycloak keycloak
 
-# Copy the theme files
-COPY smart-theme/pom.xml ./theme/
-COPY smart-theme/src ./theme/src
-# Build the theme
-RUN mvn -B -f theme/pom.xml clean package
-
 # Build the application JAR
 RUN mvn -B -DskipTests -f smart-on-fhir-spi/pom.xml clean package 
 
@@ -32,7 +26,7 @@ RUN chmod +x keycloak/bin/*.sh
 # Package Stage - add to an official Keycloak image
 # As of 22-Oct-25, Keycloak 26.4.x broke terraform by removing server version in json response to server-info\
 
-FROM quay.io/keycloak/keycloak:26.3.5  
+FROM quay.io/keycloak/keycloak:26.8.1  
 
 
 # need the Keycloak Port ENV var set so we can use it in entrypoint to 
@@ -67,9 +61,6 @@ USER keycloak
 
 # Copy the SMART on FHIR SPI Jar to the providers folder
 COPY --from=builder /app/smart-on-fhir-spi/target/*.jar ./providers/
-
-# Copy the theme files
-COPY --from=builder /app/theme/target/*.jar ./providers/
 
 # Expose the port if needed
 EXPOSE $KEYCLOAK_PORT

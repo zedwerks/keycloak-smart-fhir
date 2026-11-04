@@ -17,7 +17,7 @@ fi
 if ! docker info &> /dev/null
 then
     echo "Docker is not running. Please start Docker first."
-    exit
+    exit 1
 fi
 
 source ./config-env.sh
