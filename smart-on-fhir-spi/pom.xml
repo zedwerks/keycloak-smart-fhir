@@ -24,7 +24,7 @@
         <org.glassfish.jersey.version>4.0.0-M1</org.glassfish.jersey.version>
         <org.jakarta.ws.rs.version>4.0.0</org.jakarta.ws.rs.version>
         <org.jboss.logging.version>3.6.1.Final</org.jboss.logging.version>
-        <org.mockito.version>5.17.0</org.mockito.version>    
+        <org.mockito.version>5.20.0</org.mockito.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
