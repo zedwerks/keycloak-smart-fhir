@@ -26,6 +26,7 @@ crash.log
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+.terraform.lock.hcl
 
 # Ignore MacOS files
 .DS_Store

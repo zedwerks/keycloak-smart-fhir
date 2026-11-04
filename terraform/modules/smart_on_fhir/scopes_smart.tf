@@ -62,6 +62,30 @@ resource "keycloak_generic_protocol_mapper" "standalone_launch_patient_context_u
   }
 }
 #------------------------------------------------------------
+resource "keycloak_openid_client_scope" "standalone_launch_practitioner_context_scope" {
+  realm_id               = data.keycloak_realm.realm.id
+  name                   = "launch/practitioner"
+  description            = "When launching outside the EHR, ask for a practitioner to be selected at launch time."
+  include_in_token_scope = true
+}
+#------------------------------------------------------------
+resource "keycloak_generic_protocol_mapper" "standalone_launch_practitioner_context_usermodel_protocol_mapper" {
+  realm_id        = keycloak_openid_client_scope.standalone_launch_practitioner_context_scope.realm_id
+  client_scope_id = keycloak_openid_client_scope.standalone_launch_practitioner_context_scope.id
+  name            = "Practitioner ID Claim Mapper"
+  protocol        = "openid-connect"
+  protocol_mapper = "oidc-usermodel-attribute-mapper"
+  config = {
+    "user.attribute"             = "practitionerId"
+    "claim.name"                 = "practitioner"
+    "jsonType.label"             = "String"
+    "id.token.claim"             = "false"
+    "access.tokenResponse.claim" = "true"
+    "userinfo.token.claim"       = "true"
+    "introspection.token.claim"  = "true"
+  }
+}
+#------------------------------------------------------------
 resource "keycloak_openid_client_scope" "standalone_launch_encounter_context_scope" {
   realm_id               = data.keycloak_realm.realm.id
   name                   = "launch/encounter"

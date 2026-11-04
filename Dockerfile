@@ -16,12 +16,6 @@ COPY smart-on-fhir-spi/pom.xml ./smart-on-fhir-spi/
 COPY smart-on-fhir-spi/src ./smart-on-fhir-spi/src
 COPY keycloak keycloak
 
-# Copy the theme files
-COPY smart-theme/pom.xml ./theme/
-COPY smart-theme/src ./theme/src
-# Build the theme
-RUN mvn -B -f theme/pom.xml clean package
-
 # Build the application JAR
 RUN mvn -B -DskipTests -f smart-on-fhir-spi/pom.xml clean package 
 
@@ -67,9 +61,6 @@ USER keycloak
 
 # Copy the SMART on FHIR SPI Jar to the providers folder
 COPY --from=builder /app/smart-on-fhir-spi/target/*.jar ./providers/
-
-# Copy the theme files
-COPY --from=builder /app/theme/target/*.jar ./providers/
 
 # Expose the port if needed
 EXPOSE $KEYCLOAK_PORT

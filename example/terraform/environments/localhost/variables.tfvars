@@ -26,6 +26,7 @@ fhir_resources_supported = {
   Bundle              = true
   Patient             = true
   Encounter           = true
+  Immunization        = true
   Practitioner        = true
   MedicationStatement = true
 }
