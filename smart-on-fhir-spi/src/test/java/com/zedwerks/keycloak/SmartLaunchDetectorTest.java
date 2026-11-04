@@ -21,231 +21,90 @@
  */
 package com.zedwerks.keycloak;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any;
-
-import org.mockito.MockedStatic;
-
-import org.junit.BeforeClass;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
-import org.keycloak.authentication.Authenticator;
-import org.keycloak.models.AuthenticatorConfigModel;
-import org.keycloak.models.ClientModel;
-import org.keycloak.models.ClientScopeModel;
-import org.keycloak.models.KeycloakContext;
-import org.keycloak.models.KeycloakSession;
-import org.keycloak.models.UserModel;
-import org.keycloak.sessions.AuthenticationSessionModel;
-import org.mockito.MockitoAnnotations;
-
-import org.keycloak.common.Profile;
-
 import com.zedwerks.keycloak.authenticators.smart.SmartLaunchDetector;
-import com.zedwerks.keycloak.authenticators.smart.SmartLaunchDetectorFactory;
 
-import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.UriInfo;
-import jakarta.ws.rs.core.Response;
+class SmartLaunchDetectorTest extends KeycloakProfileTest {
+    private LaunchTestContext request;
+    private final SmartLaunchDetector detector = new SmartLaunchDetector();
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Collections;
-import java.util.Set;
-
-public class SmartLaunchDetectorTest {
-
-    @BeforeClass
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        System.setProperty("keycloak.profile", "preview");
+    @BeforeEach
+    void setUp() {
+        request = new LaunchTestContext("openid launch");
+        request.query.putSingle("aud", "https://fhir.example.com");
+        request.query.putSingle("launch", "context-id");
     }
 
     @Test
-    public void testIsEhrLaunch() {
-        // Mock the necessary dependencies
-        MockedStatic<Profile> mocked = mockStatic(Profile.class);
-        Profile mockProfile = mock(Profile.class);
-        when(mockProfile.getName()).thenReturn(Profile.ProfileName.PREVIEW);
-
-        KeycloakSession session = mock(KeycloakSession.class);
-        KeycloakContext keycloakContext = mock(KeycloakContext.class);
-        AuthenticationSessionModel authSession = mock(AuthenticationSessionModel.class);
-        AuthenticationFlowContext context = mock(AuthenticationFlowContext.class);
-        AuthenticatorConfigModel config = mock(AuthenticatorConfigModel.class);
-        UserModel user = mock(UserModel.class);
-        UriInfo uriInfo = mock(UriInfo.class);
-        ClientModel client = mock(ClientModel.class);
-        Authenticator authenticator = new SmartLaunchDetector(session);
-
-        SmartLaunchDetectorFactory factory = mock(SmartLaunchDetectorFactory.class);
-        when(factory.create(session)).thenReturn(authenticator);
-
-        MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<String, String>();
-        queryParameters.putSingle("aud", "https://fhir.example.com");
-        queryParameters.putSingle("launch", "E0727D19-7568-499D-ADA6-49872786745E");
-        when(uriInfo.getQueryParameters()).thenReturn(queryParameters);
-        when(context.getUriInfo()).thenReturn(uriInfo);
-        when(context.getUriInfo().getQueryParameters()).thenReturn(queryParameters);
-
-        ClientScopeModel defaultScope = mock(ClientScopeModel.class);
-        ClientScopeModel profileScope = mock(ClientScopeModel.class);
-        ClientScopeModel launchScope = mock(ClientScopeModel.class);
-
-        when(profileScope.getName()).thenReturn("profile");
-        when(defaultScope.getName()).thenReturn("openid");
-        when(launchScope.getName()).thenReturn("launch");
-
-        Map<String, ClientScopeModel> allOptionalScopes = new HashMap<String, ClientScopeModel>();
-        allOptionalScopes.put("launch", launchScope);
-
-        when(client.getClientScopes(false)).thenReturn(allOptionalScopes);
-
-        Map<String, ClientScopeModel> defaultScopes = new HashMap<String, ClientScopeModel>();
-        defaultScopes.put("openid", defaultScope);
-        defaultScopes.put("profile", profileScope);
-
-        when(client.getClientScopes(true)).thenReturn(defaultScopes);
-
-        when(authSession.getClient()).thenReturn(client);
-        when(authSession.getClientNote("scope")).thenReturn("openid launch");
-
-        when(context.getAuthenticationSession()).thenReturn(authSession);
-        when(context.getAuthenticatorConfig()).thenReturn(config);
-        when(context.getUser()).thenReturn(user);
-        when(context.getSession()).thenReturn(session);
-        when(context.getUriInfo()).thenReturn(uriInfo);
-
-        when(session.getContext()).thenReturn(keycloakContext);
-        when(session.getContext().getAuthenticationSession()).thenReturn(authSession);
-        when(session.getContext().getClient()).thenReturn(client);
-
-        // Test the authenticate method
-        authenticator.authenticate(context);
-        verify(context).attempted();
+    void ehrLaunchSavesAudienceAndLaunchIdWithoutCompletingAuthentication() {
+        detector.authenticate(request.context);
+        request.assertAttemptedWithoutFailure();
+        verify(request.authSession).setAuthNote("launch", "context-id");
+        verify(request.authSession).setUserSessionNote("aud", "https://fhir.example.com");
     }
 
     @Test
-    public void testNotALaunchButWithAudience() {
-        // Mock the necessary dependencies
-
-        KeycloakSession session = mock(KeycloakSession.class);
-        KeycloakContext keycloakContext = mock(KeycloakContext.class);
-        AuthenticationSessionModel authSession = mock(AuthenticationSessionModel.class);
-        AuthenticationFlowContext context = mock(AuthenticationFlowContext.class);
-        AuthenticatorConfigModel config = mock(AuthenticatorConfigModel.class);
-        UserModel user = mock(UserModel.class);
-        UriInfo uriInfo = mock(UriInfo.class);
-        ClientModel client = mock(ClientModel.class);
-        Authenticator authenticator = new SmartLaunchDetector(session);
-
-        SmartLaunchDetectorFactory factory = mock(SmartLaunchDetectorFactory.class);
-        when(factory.create(session)).thenReturn(authenticator);
-
-        MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<String, String>();
-        queryParameters.putSingle("aud", "https://fhir.example.com");
-        when(uriInfo.getQueryParameters()).thenReturn(queryParameters);
-        when(context.getUriInfo()).thenReturn(uriInfo);
-        when(context.getUriInfo().getQueryParameters()).thenReturn(queryParameters);
-
-        ClientScopeModel defaultScope = mock(ClientScopeModel.class);
-        ClientScopeModel profileScope = mock(ClientScopeModel.class);
-        ClientScopeModel launchScope = mock(ClientScopeModel.class);
-
-        when(profileScope.getName()).thenReturn("profile");
-        when(defaultScope.getName()).thenReturn("openid");
-        when(launchScope.getName()).thenReturn("launch");
-
-        Map<String, ClientScopeModel> allOptionalScopes = new HashMap<String, ClientScopeModel>();
-        allOptionalScopes.put("launch", launchScope);
-
-        when(client.getClientScopes(false)).thenReturn(allOptionalScopes);
-
-        Map<String, ClientScopeModel> defaultScopes = new HashMap<String, ClientScopeModel>();
-        defaultScopes.put("openid", defaultScope);
-        defaultScopes.put("profile", profileScope);
-
-        when(client.getClientScopes(true)).thenReturn(defaultScopes);
-
-        when(authSession.getClient()).thenReturn(client);
-
-        when(context.getAuthenticationSession()).thenReturn(authSession);
-        when(context.getAuthenticatorConfig()).thenReturn(config);
-        when(context.getUser()).thenReturn(user);
-        when(context.getSession()).thenReturn(session);
-        when(context.getUriInfo()).thenReturn(uriInfo);
-
-        when(session.getContext()).thenReturn(keycloakContext);
-        when(session.getContext().getAuthenticationSession()).thenReturn(authSession);
-        when(session.getContext().getClient()).thenReturn(client);
-
-        // Test the authenticate method
-        authenticator.authenticate(context);
-        verify(context).attempted();
+    void rejectsLaunchScopeWithoutContextId() {
+        request.query.remove("launch");
+        assertInvalidLaunch();
     }
 
     @Test
-    public void testInvalidLaunch() {
-        // Mock the necessary dependencies
+    void rejectsLaunchIdWithoutLaunchScope() {
+        when(request.authSession.getClientNote("scope")).thenReturn("openid");
+        assertInvalidLaunch();
+    }
 
-        KeycloakSession session = mock(KeycloakSession.class);
-        KeycloakContext keycloakContext = mock(KeycloakContext.class);
-        AuthenticationSessionModel authSession = mock(AuthenticationSessionModel.class);
-        AuthenticationFlowContext context = mock(AuthenticationFlowContext.class);
-        AuthenticatorConfigModel config = mock(AuthenticatorConfigModel.class);
-        UserModel user = mock(UserModel.class);
-        UriInfo uriInfo = mock(UriInfo.class);
-        ClientModel client = mock(ClientModel.class);
-        Authenticator authenticator = new SmartLaunchDetector(session);
+    @Test
+    void rejectsEhrLaunchWithoutAudience() {
+        request.query.remove("aud");
+        assertInvalidLaunch();
+    }
 
-        SmartLaunchDetectorFactory factory = mock(SmartLaunchDetectorFactory.class);
-        when(factory.create(session)).thenReturn(authenticator);
+    @Test
+    void acceptsStandalonePatientLaunchWithoutEhrContextNote() {
+        assertStandaloneLaunch("launch/patient");
+    }
 
-        MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<String, String>();
-        queryParameters.putSingle("aud", "https://fhir.example.com");
-        when(uriInfo.getQueryParameters()).thenReturn(queryParameters);
-        when(context.getUriInfo()).thenReturn(uriInfo);
-        when(context.getUriInfo().getQueryParameters()).thenReturn(queryParameters);
+    @Test
+    void acceptsStandaloneEncounterLaunchWithoutEhrContextNote() {
+        assertStandaloneLaunch("launch/encounter");
+    }
 
-        ClientScopeModel defaultScope = mock(ClientScopeModel.class);
-        ClientScopeModel profileScope = mock(ClientScopeModel.class);
-        ClientScopeModel launchScope = mock(ClientScopeModel.class);
+    private void assertStandaloneLaunch(String scope) {
+        request.query.remove("launch");
+        when(request.authSession.getClientNote("scope")).thenReturn("openid " + scope);
+        detector.authenticate(request.context);
+        request.assertAttemptedWithoutFailure();
+        verify(request.authSession).setUserSessionNote("aud", "https://fhir.example.com");
+        verify(request.authSession, never()).setAuthNote(eq("launch"), anyString());
+    }
 
-        when(profileScope.getName()).thenReturn("profile");
-        when(defaultScope.getName()).thenReturn("openid");
-        when(launchScope.getName()).thenReturn("launch");
+    @Test
+    void rejectsStandaloneLaunchWithoutAudience() {
+        request.query.clear();
+        when(request.authSession.getClientNote("scope")).thenReturn("openid launch/patient");
+        assertInvalidLaunch();
+    }
 
-        Map<String, ClientScopeModel> allOptionalScopes = new HashMap<String, ClientScopeModel>();
-        allOptionalScopes.put("launch", launchScope);
+    @Test
+    void audienceAloneDoesNotTriggerSmartLaunch() {
+        request.query.remove("launch");
+        when(request.authSession.getClientNote("scope")).thenReturn("openid");
+        detector.authenticate(request.context);
+        request.assertAttemptedWithoutFailure();
+        verify(request.authSession, never()).setAuthNote(anyString(), anyString());
+        verify(request.authSession, never()).setUserSessionNote(anyString(), anyString());
+    }
 
-        when(client.getClientScopes(false)).thenReturn(allOptionalScopes);
-
-        Map<String, ClientScopeModel> defaultScopes = new HashMap<String, ClientScopeModel>();
-        defaultScopes.put("openid", defaultScope);
-        defaultScopes.put("profile", profileScope);
-
-        when(client.getClientScopes(true)).thenReturn(defaultScopes);
-
-        when(context.getAuthenticationSession()).thenReturn(authSession);
-        when(context.getAuthenticatorConfig()).thenReturn(config);
-        when(context.getUser()).thenReturn(user);
-        when(context.getSession()).thenReturn(session);
-        when(context.getUriInfo()).thenReturn(uriInfo);
-
-        when(session.getContext()).thenReturn(keycloakContext);
-        when(session.getContext().getAuthenticationSession()).thenReturn(authSession);
-        when(session.getContext().getClient()).thenReturn(client);
-
-        when(authSession.getClient()).thenReturn(client);
-        when(authSession.getClientNote("scope")).thenReturn("openid launch");
-
-        // Test the authenticate method.. this should fail.
-        authenticator.authenticate(context);
-        verify(context).failure(any(AuthenticationFlowError.class), any(Response.class));
+    private void assertInvalidLaunch() {
+        detector.authenticate(request.context);
+        request.assertFailure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR, "invalid_request");
+        verify(request.authSession, never()).setAuthNote(anyString(), anyString());
+        verify(request.authSession, never()).setUserSessionNote(anyString(), anyString());
     }
 }

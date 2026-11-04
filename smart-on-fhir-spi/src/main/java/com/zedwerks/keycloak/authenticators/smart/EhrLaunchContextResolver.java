@@ -234,8 +234,8 @@ public class EhrLaunchContextResolver implements Authenticator {
                             if (name.equals(SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM)) {
                                 setUserSessionNote(context,  SmartLaunchHelper.SMART_TOKEN_PATIENT_CLAIM, valueString);
                             }
-                            if (name.equals(SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER)) {
-                                setUserSessionNote(context, SmartLaunchHelper.SMART_SCOPE_LAUNCH_ENCOUNTER, valueString);
+                            if (name.equals(SmartLaunchHelper.SMART_TOKEN_ENCOUNTER_CLAIM)) {
+                                setUserSessionNote(context, SmartLaunchHelper.SMART_TOKEN_ENCOUNTER_CLAIM, valueString);
                             }
                         }
                     } else {

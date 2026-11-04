@@ -21,88 +21,98 @@
  */
 package com.zedwerks.keycloak;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.UriInfo;
-import org.junit.BeforeClass;
-import org.junit.jupiter.api.Test;
-import org.keycloak.models.AuthenticatorConfigModel;
-import org.keycloak.models.KeycloakSession;
-import org.keycloak.models.UserModel;
-import org.mockito.MockitoAnnotations;
-
-import org.keycloak.authentication.AuthenticationFlowContext;
-import org.keycloak.authentication.Authenticator;
-import org.keycloak.models.ClientModel;
-import org.keycloak.models.KeycloakContext;
-import org.keycloak.sessions.AuthenticationSessionModel;
-
-import com.zedwerks.keycloak.authenticators.smart.AudienceParameterValidator;
-import com.zedwerks.keycloak.authenticators.smart.AudienceParameterValidatorFactory;
-
+import static org.mockito.Mockito.*;
 import java.util.Map;
-import java.util.Hashtable;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.keycloak.authentication.AuthenticationFlowError;
+import org.keycloak.models.AuthenticatorConfigModel;
+import com.zedwerks.keycloak.authenticators.smart.AudienceParameterValidator;
 
-public class AudienceParameterValidatorTest {
+class AudienceParameterValidatorTest extends KeycloakProfileTest {
+    private LaunchTestContext request;
+    private AudienceParameterValidator validator;
 
-    @BeforeClass
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
+    @BeforeEach
+    void setUp() {
+        request = new LaunchTestContext("openid launch");
+        request.query.putSingle("launch", "context-id");
+        request.query.putSingle("aud", "https://fhir.example.com");
+        configure("https://other.example.com ## https://fhir.example.com ");
+        validator = new AudienceParameterValidator(request.session);
+    }
+
+    private void configure(String audiences) {
+        AuthenticatorConfigModel config = new AuthenticatorConfigModel();
+        config.setConfig(Map.of("smart_audiences", audiences));
+        when(request.context.getAuthenticatorConfig()).thenReturn(config);
     }
 
     @Test
-    public void testAudienceValidation() {
-        // Mock the necessary dependencies
-
-        KeycloakSession session = mock(KeycloakSession.class);
-        KeycloakContext keycloakContext = mock(KeycloakContext.class);
-        AuthenticationSessionModel authSession = mock(AuthenticationSessionModel.class);
-        AuthenticationFlowContext context = mock(AuthenticationFlowContext.class);
-        AuthenticatorConfigModel config = mock(AuthenticatorConfigModel.class);
-        UserModel user = mock(UserModel.class);
-        UriInfo uriInfo = mock(UriInfo.class);
-        ClientModel client = mock(ClientModel.class);
-        Authenticator authenticator = new AudienceParameterValidator(session);
-
-        AudienceParameterValidatorFactory factory = mock(AudienceParameterValidatorFactory.class);
-
-        MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<String,String>();
-        queryParameters.putSingle("aud", "https://fhir.example.com");
-        queryParameters.putSingle("launch", "E0727D19-7568-499D-ADA6-49872786745E");
-
-        Map<String, String> configMap = new Hashtable<String, String>(2);
-        configMap.put("smart_audiences", "https://fhir.example.com");
-
-        when(config.getConfig()).thenReturn(configMap);
-
-        when(authSession.getClient()).thenReturn(client);
-
-        when(session.getContext()).thenReturn(keycloakContext);
-        when(session.getContext().getAuthenticationSession()).thenReturn(authSession);
-        when(session.getContext().getClient()).thenReturn(client);
-
-        when(context.getAuthenticatorConfig()).thenReturn(config);
-        when(context.getUser()).thenReturn(user);
-        when(context.getSession()).thenReturn(session);
-        when(context.getUriInfo()).thenReturn(uriInfo);
-        when(context.getAuthenticationSession()).thenReturn(authSession);
-        when(context.getUriInfo().getQueryParameters()).thenReturn(queryParameters);
-
-        when(factory.create(session)).thenReturn(authenticator);
-        when(factory.getId()).thenReturn("audience-validator");
-
-        when(uriInfo.getQueryParameters()).thenReturn(queryParameters);
-
-        // Test the authenticate method
-        authenticator.authenticate(context);
-        verify(context).attempted();
-
+    void acceptsAnyConfiguredAudienceWithWhitespaceTrimmed() {
+        validator.authenticate(request.context);
+        request.assertAttemptedWithoutFailure();
     }
 
-    // Write more test cases for other SPI methods
-}
+    @Test
+    void acceptsAudienceAlias() {
+        request.query.remove("aud");
+        request.query.putSingle("audience", "https://fhir.example.com");
+        validator.authenticate(request.context);
+        request.assertAttemptedWithoutFailure();
+    }
 
+    @Test
+    void acceptsResourceAlias() {
+        request.query.remove("aud");
+        request.query.putSingle("resource", "https://fhir.example.com");
+        validator.authenticate(request.context);
+        request.assertAttemptedWithoutFailure();
+    }
+
+    @Test
+    void rejectsUnconfiguredAudience() {
+        request.query.putSingle("aud", "https://untrusted.example.com");
+        validator.authenticate(request.context);
+        request.assertFailure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED, "invalid_request");
+    }
+
+    @Test
+    void rejectsMissingAudience() {
+        request.query.remove("aud");
+        validator.authenticate(request.context);
+        request.assertFailure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED, "invalid_request");
+    }
+
+    @Test
+    void rejectsBlankAudience() {
+        request.query.putSingle("aud", " ");
+        validator.authenticate(request.context);
+        request.assertFailure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED, "invalid_request");
+    }
+
+    @Test
+    void rejectsMissingAuthenticatorConfiguration() {
+        when(request.context.getAuthenticatorConfig()).thenReturn(null);
+        validator.authenticate(request.context);
+        request.assertFailure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED, "server_error");
+    }
+
+    @Test
+    void rejectsConfigurationWithoutAudienceProperty() {
+        AuthenticatorConfigModel config = new AuthenticatorConfigModel();
+        config.setConfig(Map.of());
+        when(request.context.getAuthenticatorConfig()).thenReturn(config);
+        validator.authenticate(request.context);
+        request.assertFailure(AuthenticationFlowError.CLIENT_CREDENTIALS_SETUP_REQUIRED, "server_error");
+    }
+
+    @Test
+    void skipsNonSmartRequestsEvenWithoutConfiguration() {
+        request.query.clear();
+        when(request.authSession.getClientNote("scope")).thenReturn("openid");
+        when(request.context.getAuthenticatorConfig()).thenReturn(null);
+        validator.authenticate(request.context);
+        request.assertAttemptedWithoutFailure();
+    }
+}

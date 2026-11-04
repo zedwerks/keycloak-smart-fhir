@@ -21,77 +21,121 @@
  */
 package com.zedwerks.keycloak;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockConstruction;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.mockStatic;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
-import org.mockito.MockedStatic;
-
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.keycloak.authentication.AuthenticationFlowContext;
-import org.keycloak.common.ClientConnection;
-import org.keycloak.common.Profile;
-import org.keycloak.models.AuthenticatedClientSessionModel;
-import org.keycloak.models.AuthenticatorConfigModel;
-import org.keycloak.models.ClientModel;
-import org.keycloak.models.ClientScopeModel;
-import org.keycloak.models.KeycloakContext;
-import org.keycloak.models.KeycloakSession;
-import org.keycloak.models.RealmModel;
-import org.keycloak.models.UserModel;
+import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.models.UserSessionModel;
 import org.keycloak.models.UserSessionProvider;
-import org.keycloak.protocol.oidc.TokenManager;
-import org.keycloak.representations.AccessToken;
-import org.keycloak.representations.JsonWebToken;
-import org.keycloak.services.util.DefaultClientSessionContext;
-import org.keycloak.sessions.AuthenticationSessionModel;
-import org.mockito.MockitoAnnotations;
-
-import com.zedwerks.keycloak.authenticators.smart.EhrLaunchContextResolverFactory;
+import org.keycloak.sessions.RootAuthenticationSessionModel;
 import com.zedwerks.keycloak.authenticators.smart.EhrLaunchContextResolver;
-import com.zedwerks.smart.context.ContextResource;
 
-import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.UriInfo;
+class EhrLaunchContextResolverTest extends KeycloakProfileTest {
+    private LaunchTestContext request;
+    private UserSessionModel userSession;
+    private Map<String, String> notes;
+    private final EhrLaunchContextResolver resolver = new EhrLaunchContextResolver();
 
-import java.net.URI;
-import java.util.ArrayList;
-
-public class EhrLaunchContextResolverTest {
-
-    @BeforeClass
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
+    @BeforeEach
+    void setUp() {
+        request = new LaunchTestContext("openid launch");
+        when(request.authSession.getAuthNote("launch")).thenReturn("new-context");
+        RootAuthenticationSessionModel parent = mock(RootAuthenticationSessionModel.class);
+        when(parent.getId()).thenReturn("user-session");
+        when(request.authSession.getParentSession()).thenReturn(parent);
+        UserSessionProvider sessions = mock(UserSessionProvider.class);
+        userSession = mock(UserSessionModel.class);
+        when(request.session.sessions()).thenReturn(sessions);
+        when(sessions.getUserSession(request.realm, "user-session")).thenReturn(userSession);
+        // Model mutable session notes so cleanup and replacement are exercised together.
+        notes = new HashMap<>();
+        when(userSession.getNote(anyString())).thenAnswer(call -> notes.get(call.getArgument(0)));
+        doAnswer(call -> { notes.put(call.getArgument(0), call.getArgument(1)); return null; })
+                .when(userSession).setNote(anyString(), anyString());
+        doAnswer(call -> { notes.remove(call.getArgument(0)); return null; })
+                .when(userSession).removeNote(anyString());
     }
 
     @Test
-    public void testLaunchResolver() {
+    void resolvesPatientEncounterAndTypedAdditionalParameters() {
+        notes.put("new-context", "{\"patient\":\"p1\",\"encounter\":\"e1\",\"additionalParameters\":{"
+                + "\"intent\":\"review\",\"need_patient_banner\":true,\"count\":2,"
+                + "\"fhirContext\":[{\"reference\":\"Observation/o1\"}]}}");
+        resolver.authenticate(request.context);
+        verify(request.context).success();
+        assertEquals("new-context", notes.get("smart_contextid"));
+        assertEquals("p1", notes.get("patient"));
+        assertEquals("e1", notes.get("encounter"));
+        assertEquals("review", notes.get("intent"));
+        assertEquals("true", notes.get("need_patient_banner"));
+        assertEquals("2", notes.get("count"));
+        assertEquals("[{\"reference\":\"Observation/o1\"}]", notes.get("fhirContext"));
+        verify(request.context, never()).failure(any(), any());
+    }
 
-        KeycloakSession session = mock(KeycloakSession.class);
-        EhrLaunchContextResolver authenticator = new EhrLaunchContextResolver(session); // this is the class we want to
-                                                                                        // test
-        KeycloakContext keycloakContext = mock(KeycloakContext.class);
-        AuthenticationSessionModel authSession = mock(AuthenticationSessionModel.class);
-        AuthenticationFlowContext context = mock(AuthenticationFlowContext.class);
-        AuthenticatorConfigModel config = mock(AuthenticatorConfigModel.class);
-        UserModel user = mock(UserModel.class);
-        UserSessionProvider userSessionProvider = mock(UserSessionProvider.class);
-        UriInfo uriInfo = mock(UriInfo.class);
-        ClientModel client = mock(ClientModel.class);
-        ClientConnection clientConnection = mock(ClientConnection.class);
-        RealmModel realm = mock(RealmModel.class);
+    @Test
+    void clearsPreviousContextAndCustomNotesBeforeReplacingThem() {
+        notes.put("smart_contextid", "old-context");
+        notes.put("old-context", "{\"patient\":\"old\",\"additionalParameters\":{\"old_custom\":\"old\"}}");
+        notes.put("patient", "old");
+        notes.put("encounter", "stale");
+        notes.put("old_custom", "old");
+        notes.put("unrelated", "keep");
+        notes.put("new-context", "{\"patient\":\"new\"}");
+        resolver.authenticate(request.context);
+        verify(request.context).success();
+        assertEquals("new", notes.get("patient"));
+        assertEquals("new-context", notes.get("smart_contextid"));
+        assertFalse(notes.containsKey("encounter"));
+        assertFalse(notes.containsKey("old_custom"));
+        assertFalse(notes.containsKey("old-context"));
+        assertEquals("keep", notes.get("unrelated"));
+    }
 
-        EhrLaunchContextResolverFactory factory = mock(EhrLaunchContextResolverFactory.class);
+    @Test
+    void acceptsLegacyPatientAndEncounterParameters() {
+        notes.put("new-context", "{\"resourceType\":\"Parameters\",\"parameter\":["
+                + "{\"name\":\"patient\",\"valueString\":\"legacy-patient\"},"
+                + "{\"name\":\"encounter\",\"valueString\":\"legacy-encounter\"}]}");
+        resolver.authenticate(request.context);
+        verify(request.context).success();
+        assertEquals("legacy-patient", notes.get("patient"));
+        assertEquals("legacy-encounter", notes.get("encounter"));
+    }
+
+    @Test
+    void rejectsUnknownContextWithoutChangingExistingNotes() {
+        notes.put("patient", "existing");
+        resolver.authenticate(request.context);
+        request.assertFailure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR, "server_error");
+        assertEquals(Map.of("patient", "existing"), notes);
+    }
+
+    @Test
+    void rejectsMalformedJson() {
+        notes.put("new-context", "{broken-json");
+        resolver.authenticate(request.context);
+        request.assertFailure(AuthenticationFlowError.GENERIC_AUTHENTICATION_ERROR, "server_error");
+    }
+
+    @Test
+    void skipsResolutionWithoutLaunchNote() {
+        when(request.authSession.getAuthNote("launch")).thenReturn(null);
+        resolver.authenticate(request.context);
+        verify(request.context).success();
+        verifyNoInteractions(userSession);
+    }
+
+    @Test
+    void skipsResolutionWithoutLaunchScope() {
+        when(request.authSession.getClientNote("scope")).thenReturn("openid");
+        resolver.authenticate(request.context);
+        verify(request.context).success();
+        verifyNoInteractions(userSession);
     }
 }
